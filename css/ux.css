@@ -1,0 +1,417 @@
+/* ux.css —— M11 体验层：动效降级 + 缺素材占位。
+   刻意独立成文件：css/avg.css 与参考 blk05.style 逐声明保真
+   （test-style 把门），任何追加都会破坏字节契约。
+   index.html / cal.html / 导出 bundle 的 play.html 都要引这个文件。 */
+
+/* 系统要求减少动效：播放器内所有过渡与动画直接归零。
+   剧情语义不依赖动画（打字机走 innerHTML 更新，不受影响）。
+   特效子树是例外：它的可见性整条都挂在淡入淡出上（部件行内 opacity 恒为 1），
+   归零后既不播也不消失，会变成永久糊在画面上的不透明贴片。 */
+@media (prefers-reduced-motion: reduce) {
+  #avg-container,
+  #avg-container *:not(.avg-effect):not(.avg-effect-part):not(.avg-effect-sprite) {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* 素材缺失占位：lpic 解码失败时给立绘盒子一个可见的虚线框，
+   剧情继续播（计划 R 条目：缺 blob 不致命）。 */
+.avg-chara.img-missing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.125em dashed var(--warn, #fc6);
+  box-sizing: border-box;
+}
+.avg-chara.img-missing::after {
+  content: '⚠ 素材缺失';
+  color: var(--warn, #fc6);
+  font-size: 1.25em;
+  transform: rotate(-8deg);
+}
+
+/* —— 游戏本体的五类图层 ——
+   UIAVGSystem 的 image item 都是全屏 RectTransform；只有角色走专用 canvas。
+   这些规则放在体验层，不污染 css/avg.css 的参考逐声明冻结表。 */
+.avg-layer-host {
+  height: 100%;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
+.avg-layer-distant { z-index: 0; }
+.avg-layer-foreground { z-index: 1; }
+.avg-layer-movie { z-index: 1; }
+.avg-layer-effects-1 { z-index: 0; }
+.avg-layer-effects-2 { z-index: 1; }
+.avg-layer-effects-3 { z-index: 2; }
+.avg-layer-item,
+.avg-video {
+  display: block;
+  height: 100%;
+  object-position: center;
+  position: absolute;
+  width: 100%;
+}
+.avg-layer-item {
+  left: 0;
+  top: 0;
+}
+.avg-video {
+  left: 0;
+  object-fit: cover;
+  top: 0;
+}
+.avg-layer-item.dark { filter: brightness(0.5); }
+.avg-chara.dissolving,
+.avg-layer-item.dissolving {
+  /* 游戏侧 AvgHeroDissolveTween 显式 SetEase(Ease.OutQuart)；按端点斜率
+     f'(0)=4、f'(1)=0 拟合，CSS 口径逐点最大偏差 1.5e-3。 */
+  animation: avg-dissolve-chara 0.6s cubic-bezier(.27, 1.06, .56, 1) both;
+  filter: brightness(1.25) contrast(1.18);
+}
+.avg-chara-ripple {
+  animation: avg-chara-ripple 0.9s ease-out infinite;
+  border: 0.125em solid #bdefff99;
+  border-radius: 50%;
+  height: 6em;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: 42%;
+  transform: translate(-50%, -50%) scale(.25);
+  width: 6em;
+}
+.avg-layer-item.img-missing,
+.avg-video.img-missing {
+  background: repeating-linear-gradient(135deg, #f5a62322 0 8px, #0000 8px 16px), #171717;
+  border: 1px dashed #f5a623;
+  color: #f5a623;
+  object-fit: contain;
+}
+.avg-layer-item.img-missing::after,
+.avg-video.img-missing::after {
+  content: '⚠ 素材缺失';
+}
+
+/* effect prefab 尚未从 AB 单独导出时，仍保留演出位置、层级和动作特征；
+   已导出的 prefab 由同一节点挂载真实纹理，未导出的继续走可识别占位。 */
+.avg-effect {
+  height: 100%;
+  transform-origin: center;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
+.avg-effect-sprite {
+  --avg-effect-z: 0px;
+}
+.avg-effect-smoke {
+  background: radial-gradient(ellipse, #d9e7ef44 0 16%, #8394a133 38%, #0000 72%);
+  mix-blend-mode: screen;
+}
+.avg-effect-smoke .avg-effect-sprite {
+  animation: avg-smoke 1.8s ease-in-out infinite alternate;
+}
+.avg-effect-snow .avg-effect-sprite {
+  animation: avg-snow 8s linear infinite;
+  opacity: .58;
+}
+/* 雪是 parts 结构（两个粒子系统），只挂 .avg-effect-sprite 的选择器永不命中 ⇒ 雪完全静止。
+   部件的 translate(-50%,-50%) 是居中用的，关键帧必须带上，否则一播动画就跳开半个自身尺寸。 */
+.avg-effect-snow .avg-effect-part {
+  animation: avg-snow-part 8s linear infinite;
+}
+.avg-effect-ripple {
+  animation: avg-ripple 1.2s ease-out infinite;
+  border: 0.125em solid #bdefff99;
+  border-radius: 50%;
+  height: 8em;
+  left: 0;
+  top: 0;
+  width: 8em;
+}
+.avg-effect-dissolve {
+  animation: avg-dissolve 0.8s ease-out both;
+  background: linear-gradient(135deg, #ffffff30, #8bd8ff00 55%);
+  mix-blend-mode: screen;
+}
+/* 一次性特效（索引 loop:false）：Unity 里粒子寿命一到就全死、画面干净，
+   但我们一件只画一个 quad，没有这条包络就会一直糊在画面上（黄色冲击能赖到剧终）。
+   时长由播放器按该件的粒子寿命写成行内 animation-duration。 */
+.avg-effect-burst {
+  animation: avg-fx-burst 0.2s ease-out both;
+}
+.avg-effect-generic {
+  color: #f5a623;
+  font-size: 1.5em;
+  height: auto;
+  text-shadow: 0 0 0.35em #000;
+  width: auto;
+}
+.avg-effect-sprite {
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  display: block;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+.avg-effect-part {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: block;
+  position: absolute;
+}
+.avg-effect-hit-knife {
+  mix-blend-mode: screen;
+}
+.avg-effect-hit-knife .avg-effect-part {
+  animation-duration: 5s;
+  animation-fill-mode: both;
+}
+.avg-effect-hit-knife .avg-effect-part.blade {
+  animation-name: avg-hit-knife-blade;
+  animation-timing-function: cubic-bezier(.2, .8, .2, 1);
+}
+.avg-effect-hit-knife .avg-effect-part.spark {
+  animation-name: avg-hit-knife-spark;
+  animation-timing-function: ease-out;
+}
+.avg-effect-hit-knife .avg-effect-part.blade {
+  animation-delay: 0s;
+}
+.avg-effect-hit-knife .avg-effect-part.spark {
+  animation-delay: 0s;
+}
+#avg-stage.avg-rgb-split::after {
+  background: linear-gradient(90deg, #f004, #0000 35% 65%, #0ff4);
+  content: '';
+  inset: 0;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  position: absolute;
+  z-index: 4;
+  filter: blur(calc(var(--avg-rgb-radius, 0) * 6px));
+  opacity: clamp(0, calc(var(--avg-rgb-radius, 0) * 1.2), .82);
+  transform: translateX(calc(var(--avg-rgb-radius, 0) * 12px));
+}
+@property --avg-ppv-saturation {
+  inherits: false;
+  initial-value: 1;
+  syntax: '<number>';
+}
+@property --avg-ppv-dof-focus {
+  inherits: false;
+  initial-value: .5;
+  syntax: '<number>';
+}
+@property --avg-ppv-dof-blur {
+  inherits: false;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+@property --avg-rgb-radius {
+  inherits: false;
+  initial-value: 0;
+  syntax: '<number>';
+}
+#avg-stage.avg-ppv {
+  filter: saturate(var(--avg-ppv-saturation, 1))
+      blur(var(--avg-ppv-dof-blur, 0px));
+}
+@keyframes avg-smoke {
+  from { opacity: .25; transform: scale(.94); }
+  to { opacity: .7; transform: scale(1.06); }
+}
+@keyframes avg-ripple {
+  from { opacity: .8; transform: scale(.2); }
+  to { opacity: 0; transform: scale(1.4); }
+}
+@keyframes avg-dissolve {
+  from { opacity: .8; transform: scale(.9); }
+  to { opacity: 0; transform: scale(1.1); }
+}
+@keyframes avg-snow {
+  from { transform: translate3d(-2%, -10%, 0) scale(1.02); }
+  to { transform: translate3d(2%, 10%, 0) scale(1.08); }
+}
+@keyframes avg-snow-part {
+  from { transform: translate(-50%, -50%) translate3d(-2%, -10%, 0) scale(1.02); }
+  to { transform: translate(-50%, -50%) translate3d(2%, 10%, 0) scale(1.08); }
+}
+@keyframes avg-fx-burst {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  100% { opacity: 0; }
+}
+@keyframes avg-hit-knife {
+  0% { opacity: 0; }
+  4% { opacity: 1; }
+  72% { opacity: .92; }
+  100% { opacity: 0; }
+}
+@keyframes avg-hit-knife-blade {
+  from { opacity: 0; transform: translate(-50%, -50%) rotate(-32deg) scale(.35); }
+  30% { opacity: 1; }
+  to { opacity: 0; transform: translate(-50%, -50%) rotate(18deg) scale(1.1); }
+}
+@keyframes avg-hit-knife-spark {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(.1); }
+  35% { opacity: 1; }
+  to { opacity: 0; transform: translate(-50%, -50%) scale(1.25); }
+}
+@keyframes avg-dissolve-chara {
+  from { filter: brightness(1.3) contrast(1.2); opacity: 1; }
+  to { filter: brightness(1.1) contrast(1.05); opacity: .15; }
+}
+@keyframes avg-chara-ripple {
+  0% { opacity: .85; transform: translate(-50%, -50%) scale(.25); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.25); }
+}
+
+/* —— 23sg 专属演出（命运石之门联动）——
+   游戏侧真值：Game.Avg.SteinsGate.*（_logic 本地件）。
+   素材真值：sg_theme_001..010 = a01 开场世界线独白的预烤终端帧；
+   sg_chat_001..011 = @channel 全屏板（走普通 images 通道，不经此层）。
+   缺件：SteinsGateAvgDialog 对话框 prefab 与手机窗贴图未提取，
+   对话框皮肤维持标准件、手机窗为结构近似（下注）。 */
+
+/* 终端镜（wire 显式 sgMonitorFrame 才出现，语料零标注 ⇒ 永不自动触发）：
+   预烤帧全屏铺满、自带打字文本，标准对话框被它盖住。2:1 原比在 16:9
+   舞台上 cover 裁边，与游戏全屏铺满一致。 */
+.avg-sg-monitor {
+  display: none;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+.avg-sg-monitor.show {
+  display: block;
+}
+/* 终端帧自带烤死的台词（008 帧那三行就是语料那三行），再挂一层对话框等于
+   同句重印 —— 监视器在屏时对白收掉（帧缺失时 player 会撤这个标记）。 */
+#avg-stage.sg-monitor #avg-dialog {
+  display: none;
+}
+
+/* 手机聊天窗：结构按 UISteinsGateAvg（标题栏/消息列表/收信横幅），
+   外观为近似——窗体贴图与 UINSteinsMobileAnim 动画帧未提取。
+   出入场时长对应 Show/HideSGAvgMobileAnim（DOTween，时长在 prefab 内，
+   取 0.45s 近似值，游戏侧还有 SetWaitAvgSGAnim 等待门）。 */
+.avg-sg-mobile {
+  background: linear-gradient(180deg, #10151d 0%, #1b2430 100%);
+  border: 1px solid #3d4a5c;
+  border-radius: 1.2em;
+  bottom: 3em;
+  box-shadow: 0 0 1.5em #0009;
+  display: flex;
+  flex-direction: column;
+  height: 26em;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 2em;
+  transform: translateX(120%);
+  transition: opacity .45s ease-out, transform .45s ease-out;
+  width: 22em;
+  visibility: hidden;
+}
+.avg-sg-mobile.show {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity .45s ease-out, transform .45s ease-out;
+  visibility: visible;
+}
+.avg-sg-mobile.immediate {
+  transition: none;
+}
+.avg-sg-mobile-title {
+  border-bottom: 1px solid #3d4a5c;
+  color: #9fe3ff;
+  font-size: 1.1em;
+  min-height: 1.4em;
+  padding: .5em .9em;
+  text-shadow: 0 0 .4em #9fe3ff66;
+}
+.avg-sg-mobile-msgs {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: .6em;
+  overflow: hidden;
+  padding: .7em .9em;
+}
+.avg-sg-mobile-item {
+  animation: avg-sg-msg-in .3s ease-out both;
+  background: #24303f;
+  border-radius: .6em;
+  color: #d7e6f2;
+  font-size: .92em;
+  line-height: 1.45;
+  max-width: 92%;
+  padding: .5em .7em;
+}
+.avg-sg-mobile-contact {
+  color: #8fa8bd;
+  font-size: .82em;
+  margin-bottom: .25em;
+}
+.avg-sg-mobile-receive {
+  background: #0e1319ee;
+  border-left: .25em solid #57c7ff;
+  color: #cfe9ff;
+  display: none;
+  left: 2em;
+  padding: .5em 1em;
+  position: absolute;
+  right: 2em;
+  top: 3.2em;
+}
+.avg-sg-mobile-receive.show {
+  display: block;
+}
+.avg-sg-mobile.confirm .avg-sg-mobile-title::after {
+  animation: avg-sg-confirm .9s ease-out both;
+  color: #ffd257;
+  content: '✓';
+  float: right;
+}
+@keyframes avg-sg-msg-in {
+  from { opacity: 0; transform: translateY(.6em); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes avg-sg-confirm {
+  0% { opacity: 0; transform: scale(1.6); }
+  30% { opacity: 1; transform: scale(1); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* 世界线变动：CameraEffectFunction.SteinLineChange 的网页近似
+   （闪白 + 横向撕裂位移；实机时长待校准，暂 1.2s）。 */
+.avg-sg-worldline::after {
+  animation: avg-sg-worldline 1.2s ease-out both;
+  background:
+    repeating-linear-gradient(0deg, #fff0 0 7px, #ffffff26 7px 8px),
+    radial-gradient(ellipse at 50% 45%, #ffffffcc 0%, #ffffff22 45%, #fff0 70%);
+  content: '';
+  inset: 0;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  position: absolute;
+  z-index: 6;
+}
+@keyframes avg-sg-worldline {
+  0% { opacity: 0; transform: translateX(0); }
+  18% { opacity: 1; }
+  30% { transform: translateX(-.6%) skewX(2deg); }
+  46% { transform: translateX(.5%) skewX(-1.4deg); }
+  62% { transform: translateX(-.25%); }
+  100% { opacity: 0; transform: none; }
+}

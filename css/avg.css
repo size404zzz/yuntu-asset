@@ -1,0 +1,615 @@
+/* 42LAB wiki AVG 播放器样式的忠实移植（源：MediaWiki:Gadget-AvgPlayer styles）。
+   与参考的差异只有三处，全部登记在 tools/test-style.mjs 的 ALLOWED 里：
+   字体栈与 color 显式钉死（参考靠宿主页面继承）、@font-face 自带 Mohave。 */
+
+/* 实测 wiki 上 document.fonts.check('16px Mohave') === true，
+   .avg-choice::before 的 OPTIONS 标号用的就是它（仅 300 字重）。
+   不带这个文件的话标号宽度会落到 Courier 而偏。 */
+@font-face {
+  font-family: 'Mohave';
+  font-style: normal;
+  font-weight: 300;
+  font-display: block;
+  src: url(../data/fonts/Mohave-Light.woff2) format('woff2'),
+      url(../data/fonts/Mohave-Light.woff) format('woff');
+}
+
+#avg-container {
+  /* 实测参考页面 getComputedStyle(#avg-dialog).fontFamily 就是这个栈：
+     拉丁走 Segoe UI，中文由末尾 sans-serif 落到系统黑体。不要"优化"成
+     PingFang/YaHei 优先——那会连拉丁字形一起改掉，换行数随之不同。 */
+  --avg-font: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", Lato,
+      "Liberation Sans", "Noto Sans", "Helvetica Neue", Helvetica, sans-serif;
+  color: black;
+  font-family: var(--avg-font);
+  background: gray;
+  font-size: 16px;
+  height: 540px;
+  max-width: 100%;
+  position: relative;
+  width: 1200px;
+}
+
+#avg-container.hide-ui #avg-choices,
+#avg-container.hide-ui #avg-controls,
+#avg-container.hide-ui #avg-dialog {
+  display: none;
+}
+
+/* 离屏量高器：打字机逐字写入时撑住对话框高度，避免框子抖动。
+   width 20.5882em 在自身 1.0625em 字号下 = 350px，与 #avg-dialog.pos* 的
+   内容宽 21.875em = 350px 严格相等 —— 两者必须同步改，否则高度算错。 */
+#height-tester {
+  color: #0000;
+  font-size: 1.0625em;
+  line-height: 1.2353;
+  position: absolute;
+  width: 20.5882em;
+  z-index: -1;
+}
+
+#height-tester.type1 {
+  font-size: 1.1875em;
+  line-height: 2.0526;
+  white-space: pre-wrap;
+  width: 28em;
+}
+
+#height-tester span {
+  opacity: 0;
+}
+
+#avg-stage {
+  background: black;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+
+#avg-bg {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: 0;
+}
+
+#avg-bg-overlay {
+  background: radial-gradient(75% 80%, #0000 40%, #000000a0 75%);
+  height: 100%;
+}
+
+#avg-bg-overlay.dark {
+  background: radial-gradient(75% 80%, #00000040, #000000a0 50%);
+}
+
+/* 勿动：#avg-charas 因为 position+z-index 已经是一个层叠上下文，
+   所以下方通讯框的 mix-blend-mode 只能与 .avg-chara 画布混合、永远摸不到 #avg-bg。
+   任何"顺手加 isolation / will-change / opacity / filter"的改动都会改变 blend group，观感立刻不同。 */
+#avg-charas {
+  height: 100%;
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+}
+
+.avg-chara {
+  position: absolute;
+  z-index: 1;
+}
+
+.avg-chara.dark {
+  filter: brightness(0.5);
+  z-index: 0;
+}
+
+.avg-chara canvas {
+  height: 100%;
+  width: 100%;
+}
+
+/* 勿动：通讯框特效。九宫格度量遵循 border-image-width(em) = 切图 slice(px) / 32。
+   源图 301x175 被拉伸到 331x462 CSS px（纵向 2.7 倍）是刻意的 9-slice 拉伸。 */
+.avg-chara div {
+  border-image: url(../data/ui/commframe.png) 84 84 84 208 fill
+      / 2.625em 2.625em 2.625em 6.5em;
+  mix-blend-mode: color-dodge;
+  position: absolute;
+}
+
+.avg-chara div::before {
+  background: no-repeat center/18.5em 26.5em linear-gradient(#5a96b4, #5a96b4);
+  content: '';
+  display: block;
+  height: 100%;
+  mix-blend-mode: color;
+  opacity: 0.3;
+  width: 100%;
+}
+
+#avg-dialog {
+  color: white;
+  position: absolute;
+  user-select: none;
+  z-index: 2;
+}
+
+/* type1 全屏旁白 */
+#avg-dialog.type1 {
+  align-items: center;
+  background: #000000c0;
+  box-sizing: border-box;
+  display: flex;
+  font-size: 1.1875em;
+  font-weight: 500;
+  height: 100%;
+  line-height: 2.0526;
+  padding-bottom: 1em;
+  padding-left: 10.2105em;
+  white-space: pre-wrap;
+  width: 100%;
+}
+
+/* type2 底部横条 */
+#avg-dialog.type2 {
+  background: #000000a0;
+  bottom: 0;
+  box-sizing: border-box;
+  height: 9.5em;
+  line-height: 1.25;
+  padding: 2em 15em 0 15.1875em;
+  width: 100%;
+}
+
+/* pos1/2/3 气泡框。注意这里刻意没有 box-sizing:border-box ——
+   width:21.875em 是内容宽 350px，与 #height-tester 的 350px 配对。不要"顺手修正"。 */
+#avg-dialog.pos1,
+#avg-dialog.pos2,
+#avg-dialog.pos3 {
+  border-image: url(../data/ui/chatwin.png) 26 42 fill
+      / 0.8125em 1.3125em / 0.375em;
+  bottom: 5.75em;
+  line-height: 1.2353;
+  padding: 0.5em 0.8125em 0.75em;
+  width: 21.875em;
+}
+
+#avg-dialog.pos1 {
+  left: 16.6875em;
+}
+
+#avg-dialog.pos2 {
+  left: 26.0625em;
+}
+
+#avg-dialog.pos3 {
+  right: 16.0625em;
+}
+
+/* type4 大字/内心独白 */
+#avg-dialog.type4 {
+  background: #000000a0;
+  bottom: 0;
+  box-sizing: border-box;
+  height: 9.5em;
+  padding: 0.375em 14em 0 15.1875em;
+  width: 100%;
+}
+
+#avg-dialog.type4 > span {
+  display: block;
+}
+
+/* type5 居中白底提示 */
+#avg-dialog.type5 {
+  align-items: start;
+  box-sizing: border-box;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  opacity: 1;
+  top: 6.6875em;
+  transition: opacity 0.2s, top 0.2s;
+  width: 100%;
+}
+
+#avg-dialog.type5.fade-in {
+  opacity: 0;
+  top: 7.6875em;
+}
+
+#avg-dialog.type5.fade-out {
+  opacity: 0;
+  top: 5.6875em;
+}
+
+#avg-speaker {
+  font-size: 1.0625em;
+}
+
+#avg-dialog.type4 #avg-speaker {
+  color: #9e9e9e;
+  font-size: 1.25em;
+  line-height: 1.3;
+}
+
+#avg-dialog.pos1 #avg-speaker::after,
+#avg-dialog.pos2 #avg-speaker::after,
+#avg-dialog.pos3 #avg-speaker::after {
+  content: '：';
+}
+
+#avg-line {
+  font-size: 1.0625em;
+}
+
+#avg-dialog.type1 #avg-line {
+  font-size: 1em;
+}
+
+#avg-dialog.type4 #avg-line {
+  line-height: 1.25;
+}
+
+#avg-dialog.type5 #avg-line {
+  background: white;
+  color: black;
+  padding: 0 0.25em;
+}
+
+span[data-ref] {
+  color: #f57c00;
+  text-decoration: underline;
+}
+
+#avg-line span[data-ref] {
+  cursor: pointer;
+}
+
+#avg-choices {
+  align-items: center;
+  background: #00000040;
+  box-sizing: border-box;
+  counter-reset: option-counter;
+  display: none;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  opacity: 0;
+  overflow-y: hidden;
+  position: absolute;
+  row-gap: 1.8125em;
+  transition: opacity 0.2s, padding 0.2s;
+  width: 100%;
+  z-index: 3;
+}
+
+#avg-stage.choice #avg-choices {
+  display: flex;
+}
+
+#avg-choices.choice {
+  opacity: 1;
+  padding-bottom: 2.5625em;
+}
+
+.avg-choice {
+  background: no-repeat center/100% 3.5em url(../data/ui/btnbg.png);
+  color: black;
+  counter-increment: option-counter;
+  cursor: pointer;
+  padding: 0.4em 0;
+  position: relative;
+  text-align: center;
+  width: 40.3125em;
+}
+
+/* Mohave 在参考站点并未实际加载，落的是 Courier/monospace；
+   这里钉死同一 fallback 链，否则 OPTIONS 标号的字距与 scale(0.5) 后的宽度都会偏。 */
+.avg-choice::before {
+  background: linear-gradient(90deg, #000d 80%, #0000);
+  color: white;
+  content: 'OPTIONS ' counter(option-counter);
+  display: block;
+  font-family: Mohave, Courier, monospace;
+  font-size: 1.1875em;
+  left: 1.1579em;
+  padding-left: 0.2632em;
+  position: absolute;
+  text-align: left;
+  top: -1.4474em;
+  transform: scale(0.5);
+  transform-origin: bottom left;
+  width: 19.231%;
+}
+
+#avg-controls {
+  box-sizing: border-box;
+  color: white;
+  column-gap: 1.375em;
+  display: grid;
+  grid-template-areas: "a b c . d e";
+  grid-template-columns: repeat(3, 2.3125em) auto 5em 5em;
+  height: 5.6875em;
+  padding: 1.6875em 3.875em 1.6875em 5.125em;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+
+#avg-controls > div {
+  cursor: pointer;
+  user-select: none;
+}
+
+#avg-control-log {
+  background: no-repeat center/1.125em 1.25em url(../data/ui/log.png), black;
+  grid-area: a;
+}
+
+#avg-control-hide-ui {
+  background: no-repeat center/1.1875em 0.75em url(../data/ui/hide.png), black;
+  grid-area: b;
+}
+
+#avg-control-dict {
+  background: no-repeat center/1.125em 1.25em url(../data/ui/dict.png), black;
+  grid-area: c;
+}
+
+#avg-control-auto,
+#avg-control-skip {
+  align-items: center;
+  column-gap: 0.5em;
+  display: flex;
+  filter: brightness(0.67);
+  font-size: 1.125em;
+  padding-bottom: 0.2222em;
+}
+
+#avg-control-auto {
+  grid-area: d;
+}
+
+#avg-control-auto.on {
+  filter: none;
+}
+
+#avg-control-skip {
+  grid-area: e;
+}
+
+/* 这两个控件不在静态骨架里：参考检测到移动端后才用 JS 创建（page.html:
+   `mobileParam.isMobile = true` 分支），所以 DOM 里没有它们是正确的。 */
+#avg-control-fullscreen,
+#avg-control-orientation {
+  align-items: center;
+  display: flex;
+  font-size: 1.125em;
+  height: 1.8333em;
+  justify-content: center;
+  padding-bottom: 0.2222em;
+  position: absolute;
+  top: 1.5em;
+  width: 3em;
+}
+
+#avg-control-fullscreen {
+  right: 14.7778em;
+}
+
+#avg-control-orientation {
+  right: 19em;
+}
+
+@media screen and (max-width: 610px) {
+  #avg-controls > div:not(#avg-control-fullscreen) {
+    display: none;
+  }
+  #avg-controls > #avg-control-fullscreen {
+    background: black;
+    height: 540px;
+    padding-bottom: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+  }
+  #avg-control-fullscreen::before {
+    content: '点击以';
+  }
+  #avg-container.empty #avg-control-fullscreen::before {
+    content: '选择剧情以开始';
+  }
+  #avg-container:fullscreen #avg-control-fullscreen::before {
+    content: '旋转至横屏以';
+  }
+  #avg-control-fullscreen::after {
+    content: '播放';
+  }
+  #avg-container:fullscreen #avg-control-fullscreen::after {
+    content: '播放，点击退出全屏';
+  }
+}
+
+#avg-controls .oo-ui-iconWidget {
+  filter: invert(1);
+}
+
+#avg-overlay {
+  display: none;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+#avg-overlay.des,
+#avg-overlay.log,
+#avg-overlay.skip {
+  display: block;
+}
+
+#avg-log {
+  background: #000000c0;
+  box-sizing: border-box;
+  color: white;
+  display: none;
+  height: 100%;
+  padding: 5.5625em 11.4375em 4.6875em 12.875em;
+  width: 100%;
+}
+
+#avg-overlay.log #avg-log {
+  display: block;
+}
+
+#avg-log-box {
+  background: #38383890;
+  box-sizing: border-box;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 2.8125em 0 2.3125em;
+  width: 100%;
+}
+
+.avg-log-div {
+  column-gap: 1.4375em;
+  display: grid;
+  grid-template-columns: 6.0625em auto;
+  padding: 0 2em;
+}
+
+.avg-log-div div:first-child {
+  color: #a0a0a0;
+  font-size: 0.9375em;
+  text-align: right;
+}
+
+.avg-log-div div:last-child {
+  font-size: 1.0625em;
+  white-space: pre-wrap;
+}
+
+.avg-log-div p {
+  line-height: 1.4559;
+  margin: 0 0 0.5882em;
+}
+
+.avg-log-div .selected {
+  color: orange;
+}
+
+#avg-skip {
+  background: #000000b0;
+  box-sizing: border-box;
+  display: none;
+  height: 100%;
+  padding: 8.875em 10.25em;
+  position: absolute;
+  width: 100%;
+}
+
+#avg-overlay.skip #avg-skip {
+  display: block;
+}
+
+#avg-skip-dialog {
+  border-image: url(../data/ui/skipbg.png) 56 56 128 fill
+      / 1.75em 1.75em 4em / 1.5em 0 0;
+  color: white;
+  position: relative;
+}
+
+#avg-location {
+  color: #a0a0a0;
+  left: 1em;
+  position: absolute;
+  top: -1.5em;
+  transform: scale(0.84375);
+  transform-origin: top left;
+  user-select: none;
+}
+
+#avg-sector-en {
+  position: absolute;
+  top: 0.4em;
+  transform: scale(0.45);
+  transform-origin: top left;
+}
+
+#avg-sector-location {
+  margin-top: 0.8em;
+}
+
+#avg-skip-title {
+  font-size: 1.5em;
+  line-height: 1;
+  margin-top: 1.0417em;
+  text-align: center;
+}
+
+#avg-scene-brief {
+  font-size: 1.125em;
+  height: 4.7778em;
+  line-height: 1.2;
+  padding: 0.6667em 1.7778em;
+}
+
+#avg-skip-buttons {
+  column-gap: 0.125em;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 2.5625em;
+  margin: 2.25em 0.25em 0.25em;
+  padding: 0.625em 0.375em;
+  position: relative;
+  text-align: center;
+}
+
+#avg-skip-buttons::before {
+  color: #a0a0a0;
+  content: '是否跳过本次剧情？';
+  display: block;
+  font-size: 1.125em;
+  left: 0;
+  position: absolute;
+  text-align: center;
+  top: -1.6667em;
+  width: 100%;
+}
+
+#avg-skip-buttons div {
+  cursor: pointer;
+  flex: 1;
+  font-size: 1.125em;
+  user-select: none;
+}
+
+#avg-skip-cancel {
+  background: url(../data/ui/cancel.png) no-repeat calc(50% - 1.0833em)
+      center/1.1111em, #501010;
+  padding: 0.3889em 0 0 2.0556em;
+}
+
+#avg-skip-confirm {
+  background: url(../data/ui/confirm.png) no-repeat calc(50% - 1.1389em)
+      center/1.1111em, #505050;
+  padding: 0.3889em 0 0 2.6667em;
+}
+
+/* 缺失资源占位：不是浏览器默认的坏图图标，而是一个明确的方块提示，
+   保证素材没到位时播放器仍然可播、且一眼看得出是缺料而非渲染坏了。 */
+.avg-missing {
+  align-items: center;
+  border: 1px dashed #f57c00;
+  box-sizing: border-box;
+  color: #f57c00;
+  display: flex;
+  font-size: 0.875em;
+  height: 100%;
+  justify-content: center;
+  width: 100%;
+}
