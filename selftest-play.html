@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<title>avg player harness</title>
+<link rel="stylesheet" href="/tools/ref/avg.css">
+<link rel="stylesheet" href="/tools/ref/pandect.css">
+<link rel="stylesheet" href="/tools/ref/nav.css">
+<style>
+  html, body { margin: 0; background: #1b1b1b; }
+  /* 与参考冻结页同款：滚动条会夹窄 #avg-container，立绘规则按 clientWidth 算。 */
+  html { overflow: hidden; }
+  body {
+    color: black;
+    font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", Lato,
+        "Liberation Sans", "Noto Sans", "Helvetica Neue", Helvetica, sans-serif;
+  }
+  @font-face {
+    font-family: 'Mohave'; font-style: normal; font-weight: 300;
+    font-display: block;
+    src: url(/data/fonts/Mohave-Light.woff2) format('woff2'),
+         url(/data/fonts/Mohave-Light.woff) format('woff');
+  }
+</style>
+</head>
+<body>
+<div id="mount"></div>
+<script type="module">
+/**
+ * M4 播放器自检：用虚拟时钟驱动我们自己的 Player 推完一个夹具的全部镜次，
+ * 逐镜抓 settled state + phase 时序；有基准件时逐项对拍，没有（wiki 冻结件
+ * 已随契约切换删除）就只跑冒烟并把跳写进报告。
+ *
+ * 与参考驱动（tools/ref/driver.mjs）的对应关系：
+ * - 观测器 / at() / ticks() / snapshot() 逐项照抄，performance.now() 换成虚拟钟；
+ * - settle 的「打全 + 静止 + 地平线 + 尾巴」语义换成虚拟钟上的等价推进；
+ * - 容差只给两类已知差异：真实钟的 setTimeout 抖动（±40ms 起步），
+ *   与画布分辨率 2048→1024（采样墨水只比有无）。
+ * 观测件（虚拟钟/时间线/settle/snapshot）在 js/test/harness.js，
+ * 与 M5 seek 回归共用同一份。
+ */
+import {Player} from '/js/engine/player.js';
+import {loadRepoIndex, flatLookup} from '/js/core/repo-index.js';
+import {
+  makeSettler, makeSnapshotter, createTimeline, VirtualTimer,
+} from '/js/test/harness.js';
+import {reporter} from '/js/test/report.js';
+
+/* 像素比对截停模式：?max=N&slug=X 播到第 N 个到达点就停（舞台留在
+   settled 态供截图），报告写 expected-X.json 不踩常驻回归件。 */
+const URLP = new URLSearchParams(location.search);
+const MAX_SHOTS = Number(URLP.get('max') || 0);
+const REPORT_SLUG = URLP.get('slug') || 'play_report';
+const SCENE = URLP.get('scene') || 'scene2';
+const TITLES = {scene2: '背水一战', scene3: '绝处逢生', scene4: 'M11 形态'};
+const playReport = reporter(REPORT_SLUG);
+
+const problems = [];
+const skipped = [];   /* 契约切换后缺基准时，跳过了什么要写进报告 */
+const pageErrors = [];
+addEventListener('error', (e) => pageErrors.push(`${e.message} @ ${e.filename}:${e.lineno}`));
+addEventListener('unhandledrejection', (e) => pageErrors.push(`rejection: ${e.reason?.message || e.reason}`));
+
+/* ---------- 虚拟时钟与资产供给 ---------- */
+
+const clock = new VirtualTimer();
+
+/* 素材优先走本地 res/ 树（与 selftest-avg 同款）。/images/ 是外源代理，
+   缺失文件按 GFWiki 的怪癖返回 200 的 HTML 提示页 —— 纹理永远到不了，
+   「纹理到达才开」的门不落地，打字机与点击推进会一起卡死。 */
+const repo = await loadRepoIndex();
+const effectIndex = await (await fetch('/data/index/avg-effects.json')).json();
+const filePathOf = (name) => flatLookup(repo, name)
+    ?? '/images/' + name[0].toUpperCase() + name.slice(1);
+const layoutCache = new Map();
+const layoutOf = async (img) => {
+  if (!layoutCache.has(img.imgPath)) {
+    layoutCache.set(img.imgPath,
+        await (await fetch('/data/layouts/' + img.imgPath + '.json')).json());
+  }
+  return layoutCache.get(img.imgPath);
+};
+
+const player = new Player({
+  mount: document.getElementById('mount'),
+  mode: 'clamp',
+  timer: clock,
+  filePathOf,
+  effectAssetOf: (prefab) => effectIndex[prefab] ?? null,
+  layoutOf,
+  getName: () => '教授',
+  getGender: () => 'TA',
+  characters: await (await fetch('/data/Avg_character.json')).json(),
+});
+const refs = player.refs;
+const timeline = createTimeline(player.container, clock);
+const settle = makeSettler({player, clock, problems});
+const snapshot = makeSnapshotter({player, timeline});
+
+/* ---------- 开跑 ---------- */
+
+const scene = await (await fetch(`/data/fixtures/${SCENE}.json`)).json();
+/* 契约已换成游戏本体（2026-08-31），wiki 冻结件随之删除：缺基准时只跑冒烟
+   （真实推进全镜 + 结构自证），并在报告里显式声明未对拍。 */
+const expected = await fetch(`/data/fixtures/expected-${SCENE}.json`)
+    .then((r) => r.ok ? r.json() : null);
+player.setScene(scene, TITLES[SCENE] ?? SCENE, '1', '绿洲防线', '');
+const header = {
+  skipTitle: refs.avgSkipTitle.textContent,
+  sectorLocation: refs.avgSectorLocation.textContent,
+  sectorEn: refs.avgSectorEn.textContent,
+  sceneBrief: refs.avgSceneBrief.textContent,
+};
+
+const shots = [];
+const readLog = () => [...refs.avgLogBox.children].map((div) => ({
+  speaker: div.children[0].innerHTML,
+  lines: [...div.children[1].children].map((p) => p.innerHTML),
+}));
+let logNow = null;
+let rulesNow = null;
+let lastLanded = null;
+/* 落点指针（与 driver.mjs 同款）：nextId 优先、+1 兜底、无内容
+   autoContinue 链穿过；窥探不提交，回廊增长才落定。 */
+const ST = Array.isArray(scene) ? -1 : 0;
+let pointer = ST;
+function nextFrom(p) {
+  for (let guard = 400; guard--; ) {
+    const shot = scene[p];
+    p = shot?.nextId != null ? Number(shot.nextId) + ST : p + 1;
+    const nxt = scene[p];
+    if (!nxt || nxt.content || nxt.branch || !nxt.autoContinue) break;
+  }
+  return p;
+}
+
+for (let click = 0; click < 120; click++) {
+  timeline.startWindow();
+  const before = refs.avgLogBox.children.length;
+  const lineBefore = refs.avgLine.innerHTML;
+  /* 分支镜在等选项，点背景不动（player 的 avgChoices 门）；取第一个选项，
+     与重放链 branch[0] 优先同口径。 */
+  const choice = refs.avgChoices?.querySelector('.avg-choice');
+  let guess;
+  if (choice) {
+    guess = pointer = Number(choice.dataset.jumpAct);
+    choice.click();
+  } else {
+    guess = nextFrom(pointer);
+    player.container.click();
+  }
+  /* 与 driver.mjs 同款 v3：settle 判据 =「行文本离开点击值 且 ∈
+     下一内容镜∪上一落点的页」，分类放到 settle 后。页取 player.scene
+     格式化副本（原始 fixture 的 content 是字符串）。 */
+  const waited = await settle({
+    content: [...(player.scene?.[guess]?.content ?? []),
+      ...(lastLanded == null ? [] : player.scene?.[lastLanded]?.content ?? [])],
+    branch: scene[guess]?.branch,
+  }, guess, lineBefore);
+  if (!player.container.classList.contains('empty')) {
+    if (refs.avgLogBox.children.length) logNow = readLog();
+    rulesNow = player.styles.textContent || rulesNow;
+  }
+  if (player.container.classList.contains('empty')) {
+    shots.push({shot: null, endOfScene: true, click, phase: {}});
+    break;
+  }
+  const after = refs.avgLogBox.children.length;
+  let landed;
+  if (after > before) { landed = guess; pointer = guess; }
+  else if (refs.avgLine.innerHTML !== lineBefore) landed = lastLanded;
+  else landed = null;
+  if (landed == null) {
+    problems.push(`第 ${click} 次点击后回廊没有增长（before=${before} after=${after}）`
+        + ` dialog=${JSON.stringify(refs.avgDialog.className)}`
+        + ` line=${JSON.stringify(refs.avgLine.innerHTML.slice(-24))}`);
+    break;
+  }
+  playReport.step(`shot#${landed}`);
+  shots.push(snapshot(scene[landed], landed, waited));
+  lastLanded = landed;
+  if (MAX_SHOTS && shots.length >= MAX_SHOTS) break;
+}
+
+/* ---------- 对拍 ---------- */
+
+const failures = [];
+let asserts = 0;
+const check = (label, cond, detail = '') => {
+  asserts++;
+  if (!cond && failures.length < 120) {
+    failures.push(label + (detail ? ` —— ${detail}` : ''));
+  }
+};
+
+const px = (v) => (v == null ? null : parseFloat(v));
+const near = (a, b, tol) =>
+    a === b || (Number.isFinite(px(a)) && Number.isFinite(px(b))
+        && Math.abs(px(a) - px(b)) <= tol);
+const bgName = (v) => {
+  const m = /^url\("?(.*?)"?\)$/.exec(v || '');
+  return m ? decodeURIComponent(m[1].split('/').pop()).toLowerCase() : v;
+};
+const phaseTol = (e) => Math.max(60, 0.3 * Math.abs(e ?? 0));
+
+/* 几何环境必须与冻结页一致，否则规则表与测量值没有可比性。 */
+check('meta.stage', player.container.clientWidth === 1200
+    && player.container.clientHeight === 540
+    && getComputedStyle(player.container).fontSize === '16px',
+    `${player.container.clientWidth}x${player.container.clientHeight}`
+    + ` ${getComputedStyle(player.container).fontSize}`);
+
+if (expected) {
+check('header', JSON.stringify(header) === JSON.stringify(expected.header),
+    JSON.stringify(header));
+check('problems', problems.length === 0, problems.join(' | '));
+check('pageErrors', pageErrors.length === 0, pageErrors.join(' | '));
+check('shotCount', shots.length === expected.shots.length,
+    `ours=${shots.length} expected=${expected.shots.length}`);
+
+for (let k = 0; k < Math.min(shots.length, expected.shots.length); k++) {
+  const got = shots[k];
+  const exp = expected.shots[k];
+  const tag = `shot[${k}]#${exp.shot}`;
+  if (exp.endOfScene) {
+    check(tag + '.endOfScene', got.shot === null && got.endOfScene === true,
+        JSON.stringify(got));
+    continue;
+  }
+  check(tag + '.contentType', got.contentType === exp.contentType,
+      `${got.contentType} != ${exp.contentType}`);
+  check(tag + '.wire', JSON.stringify(got.wire) === JSON.stringify(exp.wire));
+  for (const key of Object.keys(exp.class)) {
+    check(tag + '.class.' + key, got.class[key] === exp.class[key],
+        `${JSON.stringify(got.class[key])} != ${JSON.stringify(exp.class[key])}`);
+  }
+  check(tag + '.dialogMinHeight', got.dialogMinHeight === exp.dialogMinHeight,
+      `${got.dialogMinHeight} != ${exp.dialogMinHeight}`);
+  check(tag + '.lineMinHeight', got.lineMinHeight === exp.lineMinHeight,
+      `${got.lineMinHeight} != ${exp.lineMinHeight}`);
+  check(tag + '.speaker', got.speaker === exp.speaker,
+      `${JSON.stringify(got.speaker)} != ${JSON.stringify(exp.speaker)}`);
+  check(tag + '.lineHTML', got.lineHTML === exp.lineHTML,
+      `${JSON.stringify(got.lineHTML)} != ${JSON.stringify(exp.lineHTML)}`);
+  check(tag + '.lineText', got.lineText === exp.lineText);
+  check(tag + '.bg.image', bgName(got.bg.image) === bgName(exp.bg.image),
+      `${got.bg.image} != ${exp.bg.image}`);
+  for (const key of ['size', 'position', 'opacity', 'transition', 'overlayTransition']) {
+    check(tag + '.bg.' + key, got.bg[key] === exp.bg[key],
+        `${JSON.stringify(got.bg[key])} != ${JSON.stringify(exp.bg[key])}`);
+  }
+  check(tag + '.charas.length', got.charas.length === exp.charas.length,
+      `${got.charas.length} != ${exp.charas.length}`);
+  for (let c = 0; c < Math.min(got.charas.length, exp.charas.length); c++) {
+    const gc = got.charas[c];
+    const ec = exp.charas[c];
+    const ct = `${tag}.chara[${ec.imgId}]`;
+    for (const key of ['imgId', 'posId', 'cls', 'opacity', 'transition']) {
+      check(ct + '.' + key, gc[key] === ec[key],
+          `${JSON.stringify(gc[key])} != ${JSON.stringify(ec[key])}`);
+    }
+    for (const key of ['left', 'bottom', 'width', 'height']) {
+      check(ct + '.' + key, near(gc[key], ec[key], 0.51),
+          `${gc[key]} != ${ec[key]}`);
+    }
+    check(ct + '.transform', gc.transform === ec.transform,
+        `${gc.transform} != ${ec.transform}`);
+    check(ct + '.filter', gc.filter === ec.filter,
+        `${gc.filter} != ${ec.filter}`);
+    for (const spot of ['face', 'chest', 'hem']) {
+      const gi = gc.canvas?.samples?.[spot] ?? 0;
+      const ei = ec.canvas?.samples?.[spot] ?? 0;
+      check(ct + '.ink.' + spot, (gi > 0) === (ei > 0),
+          `ours=${gi} oracle=${ei}`);
+    }
+  }
+  check(tag + '.choices', JSON.stringify(got.choices) === JSON.stringify(exp.choices));
+  check(tag + '.logEntries', got.logEntries === exp.logEntries,
+      `${got.logEntries} != ${exp.logEntries}`);
+  for (const key of ['lineTicks', 'heightTesterTicks', 'tweenHorizonMs']) {
+    check(tag + '.phase.' + key, got.phase[key] === exp.phase[key],
+        `${got.phase[key]} != ${exp.phase[key]}`);
+  }
+  for (const key of ['dialogAt', 'dialogClassAt', 'bgAt', 'bgOverlayAt',
+                     'charaAt', 'lineAt', 'lineEndAt']) {
+    const e = exp.phase[key];
+    const g = got.phase[key];
+    check(tag + '.phase.' + key,
+        (e === null) === (g === null)
+            && (e === null || Math.abs(g - e) <= phaseTol(e)),
+        `${g} vs ${e}`);
+  }
+}
+
+/* 回廊全文与规则表：规则表冻结件是双载翻倍（B10），去重 + 压空白后对拍。 */
+check('log', JSON.stringify(logNow) === JSON.stringify(expected.log));
+const rulesOf = (text) => (text || '').split('}')
+    .map((b) => b.replace(/\s+/g, '')).filter(Boolean);
+check('charaRules',
+    JSON.stringify([...new Set(rulesOf(rulesNow))].sort())
+        === JSON.stringify([...new Set(rulesOf(expected.charaRules))].sort()),
+    `ours=${rulesOf(rulesNow).length}块 oracle=${rulesOf(expected.charaRules).length}块`);
+} else {
+  skipped.push('无 wiki 基准件：已跳过逐镜对拍（P1 换 gamefold oracle）');
+}
+
+/* comm 持久性回归（scene4 专用，不依赖基准件）：101 注册时带 comm:true，
+   shot2 起是纯 tween 镜（isDark/走位/换脸）——通讯框是注册态属性，tween
+   链路不得摘除（游戏侧只有 InitAvgHeroPicParam/Delete 动它；语料 229 个
+   带 comm 剧本的 imgTween 条目 0 例携带 comm/ripple）。 */
+if (SCENE === 'scene4') {
+  const commTrack = [];
+  for (const snap of shots) {
+    const persicaria = snap.charas?.find((c) => c.imgId === '101');
+    if (persicaria) commTrack.push([snap.shot, !!persicaria.comm]);
+  }
+  check('scene4.commPersistence',
+      commTrack.length >= 2 && commTrack.every(([, has]) => has),
+      JSON.stringify(commTrack));
+}
+
+const report = {
+  ok: failures.length === 0 && problems.length === 0 && pageErrors.length === 0,
+  asserts,
+  failureCount: failures.length,
+  failures,
+  problems,
+  skipped,
+  pageErrors,
+  shotsObserved: shots.length,
+  done: true,
+};
+await playReport.final(report);
+document.title = 'play-report-done';
+</script>
+</body>
+</html>
