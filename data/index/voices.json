@@ -1,0 +1,686 @@
+{
+ "byHero": {
+  "1001": {
+   "codename": "persicaria",
+   "sheet": "VO_persicaria"
+  },
+  "1002": {
+   "codename": "anna",
+   "sheet": "VO_anna"
+  },
+  "1003": {
+   "codename": "sol",
+   "sheet": "VO_sol"
+  },
+  "1004": {
+   "codename": "simo",
+   "sheet": "VO_simo"
+  },
+  "1005": {
+   "codename": "croque",
+   "sheet": "VO_croque"
+  },
+  "1006": {
+   "codename": "fresnel",
+   "sheet": "VO_fresnel"
+  },
+  "1007": {
+   "codename": "chelsea",
+   "sheet": "VO_chelsea"
+  },
+  "1008": {
+   "codename": "gin",
+   "sheet": "VO_gin"
+  },
+  "1009": {
+   "codename": "mai",
+   "sheet": "VO_mai"
+  },
+  "1010": {
+   "codename": "evelyn",
+   "sheet": "VO_evelyn"
+  },
+  "1011": {
+   "codename": "camellia",
+   "sheet": "VO_camellia"
+  },
+  "1012": {
+   "codename": "max",
+   "sheet": "VO_max"
+  },
+  "1013": {
+   "codename": "betty",
+   "sheet": "VO_betty"
+  },
+  "1014": {
+   "codename": "choco",
+   "sheet": "VO_choco"
+  },
+  "1015": {
+   "codename": "panakeia",
+   "sheet": "VO_panakeia"
+  },
+  "1016": {
+   "codename": "banxsy",
+   "sheet": "VO_banxsy"
+  },
+  "1017": {
+   "codename": "angela",
+   "sheet": "VO_angela"
+  },
+  "1018": {
+   "codename": "florence",
+   "sheet": "VO_florence"
+  },
+  "1019": {
+   "codename": "fern",
+   "sheet": "VO_fern"
+  },
+  "1020": {
+   "codename": "yanny",
+   "sheet": "VO_yanny"
+  },
+  "1021": {
+   "codename": "groove",
+   "sheet": "VO_groove"
+  },
+  "1022": {
+   "codename": "aki",
+   "sheet": "VO_aki"
+  },
+  "1023": {
+   "codename": "bonee",
+   "sheet": "VO_bonee"
+  },
+  "1024": {
+   "codename": "earhart",
+   "sheet": "VO_earhart"
+  },
+  "1025": {
+   "codename": "twigs",
+   "sheet": "VO_twigs"
+  },
+  "1026": {
+   "codename": "nanaka",
+   "sheet": "VO_nanaka"
+  },
+  "1027": {
+   "codename": "zion",
+   "sheet": "VO_zion"
+  },
+  "1028": {
+   "codename": "vee",
+   "sheet": "VO_vee"
+  },
+  "1029": {
+   "codename": "willow",
+   "sheet": "VO_willow"
+  },
+  "1030": {
+   "codename": "ksenia",
+   "sheet": "VO_ksenia"
+  },
+  "1031": {
+   "codename": "imhotep",
+   "sheet": "VO_imhotep"
+  },
+  "1032": {
+   "codename": "octogen",
+   "sheet": "VO_octogen"
+  },
+  "1033": {
+   "codename": "rise",
+   "sheet": "VO_rise"
+  },
+  "1034": {
+   "codename": "abigail",
+   "sheet": "VO_abigail"
+  },
+  "1035": {
+   "codename": "jessie",
+   "sheet": "VO_jessie"
+  },
+  "1036": {
+   "codename": "lam",
+   "sheet": "VO_lam"
+  },
+  "1037": {
+   "codename": "hubble",
+   "sheet": "VO_hubble"
+  },
+  "1038": {
+   "codename": "sakuya",
+   "sheet": "VO_sakuya"
+  },
+  "1039": {
+   "codename": "centaureissi",
+   "sheet": "VO_centaureissi"
+  },
+  "1040": {
+   "codename": "dusevnyj",
+   "sheet": "VO_dusevnyj"
+  },
+  "1041": {
+   "codename": "delacey",
+   "sheet": "VO_delacey"
+  },
+  "1042": {
+   "codename": "hatsuchiri",
+   "sheet": "VO_hatsuchiri"
+  },
+  "1043": {
+   "codename": "python",
+   "sheet": "VO_python"
+  },
+  "1044": {
+   "codename": "kuro",
+   "sheet": "VO_kuro"
+  },
+  "1045": {
+   "codename": "sueyoi",
+   "sheet": "VO_sueyoi"
+  },
+  "1046": {
+   "codename": "haze",
+   "sheet": "VO_haze"
+  },
+  "1047": {
+   "codename": "sockdolager",
+   "sheet": "VO_sockdolager"
+  },
+  "1048": {
+   "codename": "nora",
+   "sheet": "VO_nora"
+  },
+  "1049": {
+   "codename": "magnhilda",
+   "sheet": "VO_magnhilda"
+  },
+  "1050": {
+   "codename": "puzzle",
+   "sheet": "VO_puzzle"
+  },
+  "1051": {
+   "codename": "nascita",
+   "sheet": "VO_nascita"
+  },
+  "1052": {
+   "codename": "helix",
+   "sheet": "VO_helix"
+  },
+  "1053": {
+   "codename": "crypter",
+   "sheet": "VO_crypter"
+  },
+  "1054": {
+   "codename": "gastronomie",
+   "sheet": "VO_gastronomie"
+  },
+  "1055": {
+   "codename": "hanna",
+   "sheet": "VO_hanna"
+  },
+  "1056": {
+   "codename": "uranus",
+   "sheet": "VO_uranus"
+  },
+  "1057": {
+   "codename": "turing",
+   "sheet": "VO_turing"
+  },
+  "1058": {
+   "codename": "hk416",
+   "sheet": "VO_hk416"
+  },
+  "1059": {
+   "codename": "clotho",
+   "sheet": "VO_clotho"
+  },
+  "1060": {
+   "codename": "dupin",
+   "sheet": "VO_dupin"
+  },
+  "1061": {
+   "codename": "undline",
+   "sheet": "VO_undline"
+  },
+  "1062": {
+   "codename": "jiangyu",
+   "sheet": "VO_jiangyu"
+  },
+  "1063": {
+   "codename": "yelena",
+   "sheet": "VO_yelena"
+  },
+  "1064": {
+   "codename": "horizon",
+   "sheet": "VO_horizon"
+  },
+  "1065": {
+   "codename": "lind",
+   "sheet": "VO_lind"
+  },
+  "1066": {
+   "codename": "erika",
+   "sheet": "VO_erika"
+  },
+  "1067": {
+   "codename": "cascadia",
+   "sheet": "VO_cascadia"
+  },
+  "1068": {
+   "codename": "eos",
+   "sheet": "VO_eos"
+  },
+  "1069": {
+   "codename": "taisch",
+   "sheet": "VO_taisch"
+  },
+  "1070": {
+   "codename": "luna",
+   "sheet": "VO_luna"
+  },
+  "1071": {
+   "codename": "persicaria_species",
+   "sheet": "VO_persicaria_species"
+  },
+  "1072": {
+   "codename": "xinghuan",
+   "sheet": "VO_xinghuan"
+  },
+  "1073": {
+   "codename": "yuwang",
+   "sheet": "VO_yuwang"
+  },
+  "1074": {
+   "codename": "hubble_darkstar",
+   "sheet": "VO_hubble_darkstar"
+  },
+  "1075": {
+   "codename": "kimie",
+   "sheet": "VO_kimie"
+  },
+  "1076": {
+   "codename": "rintaro",
+   "sheet": "VO_rintaro"
+  },
+  "1077": {
+   "codename": "mayuri",
+   "sheet": "VO_mayuri"
+  },
+  "1078": {
+   "codename": "kurisu",
+   "sheet": "VO_kurisu"
+  },
+  "1079": {
+   "codename": "penumbra",
+   "sheet": "VO_penumbra"
+  },
+  "1080": {
+   "codename": "centaureissisp",
+   "sheet": "VO_centaureissisp"
+  },
+  "1081": {
+   "codename": "tony",
+   "sheet": "VO_tony"
+  },
+  "1082": {
+   "codename": "bonneville",
+   "sheet": "VO_bonneville"
+  },
+  "1083": {
+   "codename": "shale",
+   "sheet": "VO_shale"
+  },
+  "1084": {
+   "codename": "sangoma",
+   "sheet": "VO_sangoma"
+  },
+  "1085": {
+   "codename": "belladonna",
+   "sheet": "VO_belladonna"
+  },
+  "1086": {
+   "codename": "lewis",
+   "sheet": "VO_lewis"
+  },
+  "1087": {
+   "codename": "olivia",
+   "sheet": "VO_olivia"
+  },
+  "1088": {
+   "codename": "angelus",
+   "sheet": "VO_angelus"
+  },
+  "1089": {
+   "codename": "salmon",
+   "sheet": "VO_salmon"
+  },
+  "1090": {
+   "codename": "solsp",
+   "sheet": "VO_solsp"
+  },
+  "1091": {
+   "codename": "havoc",
+   "sheet": "VO_havoc"
+  },
+  "1092": {
+   "codename": "inola",
+   "sheet": "VO_inola"
+  },
+  "1093": {
+   "codename": "eniac",
+   "sheet": "VO_eniac"
+  }
+ },
+ "byVoiceId": {
+  "1": "MORNING",
+  "2": "AFTERNOON",
+  "3": "EVENING",
+  "4": "MIDNIGHT",
+  "5": "DIALOGUE1",
+  "6": "DIALOGUE2",
+  "7": "DIALOGUE3",
+  "8": "DIALOGUE4",
+  "9": "DIALOGUE5",
+  "10": "INTERACT1",
+  "11": "INTERACT2",
+  "12": "INTERACT3",
+  "13": "NEWYEAR",
+  "14": "VALENTINE",
+  "15": "TANABATA",
+  "16": "ALLHALLOWS",
+  "17": "CHRISTMAS",
+  "18": "PLAYERBIRTHDAY",
+  "101": "GAIN",
+  "102": "LEVELUP",
+  "103": "RANKUP",
+  "104": "RANKMAX",
+  "105": "FORMATION",
+  "106": "BATTLE",
+  "107": "SKILL",
+  "108": "MVP1",
+  "109": "MVP2",
+  "110": "DUTY",
+  "111": "RETREAT",
+  "112": "RELATIONSHIP1",
+  "113": "RELATIONSHIP2",
+  "114": "RELATIONSHIP3",
+  "115": "RELATIONSHIP4",
+  "116": "RELATIONSHIP5",
+  "117": "OATH",
+  "118": "TITLE",
+  "140": "ACCEPT",
+  "141": "AGREE",
+  "142": "APPRECIATE",
+  "143": "FEELING",
+  "144": "LOWMOOD",
+  "145": "MOOD1",
+  "146": "MOOD2",
+  "147": "MOOD3",
+  "148": "MOOD4",
+  "149": "MOOD5",
+  "202": "L2D1",
+  "203": "L2D2",
+  "204": "L2D3",
+  "205": "L2D4",
+  "206": "L2D5",
+  "1059001": "MORNING_2",
+  "1059002": "AFTERNOON_2",
+  "1059003": "EVENING_2",
+  "1059004": "MIDNIGHT_2",
+  "1059005": "DIALOGUE1_2",
+  "1059006": "DIALOGUE2_2",
+  "1059007": "DIALOGUE3_2",
+  "1059008": "DIALOGUE4_2",
+  "1059009": "DIALOGUE5_2",
+  "1059010": "INTERACT1_2",
+  "1059011": "INTERACT2_2",
+  "1059012": "INTERACT3_2",
+  "1059013": "NEWYEAR_2",
+  "1059014": "VALENTINE_2",
+  "1059015": "TANABATA_2",
+  "1059016": "ALLHALLOWS_2",
+  "1059017": "CHRISTMAS_2",
+  "1059018": "PLAYERBIRTHDAY_2",
+  "1059102": "LEVELUP_2",
+  "1059103": "RANKUP_2",
+  "1059104": "RANKMAX_2",
+  "1059105": "FORMATION_2",
+  "1059106": "BATTLE_2",
+  "1059107": "SKILL_2",
+  "1059108": "MVP1_2",
+  "1059109": "MVP2_2",
+  "1059110": "DUTY_2",
+  "1059118": "TITLE_2",
+  "1059140": "ACCEPT_2",
+  "1059141": "AGREE_2",
+  "1059142": "APPRECIATE_2",
+  "1059143": "FEELING_2",
+  "1059144": "LOWMOOD_2",
+  "1059145": "MOOD1_2",
+  "1059146": "MOOD2_2",
+  "301806001": "NEWYEAR_MORNING",
+  "301806003": "NEWYEAR_EVENING",
+  "301806004": "NEWYEAR_MIDNIGHT",
+  "301806005": "NEWYEAR_DIALOGUE1",
+  "301806006": "NEWYEAR_DIALOGUE2",
+  "301806008": "NEWYEAR_DIALOGUE4",
+  "301806010": "NEWYEAR_INTERACT1",
+  "301806011": "NEWYEAR_INTERACT2",
+  "301806012": "NEWYEAR_INTERACT3",
+  "301806101": "NEWYEAR_GAIN",
+  "301806105": "NEWYEAR_FORMATION",
+  "301806106": "NEWYEAR_BATTLE",
+  "301806107": "NEWYEAR_SKILL",
+  "301806108": "NEWYEAR_MVP1",
+  "301806111": "NEWYEAR_RETREAT",
+  "301808001": "CHRISTMAS_MORNING",
+  "301808002": "CHRISTMAS_AFTERNOON",
+  "301808003": "CHRISTMAS_EVENING",
+  "301808004": "CHRISTMAS_MIDNIGHT",
+  "301808005": "CHRISTMAS_DIALOGUE1",
+  "301808006": "CHRISTMAS_DIALOGUE2",
+  "301808008": "CHRISTMAS_DIALOGUE4",
+  "301808009": "CHRISTMAS_DIALOGUE5",
+  "301808010": "CHRISTMAS_INTERACT1",
+  "301808011": "CHRISTMAS_INTERACT2",
+  "301808012": "CHRISTMAS_INTERACT3",
+  "301808101": "CHRISTMAS_GAIN",
+  "301808105": "CHRISTMAS_FORMATION",
+  "301808106": "CHRISTMAS_BATTLE",
+  "301808107": "CHRISTMAS_SKILL",
+  "301808108": "CHRISTMAS_MVP1",
+  "301808109": "CHRISTMAS_MVP2",
+  "301808110": "DRESS_DUTY",
+  "301808111": "CHRISTMAS_RETREAT",
+  "302606001": "SWIMSUIT_MORNING",
+  "302606002": "SWIMSUIT_AFTERNOON",
+  "302606003": "SWIMSUIT_EVENING",
+  "302606006": "SWIMSUIT_DIALOGUE2",
+  "302606008": "SWIMSUIT_DIALOGUE4",
+  "302606009": "SWIMSUIT_DIALOGUE5",
+  "302606010": "SWIMSUIT_INTERACT1",
+  "302606012": "SWIMSUIT_INTERACT3",
+  "302606101": "SWIMSUIT_GAIN",
+  "302606105": "SWIMSUIT_FORMATION",
+  "302606106": "SWIMSUIT_BATTLE",
+  "302606107": "SWIMSUIT_SKILL",
+  "302606109": "SWIMSUIT_MVP2",
+  "302606111": "SWIMSUIT_RETREAT",
+  "303708001": "DRESS_MORNING",
+  "303708002": "DRESS_AFTERNOON",
+  "303708003": "DRESS_EVENING",
+  "303708004": "DRESS_MIDNIGHT",
+  "303708005": "DRESS_DIALOGUE1",
+  "303708006": "DRESS_DIALOGUE2",
+  "303708008": "DRESS_DIALOGUE4",
+  "303708009": "DRESS_DIALOGUE5",
+  "303708010": "DRESS_INTERACT1",
+  "303708011": "DRESS_INTERACT2",
+  "303708012": "DRESS_INTERACT3",
+  "303708101": "DRESS_GAIN",
+  "303708105": "DRESS_FORMATION",
+  "303708106": "DRESS_BATTLE",
+  "303708107": "DRESS_SKILL",
+  "303708108": "DRESS_MVP1",
+  "303708109": "DRESS_MVP2",
+  "303708110": "DRESS_DUTY",
+  "303708111": "DRESS_RETREAT",
+  "304607002": "WUXIA_AFTERNOON",
+  "304607003": "WUXIA_EVENING",
+  "304607004": "WUXIA_MIDNIGHT",
+  "304607006": "WUXIA_DIALOGUE2",
+  "304607007": "WUXIA_DIALOGUE3",
+  "304607008": "WUXIA_DIALOGUE4",
+  "304607009": "WUXIA_DIALOGUE5",
+  "304607010": "WUXIA_INTERACT1",
+  "304607012": "WUXIA_INTERACT3",
+  "304607101": "WUXIA_GAIN",
+  "304607105": "WUXIA_FORMATION",
+  "304607106": "WUXIA_BATTLE",
+  "304607107": "WUXIA_SKILL",
+  "304607108": "WUXIA_MVP1",
+  "304607111": "WUXIA_RETREAT",
+  "305804001": "IDOL_MORNING",
+  "305804003": "IDOL_EVENING",
+  "305804004": "IDOL_MIDNIGHT",
+  "305804005": "IDOL_DIALOGUE1",
+  "305804008": "IDOL_DIALOGUE4",
+  "305804009": "IDOL_DIALOGUE5",
+  "305804010": "IDOL_INTERACT1",
+  "305804011": "IDOL_INTERACT2",
+  "305804101": "IDOL_GAIN",
+  "305804105": "IDOL_FORMATION",
+  "305804106": "IDOL_BATTLE",
+  "305804107": "IDOL_SKILL",
+  "305804108": "IDOL_MVP1",
+  "305804109": "IDOL_MVP2",
+  "305804110": "IDOL_DUTY",
+  "305804202": "L2D1",
+  "305804203": "L2D2",
+  "305804204": "L2D3",
+  "305804205": "L2D4",
+  "305804206": "L2D5",
+  "305805001": "SWIMSUIT_MORNING",
+  "305805002": "SWIMSUIT_AFTERNOON",
+  "305805004": "SWIMSUIT_MIDNIGHT",
+  "305805005": "SWIMSUIT_DIALOGUE1",
+  "305805008": "SWIMSUIT_DIALOGUE4",
+  "305805009": "SWIMSUIT_DIALOGUE5",
+  "305805010": "SWIMSUIT_INTERACT1",
+  "305805011": "SWIMSUIT_INTERACT2",
+  "305805012": "SWIMSUIT_INTERACT3",
+  "305805101": "SWIMSUIT_GAIN",
+  "305805105": "SWIMSUIT_FORMATION",
+  "305805106": "SWIMSUIT_BATTLE",
+  "305805107": "SWIMSUIT_SKILL",
+  "305805109": "SWIMSUIT_MVP2",
+  "305805111": "SWIMSUIT_RETREAT",
+  "306103003": "CHRISTMAS_EVENING",
+  "306103005": "CHRISTMAS_DIALOGUE1",
+  "306103006": "CHRISTMAS_DIALOGUE2",
+  "306103009": "CHRISTMAS_DIALOGUE5",
+  "306103010": "CHRISTMAS_INTERACT1",
+  "306103011": "CHRISTMAS_INTERACT2",
+  "306103012": "CHRISTMAS_INTERACT3",
+  "306103101": "CHRISTMAS_GAIN",
+  "306103105": "CHRISTMAS_FORMATION",
+  "306103106": "CHRISTMAS_BATTLE",
+  "306103107": "CHRISTMAS_SKILL",
+  "306103108": "CHRISTMAS_MVP1",
+  "306103109": "CHRISTMAS_MVP2",
+  "306103110": "CHRISTMAS_DUTY",
+  "306103111": "CHRISTMAS_RETREAT",
+  "307104001": "NEWYEAR_MORNING",
+  "307104002": "NEWYEAR_AFTERNOON",
+  "307104003": "NEWYEAR_EVENING",
+  "307104004": "NEWYEAR_MIDNIGHT",
+  "307104005": "NEWYEAR_DIALOGUE1",
+  "307104006": "NEWYEAR_DIALOGUE2",
+  "307104007": "NEWYEAR_DIALOGUE3",
+  "307104008": "NEWYEAR_DIALOGUE4",
+  "307104009": "NEWYEAR_DIALOGUE5",
+  "307104010": "NEWYEAR_INTERACT1",
+  "307104011": "NEWYEAR_INTERACT2",
+  "307104012": "NEWYEAR_INTERACT3",
+  "307104019": "NEWYEAR_INTERACT4",
+  "307104101": "NEWYEAR_GAIN",
+  "307104105": "NEWYEAR_FORMATION",
+  "307104106": "NEWYEAR_BATTLE",
+  "307104107": "NEWYEAR_SKILL",
+  "307104108": "NEWYEAR_MVP1",
+  "307104109": "NEWYEAR_MVP2",
+  "307104110": "NEWYEAR_DUTY",
+  "307104111": "NEWYEAR_RETREAT",
+  "307104147": "NEWYEAR_MOOD3",
+  "307104148": "NEWYEAR_MOOD4",
+  "307104149": "NEWYEAR_MOOD5",
+  "307104150": "NEWYEAR_MOOD6",
+  "307104201": "NEWYEAR_L2D",
+  "307202001": "P3_MORNING",
+  "307202002": "P3_AFTERNOON",
+  "307202003": "P3_EVENING",
+  "307202004": "P3_MIDNIGHT",
+  "307202005": "P3_DIALOGUE1",
+  "307202006": "P3_DIALOGUE2",
+  "307202007": "P3_DIALOGUE3",
+  "307202008": "P3_DIALOGUE4",
+  "307202009": "P3_DIALOGUE5",
+  "307202010": "P3_INTERACT1",
+  "307202011": "P3_INTERACT2",
+  "307202012": "P3_INTERACT3",
+  "307202013": "P3_NEWYEAR",
+  "307202014": "P3_VALENTINE",
+  "307202015": "P3_TANABATA",
+  "307202016": "P3_ALLHALLOWS",
+  "307202017": "P3_CHRISTMAS",
+  "307202018": "P3_PLAYERBIRTHDAY",
+  "307202101": "P3_GAIN",
+  "307202102": "P3_LEVELUP",
+  "307202103": "P3_RANKUP",
+  "307202104": "P3_RANKMAX",
+  "307202105": "P3_FORMATION",
+  "307202106": "P3_BATTLE",
+  "307202107": "P3_SKILL",
+  "307202108": "P3_MVP1",
+  "307202109": "P3_MVP2",
+  "307202110": "P3_DUTY",
+  "307202111": "P3_RETREAT",
+  "307202112": "P3_RELATIONSHIP1",
+  "307202113": "P3_RELATIONSHIP2",
+  "307202114": "P3_RELATIONSHIP3",
+  "307202115": "P3_RELATIONSHIP4",
+  "307202116": "P3_RELATIONSHIP5",
+  "307202117": "P3_OATH",
+  "307202118": "P3_TITLE",
+  "307202141": "P3_AGREE",
+  "307202146": "P3_MOOD2",
+  "307203001": "NEWYEAR_MORNING",
+  "307203002": "NEWYEAR_AFTERNOON",
+  "307203004": "NEWYEAR_MIDNIGHT",
+  "307203005": "NEWYEAR_DIALOGUE1",
+  "307203006": "NEWYEAR_DIALOGUE2",
+  "307203009": "NEWYEAR_DIALOGUE5",
+  "307203010": "NEWYEAR_INTERACT1",
+  "307203011": "NEWYEAR_INTERACT2",
+  "307203012": "NEWYEAR_INTERACT3",
+  "307203101": "NEWYEAR_GAIN",
+  "307203105": "NEWYEAR_FORMATION",
+  "307203106": "NEWYEAR_BATTLE",
+  "307203107": "NEWYEAR_SKILL",
+  "307203108": "NEWYEAR_MVP1",
+  "307203111": "NEWYEAR_RETREAT",
+  "307203117": "NEWYEAR_OATH",
+  "307203141": "NEWYEAR_AGREE",
+  "307203144": "NEWYEAR_LOWMOOD",
+  "307203145": "NEWYEAR_MOOD1",
+  "307203201": "NEWYEAR_L2D",
+  "307203203": "NEWYEAR_L2D2"
+ },
+ "coverage": {
+  "pairs": 468,
+  "hit": 468,
+  "misses": []
+ }
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>云图计划 · 宿舍 M1 竖切</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #1a1612;
+               font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
+  #app { position: absolute; inset: 0; }
+  #panel { position: absolute; top: 12px; left: 12px; width: 300px; max-height: calc(100% - 24px);
+           overflow: auto; background: rgba(20,16,12,.82); color: #e8ddc8; border-radius: 8px;
+           padding: 12px 14px; font-size: 12.5px; line-height: 1.55; backdrop-filter: blur(4px); }
+  #panel h1 { font-size: 15px; margin: 0 0 6px; color: #ffd98a; }
+  #panel h2 { font-size: 12.5px; margin: 10px 0 4px; color: #f0b95e; }
+  #panel .ok { color: #9fdc7a; }
+  #panel .bad { color: #ff8a7a; }
+  #panel .dim { color: #a99e8a; }
+  #panel button { margin: 2px 4px 2px 0; padding: 4px 10px; border-radius: 4px; border: 1px solid #6b5636;
+                  background: #33291c; color: #ffd98a; cursor: pointer; font-size: 12.5px; }
+  #panel button.on { background: #6b5636; }
+  #panel button:hover { background: #4a3b26; }
+  #state { color: #ffd98a; font-weight: 600; }
+  ul { margin: 4px 0; padding-left: 18px; }
+  .foot { margin-top: 8px; color: #a99e8a; font-size: 11px; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="panel">
+  <h1>云图计划 · 宿舍 M1 竖切</h1>
+  <div>当前状态:<span id="state">加载中…</span> · <span id="fps" class="dim"></span></div>
+  <h2>操作</h2>
+  <div>
+    <button id="b-auto">自动巡游</button>
+    <button id="b-walk">走</button>
+    <button id="b-stand">站</button>
+  </div>
+  <div>
+    <button id="b-sit">坐下(椅子)</button>
+    <button id="b-lie">躺下(地毯)</button>
+    <button id="b-talk">说话</button>
+  </div>
+  <h2>M1 验收清单</h2>
+  <ul id="check"></ul>
+  <div class="foot" id="note">
+    资产:Unity AssetBundle → 自研 Unity→glTF 导出器(tools/dorm/)。<br>
+    骨架结论:18/18 角色 dmodel 人形核心链(40 节 Bip001)逐路径一致;宿舍动画按角色各自 controller+clip 播放,零重定向。
+  </div>
+</div>
+<script type="module" src="./dorm.js"></script>
+</body>
+</html>
