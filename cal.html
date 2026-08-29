@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>立绘标定 · 云图计划</title>
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/avg.css">
+</head>
+<body class="cal-page">
+<header class="cal-header">
+  <a href="index.html" class="tiny">← 回编辑器</a>
+  <select id="cal-id"></select>
+  <span id="cal-note" class="muted"></span>
+</header>
+<div id="cal-root"></div>
+<script type="module">
+import {AssetRegistry} from './js/core/assets.js';
+import {mountCal} from './js/editor/layout-cal.js';
+import {h} from './js/ui/dom.js';
+
+const registry = await new AssetRegistry().boot();
+const select = document.getElementById('cal-id');
+const wanted = new URLSearchParams(location.search).get('id');
+const chars = registry.repo.characters
+    .slice()
+    .sort((a, b) => Number(b.layout) - Number(a.layout) || a.id.localeCompare(b.id));
+for (const c of chars) {
+  select.append(h('option', {value: c.id, text: c.layout ? c.id : `⚠ ${c.id}`}));
+}
+if (wanted) select.value = wanted;
+
+async function go() {
+  await mountCal(document.getElementById('cal-root'), registry, {
+    id: select.value,
+    onSaved: () => {
+      document.getElementById('cal-note').textContent = `${select.value} 已标定并保存`;
+      select.options[select.selectedIndex].textContent = select.value;
+    },
+  });
+}
+select.addEventListener('change', go);
+await go();
+</script>
+</body>
+</html>

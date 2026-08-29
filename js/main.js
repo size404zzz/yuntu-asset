@@ -2,8 +2,11 @@ import {h, clear} from './ui/dom.js';
 import {normalizeScript, nextIndexOf, isTerminal, branchTargets, serializeScript}
     from './core/script.js';
 import {shotSummary} from './core/schema.js';
+import {AssetRegistry} from './core/assets.js';
+import {openPicker} from './editor/picker.js';
 import {Player} from './engine/player.js';
 import {AudioEngine, defaultAudioResolve} from './engine/audio.js';
+import {deriveLayout} from './engine/sprite.js';
 
 const FIXTURES = [
   {id: 'scene1', title: '临危受命 · 数组格式'},
@@ -13,34 +16,49 @@ const FIXTURES = [
 
 const state = {stories: new Map(), story: null, index: 0, playing: false};
 
-/* 素材解析：引擎报的是 wiki 命名（Lpic_x_avg.png / Icon_face_x_1.png /
-   Cpt00_e_cg002.png），本地 res/ 树的大小写与目录结构都不同，靠
-   data/asset-index.json（tools/build-asset-index.mjs 生成）精确解析。
-   索引缺失或未命中的条目先按规则猜本地落点，再退回 /images 代理
-   （仅在 tools/ref/serve.py 宿主下有效）。M8 素材库落地后换 IndexedDB。 */
-const assetIndex = await fetch('data/asset-index.json')
-    .then((r) => (r.ok ? r.json() : null)).catch(() => null);
+/* M8 素材库：仓库索引（res/ 生成件）+ IndexedDB 上传的统一注册表。
+   解析优先级：上传覆盖仓库；layout 是标定 > 仓库已知 > deriveLayout 起点
+   （⚠ 徽标与一键标定在 M9 检查器里做）。R13：res/ 缺失退化为纯上传模式。 */
+const registry = await new AssetRegistry().boot();
 
-const filePathOf = (name) => assetIndex?.[name.toLowerCase()]
-    ?? (() => {
-      const lower = name.toLowerCase();
-      const lpic = /^lpic_(.+)\.png$/.exec(lower);
-      if (lpic) {
-        return `res/Assets/Res/Character/${lpic[1]}/lpic_${lpic[1]}.png`;
-      }
-      const face = /^icon_face_(.+)_(\d+)\.png$/.exec(lower);
-      if (face) {
-        const stem = face[1];
-        return 'res/Assets/Res/Character/' + `${stem}_avg/Face/${stem}_avg_face_${face[2]}.png`;
-      }
-      return '/images/' + name[0].toUpperCase() + name.slice(1);
-    })();
+const loadBitmap = (url) => new Promise((resolve, reject) => {
+  const img = new Image();
+  img.onload = () => resolve(img);
+  img.onerror = () => reject(new Error(`lpic 加载失败: ${url}`));
+  img.src = url;
+});
+
+const filePathOf = (name) => {
+  const hit = registry.resolve(name);
+  if (hit) return hit.url;
+  const lower = name.toLowerCase();
+  const lpic = /^lpic_(.+)\.png$/.exec(lower);
+  if (lpic) return `res/Assets/Res/Character/${lpic[1]}/lpic_${lpic[1]}.png`;
+  const face = /^icon_face_(.+)_(\d+)\.png$/.exec(lower);
+  if (face) {
+    return 'res/Assets/Res/Character/'
+        + `${face[1]}_avg/Face/${face[1]}_avg_face_${face[2]}.png`;
+  }
+  return '/images/' + name[0].toUpperCase() + name.slice(1);
+};
+
+const layoutOf = async (img) => {
+  const entry = registry.layoutEntry(img.imgPath);
+  if (entry?.source === 'calibrated') return entry.layout;
+  if (entry) {
+    return (await fetch(registry.layoutUrl(img.imgPath))).json();
+  }
+  const bmp = await loadBitmap(filePathOf(`Lpic_${img.imgPath}.png`));
+  return deriveLayout(bmp);
+};
 
 /* 预览 = 真引擎：分镜列表点谁就 seekShot 到谁（M5 传输条）。
    M7 音频：手势前静音（浏览器自动播放策略），首次 pointerdown 解锁并
-   按已流逝时间续播手势前登记的 bgm。 */
+   按已流逝时间续播手势前登记的 bgm；上传音频（M8）覆盖 data/audio 约定。 */
 const audio = new AudioEngine({
-  resolve: defaultAudioResolve,
+  resolve: (sheet, cue) =>
+      registry.resolve(`audio:${sheet}/${cue}`)?.url
+      ?? defaultAudioResolve(sheet, cue),
   log: (m) => console.warn('[audio]', m),
 });
 addEventListener('pointerdown', () => audio.unlock(), {once: true});
@@ -49,8 +67,7 @@ const player = new Player({
   mount: document.getElementById('preview'),
   mode: 'clamp',
   filePathOf,
-  layoutOf: async (img) =>
-      (await fetch(`data/layouts/${img.imgPath}.json`)).json(),
+  layoutOf,
   getName: () => '教授',
   getGender: () => 'TA',
   characters: await (await fetch('data/Avg_character.json')).json(),
@@ -58,10 +75,41 @@ const player = new Player({
   audio,
 });
 
+const fmtMB = (b) => `${(b / 1048576).toFixed(1)}MB`;
+(async () => {
+  const el = document.getElementById('storage');
+  const est = await registry.estimate();
+  const repo = registry.repoAvailable
+      ? `仓库 ${registry.repo.backgrounds.length} 背景 / `
+          + `${registry.repo.characters.filter((c) => c.avg).length} 立绘`
+      : '未找到本地素材库（纯上传模式）';
+  el.textContent = `${repo} · 上传 ${registry.listUploads().length} · `
+      + `已用 ${est ? fmtMB(est.usage) : '?'}${registry.persisted ? ' · 持久化✓' : ''}`;
+})();
+
 const btnSound = document.getElementById('btn-sound');
 btnSound.addEventListener('click', () => {
   audio.setMuted(!audio.muted);
   btnSound.textContent = audio.muted ? '音效·关' : '音效·开';
+});
+
+document.getElementById('btn-assets').addEventListener('click', () => {
+  openPicker(registry, {
+    title: '素材库',
+    kind: 'bg',
+    onPick: (sel) => {
+      if (sel.kind === 'chara') {
+        location.href = `cal.html?id=${encodeURIComponent(sel.name)}`;
+        return;
+      }
+      const report = document.getElementById('report');
+      report.append(h('div', {
+        className: 'ok',
+        text: `已选背景 ${sel.name}（M9 检查器接字段）`,
+      }), '\n');
+      document.querySelector('.picker-overlay')?.remove();
+    },
+  });
 });
 
 /* 引擎键（数组剧本 = 下标；map 剧本 = 键名）与编辑器下标的换算。 */
@@ -272,4 +320,17 @@ document.getElementById('btn-1to1').addEventListener('click', () => {
   player.setScale(1);
 });
 
-loadFixtures();
+loadFixtures().then(async () => {
+  if (!new URLSearchParams(location.search).get('smoke')) return;
+  await new Promise((r) => setTimeout(r, 500));
+  await fetch('/freeze?scene=editor_smoke', {
+    method: 'POST', headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      done: true,
+      pos: document.getElementById('tp-pos').textContent,
+      storage: document.getElementById('storage').textContent,
+      shots: document.querySelectorAll('.shot-row').length,
+      charas: document.querySelectorAll('#avg-charas .avg-chara').length,
+    }, null, 1),
+  });
+});
