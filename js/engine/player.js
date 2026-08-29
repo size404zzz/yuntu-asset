@@ -588,6 +588,35 @@ export class Player {
     }
   }
 
+  /* —— L3 定点补丁（编辑器）：文案/说话人变了，shot 不重启 ——
+     只重绘说话人、当前页文本与回廊末条；时序、打字机、调度器一概不碰。
+     rawShot 是编辑器的 wire 原串镜，这里重新 formatPages 进场景副本。 */
+  patchShot(rawShot) {
+    if (!this.scene) return;
+    const vars = {name: this.getName(), gender: this.getGender()};
+    const copy = this.scene[this.shotId];
+    Object.assign(copy, rawShot);
+    copy.content = rawShot.content
+        ? formatPages(rawShot.content, vars) : rawShot.content;
+    const speaker = copy.speakerName == 'bravo' ? this.getName()
+        : copy.speakerName || this.characters[copy.speakerHeroId] || '';
+    if (copy.speakerName == 'bravo') this.refs.avgSpeaker.textContent = speaker;
+    else this.refs.avgSpeaker.innerHTML = speaker;
+    const page = copy.content?.[this.lineNum];
+    if (page !== undefined) this.refs.avgLine.innerHTML = page;
+    const logDiv = this.refs.avgLogBox.lastElementChild;
+    if (logDiv && copy.content) {
+      logDiv.children[0].innerHTML = speaker;
+      logDiv.children[1].replaceChildren();
+      for (let i = 0; i <= this.lineNum; i++) {
+        const p = document.createElement('p');
+        p.innerHTML = copy.content[i];
+        /* 复刻 playShot 的两条落点：page0 在 children[1]，后续页挂 logDiv。 */
+        (i === 0 ? logDiv.children[1] : logDiv).append(p);
+      }
+    }
+  }
+
   /* —— 交互（参考 handleStageClick:333 / handleControlClick:285）—— */
 
   /* 点选项：回廊对应行打上 selected + 按选项跳镜。seek 重放同款走这里。 */
@@ -741,7 +770,11 @@ export class Player {
   /* 跳到引擎键为 key 的镜（数组剧本 = 下标；map 剧本 = 键名），落点 =
      「刚进入该镜、首页打完、全部 tween 跑完」的 settled 态。
      直通镜（autoContinue 且非终点）停不住，抛错；编辑器先落到可停留镜。 */
-  async seekShot(key) {
+  /* seekShot(key, {timed})：默认整程坍缩（定格，瞬时落到 settled 态）。
+     timed=true 时重放到 key-1 后强制一次样式落定，再让目标镜走真实定时器
+     ——CSS 过渡的起值因此来自「上一镜的 settled 态」而非 DOM 残留，
+     编辑器 L2 失效（改 tween/表情/posId）用它重放动画。 */
+  async seekShot(key, {timed = false} = {}) {
     if (!this.rawScene) throw new Error('seekShot: 还没有装过场景');
     /* 重放沿途会逐镜触发 playShot 的音频——整程静音，落点只补目标镜的 bgm。 */
     const audio = this.audio;
@@ -755,7 +788,10 @@ export class Player {
       await this.idle();
       const guard = (Array.isArray(this.scene)
           ? this.scene.length : Object.keys(this.scene).length) + 4;
-      for (let left = guard; this.shotId !== key; left--) {
+      /* timed：先定格重放到目标镜的前一镜，再真实推进最后一跳。 */
+      const prevKey = timed ? this._prevKeyOf(key) : null;
+      const landOn = timed && prevKey !== null ? prevKey : key;
+      for (let left = guard; this.shotId !== landOn; left--) {
         if (this.playEnd || left <= 0) {
           throw new Error(
               `seekShot: 停不到镜 ${key}（autoContinue 直通或不在首选项路线上）`);
@@ -767,11 +803,29 @@ export class Player {
         }
         await this.fastForward();
       }
+      if (timed && prevKey !== null) {
+        void this.container.offsetWidth;   // 前一镜样式落定 = 过渡起值
+        this.playShot();
+      }
       return this.shotId;
     } finally {
       this.audio = audio;
-      if (audio && this.scene) audio.bgmOnly(this.scene[this.shotId]);
+      if (audio && this.scene && !timed) audio.bgmOnly(this.scene[this.shotId]);
     }
+  }
+
+  /* 沿播放链找 key 的前一镜（首镜返回 null → timed 退化为普通 seek）。 */
+  _prevKeyOf(key) {
+    let s = this.scriptType + 1;
+    let prev = null;
+    while (s != null && s !== Number(key)) {
+      const shot = this.scene[s];
+      if (!shot) return null;
+      prev = s;
+      s = shot.branch ? shot.branch[0].jumpAct + this.scriptType
+          : (shot.nextId ? shot.nextId + this.scriptType : s + 1);
+    }
+    return prev;
   }
 
   /* 确定性时间线（粗模型）：每个到达点的引擎耗时 =

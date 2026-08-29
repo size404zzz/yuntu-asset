@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<title>editor harness</title>
+<link rel="stylesheet" href="/tools/ref/avg.css">
+<link rel="stylesheet" href="/tools/ref/pandect.css">
+<style>
+  html, body { margin: 0; background: #1b1b1b; }
+  html { overflow: hidden; }
+  body { color: #ddd; font: 14px/1.5 "Segoe UI", sans-serif; }
+  #mount, #shot-list, #inspector { width: 1200px; }
+</style>
+</head>
+<body>
+<div id="shot-list"></div>
+<div id="inspector"></div>
+<div id="mount"></div>
+<div id="pos"></div>
+<button id="btn-undo"></button><button id="btn-redo"></button>
+<script type="module">
+/**
+ * M9 编辑器回归（真实时钟——过渡起值是渲染器时间线的事，虚拟钟测不了）：
+ * 1) 关键回归：lane 中段 seek(timed)，过渡起值来自 prev（上一镜 settled），
+ *    不是 DOM 残留——在 2 打完（α=1）后把目标 α 改成 0.2 再 timed seek，
+ *    150ms 采样 computed opacity：prev 起点 ≈0.45，残留起点 ≈0.88。
+ * 2) L3 定点补丁：改文案 → 行 DOM 更新、shotId 不变、不重装载。
+ * 3) L2 防抖 re-seek、undo 回批、结构操作 L1。
+ */
+import {Player} from '/js/engine/player.js';
+import {Editor} from '/js/editor/editor.js';
+import {AssetRegistry} from '/js/core/assets.js';
+import {normalizeScript} from '/js/core/script.js';
+
+const failures = [];
+const problems = [];
+let asserts = 0;
+const check = (label, cond, detail = '') => {
+  asserts++;
+  if (!cond && failures.length < 60) {
+    failures.push(label + (detail ? ` —— ${detail}` : ''));
+  }
+};
+addEventListener('error', (e) => problems.push(`page: ${e.message} @${e.lineno}`));
+addEventListener('unhandledrejection', (e) => problems.push(`rejection: ${e.reason?.message}`));
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+const registry = await new AssetRegistry().boot();
+const filePathOf = (name) => registry.resolve(name)?.url
+    ?? '/images/' + name[0].toUpperCase() + name.slice(1);
+const layoutOf = async (img) =>
+    (await (await fetch(`/data/layouts/${img.imgPath}.json`)).json());
+
+const player = new Player({
+  mount: document.getElementById('mount'),
+  mode: 'clamp', filePathOf, layoutOf,
+  getName: () => '教授', getGender: () => 'TA',
+  characters: await (await fetch('/data/Avg_character.json')).json(),
+});
+
+const scene = [
+  {autoContinue: true},
+  {content: '第一镜', contentType: 4,
+    images: [{imgId: 101, imgType: 3, imgPath: 'sol_avg', alpha: 0}],
+    imgTween: [{imgId: 101, alpha: 0.5, delay: 0, duration: 1, posId: 1}]},
+  {content: '第二镜', contentType: 4,
+    imgTween: [{imgId: 101, alpha: 1, delay: 0, duration: 1}]},
+];
+
+const editor = new Editor({
+  player, registry, characters: {},
+  dom: {
+    shotList: document.getElementById('shot-list'),
+    inspector: document.getElementById('inspector'),
+    pos: document.getElementById('pos'),
+    undo: document.getElementById('btn-undo'),
+    redo: document.getElementById('btn-redo'),
+  },
+  meta: {title: 'M9', sector: '回归'},
+});
+
+const chara = () => player.refs.avgCharas.querySelector('.avg-chara');
+const opa = () => parseFloat(getComputedStyle(chara()).opacity);
+
+/* —— 关键回归：中段 lane 的 timed seek 起值来自 prev —— */
+player.setScene(scene, 'M9', '1', '回归', '');
+await player.idle();
+await player.seekShot(1);
+await sleep(1300);
+check('镜1 定格 α=0.5', Math.abs(opa() - 0.5) < 0.03, String(opa()));
+await player.seekShot(2, {timed: true});
+await sleep(1500);
+check('镜2 timed 打完 α=1', Math.abs(opa() - 1) < 0.03, String(opa()));
+
+/* DOM 现在残留 α=1；把镜 2 目标改 0.2 再 timed 重进：
+   起值=prev(0.5) → 150ms 时 ≈0.45；起值=残留(1) → ≈0.88。 */
+scene[2].imgTween = [{imgId: 101, alpha: 0.2, delay: 0, duration: 1}];
+await player.seekShot(2, {timed: true});
+await sleep(150);
+const mid = opa();
+check('过渡起值来自 prev 而非 DOM 残留', mid > 0.3 && mid < 0.65,
+    `150ms 采样 α=${mid}`);
+await sleep(1500);
+check('编辑后落点 α=0.2', Math.abs(opa() - 0.2) < 0.03, String(opa()));
+
+/* —— 编辑器：L3 定点补丁 —— */
+editor.useStory(normalizeScript(scene));
+await sleep(1500);
+editor.select(1);
+await sleep(1400);
+editor.doc.patch(1, 'content', '改过的文案');
+await sleep(300);
+check('L3 行更新且 shotId 不变',
+    player.shotId === 1
+    && player.refs.avgLine.textContent.includes('改过的文案'),
+    `shot=${player.shotId} line=${player.refs.avgLine.textContent.slice(0, 20)}`);
+
+/* editor 订阅路径：speaker 走同一条 L3 */
+editor.doc.patch(1, 'speakerName', '甲');
+await sleep(300);
+check('editor L3 生效（speaker 上屏）',
+    /甲/.test(player.refs.avgSpeaker.innerHTML),
+    player.refs.avgSpeaker.innerHTML);
+
+/* —— undo 回批 —— */
+editor.doc.undo();
+await sleep(300);
+check('undo 撤掉 speakerName 批',
+    !/甲/.test(player.refs.avgSpeaker.innerHTML + player.refs.avgSpeaker.textContent));
+
+/* —— 结构操作：插入镜 → 列表 +1 —— */
+const rowsBefore = document.querySelectorAll('.shot-row').length;
+editor.doc.structure((s) => s.shots.splice(2, 0, {content: '插', contentType: 4}));
+await sleep(400);
+check('structure 后列表 +1',
+    document.querySelectorAll('.shot-row').length === rowsBefore + 1);
+
+const report = {
+  ok: failures.length === 0 && problems.length === 0,
+  asserts, failureCount: failures.length, failures, problems, done: true,
+};
+await fetch('/freeze?scene=editor_report', {
+  method: 'POST', headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify(report, null, 1),
+});
+document.title = 'editor-report-done';
+</script>
+</body>
+</html>
