@@ -3,6 +3,7 @@ import {normalizeScript, nextIndexOf, isTerminal, branchTargets, serializeScript
     from './core/script.js';
 import {shotSummary} from './core/schema.js';
 import {Player} from './engine/player.js';
+import {AudioEngine, defaultAudioResolve} from './engine/audio.js';
 
 const FIXTURES = [
   {id: 'scene1', title: '临危受命 · 数组格式'},
@@ -35,7 +36,15 @@ const filePathOf = (name) => assetIndex?.[name.toLowerCase()]
       return '/images/' + name[0].toUpperCase() + name.slice(1);
     })();
 
-/* 预览 = 真引擎：分镜列表点谁就 seekShot 到谁（M5 传输条）。 */
+/* 预览 = 真引擎：分镜列表点谁就 seekShot 到谁（M5 传输条）。
+   M7 音频：手势前静音（浏览器自动播放策略），首次 pointerdown 解锁并
+   按已流逝时间续播手势前登记的 bgm。 */
+const audio = new AudioEngine({
+  resolve: defaultAudioResolve,
+  log: (m) => console.warn('[audio]', m),
+});
+addEventListener('pointerdown', () => audio.unlock(), {once: true});
+
 const player = new Player({
   mount: document.getElementById('preview'),
   mode: 'clamp',
@@ -46,6 +55,13 @@ const player = new Player({
   getGender: () => 'TA',
   characters: await (await fetch('data/Avg_character.json')).json(),
   nouns: await (await fetch('data/Noun_des.json')).json(),
+  audio,
+});
+
+const btnSound = document.getElementById('btn-sound');
+btnSound.addEventListener('click', () => {
+  audio.setMuted(!audio.muted);
+  btnSound.textContent = audio.muted ? '音效·关' : '音效·开';
 });
 
 /* 引擎键（数组剧本 = 下标；map 剧本 = 键名）与编辑器下标的换算。 */
