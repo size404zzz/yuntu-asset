@@ -149,3 +149,29 @@ textarea { width: 100%; min-height: 64px; resize: vertical; }
 .cal-num { display: inline-flex; align-items: center; gap: 4px; }
 .cal-num input { width: 88px; }
 .cal-missing { color: var(--warn, #fc6); padding: 20px; }
+
+/* —— M9 检查器 / 时间轴 —— */
+.ins-sec { border-bottom: 1px solid #ffffff14; padding: 8px 10px; }
+.ins-sec > summary { color: var(--accent, #6cf); font-weight: 600; cursor: pointer;
+  margin-bottom: 6px; }
+.ins-tag { background: #ffffff18; border-radius: 3px; padding: 0 6px; font-size: 11px; }
+.ins-ops { display: none; gap: 2px; grid-column: 2; }
+.shot-row:hover .ins-ops, .shot-row.selected .ins-ops { display: inline-flex; }
+.ins-ops button { padding: 0 6px; }
+.inspector-scroll { overflow: auto; }
+.ins-timeline { display: flex; flex-direction: column; gap: 6px; }
+.tl-hint { color: var(--fg-dim); font-size: 11px; }
+.tl-ruler { position: relative; height: 16px; border-bottom: 1px solid #ffffff22;
+  cursor: ew-resize; margin-left: 44px; }
+.tl-ruler span { position: absolute; top: 0; font-size: 9px; color: var(--fg-dim);
+  transform: translateX(-50%); }
+.tl-lane { display: flex; align-items: center; gap: 4px; }
+.tl-lname { width: 40px; font: 11px monospace; color: var(--fg-dim); text-align: right; }
+.tl-track { position: relative; background: #ffffff0a; border: 1px solid #ffffff1a; }
+.tl-frame { position: absolute; bottom: 0; background: #4d8fd1aa; border: 1px solid #9cf;
+  border-radius: 2px; cursor: grab; min-width: 3px; }
+.tl-frame.sel { background: #e8a33dcc; border-color: #fc6; }
+.tl-handle { position: absolute; right: -3px; top: 0; bottom: 0; width: 7px;
+  cursor: ew-resize; }
+.tl-detail { font-size: 12px; margin-left: 44px; }
+textarea.bad { outline: 2px solid var(--err, #e55); }
