@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="css/app.css">
 <link rel="stylesheet" href="css/avg.css">
 <link rel="stylesheet" href="css/pandect.css">
+<link rel="stylesheet" href="css/ux.css">
 </head>
 <body>
 <div class="app">
@@ -41,6 +42,11 @@
           <button id="tp-prev" class="tiny">⏮</button>
           <button id="tp-play" class="tiny">▶ 连播</button>
           <button id="tp-next" class="tiny">⏭</button>
+          <select id="tp-mode" class="tiny">
+            <option value="freeze">定格</option>
+            <option value="once">播放本镜</option>
+            <option value="chain">连续播放</option>
+          </select>
           <span id="tp-pos" class="muted"></span>
         </div>
       </div>

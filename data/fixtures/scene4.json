@@ -1,0 +1,23 @@
+[
+ {"autoContinue":true,"SkipScenario":"M11 形态覆盖：type1/多页/comm/delete/type5/nextId"},
+ {"content":"<size=44>type1 测试</size>","contentType":1,"speakerName":"旁白甲",
+  "images":[
+   {"imgId":1,"imgType":2,"imgPath":"cpt00/cpt00_e_bg008","alpha":0},
+   {"imgId":101,"imgType":3,"imgPath":"persicaria_avg","alpha":0,"comm":true},
+   {"imgId":103,"imgType":3,"imgPath":"sol_avg","alpha":0}],
+  "imgTween":[
+   {"imgId":1,"alpha":1,"delay":0,"duration":0.2},
+   {"imgId":101,"alpha":1,"delay":0,"duration":0.2,"posId":1},
+   {"imgId":103,"alpha":1,"delay":0.2,"duration":0.2,"posId":5}]},
+ {"content":"第一页文字<|>第二页文字","contentType":3,"speakerHeroId":1001,
+  "speakerHeroPosId":1,
+  "heroFace":[{"imgId":101,"faceId":4}],
+  "imgTween":[{"imgId":101,"alpha":1,"delay":0,"duration":0.2,"isDark":true,"posId":1}]},
+ {"content":"删掉苏尔","contentType":4,"speakerName":"某人",
+  "images":[{"delete":true,"imgId":103}],
+  "imgTween":[{"imgId":101,"alpha":1,"delay":0,"duration":0.2,"posId":2}]},
+ {"content":"type5 闪现","contentType":5},
+ {"content":"nextId 跳到 7 之后","contentType":2,"nextId":8},
+ {"content":"这镜应当被跳过","contentType":2},
+ {"content":"终镜","contentType":2,"isEnd":true}
+]

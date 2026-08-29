@@ -235,6 +235,14 @@ function syncIndex() {
 }
 
 tpPlay.addEventListener('click', () => (state.playing ? stopPlay() : startPlay()));
+
+/* 预览状态开关（M9 计划项）：定格 / 播放本镜 / 连续播放。 */
+document.getElementById('tp-mode').addEventListener('change', (e) => {
+  editor.mode = e.target.value;
+  if (editor.mode === 'chain') return startPlay();
+  stopPlay();
+  editor._seekInto(editor.mode === 'once' ? 'timed' : 'freeze');
+});
 document.getElementById('tp-next').addEventListener('click', () => {
   const n = editor.doc.story.shots.length - 1;
   editor.select(Math.min(n, editor.index + 1));

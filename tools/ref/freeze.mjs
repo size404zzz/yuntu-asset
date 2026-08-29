@@ -68,6 +68,7 @@ try {
   await waitPort();
   const query = new URLSearchParams({scene: SCENE});
   if (flag('max', '')) query.set('max', flag('max'));
+  if (flag('title', '')) query.set('title', flag('title'));
   if (flag('trace', '')) query.set('trace', flag('trace'));
   const live = !!flag('live', '');
   if (live) query.set('live', '1');

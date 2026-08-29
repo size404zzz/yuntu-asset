@@ -205,8 +205,9 @@ export function makeSnapshotter({player, timeline}) {
    光看静止会在 tween 镜提前返回（M4 冻结期踩过）。 */
 export function makeSettler({player, clock, problems}) {
   const refs = player.refs;
-  return async function settle(shot, label = '?') {
-    const pages = Array.isArray(shot?.content) ? shot.content.map(plain) : null;
+  return async function settle(shot, label = '?', lineBefore = null) {
+    const pages = Array.isArray(shot?.content) && shot.content.length
+        ? shot.content.map(plain) : null;
     const start = clock.now();
     let previous = null;
     let same = 0;
@@ -215,7 +216,9 @@ export function makeSettler({player, clock, problems}) {
       await player.idle();
       await clock.advance(TICK_MS);
       await player.idle();
-      const typed = !pages || pages.includes(refs.avgLine.textContent);
+      const typed = !pages || player.container.classList.contains('empty')
+          || (refs.avgLine.innerHTML !== lineBefore
+              && pages.includes(refs.avgLine.textContent));
       const current = [
         refs.avgLine.innerHTML, refs.avgDialog.className, refs.avgChoices.className,
         refs.avgOverlay.className, charaSignature(refs), refs.avgBg.style.opacity,

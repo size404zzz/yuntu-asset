@@ -164,10 +164,12 @@ export class Player {
     characters = {},
     nouns = null,
     audio = null,
+    canvasSize = CANVAS,      // M11：低端设备可降到 512（数学与分辨率无关）
   } = {}) {
     Object.assign(this, buildStage(mount, {mode}));
     this.sched = new Scheduler(timer);
     this.audio = audio;
+    this.canvasSize = canvasSize;
     this.filePathOf = filePathOf;
     this.layoutOf = layoutOf;
     this.getName = getName;
@@ -265,7 +267,8 @@ export class Player {
       if (reenter) {
         const chara = this._charaEl(img.imgId);
         if (!chara) continue;
-        chara.firstElementChild.getContext('2d').clearRect(0, 0, CANVAS, CANVAS);
+        chara.firstElementChild.getContext('2d')
+            .clearRect(0, 0, this.canvasSize, this.canvasSize);
         this.defaultFaces.delete(img.imgId);
         await this._paintLpic(chara, img, config);
         if (epoch !== this.sched.epoch) return;
@@ -295,7 +298,7 @@ export class Player {
           chara.append(document.createElement('div'));
         }
         compositeBody(context, charaImg, config,
-                      {comm: !!img.comm, canvasSize: CANVAS});
+                      {comm: !!img.comm, canvasSize: this.canvasSize});
         if (!this.defaultFaces.has(img.imgId) && region) {
           const arg = region.slice(0, 2).map(Math.floor)
               .concat(region.slice(2).map(Math.ceil));
@@ -306,7 +309,11 @@ export class Player {
         }
         resolve();
       };
-      charaImg.onerror = () => resolve();
+      charaImg.onerror = () => {
+        /* M11：缺素材不致命——虚线占位 + 继续播（css/ux.css）。 */
+        chara.classList.add('img-missing');
+        resolve();
+      };
       charaImg.src = this.filePathOf('Lpic_' + img.imgPath + '.png');
     });
     return this._track(load);
@@ -332,7 +339,8 @@ export class Player {
     if (!imgTween) {
       for (const face of heroFace) {
         const chara = this._charaEl(face.imgId);
-        const region = chara && faceRegion(this.layouts.get(face.imgId), CANVAS);
+        const region = chara
+            && faceRegion(this.layouts.get(face.imgId), this.canvasSize);
         if (region) {
           this._track(this._drawFace(
               chara, this.state.imgMap.get(face.imgId), face.faceId, region));
@@ -374,13 +382,13 @@ export class Player {
     const img = this.state.imgMap.get(imgId);
     let chara = this._charaEl(imgId);
     if (chara) {
-      const region = config && faceRegion(config, CANVAS);
+      const region = config && faceRegion(config, this.canvasSize);
       if (faceId !== undefined && region) {
         this._track(this._drawFace(chara, img, faceId, region));
       }
       if (!img.comm) chara.children[1]?.remove();
     } else {
-      chara = buildChara(imgId, CANVAS);
+      chara = buildChara(imgId, this.canvasSize);
       this._paintLpic(chara, img, config, {faceId});
     }
     let enter = entering;
