@@ -22,6 +22,8 @@ addEventListener('error', (event) => pageErrors.push(
 addEventListener('unhandledrejection', (event) => pageErrors.push(
     `rejection: ${event.reason?.message || event.reason}`));
 const SCENE = params.get('scene') || 'scene1';
+/* slug 覆盖：max 截停跑（像素比对用）不许踩全量冻结件。 */
+const SLUG = params.get('slug') || SCENE;
 const STABLE_TICKS = 6;
 const TICK_MS = 60;
 /* 打完字再等 700ms：type5 的 fade-out 在 500ms 才挂上，不等就会抖。 */
@@ -359,7 +361,7 @@ function buildPayload() {
 }
 
 async function post() {
-  await fetch(`/freeze?scene=${SCENE}`, {
+  await fetch(`/freeze?scene=${SLUG}`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(buildPayload(), null, 1),
