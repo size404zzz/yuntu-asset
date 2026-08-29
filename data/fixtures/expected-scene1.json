@@ -31,7 +31,7 @@
   },
   "dialogWidthPx": "0px",
   "charaStageWidthPx": 1200,
-  "capturedAt": "2026-08-28T13:51:39.299Z"
+  "capturedAt": "2026-08-29T07:49:55.598Z"
  },
  "header": {
   "skipTitle": "临危受命",
@@ -122,18 +122,18 @@
    "choices": [],
    "logEntries": 1,
    "phase": {
-    "dialogAt": 0.4,
-    "dialogClassAt": 1818.2,
-    "bgAt": 19.3,
-    "bgOverlayAt": 19.3,
+    "dialogAt": 0.5,
+    "dialogClassAt": 1821.4,
+    "bgAt": 8.6,
+    "bgOverlayAt": 8.6,
     "charaAt": null,
-    "lineAt": 1818.7,
-    "lineEndAt": 2115.1,
+    "lineAt": 1821.7,
+    "lineEndAt": 2076.8,
     "lineTicks": 14,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 1799.9999999999998
    },
-   "settleMs": 3137
+   "settleMs": 3123
   },
   {
    "shot": 2,
@@ -180,12 +180,12 @@
     "bgOverlayAt": null,
     "charaAt": null,
     "lineAt": 0.2,
-    "lineEndAt": 741,
+    "lineEndAt": 719.1,
     "lineTicks": 13,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1824
+   "settleMs": 1839
   },
   {
    "shot": 3,
@@ -240,18 +240,18 @@
    "choices": [],
    "logEntries": 3,
    "phase": {
-    "dialogAt": 601.9,
-    "dialogClassAt": 601.9,
+    "dialogAt": 614.1,
+    "dialogClassAt": 614.1,
     "bgAt": null,
-    "bgOverlayAt": 0.2,
+    "bgOverlayAt": 4.4,
     "charaAt": null,
-    "lineAt": 602,
-    "lineEndAt": 1332.7,
+    "lineAt": 614.2,
+    "lineEndAt": 1317.2,
     "lineTicks": 13,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 600
    },
-   "settleMs": 2474
+   "settleMs": 2419
   },
   {
    "shot": 4,
@@ -297,13 +297,13 @@
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 0.1,
-    "lineEndAt": 941.4,
+    "lineAt": 0.3,
+    "lineEndAt": 945.9,
     "lineTicks": 17,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 2067
+   "settleMs": 2034
   },
   {
    "shot": 5,
@@ -350,12 +350,12 @@
     "bgOverlayAt": null,
     "charaAt": null,
     "lineAt": 0.2,
-    "lineEndAt": 398.6,
+    "lineEndAt": 397.4,
     "lineTicks": 8,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1524
+   "settleMs": 1546
   },
   {
    "shot": 7,
@@ -396,18 +396,18 @@
    "choices": [],
    "logEntries": 6,
    "phase": {
-    "dialogAt": 0.1,
-    "dialogClassAt": 615.1,
+    "dialogAt": 0.2,
+    "dialogClassAt": 616.8,
     "bgAt": null,
-    "bgOverlayAt": 0.6,
+    "bgOverlayAt": 4.8,
     "charaAt": null,
-    "lineAt": 0.1,
-    "lineEndAt": 1512.1,
+    "lineAt": 0.2,
+    "lineEndAt": 1499.6,
     "lineTicks": 17,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 2638
+   "settleMs": 2576
   },
   {
    "shot": 8,
@@ -448,18 +448,18 @@
    "choices": [],
    "logEntries": 7,
    "phase": {
-    "dialogAt": 0.2,
-    "dialogClassAt": 0.2,
+    "dialogAt": 0.1,
+    "dialogClassAt": 0.1,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 0.3,
-    "lineEndAt": 222.5,
+    "lineAt": 0.2,
+    "lineEndAt": 227.8,
     "lineTicks": 5,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1357
+   "settleMs": 1328
   },
   {
    "shot": 9,
@@ -514,18 +514,18 @@
    "choices": [],
    "logEntries": 8,
    "phase": {
-    "dialogAt": 612.5,
-    "dialogClassAt": 612.5,
+    "dialogAt": 613.6,
+    "dialogClassAt": 613.6,
     "bgAt": null,
-    "bgOverlayAt": 0.3,
+    "bgOverlayAt": 4.7,
     "charaAt": null,
-    "lineAt": 612.6,
-    "lineEndAt": 2132.8,
+    "lineAt": 613.6,
+    "lineEndAt": 2082.1,
     "lineTicks": 26,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 600
    },
-   "settleMs": 3260
+   "settleMs": 3201
   },
   {
    "shot": 10,
@@ -566,18 +566,18 @@
    "choices": [],
    "logEntries": 9,
    "phase": {
-    "dialogAt": 0,
-    "dialogClassAt": 0,
+    "dialogAt": 0.2,
+    "dialogClassAt": 0.2,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 0.1,
-    "lineEndAt": 473.2,
+    "lineAt": 0.2,
+    "lineEndAt": 459.6,
     "lineTicks": 9,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1584
+   "settleMs": 1560
   },
   {
    "shot": 11,
@@ -623,18 +623,18 @@
    "choices": [],
    "logEntries": 10,
    "phase": {
-    "dialogAt": 0.2,
-    "dialogClassAt": 0.2,
+    "dialogAt": 0.1,
+    "dialogClassAt": 0.1,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 0.3,
-    "lineEndAt": 1203.8,
+    "lineAt": 0.4,
+    "lineEndAt": 1169.1,
     "lineTicks": 21,
     "heightTesterTicks": 1,
     "tweenHorizonMs": 0
    },
-   "settleMs": 2288
+   "settleMs": 2250
   },
   {
    "shot": 12,
@@ -675,18 +675,18 @@
    "choices": [],
    "logEntries": 11,
    "phase": {
-    "dialogAt": 0.1,
-    "dialogClassAt": 0.1,
+    "dialogAt": 0,
+    "dialogClassAt": 0,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
     "lineAt": 0.1,
-    "lineEndAt": 820.5,
+    "lineEndAt": 826.4,
     "lineTicks": 15,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1954
+   "settleMs": 1917
   },
   {
    "shot": 13,
@@ -727,18 +727,18 @@
    "choices": [],
    "logEntries": 12,
    "phase": {
-    "dialogAt": 0,
-    "dialogClassAt": 0,
+    "dialogAt": 0.2,
+    "dialogClassAt": 0.2,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 0.1,
-    "lineEndAt": 710.3,
+    "lineAt": 0.2,
+    "lineEndAt": 731.6,
     "lineTicks": 13,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1839
+   "settleMs": 1821
   },
   {
    "shot": 14,
@@ -779,18 +779,18 @@
    "choices": [],
    "logEntries": 13,
    "phase": {
-    "dialogAt": 0.2,
-    "dialogClassAt": 0.2,
+    "dialogAt": 0.1,
+    "dialogClassAt": 0.1,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
     "lineAt": 0.2,
-    "lineEndAt": 1375.7,
+    "lineEndAt": 1333.4,
     "lineTicks": 24,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 2474
+   "settleMs": 2438
   },
   {
    "shot": 15,
@@ -831,18 +831,18 @@
    "choices": [],
    "logEntries": 14,
    "phase": {
-    "dialogAt": 0.2,
-    "dialogClassAt": 0.2,
+    "dialogAt": 0,
+    "dialogClassAt": 0,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 0.2,
-    "lineEndAt": 2193.8,
+    "lineAt": 0.1,
+    "lineEndAt": 2117.9,
     "lineTicks": 37,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 3268
+   "settleMs": 3202
   },
   {
    "shot": 16,
@@ -889,12 +889,12 @@
     "bgOverlayAt": null,
     "charaAt": null,
     "lineAt": 0.2,
-    "lineEndAt": 277.7,
+    "lineEndAt": 275,
     "lineTicks": 6,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1400
+   "settleMs": 1380
   },
   {
    "shot": 17,
@@ -940,18 +940,18 @@
    "choices": [],
    "logEntries": 16,
    "phase": {
-    "dialogAt": 0.3,
-    "dialogClassAt": 0.3,
+    "dialogAt": 0.1,
+    "dialogClassAt": 0.1,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 0.4,
-    "lineEndAt": 304.9,
+    "lineAt": 0.2,
+    "lineEndAt": 290.4,
     "lineTicks": 6,
     "heightTesterTicks": 1,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1385
+   "settleMs": 1380
   },
   {
    "shot": 18,
@@ -992,18 +992,18 @@
    "choices": [],
    "logEntries": 17,
    "phase": {
-    "dialogAt": 0,
-    "dialogClassAt": 0,
+    "dialogAt": 0.1,
+    "dialogClassAt": 0.1,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 0,
-    "lineEndAt": 169.9,
+    "lineAt": 0.1,
+    "lineEndAt": 183.3,
     "lineTicks": 4,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1278
+   "settleMs": 1272
   },
   {
    "shot": 20,
@@ -1049,18 +1049,18 @@
    "choices": [],
    "logEntries": 18,
    "phase": {
-    "dialogAt": 0.1,
-    "dialogClassAt": 1004.1,
-    "bgAt": 0.4,
-    "bgOverlayAt": 0.4,
+    "dialogAt": 0.2,
+    "dialogClassAt": 1014.9,
+    "bgAt": 5.3,
+    "bgOverlayAt": 5.3,
     "charaAt": null,
-    "lineAt": 0.1,
-    "lineEndAt": 1189,
+    "lineAt": 0.2,
+    "lineEndAt": 1181.4,
     "lineTicks": 5,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 2269
+   "settleMs": 2302
   },
   {
    "shot": 22,
@@ -1101,18 +1101,18 @@
    "choices": [],
    "logEntries": 19,
    "phase": {
-    "dialogAt": 0.2,
-    "dialogClassAt": 1001,
-    "bgAt": 0.6,
-    "bgOverlayAt": 0.6,
+    "dialogAt": 0.1,
+    "dialogClassAt": 1013.3,
+    "bgAt": 4.7,
+    "bgOverlayAt": 4.7,
     "charaAt": null,
-    "lineAt": 0.2,
-    "lineEndAt": 1500.1,
+    "lineAt": 0.1,
+    "lineEndAt": 1470.2,
     "lineTicks": 10,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 2581
+   "settleMs": 2586
   },
   {
    "shot": 23,
@@ -1153,18 +1153,18 @@
    "choices": [],
    "logEntries": 20,
    "phase": {
-    "dialogAt": 0.1,
-    "dialogClassAt": 0.1,
+    "dialogAt": 0,
+    "dialogClassAt": 0,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 0.2,
-    "lineEndAt": 1790.4,
+    "lineAt": 0.1,
+    "lineEndAt": 1709.5,
     "lineTicks": 30,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 2889
+   "settleMs": 2782
   },
   {
    "shot": 24,
@@ -1222,18 +1222,18 @@
    "choices": [],
    "logEntries": 21,
    "phase": {
-    "dialogAt": 1001.9,
-    "dialogClassAt": 1001.9,
+    "dialogAt": 1009,
+    "dialogClassAt": 1009,
     "bgAt": null,
-    "bgOverlayAt": 0.2,
+    "bgOverlayAt": 4.7,
     "charaAt": null,
-    "lineAt": 1002,
-    "lineEndAt": 1126.4,
+    "lineAt": 1009,
+    "lineEndAt": 1131.7,
     "lineTicks": 3,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 1000
    },
-   "settleMs": 2223
+   "settleMs": 2230
   },
   {
    "shot": 25,
@@ -1296,18 +1296,18 @@
    "choices": [],
    "logEntries": 22,
    "phase": {
-    "dialogAt": 1003.1,
-    "dialogClassAt": 1003.1,
+    "dialogAt": 1006.7,
+    "dialogClassAt": 1006.7,
     "bgAt": null,
-    "bgOverlayAt": 0.1,
+    "bgOverlayAt": 15,
     "charaAt": null,
-    "lineAt": 1003.2,
-    "lineEndAt": 3421,
+    "lineAt": 1006.7,
+    "lineEndAt": 3396.9,
     "lineTicks": 40,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 1000
    },
-   "settleMs": 4521
+   "settleMs": 4485
   },
   {
    "shot": 26,
@@ -1348,18 +1348,18 @@
    "choices": [],
    "logEntries": 23,
    "phase": {
-    "dialogAt": 0.1,
-    "dialogClassAt": 0.1,
+    "dialogAt": 0.2,
+    "dialogClassAt": 0.2,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
     "lineAt": 0.2,
-    "lineEndAt": 618.6,
+    "lineEndAt": 612.8,
     "lineTicks": 11,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1729
+   "settleMs": 1684
   },
   {
    "shot": 27,
@@ -1400,18 +1400,18 @@
    "choices": [],
    "logEntries": 24,
    "phase": {
-    "dialogAt": 0.3,
-    "dialogClassAt": 0.3,
+    "dialogAt": 0.1,
+    "dialogClassAt": 0.1,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 0.4,
-    "lineEndAt": 735.2,
+    "lineAt": 0.1,
+    "lineEndAt": 735,
     "lineTicks": 13,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1850
+   "settleMs": 1822
   },
   {
    "shot": 28,
@@ -1469,18 +1469,18 @@
    "choices": [],
    "logEntries": 25,
    "phase": {
-    "dialogAt": 1003,
-    "dialogClassAt": 1003,
+    "dialogAt": 1010.9,
+    "dialogClassAt": 1010.9,
     "bgAt": null,
-    "bgOverlayAt": 0.2,
+    "bgOverlayAt": 15.4,
     "charaAt": null,
-    "lineAt": 1003.1,
-    "lineEndAt": 1807.6,
+    "lineAt": 1011.5,
+    "lineEndAt": 1811.4,
     "lineTicks": 14,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 1000
    },
-   "settleMs": 2888
+   "settleMs": 2944
   },
   {
    "shot": 29,
@@ -1521,18 +1521,18 @@
    "choices": [],
    "logEntries": 26,
    "phase": {
-    "dialogAt": 0.1,
-    "dialogClassAt": 0.1,
+    "dialogAt": 0.2,
+    "dialogClassAt": 0.2,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 0.1,
-    "lineEndAt": 925.3,
+    "lineAt": 0.2,
+    "lineEndAt": 918.8,
     "lineTicks": 16,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 2024
+   "settleMs": 1992
   },
   {
    "shot": 30,
@@ -1579,12 +1579,12 @@
     "bgOverlayAt": null,
     "charaAt": null,
     "lineAt": 0.1,
-    "lineEndAt": 1298.1,
+    "lineEndAt": 1291.5,
     "lineTicks": 47,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 2393
+   "settleMs": 2364
   },
   {
    "shot": 31,
@@ -1647,18 +1647,18 @@
    "choices": [],
    "logEntries": 28,
    "phase": {
-    "dialogAt": 1003.4,
-    "dialogClassAt": 1003.4,
+    "dialogAt": 1015,
+    "dialogClassAt": 1015,
     "bgAt": null,
-    "bgOverlayAt": 0.2,
+    "bgOverlayAt": 15.7,
     "charaAt": null,
-    "lineAt": 1003.5,
-    "lineEndAt": 2366.5,
+    "lineAt": 1015,
+    "lineEndAt": 2357,
     "lineTicks": 23,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 1000
    },
-   "settleMs": 3448
+   "settleMs": 3433
   },
   {
    "shot": 32,
@@ -1716,18 +1716,18 @@
    "choices": [],
    "logEntries": 29,
    "phase": {
-    "dialogAt": 1002.8,
-    "dialogClassAt": 1002.8,
+    "dialogAt": 1011.6,
+    "dialogClassAt": 1011.6,
     "bgAt": null,
-    "bgOverlayAt": 0.1,
+    "bgOverlayAt": 14.9,
     "charaAt": null,
-    "lineAt": 1002.9,
-    "lineEndAt": 2984.8,
+    "lineAt": 1011.7,
+    "lineEndAt": 2974.2,
     "lineTicks": 33,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 1000
    },
-   "settleMs": 4070
+   "settleMs": 4071
   },
   {
    "shot": 33,
@@ -1774,12 +1774,12 @@
     "bgOverlayAt": null,
     "charaAt": null,
     "lineAt": 0.2,
-    "lineEndAt": 550.6,
+    "lineEndAt": 548.8,
     "lineTicks": 10,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1649
+   "settleMs": 1617
   },
   {
    "shot": 34,
@@ -1820,18 +1820,18 @@
    "choices": [],
    "logEntries": 31,
    "phase": {
-    "dialogAt": 0,
-    "dialogClassAt": 0,
+    "dialogAt": 0.1,
+    "dialogClassAt": 0.1,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
     "lineAt": 0.1,
-    "lineEndAt": 675.7,
+    "lineEndAt": 672.2,
     "lineTicks": 12,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1766
+   "settleMs": 1757
   },
   {
    "shot": 35,
@@ -1872,18 +1872,18 @@
    "choices": [],
    "logEntries": 32,
    "phase": {
-    "dialogAt": 0.2,
-    "dialogClassAt": 0.2,
+    "dialogAt": 0.3,
+    "dialogClassAt": 0.3,
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 0.2,
-    "lineEndAt": 859.6,
+    "lineAt": 0.3,
+    "lineEndAt": 857.4,
     "lineTicks": 15,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1964
+   "settleMs": 1942
   },
   {
    "shot": 36,
@@ -1929,13 +1929,13 @@
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 0.1,
-    "lineEndAt": 241.5,
+    "lineAt": 0.2,
+    "lineEndAt": 244.6,
     "lineTicks": 5,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 0
    },
-   "settleMs": 1344
+   "settleMs": 1319
   },
   {
    "shot": 37,
@@ -1988,18 +1988,18 @@
    "choices": [],
    "logEntries": 34,
    "phase": {
-    "dialogAt": 1002.4,
-    "dialogClassAt": 1002.4,
-    "bgAt": 0.3,
-    "bgOverlayAt": 0.3,
+    "dialogAt": 1006,
+    "dialogClassAt": 1006,
+    "bgAt": 15.2,
+    "bgOverlayAt": 15.2,
     "charaAt": null,
-    "lineAt": 1002.5,
-    "lineEndAt": 2490.5,
+    "lineAt": 1006.1,
+    "lineEndAt": 2469.8,
     "lineTicks": 25,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 1000
    },
-   "settleMs": 3599
+   "settleMs": 3557
   },
   {
    "shot": 38,
@@ -2139,18 +2139,18 @@
    "choices": [],
    "logEntries": 35,
    "phase": {
-    "dialogAt": 1601.9,
-    "dialogClassAt": 1601.9,
-    "bgAt": 1,
-    "bgOverlayAt": 1,
-    "charaAt": 1.2,
-    "lineAt": 1603.1,
-    "lineEndAt": 3571,
+    "dialogAt": 1604.9,
+    "dialogClassAt": 1604.9,
+    "bgAt": 5.2,
+    "bgOverlayAt": 5.2,
+    "charaAt": 5.4,
+    "lineAt": 1606.4,
+    "lineEndAt": 3569.8,
     "lineTicks": 33,
     "heightTesterTicks": 2,
     "tweenHorizonMs": 1600
    },
-   "settleMs": 4669
+   "settleMs": 4655
   },
   {
    "shot": 39,
@@ -2258,18 +2258,18 @@
    "choices": [],
    "logEntries": 36,
    "phase": {
-    "dialogAt": 208.3,
-    "dialogClassAt": 208.3,
+    "dialogAt": 210.7,
+    "dialogClassAt": 210.7,
     "bgAt": null,
     "bgOverlayAt": null,
-    "charaAt": 0.7,
-    "lineAt": 208.9,
-    "lineEndAt": 766.5,
+    "charaAt": 6.4,
+    "lineAt": 211.5,
+    "lineEndAt": 765.3,
     "lineTicks": 10,
     "heightTesterTicks": 2,
     "tweenHorizonMs": 200
    },
-   "settleMs": 1847
+   "settleMs": 1837
   },
   {
    "shot": 40,
@@ -2377,18 +2377,18 @@
    "choices": [],
    "logEntries": 37,
    "phase": {
-    "dialogAt": 205.8,
-    "dialogClassAt": 205.8,
+    "dialogAt": 203.5,
+    "dialogClassAt": 203.5,
     "bgAt": null,
     "bgOverlayAt": null,
-    "charaAt": 0.4,
-    "lineAt": 206.8,
-    "lineEndAt": 703.5,
+    "charaAt": 8.3,
+    "lineAt": 203.9,
+    "lineEndAt": 686.3,
     "lineTicks": 9,
     "heightTesterTicks": 2,
     "tweenHorizonMs": 200
    },
-   "settleMs": 1833
+   "settleMs": 1756
   },
   {
    "shot": 41,
@@ -2526,18 +2526,18 @@
    "choices": [],
    "logEntries": 38,
    "phase": {
-    "dialogAt": 610.5,
-    "dialogClassAt": 610.5,
+    "dialogAt": 609.8,
+    "dialogClassAt": 609.8,
     "bgAt": null,
     "bgOverlayAt": null,
-    "charaAt": 0.4,
-    "lineAt": 612,
-    "lineEndAt": 2342.9,
+    "charaAt": 4.5,
+    "lineAt": 611.2,
+    "lineEndAt": 2322.6,
     "lineTicks": 29,
     "heightTesterTicks": 2,
     "tweenHorizonMs": 600
    },
-   "settleMs": 3472
+   "settleMs": 3413
   },
   {
    "shot": 42,
@@ -2675,18 +2675,18 @@
    "choices": [],
    "logEntries": 39,
    "phase": {
-    "dialogAt": 615.3,
-    "dialogClassAt": 615.3,
+    "dialogAt": 614.1,
+    "dialogClassAt": 614.1,
     "bgAt": null,
     "bgOverlayAt": null,
-    "charaAt": 0.3,
-    "lineAt": 615.8,
-    "lineEndAt": 1483,
+    "charaAt": 6.2,
+    "lineAt": 614.7,
+    "lineEndAt": 1474.4,
     "lineTicks": 15,
     "heightTesterTicks": 2,
     "tweenHorizonMs": 600
    },
-   "settleMs": 2597
+   "settleMs": 2549
   },
   {
    "shot": 43,
@@ -2816,18 +2816,18 @@
    "choices": [],
    "logEntries": 40,
    "phase": {
-    "dialogAt": 601.7,
-    "dialogClassAt": 601.7,
+    "dialogAt": 600.9,
+    "dialogClassAt": 600.9,
     "bgAt": null,
     "bgOverlayAt": null,
-    "charaAt": 0.4,
-    "lineAt": 602.2,
-    "lineEndAt": 1904.1,
+    "charaAt": 7.8,
+    "lineAt": 601.7,
+    "lineEndAt": 1887.4,
     "lineTicks": 22,
     "heightTesterTicks": 2,
     "tweenHorizonMs": 600
    },
-   "settleMs": 3014
+   "settleMs": 2970
   },
   {
    "shot": 44,
@@ -2944,18 +2944,18 @@
    "choices": [],
    "logEntries": 41,
    "phase": {
-    "dialogAt": 212.6,
-    "dialogClassAt": 212.6,
+    "dialogAt": 212.9,
+    "dialogClassAt": 212.9,
     "bgAt": null,
     "bgOverlayAt": null,
-    "charaAt": 0.3,
-    "lineAt": 212.7,
-    "lineEndAt": 1145.2,
+    "charaAt": 15.5,
+    "lineAt": 212.9,
+    "lineEndAt": 1135.6,
     "lineTicks": 16,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 200
    },
-   "settleMs": 2276
+   "settleMs": 2208
   },
   {
    "shot": 45,
@@ -3077,18 +3077,18 @@
    "choices": [],
    "logEntries": 42,
    "phase": {
-    "dialogAt": 210.4,
-    "dialogClassAt": 210.4,
+    "dialogAt": 204.4,
+    "dialogClassAt": 204.4,
     "bgAt": null,
     "bgOverlayAt": null,
-    "charaAt": 0.3,
-    "lineAt": 211.4,
-    "lineEndAt": 2068.3,
+    "charaAt": 6.2,
+    "lineAt": 205.6,
+    "lineEndAt": 2037.2,
     "lineTicks": 31,
     "heightTesterTicks": 2,
     "tweenHorizonMs": 200
    },
-   "settleMs": 3146
+   "settleMs": 3113
   },
   {
    "shot": 46,
@@ -3201,13 +3201,13 @@
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 2.3,
-    "lineEndAt": 1531.9,
+    "lineAt": 1.3,
+    "lineEndAt": 1529.6,
     "lineTicks": 26,
     "heightTesterTicks": 2,
     "tweenHorizonMs": 0
    },
-   "settleMs": 2628
+   "settleMs": 2691
   },
   {
    "shot": 47,
@@ -3324,18 +3324,18 @@
    "choices": [],
    "logEntries": 44,
    "phase": {
-    "dialogAt": 610.4,
-    "dialogClassAt": 610.4,
+    "dialogAt": 610.2,
+    "dialogClassAt": 610.2,
     "bgAt": null,
     "bgOverlayAt": null,
-    "charaAt": 0.1,
-    "lineAt": 610.4,
-    "lineEndAt": 2961.9,
+    "charaAt": 13.8,
+    "lineAt": 610.3,
+    "lineEndAt": 2940.3,
     "lineTicks": 39,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 600
    },
-   "settleMs": 4070
+   "settleMs": 4016
   },
   {
    "shot": 48,
@@ -3465,18 +3465,18 @@
    "choices": [],
    "logEntries": 45,
    "phase": {
-    "dialogAt": 604.3,
-    "dialogClassAt": 604.3,
+    "dialogAt": 613.2,
+    "dialogClassAt": 613.2,
     "bgAt": null,
     "bgOverlayAt": null,
-    "charaAt": 0.9,
-    "lineAt": 605.1,
-    "lineEndAt": 1765.7,
+    "charaAt": 14.3,
+    "lineAt": 614.3,
+    "lineEndAt": 1774.4,
     "lineTicks": 20,
     "heightTesterTicks": 2,
     "tweenHorizonMs": 600
    },
-   "settleMs": 2869
+   "settleMs": 2860
   },
   {
    "shot": 49,
@@ -3589,13 +3589,13 @@
     "bgAt": null,
     "bgOverlayAt": null,
     "charaAt": null,
-    "lineAt": 2.1,
-    "lineEndAt": 1180.2,
+    "lineAt": 1,
+    "lineEndAt": 1166.8,
     "lineTicks": 20,
     "heightTesterTicks": 2,
     "tweenHorizonMs": 0
    },
-   "settleMs": 2267
+   "settleMs": 2239
   },
   {
    "shot": 50,
@@ -3712,18 +3712,18 @@
    "choices": [],
    "logEntries": 47,
    "phase": {
-    "dialogAt": 201.8,
-    "dialogClassAt": 201.8,
+    "dialogAt": 211.1,
+    "dialogClassAt": 211.1,
     "bgAt": null,
     "bgOverlayAt": null,
-    "charaAt": 0.4,
-    "lineAt": 201.9,
-    "lineEndAt": 1680.9,
+    "charaAt": 14,
+    "lineAt": 211.1,
+    "lineEndAt": 1687,
     "lineTicks": 25,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 200
    },
-   "settleMs": 2763
+   "settleMs": 2755
   },
   {
    "shot": 51,
@@ -3840,18 +3840,18 @@
    "choices": [],
    "logEntries": 48,
    "phase": {
-    "dialogAt": 200.3,
-    "dialogClassAt": 200.3,
+    "dialogAt": 206.1,
+    "dialogClassAt": 206.1,
     "bgAt": null,
     "bgOverlayAt": null,
-    "charaAt": 0.1,
-    "lineAt": 201,
-    "lineEndAt": 1378.8,
+    "charaAt": 14.8,
+    "lineAt": 206.9,
+    "lineEndAt": 1364.9,
     "lineTicks": 20,
     "heightTesterTicks": 2,
     "tweenHorizonMs": 200
    },
-   "settleMs": 2463
+   "settleMs": 2436
   },
   {
    "shot": 52,
@@ -3968,18 +3968,18 @@
    "choices": [],
    "logEntries": 49,
    "phase": {
-    "dialogAt": 201.7,
-    "dialogClassAt": 201.7,
+    "dialogAt": 202,
+    "dialogClassAt": 202,
     "bgAt": null,
     "bgOverlayAt": null,
-    "charaAt": 0.3,
-    "lineAt": 201.8,
-    "lineEndAt": 442.7,
+    "charaAt": 14.9,
+    "lineAt": 202,
+    "lineEndAt": 445.8,
     "lineTicks": 5,
     "heightTesterTicks": 0,
     "tweenHorizonMs": 200
    },
-   "settleMs": 1537
+   "settleMs": 1608
   },
   {
    "shot": null,
@@ -4284,7 +4284,7 @@
    ]
   }
  ],
- "charaRules": ".avg-chara[data-img-id=\"101\"] {  height: 50.4000em;  transform: translate(12.3000em, 8.3250em);  width: 50.4000em;}.avg-chara[data-img-id=\"101\"] div {  bottom: 12.8125em;  height: 28.875em;  left: 0em;  transform: translate(14.8563em,-10.7625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"101\"] {  bottom: -12.8125em;  left: -14.84375em;}.avg-chara.pos2[data-img-id=\"101\"] {  bottom: -12.8125em;  left: -12.5em;}.avg-chara.pos3[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 0em;}.avg-chara.pos4[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 14.0625em;transform: translate(12.3000em, 8.3250em) scale(-1, 1)}.avg-chara.pos5[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 14.84375em;transform: translate(12.3000em, 8.3250em) scale(-1, 1)}.avg-chara[data-img-id=\"103\"] {  height: 52.8000em;  transform: translate(11.1000em, 9.5250em);  width: 52.8000em;}.avg-chara[data-img-id=\"103\"] div {  bottom: 14.0625em;  height: 28.875em;  left: -3.125em;  transform: translate(16.0562em,-11.9625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"103\"] {  bottom: -14.0625em;  left: -10.78125em;}.avg-chara.pos2[data-img-id=\"103\"] {  bottom: -14.0625em;  left: -8.4375em;}.avg-chara.pos3[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 3.125em;}.avg-chara.pos4[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 15.625em;}.avg-chara.pos5[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 17.96875em;}.avg-chara[data-img-id=\"105\"] {  height: 60.8000em;  transform: translate(7.1000em, 13.5250em);  width: 60.8000em;}.avg-chara[data-img-id=\"105\"] div {  bottom: 13.4375em;  height: 28.875em;  left: 0em;  transform: translate(20.0562em,-15.9625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"105\"] {  bottom: -13.4375em;  left: -14.21875em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos2[data-img-id=\"105\"] {  bottom: -13.4375em;  left: -11.875em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos3[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 0em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos4[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 11.875em;}.avg-chara.pos5[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 14.21875em;}.avg-chara[data-img-id=\"101\"] {  height: 50.4000em;  transform: translate(12.3000em, 8.3250em);  width: 50.4000em;}.avg-chara[data-img-id=\"101\"] div {  bottom: 12.8125em;  height: 28.875em;  left: 0em;  transform: translate(14.8563em,-10.7625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"101\"] {  bottom: -12.8125em;  left: -14.84375em;}.avg-chara.pos2[data-img-id=\"101\"] {  bottom: -12.8125em;  left: -12.5em;}.avg-chara.pos3[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 0em;}.avg-chara.pos4[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 14.0625em;transform: translate(12.3000em, 8.3250em) scale(-1, 1)}.avg-chara.pos5[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 14.84375em;transform: translate(12.3000em, 8.3250em) scale(-1, 1)}.avg-chara[data-img-id=\"103\"] {  height: 52.8000em;  transform: translate(11.1000em, 9.5250em);  width: 52.8000em;}.avg-chara[data-img-id=\"103\"] div {  bottom: 14.0625em;  height: 28.875em;  left: -3.125em;  transform: translate(16.0562em,-11.9625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"103\"] {  bottom: -14.0625em;  left: -10.78125em;}.avg-chara.pos2[data-img-id=\"103\"] {  bottom: -14.0625em;  left: -8.4375em;}.avg-chara.pos3[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 3.125em;}.avg-chara.pos4[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 15.625em;}.avg-chara.pos5[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 17.96875em;}.avg-chara[data-img-id=\"105\"] {  height: 60.8000em;  transform: translate(7.1000em, 13.5250em);  width: 60.8000em;}.avg-chara[data-img-id=\"105\"] div {  bottom: 13.4375em;  height: 28.875em;  left: 0em;  transform: translate(20.0562em,-15.9625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"105\"] {  bottom: -13.4375em;  left: -14.21875em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos2[data-img-id=\"105\"] {  bottom: -13.4375em;  left: -11.875em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos3[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 0em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos4[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 11.875em;}.avg-chara.pos5[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 14.21875em;}",
+ "charaRules": ".avg-chara[data-img-id=\"101\"] {  height: 50.4000em;  transform: translate(12.3000em, 8.3250em);  width: 50.4000em;}.avg-chara[data-img-id=\"101\"] div {  bottom: 12.8125em;  height: 28.875em;  left: 0em;  transform: translate(14.8563em,-10.7625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"101\"] {  bottom: -12.8125em;  left: -14.84375em;}.avg-chara.pos2[data-img-id=\"101\"] {  bottom: -12.8125em;  left: -12.5em;}.avg-chara.pos3[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 0em;}.avg-chara.pos4[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 14.0625em;transform: translate(12.3000em, 8.3250em) scale(-1, 1)}.avg-chara.pos5[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 14.84375em;transform: translate(12.3000em, 8.3250em) scale(-1, 1)}.avg-chara[data-img-id=\"105\"] {  height: 60.8000em;  transform: translate(7.1000em, 13.5250em);  width: 60.8000em;}.avg-chara[data-img-id=\"105\"] div {  bottom: 13.4375em;  height: 28.875em;  left: 0em;  transform: translate(20.0562em,-15.9625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"105\"] {  bottom: -13.4375em;  left: -14.21875em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos2[data-img-id=\"105\"] {  bottom: -13.4375em;  left: -11.875em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos3[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 0em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos4[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 11.875em;}.avg-chara.pos5[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 14.21875em;}.avg-chara[data-img-id=\"103\"] {  height: 52.8000em;  transform: translate(11.1000em, 9.5250em);  width: 52.8000em;}.avg-chara[data-img-id=\"103\"] div {  bottom: 14.0625em;  height: 28.875em;  left: -3.125em;  transform: translate(16.0562em,-11.9625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"103\"] {  bottom: -14.0625em;  left: -10.78125em;}.avg-chara.pos2[data-img-id=\"103\"] {  bottom: -14.0625em;  left: -8.4375em;}.avg-chara.pos3[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 3.125em;}.avg-chara.pos4[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 15.625em;}.avg-chara.pos5[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 17.96875em;}.avg-chara[data-img-id=\"101\"] {  height: 50.4000em;  transform: translate(12.3000em, 8.3250em);  width: 50.4000em;}.avg-chara[data-img-id=\"101\"] div {  bottom: 12.8125em;  height: 28.875em;  left: 0em;  transform: translate(14.8563em,-10.7625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"101\"] {  bottom: -12.8125em;  left: -14.84375em;}.avg-chara.pos2[data-img-id=\"101\"] {  bottom: -12.8125em;  left: -12.5em;}.avg-chara.pos3[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 0em;}.avg-chara.pos4[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 14.0625em;transform: translate(12.3000em, 8.3250em) scale(-1, 1)}.avg-chara.pos5[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 14.84375em;transform: translate(12.3000em, 8.3250em) scale(-1, 1)}.avg-chara[data-img-id=\"105\"] {  height: 60.8000em;  transform: translate(7.1000em, 13.5250em);  width: 60.8000em;}.avg-chara[data-img-id=\"105\"] div {  bottom: 13.4375em;  height: 28.875em;  left: 0em;  transform: translate(20.0562em,-15.9625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"105\"] {  bottom: -13.4375em;  left: -14.21875em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos2[data-img-id=\"105\"] {  bottom: -13.4375em;  left: -11.875em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos3[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 0em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos4[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 11.875em;}.avg-chara.pos5[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 14.21875em;}.avg-chara[data-img-id=\"103\"] {  height: 52.8000em;  transform: translate(11.1000em, 9.5250em);  width: 52.8000em;}.avg-chara[data-img-id=\"103\"] div {  bottom: 14.0625em;  height: 28.875em;  left: -3.125em;  transform: translate(16.0562em,-11.9625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"103\"] {  bottom: -14.0625em;  left: -10.78125em;}.avg-chara.pos2[data-img-id=\"103\"] {  bottom: -14.0625em;  left: -8.4375em;}.avg-chara.pos3[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 3.125em;}.avg-chara.pos4[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 15.625em;}.avg-chara.pos5[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 17.96875em;}",
  "problems": [],
  "pageErrors": [],
  "summary": {
@@ -4293,55 +4293,55 @@
   "done": true,
   "endOfScene": true,
   "typeStartDelays": [
-   1818.7,
+   1821.7,
    0.2,
-   602,
+   614.2,
+   0.3,
+   0.2,
+   0.2,
+   0.2,
+   613.6,
+   0.2,
+   0.4,
    0.1,
+   0.2,
+   0.2,
+   0.1,
+   0.2,
+   0.2,
+   0.1,
+   0.2,
+   0.1,
+   0.1,
+   1009,
+   1006.7,
+   0.2,
+   0.1,
+   1011.5,
+   0.2,
+   0.1,
+   1015,
+   1011.7,
    0.2,
    0.1,
    0.3,
-   612.6,
-   0.1,
-   0.3,
-   0.1,
-   0.1,
    0.2,
-   0.2,
-   0.2,
-   0.4,
-   0,
-   0.1,
-   0.2,
-   0.2,
-   1002,
-   1003.2,
-   0.2,
-   0.4,
-   1003.1,
-   0.1,
-   0.1,
-   1003.5,
-   1002.9,
-   0.2,
-   0.1,
-   0.2,
-   0.1,
-   1002.5,
-   1603.1,
-   208.9,
-   206.8,
-   612,
-   615.8,
-   602.2,
-   212.7,
-   211.4,
-   2.3,
-   610.4,
-   605.1,
-   2.1,
-   201.9,
-   201,
-   201.8
+   1006.1,
+   1606.4,
+   211.5,
+   203.9,
+   611.2,
+   614.7,
+   601.7,
+   212.9,
+   205.6,
+   1.3,
+   610.3,
+   614.3,
+   1,
+   211.1,
+   206.9,
+   202
   ]
  }
 }

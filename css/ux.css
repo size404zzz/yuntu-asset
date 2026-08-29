@@ -1,0 +1,29 @@
+/* ux.css —— M11 体验层：动效降级 + 缺素材占位。
+   刻意独立成文件：css/avg.css 与参考 blk05.style 逐声明保真
+   （test-style 把门），任何追加都会破坏字节契约。
+   index.html / cal.html / 导出 bundle 的 play.html 都要引这个文件。 */
+
+/* 系统要求减少动效：播放器内所有过渡与动画直接归零。
+   剧情语义不依赖动画（打字机走 innerHTML 更新，不受影响）。 */
+@media (prefers-reduced-motion: reduce) {
+  #avg-container, #avg-container * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* 素材缺失占位：lpic 解码失败时给立绘盒子一个可见的虚线框，
+   剧情继续播（计划 R 条目：缺 blob 不致命）。 */
+.avg-chara.img-missing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.125em dashed var(--warn, #fc6);
+  box-sizing: border-box;
+}
+.avg-chara.img-missing::after {
+  content: '⚠ 素材缺失';
+  color: var(--warn, #fc6);
+  font-size: 1.25em;
+  transform: rotate(-8deg);
+}

@@ -114,8 +114,9 @@ const plain = (html) => {
  * readLine 的 interrupt 分支吃掉，整轮就此卡死。所以内容镜必须以
  * 「#avg-line 的纯文本 == 某一页全文」为硬条件。
  */
-async function settle(shot) {
-  const pages = Array.isArray(shot?.content) ? shot.content.map(plain) : null;
+async function settle(shot, lineBefore) {
+  const pages = Array.isArray(shot?.content) && shot.content.length
+      ? shot.content.map(plain) : null;
   const horizon = shot?.imgTween?.length
       ? Math.max(0, ...shot.imgTween.map((t) => t.delay + t.duration)) : 0;
   const floor = performance.now() + horizon * 1000 + STABLE_TICKS * TICK_MS;
@@ -124,7 +125,8 @@ async function settle(shot) {
   let same = 0;
   for (let guard = 0; guard < 150; guard++) {
     await sleep(TICK_MS);
-    const typed = !pages || pages.includes(avgLine.textContent);
+    const typed = !pages || avgContainer.classList.contains('empty')
+        || (avgLine.innerHTML !== lineBefore && pages.includes(avgLine.textContent));
     const current = [
       avgLine.innerHTML, avgDialog.className, avgChoices.className,
       avgOverlay.className, charaSignature(), avgBg.style.opacity,
@@ -265,15 +267,38 @@ const readLog = () => [...avgLogBox.children].map((div) => ({
   lines: [...div.children[1].children].map((p) => p.innerHTML),
 }));
 let seen = 0;
+let lastLanded = null;
+/* 落点指针：照参考 playShot 的推进算术自算（nextId 优先、+1 兜底、
+   无内容 autoContinue 镜链式穿过）。contentOrder[before] 的线性模型
+   遇到 nextId 跳转就会错位（scene4 实测踩中）。 */
+const ST = Array.isArray(scene) ? -1 : 0;
+let pointer = ST;
+/* 窥探式：只算不提交——翻页点击不该推进指针，回廊确认增长后才落定。 */
+function nextFrom(p) {
+  for (let guard = 400; guard--; ) {
+    const shot = scene[p];
+    p = shot?.nextId != null ? Number(shot.nextId) + ST : p + 1;
+    const nxt = scene[p];
+    if (!nxt || nxt.content || nxt.branch || !nxt.autoContinue) break;
+  }
+  return p;
+}
 const MAX = Number(params.get('max') || 0);
 for (let click = 0; click < 120; click++) {
   observer.takeRecords();
   events.length = 0;
   timelineFrom = performance.now();
   const before = avgLogBox.children.length;
+  const lineBefore = avgLine.innerHTML;
+  const guess = nextFrom(pointer);
   avgContainer.click();
-  const landed = contentOrder[before];
-  const status = await settle(scene[landed]);
+  /* settle 判据 = 「行文本离开点击值 且 ∈ 下一内容镜∪上一落点的页」——
+     纯并集会在 manageImg 串行门里被旧文案误判，纯点后立即看日志会被
+     无内容镜的 1s 串行门链骗过（两个坑都实测踩过）；分类放到 settle 后。 */
+  const status = await settle({
+    content: [...(scene[guess]?.content ?? []),
+      ...(lastLanded == null ? [] : scene[lastLanded]?.content ?? [])],
+  }, lineBefore);
   /* clearStage 会同时掏空 #avg-log-box（L400）与 charaImgStyles.innerText（L438），
      而「本镜打完 + 已 playEnd」的判定要等下一次点击才成立 ——
      回廊与立绘规则表都必须趁还完整时各留一份，且不能被清空后的那一轮覆盖。 */
@@ -292,26 +317,28 @@ for (let click = 0; click < 120; click++) {
     break;
   }
   const after = avgLogBox.children.length;
-  if (after <= before) {
-    problems.push(`第 ${click} 次点击后回廊没有增长（before=${before} after=${after}）`
+  let landed;
+  if (after > before) { landed = guess; pointer = guess; }
+  else if (avgLine.innerHTML !== lineBefore) landed = lastLanded;   // 翻页：指针不动
+  else landed = null;
+  if (landed == null) {
+    problems.push(`第 ${click} 次点击既没涨回廊也没翻页（before=${before} after=${after}）`
         + ` dialog=${JSON.stringify(avgDialog.className)}`
         + ` line=${JSON.stringify(avgLine.innerHTML.slice(-24))}`
         + ` charas=${avgCharas.children.length} choices=${JSON.stringify(avgChoices.className)}`
         + ` container=${JSON.stringify(avgContainer.className)}`);
     break;
   }
-  for (let i = before; i < after; i++) {
-    shots.push(Object.assign(
-        snapshot(scene[contentOrder[i]], contentOrder[i]),
-        {settleMs: status.waitedMs}));
-    seen++;
-  }
+  shots.push(Object.assign(snapshot(scene[landed], landed),
+      {settleMs: status.waitedMs}));
+  seen++;
+  lastLanded = landed;
   if (LIVE) {
     console.info(`live ${seen}/${contentOrder.length} shot=${contentOrder[after - 1]}`
         + ` settle=${status.waitedMs}ms settled=${status.settled}`);
     await post();
   }
-  if (after !== before + 1) {
+  if (after > before + 1) {
     problems.push(`第 ${click} 次点击一次推进了 ${after - before} 镜`);
   }
   if (MAX && seen >= MAX) break;

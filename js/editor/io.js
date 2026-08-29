@@ -166,6 +166,7 @@ const PLAY_HTML = `<!DOCTYPE html>
 <title>AVG 剧情</title>
 <link rel="stylesheet" href="css/avg.css">
 <link rel="stylesheet" href="css/pandect.css">
+<link rel="stylesheet" href="css/ux.css">
 <style>html,body{margin:0;background:#000}html{overflow:hidden}</style>
 </head>
 <body>
@@ -205,7 +206,7 @@ export async function exportZip({project, fetchImpl = fetch, assetBytes}) {
     if (!r.ok) throw new Error(`打包缺文件 ${path}`);
     entries.push({name: path, data: new Uint8Array(await r.arrayBuffer())});
   }
-  for (const css of ['css/avg.css', 'css/pandect.css']) {
+  for (const css of ['css/avg.css', 'css/pandect.css', 'css/ux.css']) {
     const r = await fetchImpl(`/${css}`);
     entries.push({name: css, data: new Uint8Array(await r.arrayBuffer())});
   }

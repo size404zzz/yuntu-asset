@@ -48,6 +48,9 @@ import {
 const URLP = new URLSearchParams(location.search);
 const MAX_SHOTS = Number(URLP.get('max') || 0);
 const REPORT_SLUG = URLP.get('slug') || 'play_report';
+const SCENE = URLP.get('scene') || 'scene1';
+const TITLES = {scene1: '临危受命', scene2: '背水一战', scene3: '绝处逢生',
+  scene4: 'M11 形态'};
 
 const problems = [];
 const pageErrors = [];
@@ -85,12 +88,12 @@ const snapshot = makeSnapshotter({player, timeline});
 
 /* ---------- 开跑 ---------- */
 
-const scene = await (await fetch('/data/fixtures/scene1.json')).json();
-const expected = await (await fetch('/data/fixtures/expected-scene1.json')).json();
+const scene = await (await fetch(`/data/fixtures/${SCENE}.json`)).json();
+const expected = await (await fetch(`/data/fixtures/expected-${SCENE}.json`)).json();
 const contentOrder =
     scene.map((shot, i) => (shot.content ? i : -1)).filter((i) => i >= 0);
 
-player.setScene(scene, '临危受命', '1', '绿洲防线', '');
+player.setScene(scene, TITLES[SCENE] ?? SCENE, '1', '绿洲防线', '');
 const header = {
   skipTitle: refs.avgSkipTitle.textContent,
   sectorLocation: refs.avgSectorLocation.textContent,
@@ -105,13 +108,34 @@ const readLog = () => [...refs.avgLogBox.children].map((div) => ({
 }));
 let logNow = null;
 let rulesNow = null;
+let lastLanded = null;
+/* 落点指针（与 driver.mjs 同款）：nextId 优先、+1 兜底、无内容
+   autoContinue 链穿过；窥探不提交，回廊增长才落定。 */
+const ST = Array.isArray(scene) ? -1 : 0;
+let pointer = ST;
+function nextFrom(p) {
+  for (let guard = 400; guard--; ) {
+    const shot = scene[p];
+    p = shot?.nextId != null ? Number(shot.nextId) + ST : p + 1;
+    const nxt = scene[p];
+    if (!nxt || nxt.content || nxt.branch || !nxt.autoContinue) break;
+  }
+  return p;
+}
 
 for (let click = 0; click < 120; click++) {
   timeline.startWindow();
   const before = refs.avgLogBox.children.length;
+  const lineBefore = refs.avgLine.innerHTML;
+  const guess = nextFrom(pointer);
   player.container.click();
-  const landed = contentOrder[before];
-  const waited = await settle(scene[landed], landed);
+  /* 与 driver.mjs 同款 v3：settle 判据 =「行文本离开点击值 且 ∈
+     下一内容镜∪上一落点的页」，分类放到 settle 后。页取 player.scene
+     格式化副本（原始 fixture 的 content 是字符串）。 */
+  const waited = await settle({
+    content: [...(player.scene?.[guess]?.content ?? []),
+      ...(lastLanded == null ? [] : player.scene?.[lastLanded]?.content ?? [])],
+  }, guess, lineBefore);
   if (!player.container.classList.contains('empty')) {
     if (refs.avgLogBox.children.length) logNow = readLog();
     rulesNow = player.styles.textContent || rulesNow;
@@ -121,15 +145,18 @@ for (let click = 0; click < 120; click++) {
     break;
   }
   const after = refs.avgLogBox.children.length;
-  if (after <= before) {
+  let landed;
+  if (after > before) { landed = guess; pointer = guess; }
+  else if (refs.avgLine.innerHTML !== lineBefore) landed = lastLanded;
+  else landed = null;
+  if (landed == null) {
     problems.push(`第 ${click} 次点击后回廊没有增长（before=${before} after=${after}）`
         + ` dialog=${JSON.stringify(refs.avgDialog.className)}`
         + ` line=${JSON.stringify(refs.avgLine.innerHTML.slice(-24))}`);
     break;
   }
-  for (let i = before; i < after; i++) {
-    shots.push(snapshot(scene[contentOrder[i]], contentOrder[i], waited));
-  }
+  shots.push(snapshot(scene[landed], landed, waited));
+  lastLanded = landed;
   if (MAX_SHOTS && shots.length >= MAX_SHOTS) break;
 }
 
@@ -247,8 +274,8 @@ check('log', JSON.stringify(logNow) === JSON.stringify(expected.log));
 const rulesOf = (text) => (text || '').split('}')
     .map((b) => b.replace(/\s+/g, '')).filter(Boolean);
 check('charaRules',
-    JSON.stringify([...new Set(rulesOf(rulesNow))])
-        === JSON.stringify([...new Set(rulesOf(expected.charaRules))]),
+    JSON.stringify([...new Set(rulesOf(rulesNow))].sort())
+        === JSON.stringify([...new Set(rulesOf(expected.charaRules))].sort()),
     `ours=${rulesOf(rulesNow).length}块 oracle=${rulesOf(expected.charaRules).length}块`);
 
 const report = {
