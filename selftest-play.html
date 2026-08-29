@@ -43,6 +43,12 @@ import {
   makeSettler, makeSnapshotter, createTimeline, VirtualTimer,
 } from '/js/test/harness.js';
 
+/* 像素比对截停模式：?max=N&slug=X 播到第 N 个到达点就停（舞台留在
+   settled 态供截图），报告写 expected-X.json 不踩常驻回归件。 */
+const URLP = new URLSearchParams(location.search);
+const MAX_SHOTS = Number(URLP.get('max') || 0);
+const REPORT_SLUG = URLP.get('slug') || 'play_report';
+
 const problems = [];
 const pageErrors = [];
 addEventListener('error', (e) => pageErrors.push(`${e.message} @ ${e.filename}:${e.lineno}`));
@@ -124,6 +130,7 @@ for (let click = 0; click < 120; click++) {
   for (let i = before; i < after; i++) {
     shots.push(snapshot(scene[contentOrder[i]], contentOrder[i], waited));
   }
+  if (MAX_SHOTS && shots.length >= MAX_SHOTS) break;
 }
 
 /* ---------- 对拍 ---------- */
@@ -254,7 +261,7 @@ const report = {
   shotsObserved: shots.length,
   done: true,
 };
-await fetch('/freeze?scene=play_report', {
+await fetch(`/freeze?scene=${REPORT_SLUG}`, {
   method: 'POST',
   headers: {'Content-Type': 'application/json'},
   body: JSON.stringify(report, null, 1),
