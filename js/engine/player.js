@@ -163,9 +163,11 @@ export class Player {
     getGender = () => DEFAULT_VARS.gender,
     characters = {},
     nouns = null,
+    audio = null,
   } = {}) {
     Object.assign(this, buildStage(mount, {mode}));
     this.sched = new Scheduler(timer);
+    this.audio = audio;
     this.filePathOf = filePathOf;
     this.layoutOf = layoutOf;
     this.getName = getName;
@@ -515,6 +517,7 @@ export class Player {
       this.playEnd = true;
     }
     this.shotEnd = false;
+    this.audio?.shot(shot);
     if (!shot.contentType) {
       this.refs.avgDialog.className = '';
       this.refs.avgSpeaker.innerHTML = '';
@@ -685,6 +688,7 @@ export class Player {
 
   clearStage() {
     this.sched.bump();
+    this.audio?.stopAll();
     resetStage(this);
     this.refs.avgDes.className = '';
     this.styles.textContent = '';
@@ -739,27 +743,35 @@ export class Player {
      直通镜（autoContinue 且非终点）停不住，抛错；编辑器先落到可停留镜。 */
   async seekShot(key) {
     if (!this.rawScene) throw new Error('seekShot: 还没有装过场景');
-    this.setScene(this.rawScene, this.sceneMeta.title, this.sceneMeta.number,
-        this.sceneMeta.sector, this.sceneMeta.sectorEn);
-    if (!(key in this.scene) || Number(key) === this.scriptType) {
-      throw new Error(`seekShot: 镜 ${key} 不是可停留的镜`);
-    }
-    await this.idle();
-    const guard = (Array.isArray(this.scene)
-        ? this.scene.length : Object.keys(this.scene).length) + 4;
-    for (let left = guard; this.shotId !== key; left--) {
-      if (this.playEnd || left <= 0) {
-        throw new Error(
-            `seekShot: 停不到镜 ${key}（autoContinue 直通或不在首选项路线上）`);
+    /* 重放沿途会逐镜触发 playShot 的音频——整程静音，落点只补目标镜的 bgm。 */
+    const audio = this.audio;
+    this.audio = null;
+    try {
+      this.setScene(this.rawScene, this.sceneMeta.title, this.sceneMeta.number,
+          this.sceneMeta.sector, this.sceneMeta.sectorEn);
+      if (!(key in this.scene) || Number(key) === this.scriptType) {
+        throw new Error(`seekShot: 镜 ${key} 不是可停留的镜`);
       }
-      if (this.scene[this.shotId]?.branch) {
-        this._chooseBranch(0);
-      } else {
-        this.playShot();
+      await this.idle();
+      const guard = (Array.isArray(this.scene)
+          ? this.scene.length : Object.keys(this.scene).length) + 4;
+      for (let left = guard; this.shotId !== key; left--) {
+        if (this.playEnd || left <= 0) {
+          throw new Error(
+              `seekShot: 停不到镜 ${key}（autoContinue 直通或不在首选项路线上）`);
+        }
+        if (this.scene[this.shotId]?.branch) {
+          this._chooseBranch(0);
+        } else {
+          this.playShot();
+        }
+        await this.fastForward();
       }
-      await this.fastForward();
+      return this.shotId;
+    } finally {
+      this.audio = audio;
+      if (audio && this.scene) audio.bgmOnly(this.scene[this.shotId]);
     }
-    return this.shotId;
   }
 
   /* 确定性时间线（粗模型）：每个到达点的引擎耗时 =
