@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<title>io harness</title>
+<link rel="stylesheet" href="/tools/ref/avg.css">
+<link rel="stylesheet" href="/tools/ref/pandect.css">
+<link rel="stylesheet" href="/tools/ref/nav.css">
+<style>
+  html, body { margin: 0; background: #1b1b1b; }
+  html { overflow: hidden; }
+  body { color: black; font-family: "Segoe UI", Lato, sans-serif; }
+  #mount-a, #mount-b { width: 1600px; }
+</style>
+</head>
+<body>
+<div id="mount-a"></div>
+<div id="mount-b"></div>
+<script type="module">
+/**
+ * M10 往返回归：
+ * 1) A 路 = 原素材解析连播 scene2（map 键 + nextId + 分支，最富形态），
+ *    每个到达点抓 settled 快照；
+ * 2) B 路 = exportProject → JSON 字符串（模拟下载/上传边界）→
+ *    projectResolvers 起第二个播放器连播同一局 → 快照逐字节全等；
+ * 3) exportZip → readZip：play.html/js/css/project.json/assets 真文件
+ *    都在，且抽查资产字节与源一致；
+ * 4) 自动保存 saveProject/loadProject 全等 + forget 清空；
+ * 5) importProject(applyTo) 把 base64 上传件与标定 layout 灌回注册表。
+ */
+import {Player} from '/js/engine/player.js';
+import {Doc} from '/js/core/doc.js';
+import {normalizeScript} from '/js/core/script.js';
+import {AssetRegistry} from '/js/core/assets.js';
+import {openDB} from '/js/core/idb.js';
+import {
+  makeSettler, makeSnapshotter, createTimeline, VirtualTimer,
+} from '/js/test/harness.js';
+import {
+  exportProject, projectResolvers, exportZip, saveProject, loadProject,
+  forgetProject, importProject,
+} from '/js/editor/io.js';
+import {readZip} from '/js/ui/zip.js';
+
+const problems = [];
+const pageErrors = [];
+addEventListener('error', (e) => pageErrors.push(`${e.message} @${e.lineno}`));
+addEventListener('unhandledrejection', (e) => pageErrors.push(`rejection: ${e.reason?.message}`));
+
+const failures = [];
+let asserts = 0;
+const check = (label, cond, detail = '') => {
+  asserts++;
+  if (!cond && failures.length < 60) {
+    failures.push(label + (detail ? ` —— ${detail}` : ''));
+  }
+};
+
+const characters = await (await fetch('/data/Avg_character.json')).json();
+const scene = await (await fetch('/data/fixtures/scene2.json')).json();
+const registry = await new AssetRegistry().boot();
+
+/* —— 双播放器 —— */
+const makeRig = (mountId, {filePathOf, layoutOf}) => {
+  const clock = new VirtualTimer();
+  const player = new Player({
+    mount: document.getElementById(mountId),
+    mode: 'clamp', timer: clock, filePathOf, layoutOf,
+    getName: () => '教授', getGender: () => 'TA', characters,
+  });
+  return {
+    player, clock,
+    timeline: createTimeline(player.container, clock),
+    settle: makeSettler({player, clock, problems}),
+    snap: makeSnapshotter({player, timeline: createTimeline(player.container, clock)}),
+  };
+};
+
+const rigA = makeRig('mount-a', {
+  /* 与编辑器同源的解析（registry：res/ 仓库路径）——B 路 bundle 解析
+     拼写一致，快照比的是内容而不是 URL 拼法（内容同源由墨水采样证明）。 */
+  filePathOf: (name) => registry.resolve(name)?.url
+      ?? '/images/' + name[0].toUpperCase() + name.slice(1),
+  layoutOf: async (img) =>
+      (await (await fetch('/data/layouts/' + img.imgPath + '.json')).json()),
+});
+
+/* A 路连播：到达点 = 回廊增长，分支恒点第一项（与 seek 回归同驱动）。 */
+async function drive(rig, sc, title) {
+  const {player, settle, snap} = rig;
+  const snaps = [];
+  player.setScene(sc, '背水一战', '1', '绿洲防线', '');
+  await player.idle();
+  for (let click = 0; click < 120; click++) {
+    const before = player.refs.avgLogBox.children.length;
+    if (player.refs.avgChoices.className) {
+      player.refs.avgChoices.firstElementChild.click();
+    } else {
+      player.container.click();
+    }
+    await settle(sc[player.shotId], `${title}#${player.shotId}`);
+    if (player.container.classList.contains('empty')) break;
+    const after = player.refs.avgLogBox.children.length;
+    for (let i = before; i < after; i++) {
+      snaps.push(snap(sc[player.shotId], player.shotId, 0));
+    }
+    if (after <= before && !player.playEnd) break;
+  }
+  return snaps;
+}
+
+const strip = (s) => {
+  const {phase, settleMs, wire, ...rest} = s;
+  return rest;
+};
+
+const snapsA = await drive(rigA, scene, 'A');
+check('A 路有到达点', snapsA.length >= 20, String(snapsA.length));
+
+/* —— 导出 → 导入 —— */
+const doc = new Doc(normalizeScript(scene));
+const project = await exportProject({
+  doc, title: '背水一战', registry, characters,
+  glossary: await (await fetch('/data/Noun_des.json')).json(),
+});
+const wire = JSON.stringify(project);
+const imported = JSON.parse(wire);           // 下载/上传边界
+const rigB = makeRig('mount-b', projectResolvers(imported));
+const snapsB = await drive(rigB, imported.stories[0].shots, 'B');
+check('到达点数一致', snapsB.length === snapsA.length,
+    `B=${snapsB.length} A=${snapsA.length}`);
+for (let i = 0; i < Math.min(snapsA.length, snapsB.length); i++) {
+  const a = JSON.stringify(strip(snapsA[i]));
+  const b = JSON.stringify(strip(snapsB[i]));
+  check(`shot[${i}] 全等`, a === b,
+      a === b ? '' : `${snapsA[i].shot}: ${diffHead(a, b)}`);
+}
+function diffHead(a, b) {
+  let n = 0;
+  while (n < a.length && a[n] === b[n]) n++;
+  return `@${n} A=…${a.slice(Math.max(0, n - 20), n + 40)} B=…${b.slice(Math.max(0, n - 20), n + 40)}`;
+}
+
+/* —— ZIP bundle —— */
+const zipBytes = await exportZip({project});
+const entries = await readZip(zipBytes);
+const names = entries.map((e) => e.name);
+for (const need of ['play.html', 'project.json', 'js/play.js',
+    'js/engine/player.js', 'css/avg.css']) {
+  check(`bundle 含 ${need}`, names.includes(need));
+}
+const assetNames = new Set(project.assets.filter((a) => !a.data).map((a) => a.name));
+check('bundle 资产数 = repo 资产数',
+    names.filter((n) => n.startsWith('assets/')).length === assetNames.size);
+{
+  const pick = entries.find((e) => e.name.startsWith('assets/'));
+  const src = new Uint8Array(await (await fetch('/' +
+      project.assets.find((a) => a.name === pick.name.slice(7)).repoPath
+  )).arrayBuffer());
+  check('资产字节与源一致', src.length === pick.data.length
+      && src.every((v, n) => v === pick.data[n]),
+      `${pick.name} ${src.length} vs ${pick.data.length}`);
+}
+
+/* 把 bundle 原样交给跑者：解到仓库子目录后真开一次 play.html?probe=1 */
+await fetch('/freeze?scene=bundle_zip_b64', {
+  method: 'POST', headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify({done: true, zip: b64encodeZip(zipBytes)}),
+});
+function b64encodeZip(bytes) {
+  let s = '';
+  for (let i = 0; i < bytes.length; i += 0x8000) {
+    s += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
+  }
+  return btoa(s);
+}
+
+/* —— 自动保存 —— */
+const db = await openDB();
+await saveProject(db, 'io-test', project);
+const back = await loadProject(db, 'io-test');
+check('自动保存全等', JSON.stringify(back) === wire);
+await forgetProject(db, 'io-test');
+check('forget 后为空', (await loadProject(db, 'io-test')) === null);
+
+/* —— importProject applyTo：base64 上传件 + layout 灌回注册表 —— */
+{
+  const fake = {...project,
+    assets: [{name: 'zz-io-test.png', kind: 'image', repoPath: null,
+      data: btoa('hello-io')}],
+    layouts: {'zz-char': {sizeDelta: 1024, m_LocalScale: 1.6}}};
+  await importProject(fake, {registry, applyTo: true});
+  check('上传件回灌可解析',
+      registry.resolve('zz-io-test.png')?.source === 'upload');
+  check('layout 回灌生效',
+      registry.layoutEntry('zz-char')?.layout?.m_LocalScale === 1.6);
+  await registry.remove('zz-io-test.png');
+  await registry.removeLayout('zz-char');
+}
+
+const report = {
+  ok: failures.length === 0 && problems.length === 0 && pageErrors.length === 0,
+  asserts, failureCount: failures.length, failures, problems, pageErrors,
+  arrivals: snapsA.length, bundleFiles: entries.length, done: true,
+};
+await fetch('/freeze?scene=io_report', {
+  method: 'POST', headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify(report, null, 1),
+});
+document.title = 'io-report-done';
+</script>
+</body>
+</html>

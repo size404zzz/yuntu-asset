@@ -2,6 +2,10 @@ import {h} from './ui/dom.js';
 import {normalizeScript, isTerminal, branchTargets, serializeScript}
     from './core/script.js';
 import {AssetRegistry} from './core/assets.js';
+import {openDB} from './core/idb.js';
+import {
+  exportProject, exportZip, importProject, saveProject, touchProjectIndex,
+} from './editor/io.js';
 import {openPicker} from './editor/picker.js';
 import {Editor} from './editor/editor.js';
 import {Player} from './engine/player.js';
@@ -101,6 +105,9 @@ document.getElementById('btn-assets').addEventListener('click', () => {
 });
 
 /* —— M9 编辑器 —— */
+const glossary = await (await fetch('data/Noun_des.json')).json();
+let currentId = 'scene1';
+
 const editor = new Editor({
   player, registry,
   characters: await (await fetch('data/Avg_character.json')).json(),
@@ -112,13 +119,82 @@ const editor = new Editor({
     redo: document.getElementById('btn-redo'),
   },
   meta: {sector: '绿洲防线'},
+  onDoc: (doc) => {
+    doc.subscribe(debounceSave);
+  },
 });
+
+/* 自动保存：编辑事件防抖 1.5s 落 IDB（localStorage 兜底在 io.saveProject 里）。 */
+let saveTimer = null;
+let lastSave = null;
+function debounceSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => doSave(true), 1500);
+}
+async function buildProject() {
+  return exportProject({
+    doc: editor.doc, title: editor.doc.story.title ?? currentId,
+    registry, characters: editor.characters, glossary,
+  });
+}
+async function doSave(silent) {
+  const project = await buildProject();
+  lastSave = JSON.stringify(project);
+  await saveProject(await openDB(), currentId, project);
+  await touchProjectIndex(await openDB(), currentId);
+  if (!silent) flashStatus('已保存');
+}
+function flashStatus(text) {
+  const el = document.getElementById('storage');
+  const old = el.textContent;
+  el.textContent = text;
+  setTimeout(() => { el.textContent = old; }, 1500);
+}
+function download(name, data, type) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([data], {type}));
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+}
+
+document.getElementById('btn-save').addEventListener('click', () => doSave(false));
+document.getElementById('btn-export').addEventListener('click', async () => {
+  download(`${currentId}.yuntu.json`,
+      lastSave ?? JSON.stringify(await buildProject()), 'application/json');
+});
+document.getElementById('btn-export-zip').addEventListener('click', async () => {
+  flashStatus('打包中…');
+  const zip = await exportZip({project: await buildProject()});
+  download(`${currentId}.yuntu.zip`, zip, 'application/zip');
+});
+const importFile = h('input', {type: 'file', accept: '.json,application/json',
+  style: {display: 'none'}});
+importFile.addEventListener('change', async () => {
+  const file = importFile.files[0];
+  importFile.value = '';
+  if (!file) return;
+  try {
+    const project = JSON.parse(await file.text());
+    const data = await importProject(project, {registry, applyTo: true});
+    currentId = data.title || 'imported';
+    editor.meta = {title: data.title, sector: '绿洲防线'};
+    editor.useStory(data.story);
+    flashStatus('导入成功');
+  } catch (error) {
+    flashStatus(`导入失败：${error.message}`);
+  }
+});
+document.getElementById('btn-import').addEventListener('click',
+    () => importFile.click());
+document.body.append(importFile);
 
 const state = {stories: new Map(), playing: false, playTimer: null};
 const tpPlay = document.getElementById('tp-play');
 
 async function useStory(id) {
   stopPlay();
+  currentId = id;
   const story = state.stories.get(id);
   editor.meta = {title: story.title, sector: '绿洲防线'};
   editor.useStory(story);
