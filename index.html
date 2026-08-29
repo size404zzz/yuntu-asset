@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>云图计划 · 剧情播放器编辑器</title>
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/avg.css">
+<link rel="stylesheet" href="css/pandect.css">
+</head>
+<body>
+<div class="app">
+  <div class="bar">
+    <span class="title">AVG 剧情编辑器</span>
+    <select id="story-select"></select>
+    <button id="btn-undo" class="tiny" disabled>撤销</button>
+    <button id="btn-redo" class="tiny" disabled>重做</button>
+    <span class="spacer"></span>
+    <span id="storage" class="muted"></span>
+    <button id="btn-1to1" class="tiny">1:1</button>
+    <button id="btn-import" class="tiny">导入</button>
+    <button id="btn-export" class="tiny">导出</button>
+  </div>
+  <div class="cols">
+    <div class="col col-a">
+      <header>分镜</header>
+      <div class="body" id="shot-list"></div>
+    </div>
+    <div class="col col-b">
+      <header>检查器</header>
+      <div class="body" id="inspector"><div class="report" id="report"></div></div>
+    </div>
+    <div class="col col-c">
+      <header>预览</header>
+      <div class="body preview-area">
+        <div id="preview" style="width:100%"></div>
+        <div class="transport">
+          <button id="tp-prev" class="tiny">⏮</button>
+          <button id="tp-play" class="tiny">▶ 连播</button>
+          <button id="tp-next" class="tiny">⏭</button>
+          <span id="tp-pos" class="muted"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

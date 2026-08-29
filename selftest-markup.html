@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>M2 markup 自检</title>
+<!-- avg.css 只为让渲染态接近参考观感；断言本身不依赖样式。 -->
+<link rel="stylesheet" href="css/avg.css">
+<style>
+  body {margin: 0; padding: 16px; background: #101418; color: #dfe6ea;
+        font: 14px/1.6 "Microsoft YaHei", sans-serif;}
+  #summary {position: sticky; top: 0; z-index: 9; background: #101418;
+            padding: 8px 0; border-bottom: 1px solid #2c3a44;}
+  #summary b.ok {color: #7CFC00;} #summary b.bad {color: #ff6b6b;}
+  .page {display: flex; gap: 12px; align-items: flex-start; padding: 10px 0;
+         border-bottom: 1px dashed #22303a;}
+  .page .tag {min-width: 90px; color: #7aa; font-size: 12px;}
+  .box {flex: 1; min-width: 0;}
+  .box h4 {margin: 0 0 4px; font-size: 12px; color: #8aa; font-weight: normal;}
+  /* 三态各自的容器：复用参考的 #avg-line 字号语境（16px 基线）。 */
+  .render {font-size: 16px; background: #1b232b; border: 1px solid #2c3a44;
+           border-radius: 6px; padding: 8px 10px; min-height: 22px;}
+  .render a {color: #ffd27a;}
+  pre#report {display: none;}
+</style>
+</head>
+<body>
+<div id="summary">正在抓取与计算…</div>
+<div id="cards"></div>
+<pre id="report"></pre>
+<script type="module">
+import {reformat, hops, hasBareTag, isTextPrefix, textOf, DEFAULT_VARS}
+    from './js/core/markup.js';
+import {Typewriter} from './js/engine/typewriter.js';
+import {splitPages, stripMarkup} from './js/core/schema.js';
+
+const immediate = () => Promise.resolve();
+/* 固定随机源，让乱码帧可复现（断言不依赖具体字母）。 */
+const fixedRand = (len) => 'A'.repeat(Math.max(0, len));
+
+const scenes = {
+  scene1: await (await fetch('data/fixtures/scene1.json')).json(),
+  scene2: await (await fetch('data/fixtures/scene2.json')).json(),
+  scene3: await (await fetch('data/fixtures/scene3.json')).json(),
+};
+const expected = await (await fetch('data/fixtures/expected-scene1.json')).json();
+
+const flat = (raw) => (Array.isArray(raw) ? raw : Object.values(raw));
+const failures = [];
+let asserts = 0;
+const check = (cond, msg) => { asserts++; if (!cond) failures.push(msg); };
+
+/* ---- 逐页：打字机逐帧无裸露标签 + 与 hops() 纯预测对拍 ---- */
+let pageCount = 0;
+const tasks = [];
+for (const [name, raw] of Object.entries(scenes)) {
+  const shots = flat(raw);
+  shots.forEach((shot, i) => {
+    if (!shot.content) return;
+    const pages = splitPages(shot.content);
+    pages.forEach((wire, p) => {
+      pageCount++;
+      const scramble = !!shot.scrambleTypeWriter;
+      const whole = reformat(wire, DEFAULT_VARS);
+      const tw = new Typewriter({
+        wait: immediate, rand: fixedRand,
+        measureLen: () => whole.length,
+      });
+      tasks.push(tw.start(whole, {scramble}).then(() => {
+        check(tw.done, `${name}[${i}].${p} 未打完`);
+        check(tw.paints.at(-1) === whole,
+            `${name}[${i}].${p} 收尾帧 != 全文`);
+        for (const [f, frame] of tw.paints.entries()) {
+          check(!hasBareTag(frame),
+              `${name}[${i}].${p} 第${f}帧裸露标签 ${JSON.stringify(frame)}`);
+        }
+        if (!scramble) {
+          let prev = '';
+          for (const frame of tw.paints) {
+            const t = textOf(frame);
+            check(t.startsWith(prev),
+                `${name}[${i}].${p} 文本非单调 ${JSON.stringify([prev, t])}`);
+            check(isTextPrefix(frame, whole),
+                `${name}[${i}].${p} 帧非全文前缀 ${JSON.stringify(frame)}`);
+            prev = t;
+          }
+          check(JSON.stringify(tw.paints.slice(0, -1)) === JSON.stringify(hops(whole)),
+              `${name}[${i}].${p} 帧序列与 hops() 不一致`);
+        }
+      }));
+    });
+  });
+}
+await Promise.all(tasks);
+
+/* ---- 冻结表对拍：reformat 的 DOM 回读 == 参考实测 lineHTML ---- */
+const freezeMismatch = [];
+const tmp = document.createElement('div');
+for (const shot of expected.shots.filter((s) => !s.endOfScene)) {
+  const wire = scenes.scene1[shot.shot].content;
+  tmp.innerHTML = reformat(wire, DEFAULT_VARS);
+  if (tmp.innerHTML !== shot.lineHTML) {
+    freezeMismatch.push(`shot ${shot.shot}: ${JSON.stringify(tmp.innerHTML)}`
+        + ` != ${JSON.stringify(shot.lineHTML)}`);
+  }
+}
+
+/* ---- 三态可视化 ---- */
+const cards = document.getElementById('cards');
+const makeBox = (title, html) => {
+  const box = document.createElement('div');
+  box.className = 'box';
+  box.innerHTML = `<h4>${title}</h4>`;
+  const r = document.createElement('div');
+  r.className = 'render';
+  r.innerHTML = html;
+  box.append(r);
+  return box;
+};
+for (const [name, raw] of Object.entries(scenes)) {
+  flat(raw).forEach((shot, i) => {
+    if (!shot.content) return;
+    splitPages(shot.content).forEach((wire, p) => {
+      const whole = reformat(wire, DEFAULT_VARS);
+      const frames = hops(whole);
+      const mid = frames[Math.floor(frames.length / 2)] ?? whole;
+      const row = document.createElement('div');
+      row.className = 'page';
+      const tag = document.createElement('div');
+      tag.className = 'tag';
+      tag.textContent = `${name}[${i}].${p}` + (shot.scrambleTypeWriter ? '·乱码' : '');
+      row.append(tag);
+      row.append(makeBox('① 打完', whole));
+      row.append(makeBox('② 打字中途', mid));
+      row.append(makeBox('③ 回廊纯文本', textOf(whole).replace(/\n/g, '<br>')));
+      cards.append(row);
+    });
+  });
+}
+
+/* ---- 报告 ---- */
+const ok = failures.length === 0 && freezeMismatch.length === 0;
+const report = {
+  done: true, ok, pages: pageCount, asserts,
+  failures: failures.slice(0, 30), failureCount: failures.length,
+  freezeChecked: expected.shots.filter((s) => !s.endOfScene).length,
+  freezeMismatch: freezeMismatch.slice(0, 20),
+};
+document.getElementById('report').textContent = JSON.stringify(report);
+await fetch('/freeze?scene=markup_report', {
+  method: 'POST', headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify(report),
+});
+const summary = document.getElementById('summary');
+summary.innerHTML = ok
+    ? `<b class="ok">✓ M2 markup 通过</b> —— ${pageCount} 页 / ${asserts} 断言 / `
+      + `冻结表 ${report.freezeChecked} 镜全等`
+    : `<b class="bad">✗ ${failures.length + freezeMismatch.length} 处失败</b>（见 report）`;
+</script>
+</body>
+</html>
