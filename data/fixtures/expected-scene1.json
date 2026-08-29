@@ -1,0 +1,4347 @@
+{
+ "meta": {
+  "scene": "scene1",
+  "oracle": "wiki.42lab.cloud MediaWiki:Gadget-AvgPlayer.js（逐字节，仅 import 路径本地化）",
+  "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/152.0.0.0 Safari/537.36",
+  "viewport": {
+   "screen": [
+    800,
+    600
+   ],
+   "inner": [
+    1256,
+    645
+   ],
+   "client": [
+    1256,
+    645
+   ],
+   "offset": [
+    1256,
+    540
+   ],
+   "dpr": 1,
+   "body": "1256px",
+   "containerInline": null
+  },
+  "stage": {
+   "width": 1200,
+   "height": 540,
+   "fontSize": "16px"
+  },
+  "dialogWidthPx": "0px",
+  "charaStageWidthPx": 1200,
+  "capturedAt": "2026-08-28T13:51:39.299Z"
+ },
+ "header": {
+  "skipTitle": "临危受命",
+  "sectorLocation": "绿洲防线 #PART.1",
+  "sectorEn": "",
+  "sceneBrief": "教授指挥着战斗队伍掩护受伤人形撤离，并就地建立防线，抵御净化者的推进。"
+ },
+ "shots": [
+  {
+   "shot": 1,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "人形们的声音",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": [
+     {
+      "alpha": 0.25,
+      "delay": 0,
+      "duration": 0.6,
+      "imgId": 1
+     },
+     {
+      "alpha": 0.5,
+      "delay": 0.6,
+      "duration": 0.6,
+      "imgId": 1
+     },
+     {
+      "alpha": 1,
+      "delay": 1.2,
+      "duration": 0.6,
+      "imgId": 1,
+      "shake": true,
+      "shakeIntensity": 2
+     }
+    ],
+    "contentShake": true,
+    "effect": {
+     "effect1": {
+      "layer": 2,
+      "pos": [
+       0,
+       -150,
+       0
+      ],
+      "prefabName": "avg/FXP_smook"
+     }
+    },
+    "autoContinue": null,
+    "audio": {
+     "bgm": {
+      "cue": "Mus_Story_Dangerous",
+      "fadeIn": 3,
+      "fadeOut": 3,
+      "sheet": "Mus_Story_Dangerous",
+      "stop": false
+     },
+     "sfx": {
+      "cue": "AVG_Explode",
+      "sheet": "AVG_gf"
+     }
+    }
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "人形们的声音",
+   "lineHTML": "<span style=\"font-size:calc((44/44)*1em)\">呜哇——</span>",
+   "lineText": "呜哇——",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 1,
+   "phase": {
+    "dialogAt": 0.4,
+    "dialogClassAt": 1818.2,
+    "bgAt": 19.3,
+    "bgOverlayAt": 19.3,
+    "charaAt": null,
+    "lineAt": 1818.7,
+    "lineEndAt": 2115.1,
+    "lineTicks": 14,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 1799.9999999999998
+   },
+   "settleMs": 3137
+  },
+  {
+   "shot": 2,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "人形们的声音",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "人形们的声音",
+   "lineHTML": "糟了！沙盒屏障被攻破了！！",
+   "lineText": "糟了！沙盒屏障被攻破了！！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 2,
+   "phase": {
+    "dialogAt": 0.1,
+    "dialogClassAt": 0.1,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.2,
+    "lineEndAt": 741,
+    "lineTicks": 13,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1824
+  },
+  {
+   "shot": 3,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "人形们的声音",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.6,
+      "imgId": 1,
+      "shake": true,
+      "shakeIntensity": 2
+     }
+    ],
+    "contentShake": true,
+    "effect": null,
+    "autoContinue": null,
+    "audio": {
+     "sfx": {
+      "cue": "AVG_Explode",
+      "sheet": "AVG_gf"
+     }
+    }
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "人形们的声音",
+   "lineHTML": "净化者……净化者打进来了！",
+   "lineText": "净化者……净化者打进来了！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 3,
+   "phase": {
+    "dialogAt": 601.9,
+    "dialogClassAt": 601.9,
+    "bgAt": null,
+    "bgOverlayAt": 0.2,
+    "charaAt": null,
+    "lineAt": 602,
+    "lineEndAt": 1332.7,
+    "lineTicks": 13,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 600
+   },
+   "settleMs": 2474
+  },
+  {
+   "shot": 4,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "人形们的声音",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "人形们的声音",
+   "lineHTML": "那些家伙一定要对我们赶尽杀绝吗？！",
+   "lineText": "那些家伙一定要对我们赶尽杀绝吗？！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 4,
+   "phase": {
+    "dialogAt": 0.1,
+    "dialogClassAt": 0.1,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.1,
+    "lineEndAt": 941.4,
+    "lineTicks": 17,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 2067
+  },
+  {
+   "shot": 5,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "人形们的声音",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": true,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "人形们的声音",
+   "lineHTML": "快逃！快点！！！",
+   "lineText": "快逃！快点！！！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 5,
+   "phase": {
+    "dialogAt": 0.2,
+    "dialogClassAt": 0.2,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.2,
+    "lineEndAt": 398.6,
+    "lineTicks": 8,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1524
+  },
+  {
+   "shot": 7,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "受伤的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "受伤的人形",
+   "lineHTML": "呜……！我的腿……我动不了了……",
+   "lineText": "呜……！我的腿……我动不了了……",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 6,
+   "phase": {
+    "dialogAt": 0.1,
+    "dialogClassAt": 615.1,
+    "bgAt": null,
+    "bgOverlayAt": 0.6,
+    "charaAt": null,
+    "lineAt": 0.1,
+    "lineEndAt": 1512.1,
+    "lineTicks": 17,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 2638
+  },
+  {
+   "shot": 8,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "惊慌的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "惊慌的人形",
+   "lineHTML": "我来帮你！",
+   "lineText": "我来帮你！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 7,
+   "phase": {
+    "dialogAt": 0.2,
+    "dialogClassAt": 0.2,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.3,
+    "lineEndAt": 222.5,
+    "lineTicks": 5,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1357
+  },
+  {
+   "shot": 9,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "焦急的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.6,
+      "imgId": 1,
+      "shake": true,
+      "shakeIntensity": 2
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": {
+     "sfx": {
+      "cue": "AVG_Explode",
+      "sheet": "AVG_gf"
+     }
+    }
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "焦急的人形",
+   "lineHTML": "喂！你疯了！净化者已经来了，你和她会一起被清除掉的！",
+   "lineText": "喂！你疯了！净化者已经来了，你和她会一起被清除掉的！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 8,
+   "phase": {
+    "dialogAt": 612.5,
+    "dialogClassAt": 612.5,
+    "bgAt": null,
+    "bgOverlayAt": 0.3,
+    "charaAt": null,
+    "lineAt": 612.6,
+    "lineEndAt": 2132.8,
+    "lineTicks": 26,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 600
+   },
+   "settleMs": 3260
+  },
+  {
+   "shot": 10,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "惊慌的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "惊慌的人形",
+   "lineHTML": "但我们不能丢下她！",
+   "lineText": "但我们不能丢下她！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 9,
+   "phase": {
+    "dialogAt": 0,
+    "dialogClassAt": 0,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.1,
+    "lineEndAt": 473.2,
+    "lineTicks": 9,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1584
+  },
+  {
+   "shot": 11,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "净化者",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": {
+     "sfx": {
+      "cue": "AVG_whitenoise",
+      "sheet": "AVG_gf"
+     }
+    }
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "净化者",
+   "lineHTML": "【检测到大量异常智能体，执行清除程序——】",
+   "lineText": "【检测到大量异常智能体，执行清除程序——】",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 10,
+   "phase": {
+    "dialogAt": 0.2,
+    "dialogClassAt": 0.2,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.3,
+    "lineEndAt": 1203.8,
+    "lineTicks": 21,
+    "heightTesterTicks": 1,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 2288
+  },
+  {
+   "shot": 12,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "焦急的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "焦急的人形",
+   "lineHTML": "啧，麻烦死了……我来引开它们！",
+   "lineText": "啧，麻烦死了……我来引开它们！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 11,
+   "phase": {
+    "dialogAt": 0.1,
+    "dialogClassAt": 0.1,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.1,
+    "lineEndAt": 820.5,
+    "lineTicks": 15,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1954
+  },
+  {
+   "shot": 13,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "焦急的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": true,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "焦急的人形",
+   "lineHTML": "喂！！！你们这些家伙！！！",
+   "lineText": "喂！！！你们这些家伙！！！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 12,
+   "phase": {
+    "dialogAt": 0,
+    "dialogClassAt": 0,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.1,
+    "lineEndAt": 710.3,
+    "lineTicks": 13,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1839
+  },
+  {
+   "shot": 14,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "焦急的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": true,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "焦急的人形",
+   "lineHTML": "看这里——！！连目标都看不清楚了还当什么净化者！",
+   "lineText": "看这里——！！连目标都看不清楚了还当什么净化者！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 13,
+   "phase": {
+    "dialogAt": 0.2,
+    "dialogClassAt": 0.2,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.2,
+    "lineEndAt": 1375.7,
+    "lineTicks": 24,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 2474
+  },
+  {
+   "shot": 15,
+   "contentType": 2,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type2",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "",
+   "lineHTML": "暴露在街道上的人形迅速吸引了净化者的注意。一瞬间，净化者已将武器瞄准了她。",
+   "lineText": "暴露在街道上的人形迅速吸引了净化者的注意。一瞬间，净化者已将武器瞄准了她。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 14,
+   "phase": {
+    "dialogAt": 0.2,
+    "dialogClassAt": 0.2,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.2,
+    "lineEndAt": 2193.8,
+    "lineTicks": 37,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 3268
+  },
+  {
+   "shot": 16,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "焦急的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "焦急的人形",
+   "lineHTML": "！！好快！！",
+   "lineText": "！！好快！！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 15,
+   "phase": {
+    "dialogAt": 0.2,
+    "dialogClassAt": 0.2,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.2,
+    "lineEndAt": 277.7,
+    "lineTicks": 6,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1400
+  },
+  {
+   "shot": 17,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "净化者",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": {
+     "sfx": {
+      "cue": "AVG_whitenoise",
+      "sheet": "AVG_gf"
+     }
+    }
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "净化者",
+   "lineHTML": "【清除——】",
+   "lineText": "【清除——】",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 16,
+   "phase": {
+    "dialogAt": 0.3,
+    "dialogClassAt": 0.3,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.4,
+    "lineEndAt": 304.9,
+    "lineTicks": 6,
+    "heightTesterTicks": 1,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1385
+  },
+  {
+   "shot": 18,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "惊慌的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": true,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "惊慌的人形",
+   "lineHTML": "不要——",
+   "lineText": "不要——",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 0.6s",
+    "overlayTransition": "background 0.6s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 17,
+   "phase": {
+    "dialogAt": 0,
+    "dialogClassAt": 0,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0,
+    "lineEndAt": 169.9,
+    "lineTicks": 4,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1278
+  },
+  {
+   "shot": 20,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "焦急的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": {
+     "sfx": {
+      "cue": "Atk_Zion_Hit",
+      "sheet": "Chara_Zion"
+     }
+    }
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "焦急的人形",
+   "lineHTML": "……？！",
+   "lineText": "……？！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "0",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 18,
+   "phase": {
+    "dialogAt": 0.1,
+    "dialogClassAt": 1004.1,
+    "bgAt": 0.4,
+    "bgOverlayAt": 0.4,
+    "charaAt": null,
+    "lineAt": 0.1,
+    "lineEndAt": 1189,
+    "lineTicks": 5,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 2269
+  },
+  {
+   "shot": 22,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "克罗琦",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "克罗琦",
+   "lineHTML": "还真是千钧一发啊。",
+   "lineText": "还真是千钧一发啊。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 19,
+   "phase": {
+    "dialogAt": 0.2,
+    "dialogClassAt": 1001,
+    "bgAt": 0.6,
+    "bgOverlayAt": 0.6,
+    "charaAt": null,
+    "lineAt": 0.2,
+    "lineEndAt": 1500.1,
+    "lineTicks": 10,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 2581
+  },
+  {
+   "shot": 23,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "帕斯卡",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "帕斯卡",
+   "lineHTML": "执行教授的指令！克罗琦，顶住正面火力！苏尔，掩护人形们撤离！",
+   "lineText": "执行教授的指令！克罗琦，顶住正面火力！苏尔，掩护人形们撤离！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 20,
+   "phase": {
+    "dialogAt": 0.1,
+    "dialogClassAt": 0.1,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.2,
+    "lineEndAt": 1790.4,
+    "lineTicks": 30,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 2889
+  },
+  {
+   "shot": 24,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "苏尔",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 1,
+      "imgId": 2,
+      "pos": [
+       -200,
+       100,
+       0
+      ],
+      "scale": [
+       1.3,
+       1.3,
+       1.3
+      ]
+     }
+    ],
+    "contentShake": true,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "苏尔",
+   "lineHTML": "收到！",
+   "lineText": "收到！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 21,
+   "phase": {
+    "dialogAt": 1001.9,
+    "dialogClassAt": 1001.9,
+    "bgAt": null,
+    "bgOverlayAt": 0.2,
+    "charaAt": null,
+    "lineAt": 1002,
+    "lineEndAt": 1126.4,
+    "lineTicks": 3,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 1000
+   },
+   "settleMs": 2223
+  },
+  {
+   "shot": 25,
+   "contentType": 2,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 1,
+      "imgId": 2,
+      "pos": [
+       200,
+       -100,
+       0
+      ],
+      "scale": [
+       1.3,
+       1.3,
+       1.3
+      ]
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": {
+     "sfx": {
+      "cue": "Skill_Croque_Ex_Start",
+      "sheet": "Chara_Croque"
+     }
+    }
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type2",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "",
+   "lineHTML": "狂风骤雨般的攻击被克罗琦的盾牌挡下，苏尔率领着失去战斗能力的人形们有序撤离战场。",
+   "lineText": "狂风骤雨般的攻击被克罗琦的盾牌挡下，苏尔率领着失去战斗能力的人形们有序撤离战场。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 22,
+   "phase": {
+    "dialogAt": 1003.1,
+    "dialogClassAt": 1003.1,
+    "bgAt": null,
+    "bgOverlayAt": 0.1,
+    "charaAt": null,
+    "lineAt": 1003.2,
+    "lineEndAt": 3421,
+    "lineTicks": 40,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 1000
+   },
+   "settleMs": 4521
+  },
+  {
+   "shot": 26,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "惊慌的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "惊慌的人形",
+   "lineHTML": "帕斯卡！是帕斯卡她们！",
+   "lineText": "帕斯卡！是帕斯卡她们！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 23,
+   "phase": {
+    "dialogAt": 0.1,
+    "dialogClassAt": 0.1,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.2,
+    "lineEndAt": 618.6,
+    "lineTicks": 11,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1729
+  },
+  {
+   "shot": 27,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "焦急的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "焦急的人形",
+   "lineHTML": "哈……总算可以松一口气了。",
+   "lineText": "哈……总算可以松一口气了。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 24,
+   "phase": {
+    "dialogAt": 0.3,
+    "dialogClassAt": 0.3,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.4,
+    "lineEndAt": 735.2,
+    "lineTicks": 13,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1850
+  },
+  {
+   "shot": 28,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "帕斯卡",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 1,
+      "imgId": 2,
+      "pos": [
+       300,
+       -100,
+       0
+      ],
+      "scale": [
+       1.3,
+       1.3,
+       1.3
+      ]
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "帕斯卡",
+   "lineHTML": "抱歉，我们来晚了。还能走吗？",
+   "lineText": "抱歉，我们来晚了。还能走吗？",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 25,
+   "phase": {
+    "dialogAt": 1003,
+    "dialogClassAt": 1003,
+    "bgAt": null,
+    "bgOverlayAt": 0.2,
+    "charaAt": null,
+    "lineAt": 1003.1,
+    "lineEndAt": 1807.6,
+    "lineTicks": 14,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 1000
+   },
+   "settleMs": 2888
+  },
+  {
+   "shot": 29,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "惊慌的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "惊慌的人形",
+   "lineHTML": "我的朋友腿受伤了，没办法移动……",
+   "lineText": "我的朋友腿受伤了，没办法移动……",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 26,
+   "phase": {
+    "dialogAt": 0.1,
+    "dialogClassAt": 0.1,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.1,
+    "lineEndAt": 925.3,
+    "lineTicks": 16,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 2024
+  },
+  {
+   "shot": 30,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "帕斯卡",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "帕斯卡",
+   "lineHTML": "别着急，这里有额外的<span data-ref=\"38\">算量</span>。马上就没事了。",
+   "lineText": "别着急，这里有额外的算量。马上就没事了。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 27,
+   "phase": {
+    "dialogAt": 0,
+    "dialogClassAt": 0,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.1,
+    "lineEndAt": 1298.1,
+    "lineTicks": 47,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 2393
+  },
+  {
+   "shot": 31,
+   "contentType": 2,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 1,
+      "imgId": 2,
+      "pos": [
+       350,
+       -10,
+       0
+      ],
+      "scale": [
+       1.3,
+       1.3,
+       1.3
+      ]
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": {
+     "sfx": {
+      "cue": "Skill_Persicaria_Ex_Start",
+      "sheet": "Chara_Persicaria"
+     }
+    }
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type2",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "",
+   "lineHTML": "温暖的光线笼罩着人形受伤的双腿，伤口迅速恢复。",
+   "lineText": "温暖的光线笼罩着人形受伤的双腿，伤口迅速恢复。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 28,
+   "phase": {
+    "dialogAt": 1003.4,
+    "dialogClassAt": 1003.4,
+    "bgAt": null,
+    "bgOverlayAt": 0.2,
+    "charaAt": null,
+    "lineAt": 1003.5,
+    "lineEndAt": 2366.5,
+    "lineTicks": 23,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 1000
+   },
+   "settleMs": 3448
+  },
+  {
+   "shot": 32,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "帕斯卡",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 1,
+      "imgId": 2,
+      "pos": [
+       0,
+       0,
+       0
+      ],
+      "scale": [
+       1,
+       1,
+       1
+      ]
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "帕斯卡",
+   "lineHTML": "现在应该能行动了。撤回指挥部附近吧，那里会有人接应你们进一步治疗。",
+   "lineText": "现在应该能行动了。撤回指挥部附近吧，那里会有人接应你们进一步治疗。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 29,
+   "phase": {
+    "dialogAt": 1002.8,
+    "dialogClassAt": 1002.8,
+    "bgAt": null,
+    "bgOverlayAt": 0.1,
+    "charaAt": null,
+    "lineAt": 1002.9,
+    "lineEndAt": 2984.8,
+    "lineTicks": 33,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 1000
+   },
+   "settleMs": 4070
+  },
+  {
+   "shot": 33,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "受伤的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "受伤的人形",
+   "lineHTML": "啊……我、我知道了！",
+   "lineText": "啊……我、我知道了！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 30,
+   "phase": {
+    "dialogAt": 0.2,
+    "dialogClassAt": 0.2,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.2,
+    "lineEndAt": 550.6,
+    "lineTicks": 10,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1649
+  },
+  {
+   "shot": 34,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "焦急的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "焦急的人形",
+   "lineHTML": "别磨蹭了！我们赶紧走吧！",
+   "lineText": "别磨蹭了！我们赶紧走吧！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 31,
+   "phase": {
+    "dialogAt": 0,
+    "dialogClassAt": 0,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.1,
+    "lineEndAt": 675.7,
+    "lineTicks": 12,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1766
+  },
+  {
+   "shot": 35,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "焦急的人形",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "焦急的人形",
+   "lineHTML": "帕斯卡……你们一定要平安回来！",
+   "lineText": "帕斯卡……你们一定要平安回来！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 32,
+   "phase": {
+    "dialogAt": 0.2,
+    "dialogClassAt": 0.2,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.2,
+    "lineEndAt": 859.6,
+    "lineTicks": 15,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1964
+  },
+  {
+   "shot": 36,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "帕斯卡",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "帕斯卡",
+   "lineHTML": "一定会的。",
+   "lineText": "一定会的。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 33,
+   "phase": {
+    "dialogAt": 0.1,
+    "dialogClassAt": 0.1,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 0.1,
+    "lineEndAt": 241.5,
+    "lineTicks": 5,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 1344
+  },
+  {
+   "shot": 37,
+   "contentType": 2,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": [
+     {
+      "alpha": 0,
+      "delay": 0,
+      "duration": 1,
+      "imgId": 2
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": {
+     "sfx": {
+      "cue": "AVG_RunStep",
+      "sheet": "AVG_gf"
+     }
+    }
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type2",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": ""
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "",
+   "lineHTML": "人形们用尽全身力气将伤者扶起，开始往绿洲后方移动。",
+   "lineText": "人形们用尽全身力气将伤者扶起，开始往绿洲后方移动。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_bg008.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "0",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [],
+   "choices": [],
+   "logEntries": 34,
+   "phase": {
+    "dialogAt": 1002.4,
+    "dialogClassAt": 1002.4,
+    "bgAt": 0.3,
+    "bgOverlayAt": 0.3,
+    "charaAt": null,
+    "lineAt": 1002.5,
+    "lineEndAt": 2490.5,
+    "lineTicks": 25,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 1000
+   },
+   "settleMs": 3599
+  },
+  {
+   "shot": 38,
+   "contentType": 3,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": 1005,
+    "speakerHeroPosId": 3,
+    "heroFace": [
+     {
+      "faceId": 4,
+      "imgId": 105
+     }
+    ],
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 1,
+      "imgId": 1
+     },
+     {
+      "alpha": 0,
+      "delay": 0,
+      "duration": 0,
+      "imgId": 101,
+      "isDark": true,
+      "posId": 1
+     },
+     {
+      "alpha": 1,
+      "delay": 1,
+      "duration": 0.6,
+      "imgId": 101,
+      "isDark": true,
+      "posId": 2
+     },
+     {
+      "alpha": 0,
+      "delay": 0,
+      "duration": 0,
+      "imgId": 105,
+      "isDark": false,
+      "posId": 5
+     },
+     {
+      "alpha": 1,
+      "delay": 1,
+      "duration": 0.6,
+      "imgId": 105,
+      "isDark": false,
+      "posId": 4
+     }
+    ],
+    "contentShake": null,
+    "effect": {
+     "effect1": {
+      "layer": 2,
+      "pos": [
+       0,
+       -150,
+       0
+      ],
+      "prefabName": "avg/FXP_smook"
+     }
+    },
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "pos3",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": "42px",
+   "lineMinHeight": null,
+   "speaker": "克罗琦",
+   "lineHTML": "说什么额外的算量……明明在治疗教授的时候，你就几乎把算量用完了吧。",
+   "lineText": "说什么额外的算量……明明在治疗教授的时候，你就几乎把算量用完了吧。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "2",
+     "cls": "avg-chara pos2 dark",
+     "opacity": "1",
+     "transition": "opacity 0.6s, left 0.6s, filter 0.6s",
+     "left": "-200px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "1",
+     "transition": "opacity 0.6s, left 0.6s, filter 0.6s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 35,
+   "phase": {
+    "dialogAt": 1601.9,
+    "dialogClassAt": 1601.9,
+    "bgAt": 1,
+    "bgOverlayAt": 1,
+    "charaAt": 1.2,
+    "lineAt": 1603.1,
+    "lineEndAt": 3571,
+    "lineTicks": 33,
+    "heightTesterTicks": 2,
+    "tweenHorizonMs": 1600
+   },
+   "settleMs": 4669
+  },
+  {
+   "shot": 39,
+   "contentType": 3,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": 1001,
+    "speakerHeroPosId": 1,
+    "heroFace": [
+     {
+      "faceId": 4,
+      "imgId": 101
+     }
+    ],
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.2,
+      "imgId": 105,
+      "isDark": true,
+      "posId": 4
+     },
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.2,
+      "imgId": 101,
+      "isDark": false,
+      "posId": 2
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "pos1",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": "21px",
+   "lineMinHeight": null,
+   "speaker": "帕斯卡",
+   "lineHTML": "别担心，我心里有数。",
+   "lineText": "别担心，我心里有数。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "2",
+     "cls": "avg-chara pos2",
+     "opacity": "1",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "-200px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4 dark",
+     "opacity": "1",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 36,
+   "phase": {
+    "dialogAt": 208.3,
+    "dialogClassAt": 208.3,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": 0.7,
+    "lineAt": 208.9,
+    "lineEndAt": 766.5,
+    "lineTicks": 10,
+    "heightTesterTicks": 2,
+    "tweenHorizonMs": 200
+   },
+   "settleMs": 1847
+  },
+  {
+   "shot": 40,
+   "contentType": 3,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": 1005,
+    "speakerHeroPosId": 3,
+    "heroFace": [
+     {
+      "faceId": 0,
+      "imgId": 105
+     }
+    ],
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.2,
+      "imgId": 101,
+      "isDark": true,
+      "posId": 2
+     },
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.2,
+      "imgId": 105,
+      "isDark": false,
+      "posId": 4
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "pos3",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": "21px",
+   "lineMinHeight": null,
+   "speaker": "克罗琦",
+   "lineHTML": "你可别倒在战场上。",
+   "lineText": "你可别倒在战场上。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "2",
+     "cls": "avg-chara pos2 dark",
+     "opacity": "1",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "-200px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "1",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 37,
+   "phase": {
+    "dialogAt": 205.8,
+    "dialogClassAt": 205.8,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": 0.4,
+    "lineAt": 206.8,
+    "lineEndAt": 703.5,
+    "lineTicks": 9,
+    "heightTesterTicks": 2,
+    "tweenHorizonMs": 200
+   },
+   "settleMs": 1833
+  },
+  {
+   "shot": 41,
+   "contentType": 3,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": 1003,
+    "speakerHeroPosId": 3,
+    "heroFace": [
+     {
+      "faceId": 4,
+      "imgId": 103
+     }
+    ],
+    "imgTween": [
+     {
+      "alpha": 0,
+      "delay": 0,
+      "duration": 0.2,
+      "imgId": 105,
+      "isDark": false,
+      "posId": 4
+     },
+     {
+      "alpha": 0,
+      "delay": 0,
+      "duration": 0,
+      "imgId": 103,
+      "isDark": false,
+      "posId": 4
+     },
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.6,
+      "imgId": 103,
+      "isDark": false,
+      "posId": 4
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "pos3",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": "42px",
+   "lineMinHeight": null,
+   "speaker": "苏尔",
+   "lineHTML": "帕斯卡，我这边的人形预计3分钟后疏散完毕！可以联络教授了！",
+   "lineText": "帕斯卡，我这边的人形预计3分钟后疏散完毕！可以联络教授了！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "2",
+     "cls": "avg-chara pos2 dark",
+     "opacity": "1",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "-200px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    },
+    {
+     "imgId": "103",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "1",
+     "transition": "opacity 0.6s, left 0.6s, filter 0.6s",
+     "left": "250px",
+     "bottom": "-225px",
+     "width": "844.797px",
+     "height": "844.797px",
+     "transform": "matrix(1, 0, 0, 1, 177.6, 152.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 38,
+   "phase": {
+    "dialogAt": 610.5,
+    "dialogClassAt": 610.5,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": 0.4,
+    "lineAt": 612,
+    "lineEndAt": 2342.9,
+    "lineTicks": 29,
+    "heightTesterTicks": 2,
+    "tweenHorizonMs": 600
+   },
+   "settleMs": 3472
+  },
+  {
+   "shot": 42,
+   "contentType": 3,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": 1005,
+    "speakerHeroPosId": 3,
+    "heroFace": [
+     {
+      "faceId": 1,
+      "imgId": 105
+     }
+    ],
+    "imgTween": [
+     {
+      "alpha": 0,
+      "delay": 0,
+      "duration": 0.2,
+      "imgId": 103,
+      "isDark": false,
+      "posId": 4
+     },
+     {
+      "alpha": 0,
+      "delay": 0,
+      "duration": 0,
+      "imgId": 105,
+      "isDark": false,
+      "posId": 4
+     },
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.6,
+      "imgId": 105,
+      "isDark": false,
+      "posId": 4
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "pos3",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": "21px",
+   "lineMinHeight": null,
+   "speaker": "克罗琦",
+   "lineHTML": "有了教授的指挥还真是不一样啊。",
+   "lineText": "有了教授的指挥还真是不一样啊。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "2",
+     "cls": "avg-chara pos2 dark",
+     "opacity": "1",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "-200px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "1",
+     "transition": "opacity 0.6s, left 0.6s, filter 0.6s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    },
+    {
+     "imgId": "103",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "250px",
+     "bottom": "-225px",
+     "width": "844.797px",
+     "height": "844.797px",
+     "transform": "matrix(1, 0, 0, 1, 177.6, 152.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 39,
+   "phase": {
+    "dialogAt": 615.3,
+    "dialogClassAt": 615.3,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": 0.3,
+    "lineAt": 615.8,
+    "lineEndAt": 1483,
+    "lineTicks": 15,
+    "heightTesterTicks": 2,
+    "tweenHorizonMs": 600
+   },
+   "settleMs": 2597
+  },
+  {
+   "shot": 43,
+   "contentType": 3,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": 1001,
+    "speakerHeroPosId": 2,
+    "heroFace": [
+     {
+      "faceId": 4,
+      "imgId": 101
+     }
+    ],
+    "imgTween": [
+     {
+      "alpha": 0,
+      "delay": 0,
+      "duration": 0.2,
+      "imgId": 105,
+      "isDark": true,
+      "posId": 4
+     },
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.6,
+      "imgId": 101,
+      "isDark": false,
+      "posId": 3
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "pos2",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": "42px",
+   "lineMinHeight": null,
+   "speaker": "帕斯卡",
+   "lineHTML": "教授，这里是帕斯卡，已在预定坐标点完成任务。",
+   "lineText": "教授，这里是帕斯卡，已在预定坐标点完成任务。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "3",
+     "cls": "avg-chara pos3",
+     "opacity": "1",
+     "transition": "opacity 0.6s, left 0.6s, filter 0.6s",
+     "left": "0px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4 dark",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    },
+    {
+     "imgId": "103",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "250px",
+     "bottom": "-225px",
+     "width": "844.797px",
+     "height": "844.797px",
+     "transform": "matrix(1, 0, 0, 1, 177.6, 152.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 40,
+   "phase": {
+    "dialogAt": 601.7,
+    "dialogClassAt": 601.7,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": 0.4,
+    "lineAt": 602.2,
+    "lineEndAt": 1904.1,
+    "lineTicks": 22,
+    "heightTesterTicks": 2,
+    "tweenHorizonMs": 600
+   },
+   "settleMs": 3014
+  },
+  {
+   "shot": 44,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "我",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.2,
+      "imgId": 101,
+      "isDark": true,
+      "posId": 3
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "我",
+   "lineHTML": "已在指挥部就位。汇报现在的情况。",
+   "lineText": "已在指挥部就位。汇报现在的情况。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "3",
+     "cls": "avg-chara pos3 dark",
+     "opacity": "1",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "0px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4 dark",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    },
+    {
+     "imgId": "103",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "250px",
+     "bottom": "-225px",
+     "width": "844.797px",
+     "height": "844.797px",
+     "transform": "matrix(1, 0, 0, 1, 177.6, 152.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 41,
+   "phase": {
+    "dialogAt": 212.6,
+    "dialogClassAt": 212.6,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": 0.3,
+    "lineAt": 212.7,
+    "lineEndAt": 1145.2,
+    "lineTicks": 16,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 200
+   },
+   "settleMs": 2276
+  },
+  {
+   "shot": 45,
+   "contentType": 3,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": 1001,
+    "speakerHeroPosId": 2,
+    "heroFace": [
+     {
+      "faceId": 11,
+      "imgId": 101
+     }
+    ],
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.2,
+      "imgId": 101,
+      "isDark": false,
+      "posId": 3
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "pos2",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": "42px",
+   "lineMinHeight": null,
+   "speaker": "帕斯卡",
+   "lineHTML": "绿洲最外围区域的防御系统已被全面攻破，外环区域已被净化者占领。",
+   "lineText": "绿洲最外围区域的防御系统已被全面攻破，外环区域已被净化者占领。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "3",
+     "cls": "avg-chara pos3",
+     "opacity": "1",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "0px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4 dark",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    },
+    {
+     "imgId": "103",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "250px",
+     "bottom": "-225px",
+     "width": "844.797px",
+     "height": "844.797px",
+     "transform": "matrix(1, 0, 0, 1, 177.6, 152.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 42,
+   "phase": {
+    "dialogAt": 210.4,
+    "dialogClassAt": 210.4,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": 0.3,
+    "lineAt": 211.4,
+    "lineEndAt": 2068.3,
+    "lineTicks": 31,
+    "heightTesterTicks": 2,
+    "tweenHorizonMs": 200
+   },
+   "settleMs": 3146
+  },
+  {
+   "shot": 46,
+   "contentType": 3,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": 1001,
+    "speakerHeroPosId": 2,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "pos2",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": "42px",
+   "lineMinHeight": null,
+   "speaker": "帕斯卡",
+   "lineHTML": "我们救下了外环约三分之二的人形，他们正往指挥部回撤。",
+   "lineText": "我们救下了外环约三分之二的人形，他们正往指挥部回撤。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "3",
+     "cls": "avg-chara pos3",
+     "opacity": "1",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "0px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4 dark",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    },
+    {
+     "imgId": "103",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "250px",
+     "bottom": "-225px",
+     "width": "844.797px",
+     "height": "844.797px",
+     "transform": "matrix(1, 0, 0, 1, 177.6, 152.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 43,
+   "phase": {
+    "dialogAt": 0.2,
+    "dialogClassAt": 0.2,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 2.3,
+    "lineEndAt": 1531.9,
+    "lineTicks": 26,
+    "heightTesterTicks": 2,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 2628
+  },
+  {
+   "shot": 47,
+   "contentType": 2,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": [
+     {
+      "alpha": 0,
+      "delay": 0,
+      "duration": 0.6,
+      "imgId": 101,
+      "isDark": true,
+      "posId": 3
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type2",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "",
+   "lineHTML": "帕斯卡看向绿洲外环。曾经的家园已经满是战火的痕迹，源源不断的净化者正向前逼近。",
+   "lineText": "帕斯卡看向绿洲外环。曾经的家园已经满是战火的痕迹，源源不断的净化者正向前逼近。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "3",
+     "cls": "avg-chara pos3 dark",
+     "opacity": "0",
+     "transition": "opacity 0.6s, left 0.6s, filter 0.6s",
+     "left": "0px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4 dark",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    },
+    {
+     "imgId": "103",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "250px",
+     "bottom": "-225px",
+     "width": "844.797px",
+     "height": "844.797px",
+     "transform": "matrix(1, 0, 0, 1, 177.6, 152.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 44,
+   "phase": {
+    "dialogAt": 610.4,
+    "dialogClassAt": 610.4,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": 0.1,
+    "lineAt": 610.4,
+    "lineEndAt": 2961.9,
+    "lineTicks": 39,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 600
+   },
+   "settleMs": 4070
+  },
+  {
+   "shot": 48,
+   "contentType": 3,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": 1001,
+    "speakerHeroPosId": 2,
+    "heroFace": [
+     {
+      "faceId": 4,
+      "imgId": 101
+     }
+    ],
+    "imgTween": [
+     {
+      "alpha": 0,
+      "delay": 0,
+      "duration": 0,
+      "imgId": 101,
+      "isDark": false,
+      "posId": 3
+     },
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.6,
+      "imgId": 101,
+      "isDark": false,
+      "posId": 3
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "pos2",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": "42px",
+   "lineMinHeight": null,
+   "speaker": "帕斯卡",
+   "lineHTML": "无论如何，我们必须要守住最后的家园……！",
+   "lineText": "无论如何，我们必须要守住最后的家园……！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "3",
+     "cls": "avg-chara pos3",
+     "opacity": "1",
+     "transition": "opacity 0.6s, left 0.6s, filter 0.6s",
+     "left": "0px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4 dark",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    },
+    {
+     "imgId": "103",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "250px",
+     "bottom": "-225px",
+     "width": "844.797px",
+     "height": "844.797px",
+     "transform": "matrix(1, 0, 0, 1, 177.6, 152.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 45,
+   "phase": {
+    "dialogAt": 604.3,
+    "dialogClassAt": 604.3,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": 0.9,
+    "lineAt": 605.1,
+    "lineEndAt": 1765.7,
+    "lineTicks": 20,
+    "heightTesterTicks": 2,
+    "tweenHorizonMs": 600
+   },
+   "settleMs": 2869
+  },
+  {
+   "shot": 49,
+   "contentType": 3,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": 1001,
+    "speakerHeroPosId": 2,
+    "heroFace": null,
+    "imgTween": null,
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "pos2",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": "42px",
+   "lineMinHeight": null,
+   "speaker": "帕斯卡",
+   "lineHTML": "教授，请给我们指令，只有您能救下绿洲了！",
+   "lineText": "教授，请给我们指令，只有您能救下绿洲了！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "3",
+     "cls": "avg-chara pos3",
+     "opacity": "1",
+     "transition": "opacity 0.6s, left 0.6s, filter 0.6s",
+     "left": "0px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4 dark",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    },
+    {
+     "imgId": "103",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "250px",
+     "bottom": "-225px",
+     "width": "844.797px",
+     "height": "844.797px",
+     "transform": "matrix(1, 0, 0, 1, 177.6, 152.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 46,
+   "phase": {
+    "dialogAt": 0.2,
+    "dialogClassAt": 0.2,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": null,
+    "lineAt": 2.1,
+    "lineEndAt": 1180.2,
+    "lineTicks": 20,
+    "heightTesterTicks": 2,
+    "tweenHorizonMs": 0
+   },
+   "settleMs": 2267
+  },
+  {
+   "shot": 50,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "我",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.2,
+      "imgId": 101,
+      "isDark": true,
+      "posId": 3
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "我",
+   "lineHTML": "利用中环的建筑物架设临时防线，阻止净化者继续推进！",
+   "lineText": "利用中环的建筑物架设临时防线，阻止净化者继续推进！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "3",
+     "cls": "avg-chara pos3 dark",
+     "opacity": "1",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "0px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4 dark",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    },
+    {
+     "imgId": "103",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "250px",
+     "bottom": "-225px",
+     "width": "844.797px",
+     "height": "844.797px",
+     "transform": "matrix(1, 0, 0, 1, 177.6, 152.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 47,
+   "phase": {
+    "dialogAt": 201.8,
+    "dialogClassAt": 201.8,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": 0.4,
+    "lineAt": 201.9,
+    "lineEndAt": 1680.9,
+    "lineTicks": 25,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 200
+   },
+   "settleMs": 2763
+  },
+  {
+   "shot": 51,
+   "contentType": 3,
+   "wire": {
+    "speakerName": null,
+    "speakerHeroId": 1001,
+    "speakerHeroPosId": 2,
+    "heroFace": null,
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.2,
+      "imgId": 101,
+      "isDark": false,
+      "posId": 3
+     }
+    ],
+    "contentShake": true,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "pos2",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": "42px",
+   "lineMinHeight": null,
+   "speaker": "帕斯卡",
+   "lineHTML": "其余战斗人员也已经就位，请指挥我们作战！",
+   "lineText": "其余战斗人员也已经就位，请指挥我们作战！",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "3",
+     "cls": "avg-chara pos3",
+     "opacity": "1",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "0px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4 dark",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    },
+    {
+     "imgId": "103",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "250px",
+     "bottom": "-225px",
+     "width": "844.797px",
+     "height": "844.797px",
+     "transform": "matrix(1, 0, 0, 1, 177.6, 152.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 48,
+   "phase": {
+    "dialogAt": 200.3,
+    "dialogClassAt": 200.3,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": 0.1,
+    "lineAt": 201,
+    "lineEndAt": 1378.8,
+    "lineTicks": 20,
+    "heightTesterTicks": 2,
+    "tweenHorizonMs": 200
+   },
+   "settleMs": 2463
+  },
+  {
+   "shot": 52,
+   "contentType": 4,
+   "wire": {
+    "speakerName": "我",
+    "speakerHeroId": null,
+    "speakerHeroPosId": null,
+    "heroFace": null,
+    "imgTween": [
+     {
+      "alpha": 1,
+      "delay": 0,
+      "duration": 0.2,
+      "imgId": 101,
+      "isDark": true,
+      "posId": 3
+     }
+    ],
+    "contentShake": null,
+    "effect": null,
+    "autoContinue": null,
+    "audio": null
+   },
+   "class": {
+    "container": "",
+    "stage": "",
+    "dialog": "type4",
+    "overlay": "",
+    "choices": "",
+    "bgOverlay": "dark"
+   },
+   "dialogMinHeight": null,
+   "lineMinHeight": null,
+   "speaker": "我",
+   "lineHTML": "交给我吧。",
+   "lineText": "交给我吧。",
+   "bg": {
+    "image": "url(\"http://127.0.0.1:8081/images/Cpt00_e_cg002.png\")",
+    "size": "auto",
+    "position": "0% 0%",
+    "opacity": "1",
+    "transition": "opacity 1s",
+    "overlayTransition": "background 1s"
+   },
+   "charas": [
+    {
+     "imgId": "101",
+     "posId": "3",
+     "cls": "avg-chara pos3 dark",
+     "opacity": "1",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "0px",
+     "bottom": "-205px",
+     "width": "806.391px",
+     "height": "806.391px",
+     "transform": "matrix(1, 0, 0, 1, 196.8, 133.2)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    },
+    {
+     "imgId": "105",
+     "posId": "4",
+     "cls": "avg-chara pos4 dark",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "190px",
+     "bottom": "-215px",
+     "width": "972.797px",
+     "height": "972.797px",
+     "transform": "matrix(1, 0, 0, 1, 113.6, 216.4)",
+     "filter": "brightness(0.5)",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 349
+      }
+     }
+    },
+    {
+     "imgId": "103",
+     "posId": "4",
+     "cls": "avg-chara pos4",
+     "opacity": "0",
+     "transition": "opacity 0.2s, left 0.2s, filter 0.2s",
+     "left": "250px",
+     "bottom": "-225px",
+     "width": "844.797px",
+     "height": "844.797px",
+     "transform": "matrix(1, 0, 0, 1, 177.6, 152.4)",
+     "filter": "none",
+     "comm": null,
+     "canvas": {
+      "size": 2048,
+      "samples": {
+       "face": 2304,
+       "chest": 2304,
+       "hem": 0
+      }
+     }
+    }
+   ],
+   "choices": [],
+   "logEntries": 49,
+   "phase": {
+    "dialogAt": 201.7,
+    "dialogClassAt": 201.7,
+    "bgAt": null,
+    "bgOverlayAt": null,
+    "charaAt": 0.3,
+    "lineAt": 201.8,
+    "lineEndAt": 442.7,
+    "lineTicks": 5,
+    "heightTesterTicks": 0,
+    "tweenHorizonMs": 200
+   },
+   "settleMs": 1537
+  },
+  {
+   "shot": null,
+   "endOfScene": true,
+   "click": 49,
+   "phase": {}
+  }
+ ],
+ "log": [
+  {
+   "speaker": "人形们的声音",
+   "lines": [
+    "<span style=\"font-size:calc((44/44)*1em)\">呜哇——</span>"
+   ]
+  },
+  {
+   "speaker": "人形们的声音",
+   "lines": [
+    "糟了！沙盒屏障被攻破了！！"
+   ]
+  },
+  {
+   "speaker": "人形们的声音",
+   "lines": [
+    "净化者……净化者打进来了！"
+   ]
+  },
+  {
+   "speaker": "人形们的声音",
+   "lines": [
+    "那些家伙一定要对我们赶尽杀绝吗？！"
+   ]
+  },
+  {
+   "speaker": "人形们的声音",
+   "lines": [
+    "快逃！快点！！！"
+   ]
+  },
+  {
+   "speaker": "受伤的人形",
+   "lines": [
+    "呜……！我的腿……我动不了了……"
+   ]
+  },
+  {
+   "speaker": "惊慌的人形",
+   "lines": [
+    "我来帮你！"
+   ]
+  },
+  {
+   "speaker": "焦急的人形",
+   "lines": [
+    "喂！你疯了！净化者已经来了，你和她会一起被清除掉的！"
+   ]
+  },
+  {
+   "speaker": "惊慌的人形",
+   "lines": [
+    "但我们不能丢下她！"
+   ]
+  },
+  {
+   "speaker": "净化者",
+   "lines": [
+    "【检测到大量异常智能体，执行清除程序——】"
+   ]
+  },
+  {
+   "speaker": "焦急的人形",
+   "lines": [
+    "啧，麻烦死了……我来引开它们！"
+   ]
+  },
+  {
+   "speaker": "焦急的人形",
+   "lines": [
+    "喂！！！你们这些家伙！！！"
+   ]
+  },
+  {
+   "speaker": "焦急的人形",
+   "lines": [
+    "看这里——！！连目标都看不清楚了还当什么净化者！"
+   ]
+  },
+  {
+   "speaker": "",
+   "lines": [
+    "暴露在街道上的人形迅速吸引了净化者的注意。一瞬间，净化者已将武器瞄准了她。"
+   ]
+  },
+  {
+   "speaker": "焦急的人形",
+   "lines": [
+    "！！好快！！"
+   ]
+  },
+  {
+   "speaker": "净化者",
+   "lines": [
+    "【清除——】"
+   ]
+  },
+  {
+   "speaker": "惊慌的人形",
+   "lines": [
+    "不要——"
+   ]
+  },
+  {
+   "speaker": "焦急的人形",
+   "lines": [
+    "……？！"
+   ]
+  },
+  {
+   "speaker": "克罗琦",
+   "lines": [
+    "还真是千钧一发啊。"
+   ]
+  },
+  {
+   "speaker": "帕斯卡",
+   "lines": [
+    "执行教授的指令！克罗琦，顶住正面火力！苏尔，掩护人形们撤离！"
+   ]
+  },
+  {
+   "speaker": "苏尔",
+   "lines": [
+    "收到！"
+   ]
+  },
+  {
+   "speaker": "",
+   "lines": [
+    "狂风骤雨般的攻击被克罗琦的盾牌挡下，苏尔率领着失去战斗能力的人形们有序撤离战场。"
+   ]
+  },
+  {
+   "speaker": "惊慌的人形",
+   "lines": [
+    "帕斯卡！是帕斯卡她们！"
+   ]
+  },
+  {
+   "speaker": "焦急的人形",
+   "lines": [
+    "哈……总算可以松一口气了。"
+   ]
+  },
+  {
+   "speaker": "帕斯卡",
+   "lines": [
+    "抱歉，我们来晚了。还能走吗？"
+   ]
+  },
+  {
+   "speaker": "惊慌的人形",
+   "lines": [
+    "我的朋友腿受伤了，没办法移动……"
+   ]
+  },
+  {
+   "speaker": "帕斯卡",
+   "lines": [
+    "别着急，这里有额外的<span data-ref=\"38\">算量</span>。马上就没事了。"
+   ]
+  },
+  {
+   "speaker": "",
+   "lines": [
+    "温暖的光线笼罩着人形受伤的双腿，伤口迅速恢复。"
+   ]
+  },
+  {
+   "speaker": "帕斯卡",
+   "lines": [
+    "现在应该能行动了。撤回指挥部附近吧，那里会有人接应你们进一步治疗。"
+   ]
+  },
+  {
+   "speaker": "受伤的人形",
+   "lines": [
+    "啊……我、我知道了！"
+   ]
+  },
+  {
+   "speaker": "焦急的人形",
+   "lines": [
+    "别磨蹭了！我们赶紧走吧！"
+   ]
+  },
+  {
+   "speaker": "焦急的人形",
+   "lines": [
+    "帕斯卡……你们一定要平安回来！"
+   ]
+  },
+  {
+   "speaker": "帕斯卡",
+   "lines": [
+    "一定会的。"
+   ]
+  },
+  {
+   "speaker": "",
+   "lines": [
+    "人形们用尽全身力气将伤者扶起，开始往绿洲后方移动。"
+   ]
+  },
+  {
+   "speaker": "克罗琦",
+   "lines": [
+    "说什么额外的算量……明明在治疗教授的时候，你就几乎把算量用完了吧。"
+   ]
+  },
+  {
+   "speaker": "帕斯卡",
+   "lines": [
+    "别担心，我心里有数。"
+   ]
+  },
+  {
+   "speaker": "克罗琦",
+   "lines": [
+    "你可别倒在战场上。"
+   ]
+  },
+  {
+   "speaker": "苏尔",
+   "lines": [
+    "帕斯卡，我这边的人形预计3分钟后疏散完毕！可以联络教授了！"
+   ]
+  },
+  {
+   "speaker": "克罗琦",
+   "lines": [
+    "有了教授的指挥还真是不一样啊。"
+   ]
+  },
+  {
+   "speaker": "帕斯卡",
+   "lines": [
+    "教授，这里是帕斯卡，已在预定坐标点完成任务。"
+   ]
+  },
+  {
+   "speaker": "我",
+   "lines": [
+    "已在指挥部就位。汇报现在的情况。"
+   ]
+  },
+  {
+   "speaker": "帕斯卡",
+   "lines": [
+    "绿洲最外围区域的防御系统已被全面攻破，外环区域已被净化者占领。"
+   ]
+  },
+  {
+   "speaker": "帕斯卡",
+   "lines": [
+    "我们救下了外环约三分之二的人形，他们正往指挥部回撤。"
+   ]
+  },
+  {
+   "speaker": "",
+   "lines": [
+    "帕斯卡看向绿洲外环。曾经的家园已经满是战火的痕迹，源源不断的净化者正向前逼近。"
+   ]
+  },
+  {
+   "speaker": "帕斯卡",
+   "lines": [
+    "无论如何，我们必须要守住最后的家园……！"
+   ]
+  },
+  {
+   "speaker": "帕斯卡",
+   "lines": [
+    "教授，请给我们指令，只有您能救下绿洲了！"
+   ]
+  },
+  {
+   "speaker": "我",
+   "lines": [
+    "利用中环的建筑物架设临时防线，阻止净化者继续推进！"
+   ]
+  },
+  {
+   "speaker": "帕斯卡",
+   "lines": [
+    "其余战斗人员也已经就位，请指挥我们作战！"
+   ]
+  },
+  {
+   "speaker": "我",
+   "lines": [
+    "交给我吧。"
+   ]
+  }
+ ],
+ "charaRules": ".avg-chara[data-img-id=\"101\"] {  height: 50.4000em;  transform: translate(12.3000em, 8.3250em);  width: 50.4000em;}.avg-chara[data-img-id=\"101\"] div {  bottom: 12.8125em;  height: 28.875em;  left: 0em;  transform: translate(14.8563em,-10.7625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"101\"] {  bottom: -12.8125em;  left: -14.84375em;}.avg-chara.pos2[data-img-id=\"101\"] {  bottom: -12.8125em;  left: -12.5em;}.avg-chara.pos3[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 0em;}.avg-chara.pos4[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 14.0625em;transform: translate(12.3000em, 8.3250em) scale(-1, 1)}.avg-chara.pos5[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 14.84375em;transform: translate(12.3000em, 8.3250em) scale(-1, 1)}.avg-chara[data-img-id=\"103\"] {  height: 52.8000em;  transform: translate(11.1000em, 9.5250em);  width: 52.8000em;}.avg-chara[data-img-id=\"103\"] div {  bottom: 14.0625em;  height: 28.875em;  left: -3.125em;  transform: translate(16.0562em,-11.9625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"103\"] {  bottom: -14.0625em;  left: -10.78125em;}.avg-chara.pos2[data-img-id=\"103\"] {  bottom: -14.0625em;  left: -8.4375em;}.avg-chara.pos3[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 3.125em;}.avg-chara.pos4[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 15.625em;}.avg-chara.pos5[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 17.96875em;}.avg-chara[data-img-id=\"105\"] {  height: 60.8000em;  transform: translate(7.1000em, 13.5250em);  width: 60.8000em;}.avg-chara[data-img-id=\"105\"] div {  bottom: 13.4375em;  height: 28.875em;  left: 0em;  transform: translate(20.0562em,-15.9625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"105\"] {  bottom: -13.4375em;  left: -14.21875em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos2[data-img-id=\"105\"] {  bottom: -13.4375em;  left: -11.875em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos3[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 0em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos4[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 11.875em;}.avg-chara.pos5[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 14.21875em;}.avg-chara[data-img-id=\"101\"] {  height: 50.4000em;  transform: translate(12.3000em, 8.3250em);  width: 50.4000em;}.avg-chara[data-img-id=\"101\"] div {  bottom: 12.8125em;  height: 28.875em;  left: 0em;  transform: translate(14.8563em,-10.7625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"101\"] {  bottom: -12.8125em;  left: -14.84375em;}.avg-chara.pos2[data-img-id=\"101\"] {  bottom: -12.8125em;  left: -12.5em;}.avg-chara.pos3[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 0em;}.avg-chara.pos4[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 14.0625em;transform: translate(12.3000em, 8.3250em) scale(-1, 1)}.avg-chara.pos5[data-img-id=\"101\"] {  bottom: -12.8125em;  left: 14.84375em;transform: translate(12.3000em, 8.3250em) scale(-1, 1)}.avg-chara[data-img-id=\"103\"] {  height: 52.8000em;  transform: translate(11.1000em, 9.5250em);  width: 52.8000em;}.avg-chara[data-img-id=\"103\"] div {  bottom: 14.0625em;  height: 28.875em;  left: -3.125em;  transform: translate(16.0562em,-11.9625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"103\"] {  bottom: -14.0625em;  left: -10.78125em;}.avg-chara.pos2[data-img-id=\"103\"] {  bottom: -14.0625em;  left: -8.4375em;}.avg-chara.pos3[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 3.125em;}.avg-chara.pos4[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 15.625em;}.avg-chara.pos5[data-img-id=\"103\"] {  bottom: -14.0625em;  left: 17.96875em;}.avg-chara[data-img-id=\"105\"] {  height: 60.8000em;  transform: translate(7.1000em, 13.5250em);  width: 60.8000em;}.avg-chara[data-img-id=\"105\"] div {  bottom: 13.4375em;  height: 28.875em;  left: 0em;  transform: translate(20.0562em,-15.9625em);  width: 20.6875em;}.avg-chara.pos1[data-img-id=\"105\"] {  bottom: -13.4375em;  left: -14.21875em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos2[data-img-id=\"105\"] {  bottom: -13.4375em;  left: -11.875em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos3[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 0em;transform: translate(7.1000em, 13.5250em) scale(-1, 1)}.avg-chara.pos4[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 11.875em;}.avg-chara.pos5[data-img-id=\"105\"] {  bottom: -13.4375em;  left: 14.21875em;}",
+ "problems": [],
+ "pageErrors": [],
+ "summary": {
+  "contentShots": 49,
+  "observed": 49,
+  "done": true,
+  "endOfScene": true,
+  "typeStartDelays": [
+   1818.7,
+   0.2,
+   602,
+   0.1,
+   0.2,
+   0.1,
+   0.3,
+   612.6,
+   0.1,
+   0.3,
+   0.1,
+   0.1,
+   0.2,
+   0.2,
+   0.2,
+   0.4,
+   0,
+   0.1,
+   0.2,
+   0.2,
+   1002,
+   1003.2,
+   0.2,
+   0.4,
+   1003.1,
+   0.1,
+   0.1,
+   1003.5,
+   1002.9,
+   0.2,
+   0.1,
+   0.2,
+   0.1,
+   1002.5,
+   1603.1,
+   208.9,
+   206.8,
+   612,
+   615.8,
+   602.2,
+   212.7,
+   211.4,
+   2.3,
+   610.4,
+   605.1,
+   2.1,
+   201.9,
+   201,
+   201.8
+  ]
+ }
+}

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>M3 立绘自检 —— 三张立绘 × posId1–5 × dark × 多表情</title>
+<link rel="stylesheet" href="css/avg.css">
+<style>
+  body {background: #1b1e24; color: #dfe3ea; font: 14px/1.6 'Microsoft YaHei', sans-serif; margin: 0; padding: 16px 20px;}
+  h1 {font-size: 18px; margin: 4px 0 12px;}
+  h2 {font-size: 14px; margin: 18px 0 6px; color: #9fc3ff;}
+  section.chars {display: flex; flex-wrap: wrap; gap: 10px;}
+  .mini {position: relative; width: 504px; height: 227px; outline: 1px solid #4a5160; background: #0d0f13;}
+  .mini figcaption {position: absolute; left: 4px; top: 2px; z-index: 2; font-size: 12px; color: #ffd479; text-shadow: 0 0 3px #000;}
+  .stage {position: relative; width: 1200px; height: 540px; font-size: 16px; overflow: hidden;
+          transform: scale(0.42); transform-origin: 0 0;
+          background: linear-gradient(#39506b, #25364a);}
+  .stage > div {position: absolute; inset: 0; overflow: hidden;}
+  #log {background: #10131a; border: 1px solid #333a48; padding: 10px 12px; white-space: pre-wrap; margin-top: 16px;}
+  .pass {color: #7dd87d;} .fail {color: #ff7d7d;}
+</style>
+</head>
+<body>
+<h1>M3 立绘自检</h1>
+<p>断言：脸区域换脸/还原逐字节可逆（脸不偏移）、区域外像素零扰动、三张立绘脚位对齐、
+   deriveLayout 反推的整体缩放与已知件一致、.dark 亮度 0.5。下方为目视图。</p>
+<div id="gallery"></div>
+<pre id="log">运行中…</pre>
+<script type="module">
+import {CANVAS, buildChara, buildCharaRules, compositeBody, faceRegion, drawFace,
+        deriveLayout, imgSizeOf} from './js/engine/sprite.js';
+
+const STAGE = {width: 1200, height: 540, fontSize: 16};
+const CHARS = [
+  {name: 'persicaria', imgId: 101,
+   layout: 'data/layouts/persicaria_avg.json',
+   lpic: 'res/Assets/Res/Character/persicaria_avg/lpic_persicaria_avg.png',
+   face: (id) => `res/Assets/Res/Character/persicaria_avg/Face/persicaria_avg_face_${id}.png`,
+   faces: [1, 10]},
+  {name: 'sol', imgId: 103,
+   layout: 'data/layouts/sol_avg.json',
+   lpic: 'res/Assets/Res/Character/sold_avg/lpic_sold.png',
+   face: (id) => `res/Assets/Res/Character/sol_avg/Face/sol_avg_face_${id}.png`,
+   faces: [1, 2]},
+  {name: 'croque', imgId: 105,
+   layout: 'data/layouts/croque_avg.json',
+   lpic: 'res/Assets/Res/Character/croque_avg/lpic_croque_avg.png',
+   face: (id) => `res/Assets/Res/Character/croque_avg/Face/croque_avg_face_${id}.png`,
+   faces: [1, 2]},
+];
+
+const logEl = document.querySelector('#log');
+const lines = [];
+let asserts = 0;
+const failures = [];
+function check(name, ok, detail = '') {
+  asserts++;
+  if (!ok) failures.push(`${name}${detail ? ' —— ' + detail : ''}`);
+  lines.push(`${ok ? '✓' : '✗'} ${name}${detail ? '（' + detail + '）' : ''}`);
+}
+
+const loadImage = (src) => new Promise((resolve, reject) => {
+  const img = new Image();
+  img.onload = () => resolve(img);
+  img.onerror = () => reject(new Error('加载失败：' + src));
+  img.src = src;
+});
+
+/* —— 像素比较工具（整幅快照，按区域裁断）—— */
+const snap = (ctx) => ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
+function regionRect(region, canvas) {
+  const x0 = Math.max(0, Math.floor(region[0]));
+  const y0 = Math.max(0, Math.floor(region[1]));
+  const x1 = Math.min(canvas.width, Math.ceil(region[0] + region[2]));
+  const y1 = Math.min(canvas.height, Math.ceil(region[1] + region[3]));
+  return {x0, y0, x1, y1};
+}
+function pixelsEqual(a, b, region, wantEqual) {
+  const {x0, y0, x1, y1} = regionRect(region, {width: a.width, height: a.height});
+  for (let y = 0; y < a.height; y++) {
+    for (let x = 0; x < a.width; x++) {
+      const inside = x >= x0 && x < x1 && y >= y0 && y < y1;
+      if (inside !== wantEqual) continue;
+      const i = (y * a.width + x) * 4;
+      if (a.data[i] !== b.data[i] || a.data[i + 1] !== b.data[i + 1]
+          || a.data[i + 2] !== b.data[i + 2] || a.data[i + 3] !== b.data[i + 3]) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+const outsideEqual = (a, b, r) => pixelsEqual(a, b, r, false);
+const regionChanged = (a, b, r) => !pixelsEqual(a, b, r, true);
+
+/* 换脸还原的 getImageData→putImageData 往返，对半透明像素有预乘取整损耗
+   （参考实现同款，putImageData 原样写回的就是 getImageData 的值）。
+   判据：不透明像素必须逐字节相等；半透明损耗只计数上报。
+   扫描范围只取参考实际管理的整数矩形（floor 位置 + ceil 尺寸）：
+   参考用浮点 faceArg 画脸、用整数矩形还原，小数不互补时右/下缘会留
+   ≤1px 残差条带（如 sol 的 x=525），这是参考固有观感，复刻保持一致。 */
+function restoreRoundtrip(before, restored, arg) {
+  const x0 = Math.max(0, arg[0]);
+  const y0 = Math.max(0, arg[1]);
+  const x1 = Math.min(before.width, arg[0] + arg[2]);
+  const y1 = Math.min(before.height, arg[1] + arg[3]);
+  let opaqueDiff = 0;
+  let softDiff = 0;
+  const samples = [];
+  for (let y = y0; y < y1; y++) {
+    for (let x = x0; x < x1; x++) {
+      const i = (y * before.width + x) * 4;
+      if (before.data[i] === restored.data[i] && before.data[i + 1] === restored.data[i + 1]
+          && before.data[i + 2] === restored.data[i + 2]
+          && before.data[i + 3] === restored.data[i + 3]) continue;
+      if (before.data[i + 3] === 255) opaqueDiff++; else softDiff++;
+      if (samples.length < 5) {
+        samples.push(`(${x},${y}) before=[${before.data[i]},${before.data[i + 1]},`
+            + `${before.data[i + 2]},${before.data[i + 3]}] after=[${restored.data[i]},`
+            + `${restored.data[i + 1]},${restored.data[i + 2]},${restored.data[i + 3]}]`);
+      }
+    }
+  }
+  return {opaqueDiff, softDiff, samples};
+}
+
+/* 立绘脚底的舞台 y：bottom: pos.y/32em → 盒子底缘在 y 向下坐标里是
+   舞台高 − pos.y/2（pos.y 为负 → 盒子沉到台面下，是常见的膝上裁切）。
+   画布MaxY 按 imgSize/CANVAS 折算进盒子。扫描只取最底一行，够用且快。 */
+function footStageY(ctx, config, posId = 3) {
+  const {width, height} = ctx.canvas;
+  const data = ctx.getImageData(0, 0, width, height).data;
+  let maxY = -1;
+  for (let y = height - 1; y >= 0 && maxY < 0; y--) {
+    for (let x = 0; x < width; x++) {
+      if (data[(y * width + x) * 4 + 3] > 0) {maxY = y; break;}
+    }
+  }
+  const imgSize = imgSizeOf(config);
+  const boxBottom = STAGE.height - config['AvgHero' + posId].pos[1] / 2;
+  return boxBottom - imgSize + (maxY + 1) * imgSize / CANVAS;
+}
+
+/* —— 目视画廊：一张立绘一行，pos1..5 + dark + 两张表情 —— */
+const ruleStyle = document.createElement('style');
+document.head.append(ruleStyle);
+const gallery = document.querySelector('#gallery');
+
+function makeStage() {
+  const mini = document.createElement('figure');
+  mini.className = 'mini';
+  const stage = document.createElement('div');
+  stage.className = 'stage';
+  const charas = document.createElement('div');
+  stage.append(charas);
+  mini.append(stage);
+  return {mini, charas};
+}
+function caption(mini, text) {
+  const cap = document.createElement('figcaption');
+  cap.textContent = text;
+  mini.append(cap);
+}
+/* 画廊画布用 512（数学与 1024 等价，sprite.js 全部参数化过）省显存；
+   断言画布走 CANVAS=1024 正式档。 */
+async function paintChara(chara, lpicImg, config, canvasSize, {face = 0, filePathOf} = {}) {
+  const context = chara.firstElementChild.getContext('2d');
+  compositeBody(context, lpicImg, config, {canvasSize});
+  const region = faceRegion(config, canvasSize);
+  if (face && region) await drawFace(context, config, face, region, {filePathOf});
+  return context;
+}
+
+async function buildGallery(assets) {
+  ruleStyle.textContent = buildCharaRules(
+      assets.map((a) => ({imgId: a.imgId, config: a.config})), STAGE);
+  for (const asset of assets) {
+    const section = document.createElement('section');
+    section.className = 'chars';
+    const h2 = document.createElement('h2');
+    h2.textContent = `${asset.name} —— imgSize ${imgSizeOf(asset.config).toFixed(1)}px`;
+    gallery.append(h2, section);
+    for (let posId = 1; posId <= 5; posId++) {
+      const {mini, charas} = makeStage();
+      const chara = buildChara(asset.imgId, 512);
+      chara.classList.add('pos' + posId);
+      await paintChara(chara, asset.lpicImg, asset.config, 512);
+      charas.append(chara);
+      caption(mini, `pos${posId}`);
+      section.append(mini);
+    }
+    const variants = [['dark', {}], ['表情 ' + asset.faces[0], {face: asset.faces[0]}],
+                      ['表情 ' + asset.faces[1], {face: asset.faces[1]}]];
+    for (const [label, opts] of variants) {
+      const {mini, charas} = makeStage();
+      const chara = buildChara(asset.imgId, 512);
+      chara.classList.add('pos3');
+      if (label === 'dark') chara.classList.add('dark');
+      await paintChara(chara, asset.lpicImg, asset.config, 512,
+          {...opts, filePathOf: asset.face});
+      charas.append(chara);
+      caption(mini, label);
+      section.append(mini);
+    }
+  }
+}
+
+/* —— 断言主流程 —— */
+async function run(assets) {
+  for (const asset of assets) {
+    const {name, config, lpicImg} = asset;
+    const chara = buildChara(asset.imgId);
+    const context = chara.firstElementChild.getContext('2d', {willReadFrequently: true});
+    compositeBody(context, lpicImg, config);
+    const region = faceRegion(config);
+    check(`${name} 脸区域存在`, !!region && region.every(Number.isFinite),
+        region ? region.map((v) => v.toFixed(1)).join(',') : 'null');
+
+    const before = snap(context);
+    // 参考的 defaultFaceMap 存的是**区域裁剪**快照（getImageData(faceArg)），
+    // 还原时 putImageData 才能落回原矩形；整幅快照会写偏。
+    const arg = region.slice(0, 2).map(Math.floor)
+        .concat(region.slice(2).map(Math.ceil));
+    const defaultFace = context.getImageData(...arg);
+    await drawFace(context, config, 1, region, {filePathOf: asset.face});
+    const swapped = snap(context);
+    check(`${name} 换脸后区域内像素改变`, regionChanged(before, swapped, region));
+    check(`${name} 换脸后区域外像素零扰动`, outsideEqual(before, swapped, region));
+    await drawFace(context, config, null, region, {defaultFace});
+    const restored = snap(context);
+    const round = restoreRoundtrip(before, restored, arg);
+    check(`${name} 还原默认脸：不透明像素逐字节相等`, round.opaqueDiff === 0,
+        `半透明预乘损耗 ${round.softDiff} px（参考同款，允许）`
+        + (round.samples.length ? '；差异采样 ' + round.samples.join(' ') : ''));
+    check(`${name} 还原后区域外仍零扰动`, outsideEqual(before, restored, region));
+
+    asset.footY = footStageY(context, config, 3);
+    const derived = deriveLayout(lpicImg);
+    const known = Math.abs(config.sizeDelta * config.m_LocalScale);
+    const got = Math.abs(derived.sizeDelta * derived.m_LocalScale);
+    const err = Math.abs(got - known) / known;
+    asset.derivedErr = err;
+    // 门槛 6%：三份已知件的显示身高本身在 790 锚点 ±4.3% 浮动，
+    // 锚定 790 的推导不可能优于锚点方差；这只是标定起点（M8 精标）。
+    check(`${name} deriveLayout 反推缩放误差 ≤6%`, err <= 0.06,
+        `已知 ${known.toFixed(1)} → 反推 ${got.toFixed(1)}，偏差 ${(err * 100).toFixed(2)}%`);
+  }
+
+  // 实测结论：成人模型（persicaria/sol）脚位差 ~19px；Croque 是幼体模型，
+  // 游戏 layout 故意把脚抬高 ~70–90px。三者全对齐不成立，也不应成立。
+  const ys = assets.map((a) => a.footY);
+  check('立绘脚位均低于台底（膝上裁切）', ys.every((y) => y > STAGE.height),
+      assets.map((a) => `${a.name}=${a.footY.toFixed(1)}px`).join(' '));
+  const [pa, sol] = assets;
+  check('成人模型脚位对齐（persicaria/sol 差 ≤25px）',
+      Math.abs(pa.footY - sol.footY) <= 25,
+      `差 ${Math.abs(pa.footY - sol.footY).toFixed(1)}px`);
+
+  const darkProbe = document.querySelector('.mini .avg-chara');
+  darkProbe.classList.add('dark');
+  const filter = getComputedStyle(darkProbe).filter;
+  check('.dark 命中 brightness(0.5)', filter.replace(/\s/g, '') === 'brightness(0.5)', filter);
+
+  check('画廊立绘数量 = 3×8', document.querySelectorAll('.mini canvas').length === 24);
+}
+
+let assets = [];
+try {
+  assets = await Promise.all(CHARS.map(async (c) => ({
+    ...c,
+    config: await (await fetch(c.layout)).json(),
+    lpicImg: await loadImage(c.lpic),
+  })));
+  await buildGallery(assets);
+  await run(assets);
+} catch (e) {
+  failures.push('异常：' + e.stack);
+  lines.push('✗ 异常：' + e.message);
+}
+
+const ok = failures.length === 0;
+logEl.innerHTML = lines.map((l) =>
+  `<span class="${l.startsWith('✓') ? 'pass' : 'fail'}">${l}</span>`).join('\n')
+  + `\n\n${ok ? '全部通过' : '存在 ' + failures.length + ' 条失败'}`
+  + `（断言 ${asserts} 条）`;
+
+await fetch('/freeze?scene=sprite_report', {
+  method: 'POST',
+  body: JSON.stringify({
+    ok, asserts, failureCount: failures.length, failures,
+    feet: assets.map((a) => ({name: a.name, y: a.footY})),
+    derived: assets.map((a) => ({name: a.name, err: a.derivedErr})),
+    done: true,
+  }, null, 1),
+});
+</script>
+</body>
+</html>

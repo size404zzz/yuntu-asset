@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<title>avg ui harness</title>
+<link rel="stylesheet" href="/tools/ref/avg.css">
+<link rel="stylesheet" href="/tools/ref/pandect.css">
+<link rel="stylesheet" href="/tools/ref/nav.css">
+<style>
+  html, body { margin: 0; background: #1b1b1b; }
+  /* 与冻结页同款：滚动条会夹窄 #avg-container，立绘规则按 clientWidth 算。 */
+  html { overflow: hidden; }
+  body {
+    color: black;
+    font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", Lato,
+        "Liberation Sans", "Noto Sans", "Helvetica Neue", Helvetica, sans-serif;
+  }
+  @font-face {
+    font-family: 'Mohave'; font-style: normal; font-weight: 300;
+    font-display: block;
+    src: url(/data/fonts/Mohave-Light.woff2) format('woff2'),
+         url(/data/fonts/Mohave-Light.woff) format('woff');
+  }
+</style>
+</head>
+<body>
+<div id="mount"></div>
+<script type="module">
+/**
+ * M6 UI 对拍：与 tools/ref/uidriver.mjs 的交互脚本路径同序同步驱动我们的
+ * Player（虚拟钟），每一步抓同款 uiState 与 expected-ui_<scene>.json 逐字段
+ * 对拍。落点规则也同款（两段式 waitIdle / waitLineChange、now-idle 双模式），
+ * 因为「参考在什么时候抓拍」本身就是契约的一部分。
+ * 已知不比对项：参考 clearStage 后陈旧 compose 链会在 manageContentType
+ * 抛 TypeError（无 epoch 护栏），我们同场景下由 bump 静默拦停——DOM 结果
+ * 相同，只有 console 噪声不同，故参考的 pageErrors 不进契约。
+ */
+import {Player} from '/js/engine/player.js';
+import {VirtualTimer} from '/js/test/harness.js';
+
+const problems = [];
+const pageErrors = [];
+addEventListener('error', (e) => pageErrors.push(`${e.message} @ ${e.filename}:${e.lineno}`));
+addEventListener('unhandledrejection', (e) => pageErrors.push(`rejection: ${e.reason?.message || e.reason}`));
+
+const params = new URLSearchParams(location.search);
+const SCENE = params.get('scene') || 'scene1';
+const TITLES = {scene1: '临危受命', scene2: '背水一战', scene3: '绝处逢生'};
+const TICK_MS = 60;
+const STABLE_TICKS = 6;
+
+const clock = new VirtualTimer();
+const player = new Player({
+  mount: document.getElementById('mount'),
+  mode: 'clamp',
+  timer: clock,
+  filePathOf: (name) => '/images/' + name[0].toUpperCase() + name.slice(1),
+  layoutOf: async (img) => (await fetch('/data/layouts/' + img.imgPath + '.json')).json(),
+  getName: () => '教授',
+  getGender: () => 'TA',
+  characters: await (await fetch('/data/Avg_character.json')).json(),
+  nouns: await (await fetch('/data/Noun_des.json')).json(),
+});
+const refs = player.refs;
+
+const scene = await (await fetch(`/data/fixtures/${SCENE}.json`)).json();
+player.setScene(scene, TITLES[SCENE] || SCENE, '1', '绿洲防线', '');
+
+const PLAIN = (html) => new DOMParser().parseFromString(html, 'text/html').body.textContent;
+const allPages = new Set();
+for (const shot of Object.values(player.scene)) {
+  for (const page of [...(shot.content || [])]) allPages.add(PLAIN(page));
+}
+
+const sig = () => [
+  refs.avgLine.innerHTML, refs.avgDialog.className, refs.avgOverlay.className,
+  refs.avgChoices.className, refs.avgLogBox.children.length, player.container.className,
+  refs.avgPandect.className, refs.avgDes.className, refs.avgDesDt.textContent,
+  refs.avgControlAuto.className,
+].join('\u0000');
+const typedNow = () => {
+  const html = refs.avgLine.innerHTML;
+  return html === '' || allPages.has(PLAIN(html));
+};
+
+async function waitIdle() {
+  const entry = refs.avgLine.innerHTML;
+  for (let guard = 50; guard--; ) {
+    await player.idle();
+    await clock.advance(TICK_MS);
+    if (refs.avgLine.innerHTML !== entry) break;
+  }
+  let previous = null;
+  let same = 0;
+  for (let guard = 500; guard--; ) {
+    await player.idle();
+    await clock.advance(TICK_MS);
+    const current = sig();
+    same = current === previous ? same + 1 : 0;
+    previous = current;
+    if (same >= STABLE_TICKS && typedNow()) break;
+  }
+  await clock.advance(150);
+}
+
+async function waitLineChange(before) {
+  for (let guard = 500; guard--; ) {
+    await player.idle();
+    await clock.advance(TICK_MS);
+    if (refs.avgLine.innerHTML !== before) break;
+  }
+  await waitIdle();
+}
+
+const uiState = () => ({
+  container: player.container.className,
+  stage: refs.avgStage.className,
+  overlay: refs.avgOverlay.className,
+  pandect: refs.avgPandect.className,
+  dialog: refs.avgDialog.className,
+  speaker: refs.avgSpeaker.innerHTML,
+  lineHTML: refs.avgLine.innerHTML,
+  choicesClass: refs.avgChoices.className,
+  choices: [...refs.avgChoices.children].map((el) =>
+      ({text: el.textContent, jumpAct: el.dataset.jumpAct})),
+  autoClass: refs.avgControlAuto.className,
+  logCount: refs.avgLogBox.children.length,
+  logTail: refs.avgLogBox.lastElementChild?.innerHTML ?? null,
+  desClass: refs.avgDes.className,
+  desId: refs.avgDes.dataset.id ?? null,
+  desDt: refs.avgDesDt.textContent,
+  desDd: refs.avgDesDd.textContent.slice(0, 40),
+  expandText: refs.avgDesExpand.textContent,
+  desTypes: [...refs.avgDesType.children].map(
+      (li) => li.textContent + (li.className ? '*' : '')),
+  entriesCount: refs.avgDesEntries.children.length,
+  entriesHead: [...refs.avgDesEntries.children].slice(0, 5).map(
+      (li) => li.textContent + (li.className ? '*' : '')),
+  entriesScrollTop: Math.round(refs.avgDesEntries.scrollTop),
+  logVisible: getComputedStyle(refs.avgLog).display,
+  pandectVisible: getComputedStyle(refs.avgPandect).display,
+  skipVisible: getComputedStyle(refs.avgSkip).display,
+});
+
+const steps = [];
+async function step(name, action, mode = 'idle') {
+  if (action) await action();
+  if (mode === 'idle') await waitIdle();
+  steps.push({name, state: uiState()});
+}
+async function clickUntil(name, cond, cap = 80) {
+  for (let guard = cap; guard--; ) {
+    if (cond()) return void steps.push({name, state: uiState()});
+    player.container.click();
+    await waitIdle();
+  }
+  problems.push(`${name}: ${cap} 次点击内条件没成立`);
+  steps.push({name, state: uiState()});
+}
+const lineHasRef = () => !!refs.avgLine.querySelector('[data-ref]');
+const choicesShown = (n) => () => refs.avgChoices.children.length === n;
+
+async function dictRoundTrip() {
+  await step('ref-show', () => refs.avgLine.querySelector('[data-ref]').click(), 'now');
+  await step('des-return', () => refs.avgDesReturn.click(), 'now');
+  await step('backdrop-close', () => refs.avgPandect.click(), 'now');
+}
+
+async function scene1Script() {
+  await step('boot', null, 'now');
+  await step('shot1', () => player.container.click());
+  await step('log-open', () => refs.avgControlLog.click(), 'now');
+  await step('play-through-log', () => player.container.click());
+  await step('dict-open', () => refs.avgControlDict.click(), 'now');
+  await step('type-hero', () => refs.avgDesType.children[3].click(), 'now');
+  await step('entry-click', () => refs.avgDesEntries.children[2].click(), 'now');
+  await step('backdrop-close', () => refs.avgPandect.click(), 'now');
+  await clickUntil('at-ref', lineHasRef);
+  await dictRoundTrip();
+  await step('expand-toggle', () => refs.avgDesExpand.click(), 'now');
+  await step('backdrop-close-2', () => refs.avgPandect.click(), 'now');
+  await step('hide-on', () => refs.avgControlHideUi.click(), 'now');
+  await step('hide-restore', () => player.container.click(), 'now');
+  await step('auto-enable', () => refs.avgControlAuto.click(), 'now');
+  await step('auto-tick1', () => waitLineChange(refs.avgLine.innerHTML), 'now');
+  await step('auto-tick2', () => waitLineChange(refs.avgLine.innerHTML), 'now');
+  await step('auto-click-cancel', () => player.container.click());
+  await step('auto-tick3', () => waitLineChange(refs.avgLine.innerHTML), 'now');
+  await step('auto-off', () => refs.avgControlAuto.click(), 'now');
+  await step('auto-quiet', () => clock.advance(3200), 'now');
+  await step('skip-open', () => refs.avgControlSkip.click(), 'now');
+  await step('skip-confirm', () => refs.avgSkipConfirm.click());
+  await step('skip-cancel', () => refs.avgSkipCancel.click());
+}
+
+async function scene2Script() {
+  await step('boot', null, 'now');
+  await clickUntil('branch-8', choicesShown(2));
+  await step('choose-2', () => refs.avgChoices.children[1].click());
+  await clickUntil('at-ref', lineHasRef);
+  await dictRoundTrip();
+  await clickUntil('branch-37', choicesShown(3));
+  await step('choose-3', () => refs.avgChoices.children[2].click());
+  await clickUntil('is-end', () => player.container.classList.contains('empty'));
+}
+
+let lastStep = 'start';
+const failures = [];
+let asserts = 0;
+const check = (label, cond, detail = '') => {
+  asserts++;
+  if (!cond && failures.length < 120) {
+    failures.push(label + (detail ? ` —— ${detail}` : ''));
+  }
+};
+
+try {
+  lastStep = 'script';
+  if (SCENE === 'scene2') await scene2Script();
+  else await scene1Script();
+
+  lastStep = 'compare';
+  const expected = await (await fetch(`/data/fixtures/expected-ui_${SCENE}.json`)).json();
+  check('stage', player.container.clientWidth === expected.meta.stage.width
+      && player.container.clientHeight === expected.meta.stage.height,
+      `${player.container.clientWidth}x${player.container.clientHeight}`);
+  check('stepCount', steps.length === expected.steps.length,
+      `ours=${steps.length} ref=${expected.steps.length}`);
+  for (let i = 0; i < Math.min(steps.length, expected.steps.length); i++) {
+    const got = steps[i];
+    const exp = expected.steps[i];
+    check(`step[${i}].name`, got.name === exp.name, `${got.name} != ${exp.name}`);
+    const gs = got.state;
+    const es = exp.state;
+    for (const key of Object.keys(es)) {
+      const g = JSON.stringify(gs[key]);
+      const e = JSON.stringify(es[key]);
+      check(`step[${i}]#${exp.name}.${key}`, g === e,
+          g?.slice(0, 120) + (g !== e ? ` != ` + e?.slice(0, 120) : ''));
+    }
+  }
+  check('problems', problems.length === 0, problems.join(' | '));
+  check('pageErrors', pageErrors.length === 0, pageErrors.join(' | '));
+} catch (error) {
+  problems.push(`主流程在 ${lastStep} 抛错：${error.stack || error}`);
+}
+
+const report = {
+  ok: failures.length === 0 && problems.length === 0 && pageErrors.length === 0,
+  scene: SCENE,
+  asserts,
+  failureCount: failures.length,
+  failures,
+  problems,
+  pageErrors,
+  stepsCaptured: steps.length,
+  done: true,
+};
+await fetch('/freeze?scene=ui_report', {
+  method: 'POST',
+  headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify(report, null, 1),
+});
+document.title = 'ui-report-done';
+</script>
+</body>
+</html>

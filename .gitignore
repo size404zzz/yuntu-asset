@@ -1,0 +1,10 @@
+# 参考实现的抓取件与代理缓存：第三方素材与代码，不入库。
+tools/ref/AvgPlayer.js
+tools/ref/NounDes.js
+tools/ref/avg.css
+tools/ref/pandect.css
+tools/ref/nav.css
+tools/ref/skeleton.html
+tools/ref/harness.html
+tools/ref/cache/
+tools/ref/vendor/

@@ -1,0 +1,108 @@
+/* 编辑器外壳样式。播放器本体一律在 css/avg.css，这里只写外壳，
+   两边类名互不重叠，方便日后把 play.html 单独抽出去跑。 */
+
+:root {
+  --bg: #14151a;
+  --panel: #1c1e26;
+  --panel-2: #23262f;
+  --line: #2e323d;
+  --fg: #d8dae0;
+  --fg-dim: #8b90a0;
+  --accent: #7cc7ff;
+  --warn: #f5a623;
+  --err: #ef5350;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font: 13px/1.5 system-ui, "Microsoft YaHei", sans-serif;
+  margin: 0;
+}
+
+.app { display: flex; flex-direction: column; height: 100vh; }
+
+.bar {
+  align-items: center;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  column-gap: 8px;
+  display: flex;
+  height: 40px;
+  padding: 0 12px;
+}
+
+.bar .title { color: var(--accent); font-weight: 600; margin-right: 8px; }
+.bar .spacer { flex: 1; }
+
+.cols { display: flex; flex: 1; min-height: 0; }
+
+.col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.col-a { background: var(--panel); border-right: 1px solid var(--line); width: 280px; }
+.col-b { background: var(--panel-2); border-right: 1px solid var(--line); width: 420px; }
+.col-c { flex: 1; }
+
+.col > header {
+  border-bottom: 1px solid var(--line);
+  color: var(--fg-dim);
+  font-size: 11px;
+  letter-spacing: .08em;
+  padding: 6px 10px;
+  text-transform: uppercase;
+}
+
+.col > .body { flex: 1; overflow-y: auto; padding: 8px; }
+
+button, select, input, textarea {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--fg);
+  font: inherit;
+  padding: 3px 8px;
+}
+
+button { cursor: pointer; }
+button:hover { border-color: var(--accent); }
+button.primary { background: #2b4257; border-color: #3d6a8f; }
+button.tiny { font-size: 11px; padding: 1px 6px; }
+
+textarea { width: 100%; min-height: 64px; resize: vertical; }
+
+.shot-row {
+  border-left: 3px solid transparent;
+  border-radius: 3px;
+  cursor: pointer;
+  display: grid;
+  gap: 2px 6px;
+  grid-template-columns: 34px 1fr;
+  padding: 5px 6px;
+}
+
+.shot-row:hover { background: #ffffff10; }
+.shot-row.selected { background: #2b4257; border-left-color: var(--accent); }
+.shot-row .num { color: var(--fg-dim); font-family: Consolas, monospace; text-align: right; }
+.shot-row .badges { color: var(--fg-dim); font-size: 11px; grid-column: 2; }
+.shot-row .text { grid-column: 2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.shot-row .speaker { color: var(--warn); font-size: 11px; grid-column: 2; }
+
+.preview-area { align-items: flex-start; display: flex; flex-direction: column; padding: 12px; }
+.transport { display: flex; gap: 6px; margin-top: 10px; }
+
+.report { font-family: Consolas, monospace; font-size: 12px; white-space: pre-wrap; }
+.report .ok { color: #7fd18a; }
+.report .bad { color: var(--err); }
+
+.field { margin-bottom: 10px; }
+.field > label { color: var(--fg-dim); display: block; font-size: 11px; margin-bottom: 3px; }
+.row { display: flex; align-items: center; column-gap: 6px; }
+.muted { color: var(--fg-dim); }
+.warn { color: var(--warn); }

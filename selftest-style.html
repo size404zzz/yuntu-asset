@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>AVG 样式自检 · 13 个形态</title>
+<link rel="stylesheet" href="../css/avg.css">
+<link rel="stylesheet" href="../css/pandect.css">
+<style>
+  body { background: #1a1a1a; color: #ddd; font: 13px/1.5 system-ui, sans-serif;
+         margin: 0; padding: 24px; }
+  h1 { font-size: 16px; margin: 0 0 4px; }
+  p.note { color: #888; margin: 0 0 20px; }
+  .case { margin-bottom: 28px; }
+  .case > .label { color: #7cc7ff; font-family: Consolas, monospace; margin-bottom: 6px; }
+  /* 自检页故意同时挂多个 #avg-container，id 重复但样式按 id 命中全部实例；
+     取元素一律用自己的 root.querySelector，不用 document.getElementById。 */
+  .avg-fit { outline: 1px solid #333; }
+  #fontstate { position: fixed; right: 24px; top: 24px; font-size: 11px; color: #888; }
+</style>
+</head>
+<body>
+<h1>AVG 播放器样式自检</h1>
+<p class="note">对照 wiki 原页面逐形态截图比较。字体就绪前不要截图（换行数不同会让框高算错）。</p>
+<div id="fontstate">字体加载中…</div>
+<div id="cases"></div>
+
+<script type="module">
+import {buildStage, resetStage} from '../js/engine/player.js';
+import {h} from '../js/ui/dom.js';
+
+const SPEAKER = '帕斯卡';
+const SHORT = '教授，您醒了？';
+const LONG = '强大的冲击力让苏尔几乎倒下。帕斯卡立刻上前治疗，但算量依旧抑制不住地从伤口汩汩流出。';
+
+const CASES = [
+  {title: 'type1 · 全屏旁白', form: (r) => {
+    r.avgDialog.className = 'type1';
+    r.avgLine.innerHTML = '而它们看来，我们这些没有扇区归属的异常程序，于是试图把我们赶尽杀绝。';
+  }},
+  {title: 'type2 · 底部横条', form: (r) => {
+    r.avgDialog.className = 'type2';
+    r.avgSpeaker.textContent = SPEAKER;
+    r.avgLine.innerHTML = LONG;
+  }},
+  {title: 'pos1 · 气泡框（左）', form: (r) => {
+    r.avgDialog.className = 'pos1';
+    r.avgSpeaker.textContent = SPEAKER;
+    r.avgLine.innerHTML = SHORT;
+  }},
+  {title: 'pos2 · 气泡框（中）', form: (r) => {
+    r.avgDialog.className = 'pos2';
+    r.avgSpeaker.textContent = '克罗琦';
+    r.avgLine.innerHTML = LONG;
+  }},
+  {title: 'pos3 · 气泡框（右）', form: (r) => {
+    r.avgDialog.className = 'pos3';
+    r.avgSpeaker.textContent = '苏尔';
+    r.avgLine.innerHTML = SHORT;
+  }},
+  {title: 'type4 · 大字', form: (r) => {
+    r.avgDialog.className = 'type4';
+    r.avgSpeaker.textContent = '帕斯卡的声音';
+    r.avgLine.innerHTML = '<span style="font-size:calc((44/44)*1em)">呜哇——</span>';
+  }},
+  {title: 'type5 · 居中白底提示', form: (r) => {
+    r.avgDialog.className = 'type5';
+    r.avgLine.textContent = '“大地之堡垒盖亚提卡号”沙盒屏障启动！';
+  }},
+  {title: 'type5 + fade-out', form: (r) => {
+    r.avgDialog.className = 'type5 fade-out';
+    r.avgLine.textContent = '照进绝地的第一束光芒。';
+  }},
+  {title: '控件条 + 分支选项', form: (r) => {
+    r.avgStage.classList.add('choice');
+    r.avgChoices.className = 'choice';
+    r.avgChoices.append(
+        h('div.avg-choice', {text: '净化者……？'}),
+        h('div.avg-choice', {text: '我有些混乱，从头解释一下情况吧。'}));
+  }},
+  {title: '回廊 log 浮层', form: (r) => {
+    r.avgOverlay.className = 'log';
+    for (const [speaker, line] of [['帕斯卡', SHORT], ['克罗琦', LONG]]) {
+      r.avgLogBox.append(h('div.avg-log-div', null,
+          h('div', {text: speaker}), h('div', null, h('p', {text: line}))));
+    }
+    const last = r.avgLogBox.lastElementChild.children[1];
+    last.append(h('p', null, h('span.selected', {text: '2.我有些混乱，从头解释一下情况吧。'})));
+  }},
+  {title: '跳过确认框', form: (r) => {
+    r.avgOverlay.className = 'skip';
+    r.avgSectorEn.textContent = 'The Oasis Defense';
+    r.avgSectorLocation.textContent = '绿洲防线 #PART.1';
+    r.avgSkipTitle.textContent = '临危受命';
+    r.avgSceneBrief.textContent = '有效的指挥对作战来说至关重要。';
+  }},
+  {title: '词典浏览器（expanded）', form: (r) => {
+    /* 参考 NounDes.js：词典按钮入口给 pandect 加 .expanded，两个 ul 才恢复
+       自然宽度；从正文 data-ref 点进来才是 .des（列表宽度 0）。 */
+    r.avgOverlay.className = 'des';
+    r.avgPandect.className = 'expanded';
+    for (const [i, name] of ['总览', '世界观', '概念', '人物', '事件', '地点', '势力']
+        .entries()) {
+      const li = h('li', {text: name});
+      li.dataset.type = i;
+      if (!i) li.className = 'selected';
+      r.avgDesType.append(li);
+    }
+    for (const [i, name] of ['算量', '扇区', '净化者'].entries()) {
+      const li = h('li', {text: name});
+      li.dataset.id = i;
+      if (!i) li.className = 'selected';
+      r.avgDesEntries.append(li);
+    }
+    r.avgDesDt.textContent = '算量';
+    r.avgDesDd.textContent = '云端世界中用于维系一切运算与存在的通用资源。';
+  }},
+  {title: '行内引用浮出（des）', form: (r) => {
+    r.avgOverlay.className = 'des';
+    r.avgPandect.className = 'des';
+    r.avgDes.dataset.id = '1';
+    r.avgDesDt.textContent = '盖亚提卡号';
+    r.avgDesDd.textContent = '“大地之堡垒”，绿洲防线一役中承载指挥运算的移动平台。';
+  }},
+];
+
+const root = document.getElementById('cases');
+/* ?case=N 只渲染一个形态：整页十三个 540px 舞台高 7000+px，
+   headless 截图后再手工切图极易错位，单形态可固定窗口尺寸。
+   ?mode=none|clamp|scale 切换适配档，默认 none（钉死 1200×540 供逐像素比对）。 */
+const params = new URLSearchParams(location.search);
+const wanted = params.get('case');
+const MODE = params.get('mode') || 'none';
+const selected = wanted === null
+    ? CASES
+    : CASES.filter((_, i) => i === Number(wanted));
+if (wanted !== null && !selected.length) {
+  document.getElementById('fontstate').textContent = `没有形态 #${wanted}`;
+}
+if (selected.length === 1) {
+  document.title = selected[0].title;
+  document.body.dataset.case = String(CASES.indexOf(selected[0]));
+}
+const stages = [];
+for (const testCase of selected) {
+  const mount = h('div.avg-fit-mount');
+  const case_ = h('div.case', null, h('div.label', {text: testCase.title}), mount);
+  root.append(case_);
+  const stage = buildStage(mount, {mode: MODE});
+  stages.push(stage);
+  const refs = resetStage(stage);
+  refs.avgBg.style.backgroundImage =
+      'url(res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg008.png)';
+  refs.avgBg.style.backgroundSize = 'cover';
+  testCase.form(refs);
+}
+
+await document.fonts.ready;
+const box = stages[0].container.getBoundingClientRect();
+document.getElementById('fontstate').textContent =
+    `字体已就绪 · mode=${MODE} · 实测舞台 ${
+      Math.round(box.width * 10) / 10}×${Math.round(box.height)} · 基准 16px · Mohave ${
+      document.fonts.check('16px Mohave') ? '已加载' : '缺失'}`;
+</script>
+</body>
+</html>

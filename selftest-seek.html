@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<title>avg seek harness</title>
+<link rel="stylesheet" href="/tools/ref/avg.css">
+<link rel="stylesheet" href="/tools/ref/pandect.css">
+<link rel="stylesheet" href="/tools/ref/nav.css">
+<style>
+  html, body { margin: 0; background: #1b1b1b; }
+  html { overflow: hidden; }
+  body {
+    color: black;
+    font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", Lato,
+        "Liberation Sans", "Noto Sans", "Helvetica Neue", Helvetica, sans-serif;
+  }
+  @font-face {
+    font-family: 'Mohave'; font-style: normal; font-weight: 300;
+    font-display: block;
+    src: url(/data/fonts/Mohave-Light.woff2) format('woff2'),
+         url(/data/fonts/Mohave-Light.woff) format('woff');
+  }
+</style>
+</head>
+<body>
+<div id="mount-a"></div>
+<div id="mount-b"></div>
+<script type="module">
+/**
+ * M5 seek 自检：验收标准 =「任意镜的 seek 快照」与「从头连续播到该镜暂停」
+ * 的快照逐字节相等。
+ *
+ * A 路（oracle）：虚拟钟 + 逐点击驱动 Player 跑完场景，在每个到达点 settle 后
+ *   抓快照 —— 与 M4 冻结驱动同款语义（到达点以回廊增长定位，直通镜自动飞过）。
+ * B 路：同一 Player 反复 seekShot(到达点 key)（每次从空场重放），settle 后抓
+ *   快照。两路用 js/test/harness.js 的**同一份** settle/snapshot。
+ *
+ * 快照剥掉 phase/settleMs 后整包 JSON 对字节（相位是时序产物，不进 settled 态）。
+ * 附加探针：脏寻址（seek 过一sort再往回 seek）、playShot+fastForward 中途接力、
+ * seekTime 时间线映射、终局清场。场景覆盖 scene1（数组）+ scene2（map 格式、
+ * nextId 跳转、分支）+ scene3（数组、终点 isEnd）。
+ * ?scene=scene1 可只跑一个场景（约 1/3 时长）。
+ */
+import {Player} from '/js/engine/player.js';
+import {
+  makeSettler, makeSnapshotter, createTimeline, VirtualTimer,
+} from '/js/test/harness.js';
+
+const problems = [];
+const pageErrors = [];
+addEventListener('error', (e) => pageErrors.push(`${e.message} @ ${e.filename}:${e.lineno}`));
+addEventListener('unhandledrejection', (e) => pageErrors.push(`rejection: ${e.reason?.message || e.reason}`));
+
+/* ---------- 双舞台：A 路 oracle / B 路 seek ---------- */
+
+const makeRig = async (mountId) => {
+  const clock = new VirtualTimer();
+  const player = new Player({
+    mount: document.getElementById(mountId),
+    mode: 'clamp',
+    timer: clock,
+    filePathOf: (name) => '/images/' + name[0].toUpperCase() + name.slice(1),
+    layoutOf: async (img) => (await fetch('/data/layouts/' + img.imgPath + '.json')).json(),
+    getName: () => '教授',
+    getGender: () => 'TA',
+    characters: await (await fetch('/data/Avg_character.json')).json(),
+  });
+  return {
+    player,
+    clock,
+    timeline: createTimeline(player.container, clock),
+    settle: null,
+    snap: null,
+  };
+};
+
+const rigA = await makeRig('mount-a');
+const rigB = await makeRig('mount-b');
+for (const rig of [rigA, rigB]) {
+  rig.settle = makeSettler({player: rig.player, clock: rig.clock, problems});
+  rig.snap = makeSnapshotter({player: rig.player, timeline: rig.timeline});
+}
+
+/* ---------- 快照对拍 ---------- */
+
+/* 相位/耗时是时序产物；settled 态不含它们。 */
+const stripVolatile = (s) => {
+  if (!s) return null;
+  const {phase, settleMs, ...rest} = s;
+  return rest;
+};
+
+const deepDiff = (a, b, path = '', out = []) => {
+  if (out.length >= 8) return out;
+  if (a === b) return out;
+  const ta = typeof a;
+  if (ta !== typeof b || a === null || b === null || ta !== 'object') {
+    out.push(`${path || '<root>'}: ${JSON.stringify(a)} ≠ ${JSON.stringify(b)}`);
+    return out;
+  }
+  if (Array.isArray(a) !== Array.isArray(b)) {
+    out.push(`${path}: ${Array.isArray(a) ? 'array' : 'object'} ≠ `
+        + `${Array.isArray(b) ? 'array' : 'object'}`);
+    return out;
+  }
+  for (const key of new Set([...Object.keys(a), ...Object.keys(b)])) {
+    deepDiff(a[key], b[key], path ? `${path}.${key}` : key, out);
+  }
+  return out;
+};
+
+const readLog = (player) => [...player.refs.avgLogBox.children].map((div) => ({
+  speaker: div.children[0].innerHTML,
+  lines: [...div.children[1].children].map((p) => p.innerHTML),
+}));
+const rulesOf = (text) => (text || '').split('}')
+    .map((b) => b.replace(/\s+/g, '')).filter(Boolean);
+
+/* ---------- A 路驱动：与 M4 冻结驱动同款 ---------- */
+
+async function driveOracle(rig, scene, tag) {
+  const {player, timeline, settle, snap} = rig;
+  const arrivals = [];
+  let logNow = null;
+  let rulesNow = null;
+  for (let click = 0; click < 300; click++) {
+    timeline.startWindow();
+    const before = player.refs.avgLogBox.children.length;
+    /* 分支镜停着等选项：与 seekShot 的「恒取第一项」同路线。 */
+    if (player.refs.avgChoices.className) {
+      player.refs.avgChoices.firstElementChild.click();
+    } else {
+      player.container.click();
+    }
+    const waited = await settle(scene[player.shotId], `${tag}#${player.shotId}`);
+    if (!player.container.classList.contains('empty')) {
+      if (player.refs.avgLogBox.children.length) logNow = readLog(player);
+      rulesNow = player.styles.textContent || rulesNow;
+    }
+    if (player.container.classList.contains('empty')) {
+      return {arrivals, endOfScene: true, logNow, rulesNow};
+    }
+    const after = player.refs.avgLogBox.children.length;
+    if (after > before) {
+      arrivals.push({
+        key: player.shotId,
+        snap: snap(scene[player.shotId], player.shotId, waited),
+      });
+    }
+    /* after === before：同镜翻页（本批夹具暂无多页镜），继续点。 */
+  }
+  problems.push(`${tag}: 驱动 300 次未到场景尾`);
+  return {arrivals, endOfScene: false, logNow, rulesNow};
+}
+
+/* ---------- 开跑 ---------- */
+
+const FIXTURES = [
+  {id: 'scene1', title: '临危受命'},
+  {id: 'scene2', title: '背水一战'},
+  {id: 'scene3', title: '绝处逢生'},
+];
+const only = new URLSearchParams(location.search).get('scene');
+const fixtures = only ? FIXTURES.filter((f) => f.id === only) : FIXTURES;
+if (!fixtures.length) {
+  problems.push(`?scene=${only} 不在夹具清单里`);
+}
+
+const failures = [];
+let asserts = 0;
+const check = (label, cond, detail = '') => {
+  asserts++;
+  if (!cond && failures.length < 120) {
+    failures.push(label + (detail ? ` —— ${detail}` : ''));
+  }
+};
+let pairs = 0;
+
+/* 整个流程兜在 try/finally 里：任何一处抛错都要把报告送出去，
+   lastStep 指认卡点。 */
+let lastStep = 'start';
+const post = async () => {
+  const report = {
+    ok: failures.length === 0 && problems.length === 0 && pageErrors.length === 0,
+    asserts,
+    failureCount: failures.length,
+    failures,
+    problems,
+    pageErrors,
+    pairs,
+    lastStep,
+    done: true,
+  };
+  await fetch('/freeze?scene=seek_report', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(report, null, 1),
+  });
+  document.title = 'seek-report-done';
+};
+
+try {
+  for (const fixture of fixtures) {
+    lastStep = `${fixture.id}:load`;
+    const tag = fixture.id;
+    const scene = await (await fetch(`/data/fixtures/${fixture.id}.json`)).json();
+
+    lastStep = `${tag}:setScene`;
+    rigA.player.setScene(scene, fixture.title, '1', '绿洲防线', '');
+    rigB.player.setScene(scene, fixture.title, '1', '绿洲防线', '');
+    await rigA.player.idle();
+    await rigB.player.idle();
+
+    lastStep = `${tag}:stage`;
+    check(`${tag}.stageA`, rigA.player.container.clientWidth === 1200
+        && rigA.player.container.clientHeight === 540
+        && getComputedStyle(rigA.player.container).fontSize === '16px',
+        `${rigA.player.container.clientWidth}x${rigA.player.container.clientHeight}`);
+    check(`${tag}.stageB`, rigB.player.container.clientWidth === 1200
+        && rigB.player.container.clientHeight === 540
+        && getComputedStyle(rigB.player.container).fontSize === '16px',
+        `${rigB.player.container.clientWidth}x${rigB.player.container.clientHeight}`);
+
+    lastStep = `${tag}:drive`;
+    const oracle = await driveOracle(rigA, scene, tag);
+
+    /* B 路：逐到达点 seekShot（内部每次从空场重放）。 */
+    const bSnaps = [];
+    for (let i = 0; i < oracle.arrivals.length; i++) {
+      const arrival = oracle.arrivals[i];
+      lastStep = `${tag}:seek[${i}]#${arrival.key}`;
+      let landed = null;
+      try {
+        landed = await rigB.player.seekShot(arrival.key);
+      } catch (error) {
+        problems.push(`${tag}: seekShot(${arrival.key}) 抛错 —— ${error.message}`);
+      }
+      if (landed === null) {
+        bSnaps.push(null);
+        continue;
+      }
+      lastStep = `${tag}:settleB[${i}]#${arrival.key}`;
+      const waited = await rigB.settle(scene[arrival.key], `${tag} seek#${arrival.key}`);
+      bSnaps.push(rigB.snap(scene[arrival.key], arrival.key, waited));
+    }
+
+    lastStep = `${tag}:pairs`;
+    for (let i = 0; i < oracle.arrivals.length; i++) {
+      const a = stripVolatile(oracle.arrivals[i].snap);
+      const b = stripVolatile(bSnaps[i]);
+      const key = oracle.arrivals[i].key;
+      pairs++;
+      if (!b) {
+        check(`${tag}.pair[${i}]#key${key}`, false, 'B 路没抓到快照');
+        continue;
+      }
+      const diffs = deepDiff(a, b);
+      check(`${tag}.pair[${i}]#key${key}`, diffs.length === 0, diffs.join(' | '));
+    }
+
+    /* 回廊全文与立绘规则表（A 路的全程累积 vs B 路 seek 到末到达点）。 */
+    const lastKey = oracle.arrivals[oracle.arrivals.length - 1]?.key;
+    if (lastKey !== undefined) {
+      check(`${tag}.log`, JSON.stringify(readLog(rigB.player))
+              === JSON.stringify(oracle.logNow),
+          `B ${readLog(rigB.player).length} 段 oracle ${oracle.logNow?.length ?? 0} 段`);
+      check(`${tag}.charaRules`,
+          JSON.stringify([...new Set(rulesOf(rigB.player.styles.textContent))])
+              === JSON.stringify([...new Set(rulesOf(oracle.rulesNow))]),
+          `B ${rulesOf(rigB.player.styles.textContent).length}块`
+          + ` oracle ${rulesOf(oracle.rulesNow).length}块`);
+    }
+
+    /* 探针 1：脏寻址 —— 从末到达点直接往回 seek，须与升序 seek 的快照一致。 */
+    lastStep = `${tag}:dirty`;
+    if (oracle.arrivals.length >= 3
+        && bSnaps[Math.floor(oracle.arrivals.length / 2)]) {
+      const mid = Math.floor(oracle.arrivals.length / 2);
+      const {key, snap} = oracle.arrivals[mid];
+      await rigB.player.seekShot(key);
+      await rigB.settle(scene[key], `${tag} dirty#${key}`);
+      const diffs = deepDiff(stripVolatile(snap), stripVolatile(bSnaps[mid]));
+      check(`${tag}.dirtySeek#key${key}`, diffs.length === 0, diffs.join(' | '));
+    }
+
+    /* 探针 2：playShot + fastForward 中途接力 —— 从某到达点直接推进（像一次
+       点击），逐站排干直到下一到达点，落点快照须与该点的 seek 快照一致。
+       挑前后都是非分支镜的一段；中途可能穿过「无台词且非直通」的停靠镜，
+       所以像驱动器一样循环推进。 */
+    lastStep = `${tag}:fastForward`;
+    if (oracle.arrivals.length >= 3) {
+      const i = oracle.arrivals.findIndex((a, k) =>
+          k < oracle.arrivals.length - 1
+          && !scene[a.key]?.branch && !scene[oracle.arrivals[k + 1].key]?.branch);
+      if (i >= 0) {
+        const key2 = oracle.arrivals[i + 1].key;
+        await rigB.player.seekShot(oracle.arrivals[i].key);
+        for (let guard = 8;
+             guard-- && rigB.player.shotId !== key2
+                 && !rigB.player.container.classList.contains('empty');) {
+          rigB.player.playShot();
+          await rigB.player.fastForward();
+        }
+        check(`${tag}.fastForward`, rigB.player.shotId === key2
+                && !rigB.player.container.classList.contains('empty'),
+            `shotId=${rigB.player.shotId} 期望 ${key2}`);
+        if (rigB.player.shotId === key2) {
+          await rigB.settle(scene[key2], `${tag} ff#${key2}`);
+          const diffs = deepDiff(
+              stripVolatile(oracle.arrivals[i + 1].snap), stripVolatile(rigB.snap(
+                  scene[key2], key2, 0)));
+          check(`${tag}.fastForward#key${key2}`, diffs.length === 0, diffs.join(' | '));
+        }
+      }
+    }
+
+    /* 探针 3：seekTime —— 先对齐路线（模型里「含文案或分支」的可停留站
+       必须与 A 路到达点逐 key 相同），再验映射：唯一窗口起点的站精确落点，
+       两端钳位到首末可停留站。 */
+    lastStep = `${tag}:seekTime`;
+    const tl = rigB.player.sceneTimeline();
+    const pausable = tl.filter((e) => e.pausable);
+    const stopKeys = pausable
+        .filter((e) => scene[e.key].content || scene[e.key].branch)
+        .map((e) => e.key);
+    check(`${tag}.timeline`,
+        JSON.stringify(stopKeys)
+            === JSON.stringify(oracle.arrivals.map((a) => a.key)),
+        `模型 [${stopKeys}] oracle [${oracle.arrivals.map((a) => a.key)}]`);
+    /* 「唯一窗口起点」= 没有更靠后的可停留站与它同起点（同起点映射取后者）。 */
+    const uniqueStart = pausable.filter((e, i) => pausable[i + 1]?.start !== e.start);
+    for (const idx of [0, Math.floor(uniqueStart.length / 2), uniqueStart.length - 1]) {
+      const entry = uniqueStart[idx];
+      if (!entry) continue;
+      await rigB.player.seekTime(entry.start);
+      check(`${tag}.seekTime[key${entry.key}]`,
+          rigB.player.shotId === entry.key,
+          `shotId=${rigB.player.shotId} 期望 ${entry.key}`);
+    }
+    await rigB.player.seekTime(-5);
+    check(`${tag}.seekTime.clampLow`,
+        rigB.player.shotId === pausable[0]?.key,
+        `shotId=${rigB.player.shotId}`);
+    await rigB.player.seekTime(1e12);
+    check(`${tag}.seekTime.clampHigh`,
+        rigB.player.shotId === pausable[pausable.length - 1]?.key,
+        `shotId=${rigB.player.shotId}`);
+
+    /* 终局：从末到达点继续像点击一样推进（scene3 的终点镜本身无台词、
+       不进回廊），直到 playEnd 清场，终态与 A 路一致。 */
+    lastStep = `${tag}:endOfScene`;
+    if (oracle.endOfScene && lastKey !== undefined) {
+      await rigB.player.seekShot(lastKey);
+      for (let guard = 8;
+           guard-- && !rigB.player.container.classList.contains('empty');) {
+        rigB.player.playShot();
+        await rigB.player.fastForward();
+      }
+      const emptyOf = (player) => ({
+        container: player.container.className,
+        charas: player.refs.avgCharas.children.length,
+        log: player.refs.avgLogBox.children.length,
+        line: player.refs.avgLine.innerHTML,
+      });
+      check(`${tag}.endOfScene`,
+          JSON.stringify(emptyOf(rigA.player)) === JSON.stringify(emptyOf(rigB.player))
+          && rigB.player.playEnd === true,
+          `A=${JSON.stringify(emptyOf(rigA.player))} B=${JSON.stringify(emptyOf(rigB.player))}`);
+    }
+  }
+  lastStep = 'done';
+} catch (error) {
+  problems.push(`主流程在 ${lastStep} 抛错：${error.stack || error}`);
+}
+await post();
+</script>
+</body>
+</html>
