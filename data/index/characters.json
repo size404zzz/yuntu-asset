@@ -1,0 +1,10111 @@
+[
+ {
+  "id": "42lab_npc_01_avg",
+  "lpic": "res/Assets/Res/Character/42lab_npc_01_avg/lpic_42lab_npc_01_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   22,
+   23,
+   32,
+   42,
+   43,
+   52,
+   72,
+   82
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "42lab_npc_02_avg",
+  "lpic": "res/Assets/Res/Character/42lab_npc_02_avg/lpic_42lab_npc_02_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "42lab_npc_03_avg",
+  "lpic": "res/Assets/Res/Character/42lab_npc_03_avg/lpic_42lab_npc_03_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "abigail",
+  "lpic": "res/Assets/Res/Character/abigail/lpic_abigail.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "abigail_p2",
+  "lpic": "res/Assets/Res/Character/abigail_p2/lpic_abigail_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "abigail_p3",
+  "lpic": "res/Assets/Res/Character/abigail_p3/lpic_abigail_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "abigail_whiteday",
+  "lpic": "res/Assets/Res/Character/abigail_whiteday/lpic_abigail_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "adele_avg",
+  "lpic": "res/Assets/Res/Character/adele_avg/lpic_adele_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "agent",
+  "lpic": "res/Assets/Res/Character/agent/lpic_agent.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "aki",
+  "lpic": "res/Assets/Res/Character/aki/lpic_aki.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "aki2_avg",
+  "lpic": "res/Assets/Res/Character/aki2_avg/lpic_aki2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "aki3_avg",
+  "lpic": "res/Assets/Res/Character/aki3_avg/lpic_aki3_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "aki_april",
+  "lpic": "res/Assets/Res/Character/aki_april/lpic_aki_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "aki_avg",
+  "lpic": "res/Assets/Res/Character/aki_avg/lpic_aki_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   101,
+   102,
+   103,
+   104,
+   105,
+   107,
+   110,
+   112,
+   113,
+   114,
+   999
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "aki_carnival",
+  "lpic": "res/Assets/Res/Character/aki_carnival/lpic_aki_carnival.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "aki_newyear",
+  "lpic": "res/Assets/Res/Character/aki_newyear/lpic_aki_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "aki_open",
+  "lpic": "res/Assets/Res/Character/aki_open/lpic_aki_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "aki_p2",
+  "lpic": "res/Assets/Res/Character/aki_p2/lpic_aki_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "aki_p3",
+  "lpic": "res/Assets/Res/Character/aki_p3/lpic_aki_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "aki_spring_avg",
+  "lpic": "res/Assets/Res/Character/aki_spring_avg/lpic_aki_spring_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "aki_whiteday",
+  "lpic": "res/Assets/Res/Character/aki_whiteday/lpic_aki_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "alcyone_avg",
+  "lpic": "res/Assets/Res/Character/alcyone_avg/lpic_alcyone_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "alcyone_shadow_avg",
+  "lpic": "res/Assets/Res/Character/alcyone_shadow_avg/lpic_alcyone_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "angela",
+  "lpic": "res/Assets/Res/Character/angela/lpic_angela.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angela_avg",
+  "lpic": "res/Assets/Res/Character/angela_avg/lpic_angela_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "angela_bp",
+  "lpic": "res/Assets/Res/Character/angela_bp/lpic_angela_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angela_honeydearest",
+  "lpic": "res/Assets/Res/Character/angela_honeydearest/lpic_angela_honeydearest.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angela_honeydearest_rectify",
+  "lpic": "res/Assets/Res/Character/angela_honeydearest_rectify/lpic_angela_honeydearest_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angela_oath_avg",
+  "lpic": "res/Assets/Res/Character/angela_oath_avg/lpic_angela_oath_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "angela_open",
+  "lpic": "res/Assets/Res/Character/angela_open/lpic_angela_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angela_p2",
+  "lpic": "res/Assets/Res/Character/angela_p2/lpic_angela_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angela_p3",
+  "lpic": "res/Assets/Res/Character/angela_p3/lpic_angela_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angela_personal",
+  "lpic": "res/Assets/Res/Character/angela_personal/lpic_angela_personal.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angela_personal_rectify",
+  "lpic": "res/Assets/Res/Character/angela_personal_rectify/lpic_angela_personal_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angela_summer_avg",
+  "lpic": "res/Assets/Res/Character/angela_summer_avg/lpic_angela_summer_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "angela_summerb_avg",
+  "lpic": "res/Assets/Res/Character/angela_summerb_avg/lpic_angela_summerb_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "angela_swimsuit",
+  "lpic": "res/Assets/Res/Character/angela_swimsuit/lpic_angela_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angela_vow",
+  "lpic": "res/Assets/Res/Character/angela_vow/lpic_angela_vow.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angela_vow_rectify",
+  "lpic": "res/Assets/Res/Character/angela_vow_rectify/lpic_angela_vow_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angela_whiteday",
+  "lpic": "res/Assets/Res/Character/angela_whiteday/lpic_angela_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angelus",
+  "lpic": "res/Assets/Res/Character/angelus/lpic_angelus.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angelus_p2",
+  "lpic": "res/Assets/Res/Character/angelus_p2/lpic_angelus_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "angelus_p3",
+  "lpic": "res/Assets/Res/Character/angelus_p3/lpic_angelus_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "anna",
+  "lpic": "res/Assets/Res/Character/anna/lpic_anna.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "anna_amusement",
+  "lpic": "res/Assets/Res/Character/anna_amusement/lpic_anna_amusement.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "anna_april",
+  "lpic": "res/Assets/Res/Character/anna_april/lpic_anna_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "anna_avg",
+  "lpic": "res/Assets/Res/Character/anna_avg/lpic_anna_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "anna_christmas",
+  "lpic": "res/Assets/Res/Character/anna_christmas/lpic_anna_christmas.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "anna_hallo_avg",
+  "lpic": "res/Assets/Res/Character/anna_hallo_avg/lpic_anna_hallo_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "anna_halloween",
+  "lpic": "res/Assets/Res/Character/anna_halloween/lpic_anna_halloween.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "anna_hood_avg",
+  "lpic": "res/Assets/Res/Character/anna_hood_avg/lpic_anna_hood_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "anna_myth",
+  "lpic": "res/Assets/Res/Character/anna_myth/lpic_anna_myth.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "anna_myth_avg",
+  "lpic": "res/Assets/Res/Character/anna_myth_avg/lpic_anna_myth_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "anna_open",
+  "lpic": "res/Assets/Res/Character/anna_open/lpic_anna_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "anna_p2",
+  "lpic": "res/Assets/Res/Character/anna_p2/lpic_anna_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "anna_p3",
+  "lpic": "res/Assets/Res/Character/anna_p3/lpic_anna_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "anna_shadow_avg",
+  "lpic": "res/Assets/Res/Character/anna_shadow_avg/lpic_anna_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "anna_shiningsoul",
+  "lpic": "res/Assets/Res/Character/anna_shiningsoul/lpic_anna_shiningsoul.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "anna_whiteday",
+  "lpic": "res/Assets/Res/Character/anna_whiteday/lpic_anna_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "antenora_avg",
+  "lpic": "res/Assets/Res/Character/antenora_avg/lpic_antenora_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "arrow_avg",
+  "lpic": "res/Assets/Res/Character/arrow_avg/lpic_arrow_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   11,
+   22,
+   33,
+   44,
+   55,
+   66,
+   77,
+   999
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "asagent_avg",
+  "lpic": "res/Assets/Res/Character/asagent_avg/lpic_asagent_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "asagentb_avg",
+  "lpic": "res/Assets/Res/Character/asagentb_avg/lpic_asagentb_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "asagentc_avg",
+  "lpic": "res/Assets/Res/Character/asagentc_avg/lpic_asagentc_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "astronaut_avg",
+  "lpic": "res/Assets/Res/Character/astronaut_avg/lpic_astronaut_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "atlas_avg",
+  "lpic": "res/Assets/Res/Character/atlas_avg/lpic_atlas_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "atlas_hurt_avg",
+  "lpic": "res/Assets/Res/Character/atlas_hurt_avg/lpic_atlas_hurt_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "atlas_shadow_avg",
+  "lpic": "res/Assets/Res/Character/atlas_shadow_avg/lpic_atlas_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "avlan_avg",
+  "lpic": "res/Assets/Res/Character/avlan_avg/lpic_avlan_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "banxsy",
+  "lpic": "res/Assets/Res/Character/banxsy/lpic_banxsy.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "banxsy_avg",
+  "lpic": "res/Assets/Res/Character/banxsy_avg/lpic_banxsy_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "banxsy_myth",
+  "lpic": "res/Assets/Res/Character/banxsy_myth/lpic_banxsy_myth.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "banxsy_p2",
+  "lpic": "res/Assets/Res/Character/banxsy_p2/lpic_banxsy_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "banxsy_p3",
+  "lpic": "res/Assets/Res/Character/banxsy_p3/lpic_banxsy_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "banxsy_racer",
+  "lpic": "res/Assets/Res/Character/banxsy_racer/lpic_banxsy_racer.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "banxsy_school",
+  "lpic": "res/Assets/Res/Character/banxsy_school/lpic_banxsy_school.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "banxsy_summer_avg",
+  "lpic": "res/Assets/Res/Character/banxsy_summer_avg/lpic_banxsy_summer_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "banxsy_swimsuit",
+  "lpic": "res/Assets/Res/Character/banxsy_swimsuit/lpic_banxsy_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "beelneith_2_avg",
+  "lpic": "res/Assets/Res/Character/beelneith_2_avg/lpic_beelneith_2_avg.png",
+  "faces": [
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "beelneith_avg",
+  "lpic": "res/Assets/Res/Character/beelneith_avg/lpic_beelneith_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "beelneith_avg_stage_perform",
+  "lpic": "res/Assets/Res/Character/beelneith_avg_stage_perform/lpic_beelneith_avg_stage_perform.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "beelneith_b_avg",
+  "lpic": "res/Assets/Res/Character/beelneith_b_avg/lpic_beelneith_b_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "belladonna",
+  "lpic": "res/Assets/Res/Character/belladonna/lpic_belladonna.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "belladonna_avg",
+  "lpic": "res/Assets/Res/Character/belladonna_avg/lpic_belladonna_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "belladonna_p2",
+  "lpic": "res/Assets/Res/Character/belladonna_p2/lpic_belladonna_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "belladonna_p3",
+  "lpic": "res/Assets/Res/Character/belladonna_p3/lpic_belladonna_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "belladonna_shadow_avg",
+  "lpic": "res/Assets/Res/Character/belladonna_shadow_avg/lpic_belladonna_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "betty",
+  "lpic": "res/Assets/Res/Character/betty/lpic_betty.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "betty_newyear",
+  "lpic": "res/Assets/Res/Character/betty_newyear/lpic_betty_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "betty_oath2_avg",
+  "lpic": "res/Assets/Res/Character/betty_oath2_avg/lpic_betty_oath2_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "betty_oath_avg",
+  "lpic": "res/Assets/Res/Character/betty_oath_avg/lpic_betty_oath_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "betty_p2",
+  "lpic": "res/Assets/Res/Character/betty_p2/lpic_betty_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "betty_p3",
+  "lpic": "res/Assets/Res/Character/betty_p3/lpic_betty_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "betty_vow",
+  "lpic": "res/Assets/Res/Character/betty_vow/lpic_betty_vow.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "betty_whiteday",
+  "lpic": "res/Assets/Res/Character/betty_whiteday/lpic_betty_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "bettybox_avg",
+  "lpic": "res/Assets/Res/Character/bettybox_avg/lpic_bettybox_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "bonee",
+  "lpic": "res/Assets/Res/Character/bonee/lpic_bonee.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "bonee_p2",
+  "lpic": "res/Assets/Res/Character/bonee_p2/lpic_bonee_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "bonee_p3",
+  "lpic": "res/Assets/Res/Character/bonee_p3/lpic_bonee_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "bonee_school",
+  "lpic": "res/Assets/Res/Character/bonee_school/lpic_bonee_school.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "bonee_whiteday",
+  "lpic": "res/Assets/Res/Character/bonee_whiteday/lpic_bonee_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "bonneville",
+  "lpic": "res/Assets/Res/Character/bonneville/lpic_bonneville.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "bonneville_army",
+  "lpic": "res/Assets/Res/Character/bonneville_army/lpic_bonneville_army.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "bonneville_avg",
+  "lpic": "res/Assets/Res/Character/bonneville_avg/lpic_bonneville_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "bonneville_p2",
+  "lpic": "res/Assets/Res/Character/bonneville_p2/lpic_bonneville_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "bonneville_p3",
+  "lpic": "res/Assets/Res/Character/bonneville_p3/lpic_bonneville_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "boshogun_avg",
+  "lpic": "res/Assets/Res/Character/boshogun_avg/lpic_boshogun_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "botaiko_avg",
+  "lpic": "res/Assets/Res/Character/botaiko_avg/lpic_botaiko_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "bottle_avg",
+  "lpic": "res/Assets/Res/Character/bottle_avg/lpic_bottle_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "boxer1_avg",
+  "lpic": "res/Assets/Res/Character/boxer1_avg/lpic_boxer1_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "boxer2_avg",
+  "lpic": "res/Assets/Res/Character/boxer2_avg/lpic_boxer2_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "boxer3_avg",
+  "lpic": "res/Assets/Res/Character/boxer3_avg/lpic_boxer3_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "boy_avg",
+  "lpic": "res/Assets/Res/Character/boy_avg/lpic_boy_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "burbank_npc1_avg",
+  "lpic": "res/Assets/Res/Character/burbank_npc1_avg/lpic_burbank_npc1_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "burbank_npc2_avg",
+  "lpic": "res/Assets/Res/Character/burbank_npc2_avg/lpic_burbank_npc2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "burbank_npc3_avg",
+  "lpic": "res/Assets/Res/Character/burbank_npc3_avg/lpic_burbank_npc3_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "caina_avg",
+  "lpic": "res/Assets/Res/Character/caina_avg/lpic_caina_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "caina_star2_avg",
+  "lpic": "res/Assets/Res/Character/caina_star2_avg/lpic_caina_star2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "caina_star_avg",
+  "lpic": "res/Assets/Res/Character/caina_star_avg/lpic_caina_star_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "camellia",
+  "lpic": "res/Assets/Res/Character/camellia/lpic_camellia.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "camellia_bp",
+  "lpic": "res/Assets/Res/Character/camellia_bp/lpic_camellia_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "camellia_concert_avg",
+  "lpic": "res/Assets/Res/Character/camellia_concert_avg/lpic_camellia_concert_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "camellia_live",
+  "lpic": "res/Assets/Res/Character/camellia_live/lpic_camellia_live.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "camellia_p2",
+  "lpic": "res/Assets/Res/Character/camellia_p2/lpic_camellia_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "camellia_p3",
+  "lpic": "res/Assets/Res/Character/camellia_p3/lpic_camellia_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "camellia_swimsuit",
+  "lpic": "res/Assets/Res/Character/camellia_swimsuit/lpic_camellia_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "camellia_whiteday",
+  "lpic": "res/Assets/Res/Character/camellia_whiteday/lpic_camellia_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "camera_avg",
+  "lpic": "res/Assets/Res/Character/camera_avg/lpic_camera_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "cascadia",
+  "lpic": "res/Assets/Res/Character/cascadia/lpic_cascadia.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "cascadia_avg",
+  "lpic": "res/Assets/Res/Character/cascadia_avg/lpic_cascadia_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "cascadia_halloween",
+  "lpic": "res/Assets/Res/Character/cascadia_halloween/lpic_cascadia_halloween.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "cascadia_p2",
+  "lpic": "res/Assets/Res/Character/cascadia_p2/lpic_cascadia_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "cascadia_p3",
+  "lpic": "res/Assets/Res/Character/cascadia_p3/lpic_cascadia_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "centaureissi",
+  "lpic": "res/Assets/Res/Character/centaureissi/lpic_centaureissi.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "centaureissi_anniversary",
+  "lpic": "res/Assets/Res/Character/centaureissi_anniversary/lpic_centaureissi_anniversary.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "centaureissi_april",
+  "lpic": "res/Assets/Res/Character/centaureissi_april/lpic_centaureissi_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "centaureissi_avg",
+  "lpic": "res/Assets/Res/Character/centaureissi_avg/lpic_centaureissi_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "centaureissi_hurt_avg",
+  "lpic": "res/Assets/Res/Character/centaureissi_hurt_avg/lpic_centaureissi_hurt_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "centaureissi_idol",
+  "lpic": "res/Assets/Res/Character/centaureissi_idol/lpic_centaureissi_idol.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "centaureissi_idol_avg",
+  "lpic": "res/Assets/Res/Character/centaureissi_idol_avg/lpic_centaureissi_idol_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "centaureissi_mil_avg",
+  "lpic": "res/Assets/Res/Character/centaureissi_mil_avg/lpic_centaureissi_mil_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "centaureissi_open",
+  "lpic": "res/Assets/Res/Character/centaureissi_open/lpic_centaureissi_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "centaureissi_p2",
+  "lpic": "res/Assets/Res/Character/centaureissi_p2/lpic_centaureissi_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "centaureissi_p3",
+  "lpic": "res/Assets/Res/Character/centaureissi_p3/lpic_centaureissi_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "centaureissi_sp1_avg",
+  "lpic": "res/Assets/Res/Character/centaureissi_sp1_avg/lpic_centaureissi_sp1_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "centaureissi_sp2_avg",
+  "lpic": "res/Assets/Res/Character/centaureissi_sp2_avg/lpic_centaureissi_sp2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "centaureissi_sp_avg",
+  "lpic": "res/Assets/Res/Character/centaureissi_sp_avg/lpic_centaureissi_sp_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "centaureissi_summer_avg",
+  "lpic": "res/Assets/Res/Character/centaureissi_summer_avg/lpic_centaureissi_summer_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "centaureissi_whiteday",
+  "lpic": "res/Assets/Res/Character/centaureissi_whiteday/lpic_centaureissi_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "centaureissisp",
+  "lpic": "res/Assets/Res/Character/centaureissisp/lpic_centaureissisp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "centaureissisp_p2",
+  "lpic": "res/Assets/Res/Character/centaureissisp_p2/lpic_centaureissisp_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "centaureissisp_p3",
+  "lpic": "res/Assets/Res/Character/centaureissisp_p3/lpic_centaureissisp_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "centaureissisp_swimsuit",
+  "lpic": "res/Assets/Res/Character/centaureissisp_swimsuit/lpic_centaureissisp_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "chelsea",
+  "lpic": "res/Assets/Res/Character/chelsea/lpic_chelsea.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "chelsea_child",
+  "lpic": "res/Assets/Res/Character/chelsea_child/lpic_chelsea_child.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "chelsea_kid_avg",
+  "lpic": "res/Assets/Res/Character/chelsea_kid_avg/lpic_chelsea_kid_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "chelsea_p2",
+  "lpic": "res/Assets/Res/Character/chelsea_p2/lpic_chelsea_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "chelsea_p3",
+  "lpic": "res/Assets/Res/Character/chelsea_p3/lpic_chelsea_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "chelsea_whiteday",
+  "lpic": "res/Assets/Res/Character/chelsea_whiteday/lpic_chelsea_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "choco",
+  "lpic": "res/Assets/Res/Character/choco/lpic_choco.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "choco_avg",
+  "lpic": "res/Assets/Res/Character/choco_avg/lpic_choco_avg.png",
+  "faces": [
+   1,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "choco_christ_avg",
+  "lpic": "res/Assets/Res/Character/choco_christ_avg/lpic_choco_christ_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "choco_christmas",
+  "lpic": "res/Assets/Res/Character/choco_christmas/lpic_choco_christmas.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "choco_p2",
+  "lpic": "res/Assets/Res/Character/choco_p2/lpic_choco_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "choco_p3",
+  "lpic": "res/Assets/Res/Character/choco_p3/lpic_choco_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "choco_whiteday",
+  "lpic": "res/Assets/Res/Character/choco_whiteday/lpic_choco_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "chocoshadow_avg",
+  "lpic": "res/Assets/Res/Character/chocoshadow_avg/lpic_chocoshadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "chris_avg",
+  "lpic": "res/Assets/Res/Character/chris_avg/lpic_chris_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   11,
+   12,
+   13,
+   21,
+   22,
+   23,
+   31,
+   32,
+   33,
+   41,
+   42,
+   43,
+   51,
+   52,
+   53,
+   61,
+   62,
+   63,
+   71,
+   72,
+   73,
+   991,
+   992,
+   993
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clotho",
+  "lpic": "res/Assets/Res/Character/clotho/lpic_clotho.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "clotho2_avg",
+  "lpic": "res/Assets/Res/Character/clotho2_avg/lpic_clotho2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clotho_army",
+  "lpic": "res/Assets/Res/Character/clotho_army/lpic_clotho_army.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "clotho_avg",
+  "lpic": "res/Assets/Res/Character/clotho_avg/lpic_clotho_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clotho_g_avg",
+  "lpic": "res/Assets/Res/Character/clotho_g_avg/lpic_clotho_g_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clotho_oath_avg",
+  "lpic": "res/Assets/Res/Character/clotho_oath_avg/lpic_clotho_oath_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clotho_p2",
+  "lpic": "res/Assets/Res/Character/clotho_p2/lpic_clotho_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "clotho_p3",
+  "lpic": "res/Assets/Res/Character/clotho_p3/lpic_clotho_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "clotho_summer_avg",
+  "lpic": "res/Assets/Res/Character/clotho_summer_avg/lpic_clotho_summer_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clotho_summerb_avg",
+  "lpic": "res/Assets/Res/Character/clotho_summerb_avg/lpic_clotho_summerb_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clotho_swimsuit",
+  "lpic": "res/Assets/Res/Character/clotho_swimsuit/lpic_clotho_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "clotho_vow",
+  "lpic": "res/Assets/Res/Character/clotho_vow/lpic_clotho_vow.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "clukay2_avg",
+  "lpic": "res/Assets/Res/Character/clukay2_avg/lpic_clukay2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clukay_avg",
+  "lpic": "res/Assets/Res/Character/clukay_avg/lpic_clukay_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clukay_cloud_avg",
+  "lpic": "res/Assets/Res/Character/clukay_cloud_avg/lpic_clukay_cloud_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clukay_ent_avg",
+  "lpic": "res/Assets/Res/Character/clukay_ent_avg/lpic_clukay_ent_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clukay_full_avg",
+  "lpic": "res/Assets/Res/Character/clukay_full_avg/lpic_clukay_full_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clukay_gf_avg",
+  "lpic": "res/Assets/Res/Character/clukay_gf_avg/lpic_clukay_gf_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clukay_idol_avg",
+  "lpic": "res/Assets/Res/Character/clukay_idol_avg/lpic_clukay_idol_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clukay_summer_avg",
+  "lpic": "res/Assets/Res/Character/clukay_summer_avg/lpic_clukay_summer_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "clukay_summerb_avg",
+  "lpic": "res/Assets/Res/Character/clukay_summerb_avg/lpic_clukay_summerb_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "cocytus_avg",
+  "lpic": "res/Assets/Res/Character/cocytus_avg/lpic_cocytus_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "croque",
+  "lpic": "res/Assets/Res/Character/croque/lpic_croque.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "croque2_avg",
+  "lpic": "res/Assets/Res/Character/croque2_avg/lpic_croque2_avg.png",
+  "faces": [
+   1,
+   2,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "croque_april",
+  "lpic": "res/Assets/Res/Character/croque_april/lpic_croque_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "croque_avg",
+  "lpic": "res/Assets/Res/Character/croque_avg/lpic_croque_avg.png",
+  "faces": [
+   1,
+   2,
+   4,
+   5,
+   6
+  ],
+  "layout": true,
+  "avg": true
+ },
+ {
+  "id": "croque_bp",
+  "lpic": "res/Assets/Res/Character/croque_bp/lpic_croque_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "croque_child",
+  "lpic": "res/Assets/Res/Character/croque_child/lpic_croque_child.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "croque_g_avg",
+  "lpic": "res/Assets/Res/Character/croque_g_avg/lpic_croque_g_avg.png",
+  "faces": [
+   1,
+   2,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "croque_kid_avg",
+  "lpic": "res/Assets/Res/Character/croque_kid_avg/lpic_croque_kid_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "croque_newyear",
+  "lpic": "res/Assets/Res/Character/croque_newyear/lpic_croque_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "croque_newyear_rectify",
+  "lpic": "res/Assets/Res/Character/croque_newyear_rectify/lpic_croque_newyear_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "croque_open",
+  "lpic": "res/Assets/Res/Character/croque_open/lpic_croque_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "croque_p2",
+  "lpic": "res/Assets/Res/Character/croque_p2/lpic_croque_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "croque_p3",
+  "lpic": "res/Assets/Res/Character/croque_p3/lpic_croque_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "croque_shiningsoul",
+  "lpic": "res/Assets/Res/Character/croque_shiningsoul/lpic_croque_shiningsoul.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "croque_spring_avg",
+  "lpic": "res/Assets/Res/Character/croque_spring_avg/lpic_croque_spring_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "croque_whiteday",
+  "lpic": "res/Assets/Res/Character/croque_whiteday/lpic_croque_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "crypter",
+  "lpic": "res/Assets/Res/Character/crypter/lpic_crypter.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "crypter_anniversary",
+  "lpic": "res/Assets/Res/Character/crypter_anniversary/lpic_crypter_anniversary.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "crypter_avg",
+  "lpic": "res/Assets/Res/Character/crypter_avg/lpic_crypter_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "crypter_bp",
+  "lpic": "res/Assets/Res/Character/crypter_bp/lpic_crypter_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "crypter_p2",
+  "lpic": "res/Assets/Res/Character/crypter_p2/lpic_crypter_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "crypter_p3",
+  "lpic": "res/Assets/Res/Character/crypter_p3/lpic_crypter_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "cyclope_avg",
+  "lpic": "res/Assets/Res/Character/cyclope_avg/lpic_cyclope_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "cyclopes_npc_01_avg",
+  "lpic": "res/Assets/Res/Character/cyclopes_npc_01_avg/lpic_cyclopes_npc_01_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "cyclopes_npc_02_avg",
+  "lpic": "res/Assets/Res/Character/cyclopes_npc_02_avg/lpic_cyclopes_npc_02_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "cyclopes_npc_03_avg",
+  "lpic": "res/Assets/Res/Character/cyclopes_npc_03_avg/lpic_cyclopes_npc_03_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "defender_avg",
+  "lpic": "res/Assets/Res/Character/defender_avg/lpic_defender_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "delacey",
+  "lpic": "res/Assets/Res/Character/delacey/lpic_delacey.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "delacey_april",
+  "lpic": "res/Assets/Res/Character/delacey_april/lpic_delacey_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "delacey_avg",
+  "lpic": "res/Assets/Res/Character/delacey_avg/lpic_delacey_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "delacey_bathrobe",
+  "lpic": "res/Assets/Res/Character/delacey_bathrobe/lpic_delacey_bathrobe.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "delacey_bp",
+  "lpic": "res/Assets/Res/Character/delacey_bp/lpic_delacey_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "delacey_bp_rectify",
+  "lpic": "res/Assets/Res/Character/delacey_bp_rectify/lpic_delacey_bp_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "delacey_honeydearest",
+  "lpic": "res/Assets/Res/Character/delacey_honeydearest/lpic_delacey_honeydearest.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "delacey_honeydearest_rectify",
+  "lpic": "res/Assets/Res/Character/delacey_honeydearest_rectify/lpic_delacey_honeydearest_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "delacey_p2",
+  "lpic": "res/Assets/Res/Character/delacey_p2/lpic_delacey_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "delacey_p3",
+  "lpic": "res/Assets/Res/Character/delacey_p3/lpic_delacey_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "delacey_shadow_avg",
+  "lpic": "res/Assets/Res/Character/delacey_shadow_avg/lpic_delacey_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "delacey_whiteday",
+  "lpic": "res/Assets/Res/Character/delacey_whiteday/lpic_delacey_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "demi_lava2_avg",
+  "lpic": "res/Assets/Res/Character/demi_lava2_avg/lpic_demi_lava2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "demi_lava_avg",
+  "lpic": "res/Assets/Res/Character/demi_lava_avg/lpic_demi_lava_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "demiurge_avg",
+  "lpic": "res/Assets/Res/Character/demiurge_avg/lpic_demiurge_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "dog_avg",
+  "lpic": "res/Assets/Res/Character/dog_avg/lpic_dog_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "dupin",
+  "lpic": "res/Assets/Res/Character/dupin/lpic_dupin.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "dupin_april",
+  "lpic": "res/Assets/Res/Character/dupin_april/lpic_dupin_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "dupin_avg",
+  "lpic": "res/Assets/Res/Character/dupin_avg/lpic_dupin_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "dupin_honeydearest",
+  "lpic": "res/Assets/Res/Character/dupin_honeydearest/lpic_dupin_honeydearest.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "dupin_p2",
+  "lpic": "res/Assets/Res/Character/dupin_p2/lpic_dupin_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "dupin_p3",
+  "lpic": "res/Assets/Res/Character/dupin_p3/lpic_dupin_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "dusevnyj",
+  "lpic": "res/Assets/Res/Character/dusevnyj/lpic_dusevnyj.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "dusevnyj_p2",
+  "lpic": "res/Assets/Res/Character/dusevnyj_p2/lpic_dusevnyj_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "dusevnyj_p3",
+  "lpic": "res/Assets/Res/Character/dusevnyj_p3/lpic_dusevnyj_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "dusevnyj_whiteday",
+  "lpic": "res/Assets/Res/Character/dusevnyj_whiteday/lpic_dusevnyj_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "earhart",
+  "lpic": "res/Assets/Res/Character/earhart/lpic_earhart.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "earhart_avg",
+  "lpic": "res/Assets/Res/Character/earhart_avg/lpic_earhart_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "earhart_oath_avg",
+  "lpic": "res/Assets/Res/Character/earhart_oath_avg/lpic_earhart_oath_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "earhart_p2",
+  "lpic": "res/Assets/Res/Character/earhart_p2/lpic_earhart_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "earhart_p3",
+  "lpic": "res/Assets/Res/Character/earhart_p3/lpic_earhart_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "earhart_theater",
+  "lpic": "res/Assets/Res/Character/earhart_theater/lpic_earhart_theater.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "earhart_vow",
+  "lpic": "res/Assets/Res/Character/earhart_vow/lpic_earhart_vow.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "earhart_whiteday",
+  "lpic": "res/Assets/Res/Character/earhart_whiteday/lpic_earhart_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "elaugh_avg",
+  "lpic": "res/Assets/Res/Character/elaugh_avg/lpic_elaugh_avg.png",
+  "faces": [
+   1,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "elaugh_mask_avg",
+  "lpic": "res/Assets/Res/Character/elaugh_mask_avg/lpic_elaugh_mask_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eniac",
+  "lpic": "res/Assets/Res/Character/eniac/lpic_eniac.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "eniac2_avg",
+  "lpic": "res/Assets/Res/Character/eniac2_avg/lpic_eniac2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eniac_avg",
+  "lpic": "res/Assets/Res/Character/eniac_avg/lpic_eniac_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eniac_p2",
+  "lpic": "res/Assets/Res/Character/eniac_p2/lpic_eniac_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "eniac_p3",
+  "lpic": "res/Assets/Res/Character/eniac_p3/lpic_eniac_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "eniac_shadow_avg",
+  "lpic": "res/Assets/Res/Character/eniac_shadow_avg/lpic_eniac_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "entropy_avg",
+  "lpic": "res/Assets/Res/Character/entropy_avg/lpic_entropy_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "entropy_star_avg",
+  "lpic": "res/Assets/Res/Character/entropy_star_avg/lpic_entropy_star_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "entropys_avg",
+  "lpic": "res/Assets/Res/Character/entropys_avg/lpic_entropys_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "entropys_r_avg",
+  "lpic": "res/Assets/Res/Character/entropys_r_avg/lpic_entropys_r_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eos",
+  "lpic": "res/Assets/Res/Character/eos/lpic_eos.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "eos2_avg",
+  "lpic": "res/Assets/Res/Character/eos2_avg/lpic_eos2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eos2_shadow_avg",
+  "lpic": "res/Assets/Res/Character/eos2_shadow_avg/lpic_eos2_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eos2_wrecked_avg",
+  "lpic": "res/Assets/Res/Character/eos2_wrecked_avg/lpic_eos2_wrecked_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eos_avg",
+  "lpic": "res/Assets/Res/Character/eos_avg/lpic_eos_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eos_concert_avg",
+  "lpic": "res/Assets/Res/Character/eos_concert_avg/lpic_eos_concert_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eos_live",
+  "lpic": "res/Assets/Res/Character/eos_live/lpic_eos_live.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "eos_oath2_avg",
+  "lpic": "res/Assets/Res/Character/eos_oath2_avg/lpic_eos_oath2_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eos_oath_avg",
+  "lpic": "res/Assets/Res/Character/eos_oath_avg/lpic_eos_oath_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eos_p2",
+  "lpic": "res/Assets/Res/Character/eos_p2/lpic_eos_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "eos_p3",
+  "lpic": "res/Assets/Res/Character/eos_p3/lpic_eos_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "eos_shadow_avg",
+  "lpic": "res/Assets/Res/Character/eos_shadow_avg/lpic_eos_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eos_underwear",
+  "lpic": "res/Assets/Res/Character/eos_underwear/lpic_eos_underwear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "eos_vow",
+  "lpic": "res/Assets/Res/Character/eos_vow/lpic_eos_vow.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "eos_vow_rectify",
+  "lpic": "res/Assets/Res/Character/eos_vow_rectify/lpic_eos_vow_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "eosphorus_avg",
+  "lpic": "res/Assets/Res/Character/eosphorus_avg/lpic_eosphorus_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eosphorus_b_avg",
+  "lpic": "res/Assets/Res/Character/eosphorus_b_avg/lpic_eosphorus_b_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eosphorus_shadow_avg",
+  "lpic": "res/Assets/Res/Character/eosphorus_shadow_avg/lpic_eosphorus_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eosphorus_w1_avg",
+  "lpic": "res/Assets/Res/Character/eosphorus_w1_avg/lpic_eosphorus_w1_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eosphorus_w2_avg",
+  "lpic": "res/Assets/Res/Character/eosphorus_w2_avg/lpic_eosphorus_w2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "eosphorus_wings_avg",
+  "lpic": "res/Assets/Res/Character/eosphorus_wings_avg/lpic_eosphorus_wings_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "erika",
+  "lpic": "res/Assets/Res/Character/erika/lpic_erika.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "erika_amusement",
+  "lpic": "res/Assets/Res/Character/erika_amusement/lpic_erika_amusement.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "erika_avg",
+  "lpic": "res/Assets/Res/Character/erika_avg/lpic_erika_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   22,
+   33,
+   55,
+   999
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "erika_hurt_avg",
+  "lpic": "res/Assets/Res/Character/erika_hurt_avg/lpic_erika_hurt_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   22,
+   33,
+   55,
+   999
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "erika_newyear",
+  "lpic": "res/Assets/Res/Character/erika_newyear/lpic_erika_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "erika_newyear_avg",
+  "lpic": "res/Assets/Res/Character/erika_newyear_avg/lpic_erika_newyear_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "erika_p2",
+  "lpic": "res/Assets/Res/Character/erika_p2/lpic_erika_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "erika_p3",
+  "lpic": "res/Assets/Res/Character/erika_p3/lpic_erika_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "evelyn",
+  "lpic": "res/Assets/Res/Character/evelyn/lpic_evelyn.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "evelyn_avg",
+  "lpic": "res/Assets/Res/Character/evelyn_avg/lpic_evelyn_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "evelyn_newyear",
+  "lpic": "res/Assets/Res/Character/evelyn_newyear/lpic_evelyn_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "evelyn_open",
+  "lpic": "res/Assets/Res/Character/evelyn_open/lpic_evelyn_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "evelyn_p2",
+  "lpic": "res/Assets/Res/Character/evelyn_p2/lpic_evelyn_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "evelyn_p3",
+  "lpic": "res/Assets/Res/Character/evelyn_p3/lpic_evelyn_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "evelyn_rookie_avg",
+  "lpic": "res/Assets/Res/Character/evelyn_rookie_avg/lpic_evelyn_rookie_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "evelyn_summer_avg",
+  "lpic": "res/Assets/Res/Character/evelyn_summer_avg/lpic_evelyn_summer_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "evelyn_swimsuit",
+  "lpic": "res/Assets/Res/Character/evelyn_swimsuit/lpic_evelyn_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "evelyn_whiteday",
+  "lpic": "res/Assets/Res/Character/evelyn_whiteday/lpic_evelyn_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "faith2_avg",
+  "lpic": "res/Assets/Res/Character/faith2_avg/lpic_faith2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "faith_avatar_avg",
+  "lpic": "res/Assets/Res/Character/faith_avatar_avg/lpic_faith_avatar_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "faith_avg",
+  "lpic": "res/Assets/Res/Character/faith_avg/lpic_faith_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fakegod_avg",
+  "lpic": "res/Assets/Res/Character/fakegod_avg/lpic_fakegod_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "faris_avg",
+  "lpic": "res/Assets/Res/Character/faris_avg/lpic_faris_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fern",
+  "lpic": "res/Assets/Res/Character/fern/lpic_fern.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "fern_avg",
+  "lpic": "res/Assets/Res/Character/fern_avg/lpic_fern_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fern_movie",
+  "lpic": "res/Assets/Res/Character/fern_movie/lpic_fern_movie.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "fern_myth",
+  "lpic": "res/Assets/Res/Character/fern_myth/lpic_fern_myth.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "fern_myth_avg",
+  "lpic": "res/Assets/Res/Character/fern_myth_avg/lpic_fern_myth_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fern_p2",
+  "lpic": "res/Assets/Res/Character/fern_p2/lpic_fern_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "fern_p3",
+  "lpic": "res/Assets/Res/Character/fern_p3/lpic_fern_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "fern_whiteday",
+  "lpic": "res/Assets/Res/Character/fern_whiteday/lpic_fern_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "fireman2_avg",
+  "lpic": "res/Assets/Res/Character/fireman2_avg/lpic_fireman2_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fireman3_avg",
+  "lpic": "res/Assets/Res/Character/fireman3_avg/lpic_fireman3_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fireman_avg",
+  "lpic": "res/Assets/Res/Character/fireman_avg/lpic_fireman_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "florence",
+  "lpic": "res/Assets/Res/Character/florence/lpic_florence.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "florence_april",
+  "lpic": "res/Assets/Res/Character/florence_april/lpic_florence_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "florence_christmas",
+  "lpic": "res/Assets/Res/Character/florence_christmas/lpic_florence_christmas.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "florence_honeydearest",
+  "lpic": "res/Assets/Res/Character/florence_honeydearest/lpic_florence_honeydearest.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "florence_honeydearest_rectify",
+  "lpic": "res/Assets/Res/Character/florence_honeydearest_rectify/lpic_florence_honeydearest_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "florence_newyear",
+  "lpic": "res/Assets/Res/Character/florence_newyear/lpic_florence_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "florence_open",
+  "lpic": "res/Assets/Res/Character/florence_open/lpic_florence_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "florence_p2",
+  "lpic": "res/Assets/Res/Character/florence_p2/lpic_florence_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "florence_p3",
+  "lpic": "res/Assets/Res/Character/florence_p3/lpic_florence_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "florence_spring_avg",
+  "lpic": "res/Assets/Res/Character/florence_spring_avg/lpic_florence_spring_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "florence_swim2_avg",
+  "lpic": "res/Assets/Res/Character/florence_swim2_avg/lpic_florence_swim2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "florence_swim_avg",
+  "lpic": "res/Assets/Res/Character/florence_swim_avg/lpic_florence_swim_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "florence_swimb_avg",
+  "lpic": "res/Assets/Res/Character/florence_swimb_avg/lpic_florence_swimb_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "florence_whiteday",
+  "lpic": "res/Assets/Res/Character/florence_whiteday/lpic_florence_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "fool_aki_avg",
+  "lpic": "res/Assets/Res/Character/fool_aki_avg/lpic_fool_aki_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_anna2_avg",
+  "lpic": "res/Assets/Res/Character/fool_anna2_avg/lpic_fool_anna2_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_anna_avg",
+  "lpic": "res/Assets/Res/Character/fool_anna_avg/lpic_fool_anna_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_centaureissi_avg",
+  "lpic": "res/Assets/Res/Character/fool_centaureissi_avg/lpic_fool_centaureissi_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_croque_avg",
+  "lpic": "res/Assets/Res/Character/fool_croque_avg/lpic_fool_croque_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_delacey_avg",
+  "lpic": "res/Assets/Res/Character/fool_delacey_avg/lpic_fool_delacey_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_florence_avg",
+  "lpic": "res/Assets/Res/Character/fool_florence_avg/lpic_fool_florence_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_gin_avg",
+  "lpic": "res/Assets/Res/Character/fool_gin_avg/lpic_fool_gin_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_hatsuchiri_avg",
+  "lpic": "res/Assets/Res/Character/fool_hatsuchiri_avg/lpic_fool_hatsuchiri_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_haze_avg",
+  "lpic": "res/Assets/Res/Character/fool_haze_avg/lpic_fool_haze_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_hubble_avg",
+  "lpic": "res/Assets/Res/Character/fool_hubble_avg/lpic_fool_hubble_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_kuro_avg",
+  "lpic": "res/Assets/Res/Character/fool_kuro_avg/lpic_fool_kuro_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_mie_avg",
+  "lpic": "res/Assets/Res/Character/fool_mie_avg/lpic_fool_mie_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   11,
+   22,
+   33,
+   44,
+   55,
+   999
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_nora_avg",
+  "lpic": "res/Assets/Res/Character/fool_nora_avg/lpic_fool_nora_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_persicaria_avg",
+  "lpic": "res/Assets/Res/Character/fool_persicaria_avg/lpic_fool_persicaria_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_python_avg",
+  "lpic": "res/Assets/Res/Character/fool_python_avg/lpic_fool_python_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_simo_avg",
+  "lpic": "res/Assets/Res/Character/fool_simo_avg/lpic_fool_simo_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_sol_avg",
+  "lpic": "res/Assets/Res/Character/fool_sol_avg/lpic_fool_sol_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fool_sueyoi_avg",
+  "lpic": "res/Assets/Res/Character/fool_sueyoi_avg/lpic_fool_sueyoi_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fortitude_avg",
+  "lpic": "res/Assets/Res/Character/fortitude_avg/lpic_fortitude_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fresnel",
+  "lpic": "res/Assets/Res/Character/fresnel/lpic_fresnel.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "fresnel_avg",
+  "lpic": "res/Assets/Res/Character/fresnel_avg/lpic_fresnel_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fresnel_bathrobe",
+  "lpic": "res/Assets/Res/Character/fresnel_bathrobe/lpic_fresnel_bathrobe.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "fresnel_hurt_avg",
+  "lpic": "res/Assets/Res/Character/fresnel_hurt_avg/lpic_fresnel_hurt_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "fresnel_newyear",
+  "lpic": "res/Assets/Res/Character/fresnel_newyear/lpic_fresnel_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "fresnel_p2",
+  "lpic": "res/Assets/Res/Character/fresnel_p2/lpic_fresnel_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "fresnel_p3",
+  "lpic": "res/Assets/Res/Character/fresnel_p3/lpic_fresnel_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "fresnel_wuxia",
+  "lpic": "res/Assets/Res/Character/fresnel_wuxia/lpic_fresnel_wuxia.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "gabriel2_avg",
+  "lpic": "res/Assets/Res/Character/gabriel2_avg/lpic_gabriel2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "gabriel3_avg",
+  "lpic": "res/Assets/Res/Character/gabriel3_avg/lpic_gabriel3_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "gabriel_avg",
+  "lpic": "res/Assets/Res/Character/gabriel_avg/lpic_gabriel_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "gagarin_avg",
+  "lpic": "res/Assets/Res/Character/gagarin_avg/lpic_gagarin_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "gagarin_b_avg",
+  "lpic": "res/Assets/Res/Character/gagarin_b_avg/lpic_gagarin_b_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "gastronomie",
+  "lpic": "res/Assets/Res/Character/gastronomie/lpic_gastronomie.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "gastronomie_april",
+  "lpic": "res/Assets/Res/Character/gastronomie_april/lpic_gastronomie_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "gastronomie_avg",
+  "lpic": "res/Assets/Res/Character/gastronomie_avg/lpic_gastronomie_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "gastronomie_midages",
+  "lpic": "res/Assets/Res/Character/gastronomie_midages/lpic_gastronomie_midages.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "gastronomie_open",
+  "lpic": "res/Assets/Res/Character/gastronomie_open/lpic_gastronomie_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "gastronomie_p2",
+  "lpic": "res/Assets/Res/Character/gastronomie_p2/lpic_gastronomie_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "gastronomie_p3",
+  "lpic": "res/Assets/Res/Character/gastronomie_p3/lpic_gastronomie_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "gentle_avg",
+  "lpic": "res/Assets/Res/Character/gentle_avg/lpic_gentle_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "gin",
+  "lpic": "res/Assets/Res/Character/gin/lpic_gin.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "gin_april",
+  "lpic": "res/Assets/Res/Character/gin_april/lpic_gin_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "gin_avg",
+  "lpic": "res/Assets/Res/Character/gin_avg/lpic_gin_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "gin_concert_avg",
+  "lpic": "res/Assets/Res/Character/gin_concert_avg/lpic_gin_concert_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "gin_live",
+  "lpic": "res/Assets/Res/Character/gin_live/lpic_gin_live.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "gin_newyear",
+  "lpic": "res/Assets/Res/Character/gin_newyear/lpic_gin_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "gin_p2",
+  "lpic": "res/Assets/Res/Character/gin_p2/lpic_gin_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "gin_p3",
+  "lpic": "res/Assets/Res/Character/gin_p3/lpic_gin_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "glowbot_avg",
+  "lpic": "res/Assets/Res/Character/glowbot_avg/lpic_glowbot_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "golem1_avg",
+  "lpic": "res/Assets/Res/Character/golem1_avg/lpic_golem1_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "golem1b_avg",
+  "lpic": "res/Assets/Res/Character/golem1b_avg/lpic_golem1b_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "golem2_avg",
+  "lpic": "res/Assets/Res/Character/golem2_avg/lpic_golem2_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "golem2b_avg",
+  "lpic": "res/Assets/Res/Character/golem2b_avg/lpic_golem2b_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "golem_puzzle_avg",
+  "lpic": "res/Assets/Res/Character/golem_puzzle_avg/lpic_golem_puzzle_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "groove",
+  "lpic": "res/Assets/Res/Character/groove/lpic_groove.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "groove_bathrobe",
+  "lpic": "res/Assets/Res/Character/groove_bathrobe/lpic_groove_bathrobe.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "groove_p2",
+  "lpic": "res/Assets/Res/Character/groove_p2/lpic_groove_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "groove_p3",
+  "lpic": "res/Assets/Res/Character/groove_p3/lpic_groove_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "groove_whiteday",
+  "lpic": "res/Assets/Res/Character/groove_whiteday/lpic_groove_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "halloghost_avg",
+  "lpic": "res/Assets/Res/Character/halloghost_avg/lpic_halloghost_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hallopump_avg",
+  "lpic": "res/Assets/Res/Character/hallopump_avg/lpic_hallopump_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hanna",
+  "lpic": "res/Assets/Res/Character/hanna/lpic_hanna.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hanna_christmas",
+  "lpic": "res/Assets/Res/Character/hanna_christmas/lpic_hanna_christmas.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hanna_honeydearest",
+  "lpic": "res/Assets/Res/Character/hanna_honeydearest/lpic_hanna_honeydearest.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hanna_p2",
+  "lpic": "res/Assets/Res/Character/hanna_p2/lpic_hanna_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hanna_p3",
+  "lpic": "res/Assets/Res/Character/hanna_p3/lpic_hanna_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hannah_avg",
+  "lpic": "res/Assets/Res/Character/hannah_avg/lpic_hannah_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hatsuchiri",
+  "lpic": "res/Assets/Res/Character/hatsuchiri/lpic_hatsuchiri.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hatsuchiri_april",
+  "lpic": "res/Assets/Res/Character/hatsuchiri_april/lpic_hatsuchiri_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hatsuchiri_avg",
+  "lpic": "res/Assets/Res/Character/hatsuchiri_avg/lpic_hatsuchiri_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hatsuchiri_carnival",
+  "lpic": "res/Assets/Res/Character/hatsuchiri_carnival/lpic_hatsuchiri_carnival.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hatsuchiri_concert_avg",
+  "lpic": "res/Assets/Res/Character/hatsuchiri_concert_avg/lpic_hatsuchiri_concert_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hatsuchiri_helmet_avg",
+  "lpic": "res/Assets/Res/Character/hatsuchiri_helmet_avg/lpic_hatsuchiri_helmet_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hatsuchiri_live",
+  "lpic": "res/Assets/Res/Character/hatsuchiri_live/lpic_hatsuchiri_live.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hatsuchiri_live_rectify",
+  "lpic": "res/Assets/Res/Character/hatsuchiri_live_rectify/lpic_hatsuchiri_live_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hatsuchiri_p2",
+  "lpic": "res/Assets/Res/Character/hatsuchiri_p2/lpic_hatsuchiri_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hatsuchiri_p3",
+  "lpic": "res/Assets/Res/Character/hatsuchiri_p3/lpic_hatsuchiri_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hatsuchiri_shadow_avg",
+  "lpic": "res/Assets/Res/Character/hatsuchiri_shadow_avg/lpic_hatsuchiri_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "havoc",
+  "lpic": "res/Assets/Res/Character/havoc/lpic_havoc.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "havoc2_avg",
+  "lpic": "res/Assets/Res/Character/havoc2_avg/lpic_havoc2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "havoc_avg",
+  "lpic": "res/Assets/Res/Character/havoc_avg/lpic_havoc_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "havoc_hang_avg",
+  "lpic": "res/Assets/Res/Character/havoc_hang_avg/lpic_havoc_hang_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "havoc_p2",
+  "lpic": "res/Assets/Res/Character/havoc_p2/lpic_havoc_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "havoc_p3",
+  "lpic": "res/Assets/Res/Character/havoc_p3/lpic_havoc_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "haze",
+  "lpic": "res/Assets/Res/Character/haze/lpic_haze.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "haze_april",
+  "lpic": "res/Assets/Res/Character/haze_april/lpic_haze_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "haze_avg",
+  "lpic": "res/Assets/Res/Character/haze_avg/lpic_haze_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "haze_doll_avg",
+  "lpic": "res/Assets/Res/Character/haze_doll_avg/lpic_haze_doll_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "haze_dress",
+  "lpic": "res/Assets/Res/Character/haze_dress/lpic_haze_dress.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "haze_dress_rectify",
+  "lpic": "res/Assets/Res/Character/haze_dress_rectify/lpic_haze_dress_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "haze_oath_avg",
+  "lpic": "res/Assets/Res/Character/haze_oath_avg/lpic_haze_oath_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "haze_open",
+  "lpic": "res/Assets/Res/Character/haze_open/lpic_haze_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "haze_open_rectify",
+  "lpic": "res/Assets/Res/Character/haze_open_rectify/lpic_haze_open_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "haze_p2",
+  "lpic": "res/Assets/Res/Character/haze_p2/lpic_haze_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "haze_p3",
+  "lpic": "res/Assets/Res/Character/haze_p3/lpic_haze_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "haze_vow",
+  "lpic": "res/Assets/Res/Character/haze_vow/lpic_haze_vow.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "haze_whiteday",
+  "lpic": "res/Assets/Res/Character/haze_whiteday/lpic_haze_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "haze_wuxia",
+  "lpic": "res/Assets/Res/Character/haze_wuxia/lpic_haze_wuxia.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "haze_wuxia_rectify",
+  "lpic": "res/Assets/Res/Character/haze_wuxia_rectify/lpic_haze_wuxia_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hel_avg",
+  "lpic": "res/Assets/Res/Character/hel_avg/lpic_hel_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "helios_firewood_avg",
+  "lpic": "res/Assets/Res/Character/helios_firewood_avg/lpic_helios_firewood_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "helios_npc_01_avg",
+  "lpic": "res/Assets/Res/Character/helios_npc_01_avg/lpic_helios_npc_01_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "helios_npc_01b_avg",
+  "lpic": "res/Assets/Res/Character/helios_npc_01b_avg/lpic_helios_npc_01b_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "helios_npc_02_avg",
+  "lpic": "res/Assets/Res/Character/helios_npc_02_avg/lpic_helios_npc_02_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "helios_robotgreen_avg",
+  "lpic": "res/Assets/Res/Character/helios_robotgreen_avg/lpic_helios_robotgreen_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "helios_robotred_avg",
+  "lpic": "res/Assets/Res/Character/helios_robotred_avg/lpic_helios_robotred_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "helios_robotyellow_avg",
+  "lpic": "res/Assets/Res/Character/helios_robotyellow_avg/lpic_helios_robotyellow_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "helios_statue_avg",
+  "lpic": "res/Assets/Res/Character/helios_statue_avg/lpic_helios_statue_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "helix",
+  "lpic": "res/Assets/Res/Character/helix/lpic_helix.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "helix_avg",
+  "lpic": "res/Assets/Res/Character/helix_avg/lpic_helix_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "helix_bp",
+  "lpic": "res/Assets/Res/Character/helix_bp/lpic_helix_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "helix_hallo_avg",
+  "lpic": "res/Assets/Res/Character/helix_hallo_avg/lpic_helix_hallo_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "helix_halloween",
+  "lpic": "res/Assets/Res/Character/helix_halloween/lpic_helix_halloween.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "helix_midages",
+  "lpic": "res/Assets/Res/Character/helix_midages/lpic_helix_midages.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "helix_open",
+  "lpic": "res/Assets/Res/Character/helix_open/lpic_helix_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "helix_p2",
+  "lpic": "res/Assets/Res/Character/helix_p2/lpic_helix_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "helix_p3",
+  "lpic": "res/Assets/Res/Character/helix_p3/lpic_helix_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "helix_whiteday",
+  "lpic": "res/Assets/Res/Character/helix_whiteday/lpic_helix_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hesperus_avg",
+  "lpic": "res/Assets/Res/Character/hesperus_avg/lpic_hesperus_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hesperus_weapon2_avg",
+  "lpic": "res/Assets/Res/Character/hesperus_weapon2_avg/lpic_hesperus_weapon2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hesperus_weapon2_avg_stage_perform",
+  "lpic": "res/Assets/Res/Character/hesperus_weapon2_avg_stage_perform/lpic_hesperus_weapon2_avg_stage_perform.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hesperus_weapon_avg",
+  "lpic": "res/Assets/Res/Character/hesperus_weapon_avg/lpic_hesperus_weapon_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hk416",
+  "lpic": "res/Assets/Res/Character/hk416/lpic_hk416.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hk416_april",
+  "lpic": "res/Assets/Res/Character/hk416_april/lpic_hk416_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hk416_happyzoo",
+  "lpic": "res/Assets/Res/Character/hk416_happyzoo/lpic_hk416_happyzoo.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hk416_idol",
+  "lpic": "res/Assets/Res/Character/hk416_idol/lpic_hk416_idol.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hk416_p2",
+  "lpic": "res/Assets/Res/Character/hk416_p2/lpic_hk416_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hk416_p3",
+  "lpic": "res/Assets/Res/Character/hk416_p3/lpic_hk416_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hk416_swimsuit",
+  "lpic": "res/Assets/Res/Character/hk416_swimsuit/lpic_hk416_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hk416_winner",
+  "lpic": "res/Assets/Res/Character/hk416_winner/lpic_hk416_winner.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hope",
+  "lpic": "res/Assets/Res/Character/hope/lpic_hope.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hope_avg",
+  "lpic": "res/Assets/Res/Character/hope_avg/lpic_hope_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "horizon",
+  "lpic": "res/Assets/Res/Character/horizon/lpic_horizon.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "horizon_avg",
+  "lpic": "res/Assets/Res/Character/horizon_avg/lpic_horizon_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "horizon_p2",
+  "lpic": "res/Assets/Res/Character/horizon_p2/lpic_horizon_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "horizon_p3",
+  "lpic": "res/Assets/Res/Character/horizon_p3/lpic_horizon_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "horizon_s_avg",
+  "lpic": "res/Assets/Res/Character/horizon_s_avg/lpic_horizon_s_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hubble",
+  "lpic": "res/Assets/Res/Character/hubble/lpic_hubble.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hubble_april",
+  "lpic": "res/Assets/Res/Character/hubble_april/lpic_hubble_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hubble_avg",
+  "lpic": "res/Assets/Res/Character/hubble_avg/lpic_hubble.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hubble_christ_avg",
+  "lpic": "res/Assets/Res/Character/hubble_christ_avg/lpic_hubble_christ_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hubble_christmas",
+  "lpic": "res/Assets/Res/Character/hubble_christmas/lpic_hubble_christmas.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hubble_christmas_rectify",
+  "lpic": "res/Assets/Res/Character/hubble_christmas_rectify/lpic_hubble_christmas_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hubble_darkstar",
+  "lpic": "res/Assets/Res/Character/hubble_darkstar/lpic_hubble_darkstar.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hubble_darkstar_p2",
+  "lpic": "res/Assets/Res/Character/hubble_darkstar_p2/lpic_hubble_darkstar_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hubble_darkstar_p3",
+  "lpic": "res/Assets/Res/Character/hubble_darkstar_p3/lpic_hubble_darkstar_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hubble_darkstar_vow",
+  "lpic": "res/Assets/Res/Character/hubble_darkstar_vow/lpic_hubble_darkstar_vow.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hubble_darkstar_vow_rectify",
+  "lpic": "res/Assets/Res/Character/hubble_darkstar_vow_rectify/lpic_hubble_darkstar_vow_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hubble_dress",
+  "lpic": "res/Assets/Res/Character/hubble_dress/lpic_hubble_dress.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hubble_dress_avg",
+  "lpic": "res/Assets/Res/Character/hubble_dress_avg/lpic_hubble_dress_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hubble_hurt_avg",
+  "lpic": "res/Assets/Res/Character/hubble_hurt_avg/lpic_hubble_hurt_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hubble_newyear",
+  "lpic": "res/Assets/Res/Character/hubble_newyear/lpic_hubble_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hubble_open",
+  "lpic": "res/Assets/Res/Character/hubble_open/lpic_hubble_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hubble_p2",
+  "lpic": "res/Assets/Res/Character/hubble_p2/lpic_hubble_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hubble_p3",
+  "lpic": "res/Assets/Res/Character/hubble_p3/lpic_hubble_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "hubble_sp_avg",
+  "lpic": "res/Assets/Res/Character/hubble_sp_avg/lpic_hubble_sp_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hubble_sp_oath_avg",
+  "lpic": "res/Assets/Res/Character/hubble_sp_oath_avg/lpic_hubble_sp_oath_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hubble_sp_shadow_avg",
+  "lpic": "res/Assets/Res/Character/hubble_sp_shadow_avg/lpic_hubble_sp_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "hubble_whiteday",
+  "lpic": "res/Assets/Res/Character/hubble_whiteday/lpic_hubble_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "imhotep",
+  "lpic": "res/Assets/Res/Character/imhotep/lpic_imhotep.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "imhotep_bp",
+  "lpic": "res/Assets/Res/Character/imhotep_bp/lpic_imhotep_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "imhotep_hurt_avg",
+  "lpic": "res/Assets/Res/Character/imhotep_hurt_avg/lpic_imhotep_hurt_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "imhotep_idol",
+  "lpic": "res/Assets/Res/Character/imhotep_idol/lpic_imhotep_idol.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "imhotep_midages",
+  "lpic": "res/Assets/Res/Character/imhotep_midages/lpic_imhotep_midages.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "imhotep_midages_rectify",
+  "lpic": "res/Assets/Res/Character/imhotep_midages_rectify/lpic_imhotep_midages_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "imhotep_open",
+  "lpic": "res/Assets/Res/Character/imhotep_open/lpic_imhotep_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "imhotep_p2",
+  "lpic": "res/Assets/Res/Character/imhotep_p2/lpic_imhotep_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "imhotep_p3",
+  "lpic": "res/Assets/Res/Character/imhotep_p3/lpic_imhotep_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "imhotep_school",
+  "lpic": "res/Assets/Res/Character/imhotep_school/lpic_imhotep_school.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "imhotep_whiteday",
+  "lpic": "res/Assets/Res/Character/imhotep_whiteday/lpic_imhotep_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "imhotep_wreck2_avg",
+  "lpic": "res/Assets/Res/Character/imhotep_wreck2_avg/lpic_imhotep_wreck2_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "imhotep_wreck_avg",
+  "lpic": "res/Assets/Res/Character/imhotep_wreck_avg/lpic_imhotep_wreck_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "inola",
+  "lpic": "res/Assets/Res/Character/inola/lpic_inola.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "inola_avg",
+  "lpic": "res/Assets/Res/Character/inola_avg/lpic_inola_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "inola_p2",
+  "lpic": "res/Assets/Res/Character/inola_p2/lpic_inola_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "inola_p3",
+  "lpic": "res/Assets/Res/Character/inola_p3/lpic_inola_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "ira_avg",
+  "lpic": "res/Assets/Res/Character/ira_avg/lpic_ira_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "ira_b_avg",
+  "lpic": "res/Assets/Res/Character/ira_b_avg/lpic_ira_b_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "ira_shadow_avg",
+  "lpic": "res/Assets/Res/Character/ira_shadow_avg/lpic_ira_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "irida_avg",
+  "lpic": "res/Assets/Res/Character/irida_avg/lpic_irida_avg.png",
+  "faces": [
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "irida_shadow_avg",
+  "lpic": "res/Assets/Res/Character/irida_shadow_avg/lpic_irida_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "itaru_avg",
+  "lpic": "res/Assets/Res/Character/itaru_avg/lpic_itaru_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "jessie",
+  "lpic": "res/Assets/Res/Character/jessie/lpic_jessie.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "jessie_avg",
+  "lpic": "res/Assets/Res/Character/jessie_avg/lpic_jessie_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "jessie_open",
+  "lpic": "res/Assets/Res/Character/jessie_open/lpic_jessie_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "jessie_p2",
+  "lpic": "res/Assets/Res/Character/jessie_p2/lpic_jessie_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "jessie_p3",
+  "lpic": "res/Assets/Res/Character/jessie_p3/lpic_jessie_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "jessie_whiteday",
+  "lpic": "res/Assets/Res/Character/jessie_whiteday/lpic_jessie_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "jiangyu",
+  "lpic": "res/Assets/Res/Character/jiangyu/lpic_jiangyu.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "jiangyu2_avg",
+  "lpic": "res/Assets/Res/Character/jiangyu2_avg/lpic_jiangyu2_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "jiangyu_anniversary",
+  "lpic": "res/Assets/Res/Character/jiangyu_anniversary/lpic_jiangyu_anniversary.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "jiangyu_avg",
+  "lpic": "res/Assets/Res/Character/jiangyu_avg/lpic_jiangyu_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "jiangyu_doll_avg",
+  "lpic": "res/Assets/Res/Character/jiangyu_doll_avg/lpic_jiangyu_doll_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "jiangyu_dress",
+  "lpic": "res/Assets/Res/Character/jiangyu_dress/lpic_jiangyu_dress.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "jiangyu_dress_avg",
+  "lpic": "res/Assets/Res/Character/jiangyu_dress_avg/lpic_jiangyu_dress_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "jiangyu_p2",
+  "lpic": "res/Assets/Res/Character/jiangyu_p2/lpic_jiangyu_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "jiangyu_p3",
+  "lpic": "res/Assets/Res/Character/jiangyu_p3/lpic_jiangyu_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "jiangyu_summer_avg",
+  "lpic": "res/Assets/Res/Character/jiangyu_summer_avg/lpic_jiangyu_summer_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "jiangyu_swimsuit",
+  "lpic": "res/Assets/Res/Character/jiangyu_swimsuit/lpic_jiangyu_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "jiangyu_wuxia",
+  "lpic": "res/Assets/Res/Character/jiangyu_wuxia/lpic_jiangyu_wuxia.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "jiangyu_wuxia_rectify",
+  "lpic": "res/Assets/Res/Character/jiangyu_wuxia_rectify/lpic_jiangyu_wuxia_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "judge2_avg",
+  "lpic": "res/Assets/Res/Character/judge2_avg/lpic_judge2_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "judge3_avg",
+  "lpic": "res/Assets/Res/Character/judge3_avg/lpic_judge3_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "judge_avg",
+  "lpic": "res/Assets/Res/Character/judge_avg/lpic_judge_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   11,
+   22,
+   33,
+   999
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "kimie",
+  "lpic": "res/Assets/Res/Character/kimie/lpic_kimie.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kimie_avg",
+  "lpic": "res/Assets/Res/Character/kimie_avg/lpic_kimie_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "kimie_newyear",
+  "lpic": "res/Assets/Res/Character/kimie_newyear/lpic_kimie_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kimie_newyear_avg",
+  "lpic": "res/Assets/Res/Character/kimie_newyear_avg/lpic_kimie_newyear_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "kimie_oath_avg",
+  "lpic": "res/Assets/Res/Character/kimie_oath_avg/lpic_kimie_oath_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "kimie_p2",
+  "lpic": "res/Assets/Res/Character/kimie_p2/lpic_kimie_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kimie_p3",
+  "lpic": "res/Assets/Res/Character/kimie_p3/lpic_kimie_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kimie_vow",
+  "lpic": "res/Assets/Res/Character/kimie_vow/lpic_kimie_vow.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "knot_shadow_avg",
+  "lpic": "res/Assets/Res/Character/knot_shadow_avg/lpic_knot_shadow_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "ksenia",
+  "lpic": "res/Assets/Res/Character/ksenia/lpic_ksenia.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "ksenia_dress",
+  "lpic": "res/Assets/Res/Character/ksenia_dress/lpic_ksenia_dress.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "ksenia_dress_avg",
+  "lpic": "res/Assets/Res/Character/ksenia_dress_avg/lpic_ksenia_dress_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "ksenia_p2",
+  "lpic": "res/Assets/Res/Character/ksenia_p2/lpic_ksenia_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "ksenia_p3",
+  "lpic": "res/Assets/Res/Character/ksenia_p3/lpic_ksenia_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "ksenia_whiteday",
+  "lpic": "res/Assets/Res/Character/ksenia_whiteday/lpic_ksenia_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kurisu",
+  "lpic": "res/Assets/Res/Character/kurisu/lpic_kurisu.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kurisu_avg",
+  "lpic": "res/Assets/Res/Character/kurisu_avg/lpic_kurisu_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "kurisu_b_avg",
+  "lpic": "res/Assets/Res/Character/kurisu_b_avg/lpic_kurisu_b_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "kurisu_maid_avg",
+  "lpic": "res/Assets/Res/Character/kurisu_maid_avg/lpic_kurisu_maid_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "kurisu_mayqueen",
+  "lpic": "res/Assets/Res/Character/kurisu_mayqueen/lpic_kurisu_mayqueen.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kurisu_p2",
+  "lpic": "res/Assets/Res/Character/kurisu_p2/lpic_kurisu_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kurisu_p3",
+  "lpic": "res/Assets/Res/Character/kurisu_p3/lpic_kurisu_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kuro",
+  "lpic": "res/Assets/Res/Character/kuro/lpic_kuro.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kuro_april",
+  "lpic": "res/Assets/Res/Character/kuro_april/lpic_kuro_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kuro_avg",
+  "lpic": "res/Assets/Res/Character/kuro_avg/lpic_kuro_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "kuro_child",
+  "lpic": "res/Assets/Res/Character/kuro_child/lpic_kuro_child.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kuro_idol",
+  "lpic": "res/Assets/Res/Character/kuro_idol/lpic_kuro_idol.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kuro_idol_avg",
+  "lpic": "res/Assets/Res/Character/kuro_idol_avg/lpic_kuro_idol_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "kuro_kid_avg",
+  "lpic": "res/Assets/Res/Character/kuro_kid_avg/lpic_kuro_kid_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "kuro_maid_avg",
+  "lpic": "res/Assets/Res/Character/kuro_maid_avg/lpic_kuro_maid_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "kuro_mayqueen",
+  "lpic": "res/Assets/Res/Character/kuro_mayqueen/lpic_kuro_mayqueen.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kuro_newyear",
+  "lpic": "res/Assets/Res/Character/kuro_newyear/lpic_kuro_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kuro_p2",
+  "lpic": "res/Assets/Res/Character/kuro_p2/lpic_kuro_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kuro_p3",
+  "lpic": "res/Assets/Res/Character/kuro_p3/lpic_kuro_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kuro_spring_avg",
+  "lpic": "res/Assets/Res/Character/kuro_spring_avg/lpic_kuro_spring_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   22,
+   33,
+   44,
+   55,
+   66,
+   77,
+   88,
+   99,
+   100,
+   202,
+   999
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "kuro_whiteday",
+  "lpic": "res/Assets/Res/Character/kuro_whiteday/lpic_kuro_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "kuroryu_avg",
+  "lpic": "res/Assets/Res/Character/kuroryu_avg/lpic_kuroryu_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   11,
+   22,
+   33,
+   44,
+   55,
+   66,
+   999
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "lam",
+  "lpic": "res/Assets/Res/Character/lam/lpic_lam.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lam_avg",
+  "lpic": "res/Assets/Res/Character/lam_avg/lpic_lam_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "lam_open",
+  "lpic": "res/Assets/Res/Character/lam_open/lpic_lam_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lam_p2",
+  "lpic": "res/Assets/Res/Character/lam_p2/lpic_lam_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lam_p3",
+  "lpic": "res/Assets/Res/Character/lam_p3/lpic_lam_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lam_racer",
+  "lpic": "res/Assets/Res/Character/lam_racer/lpic_lam_racer.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lam_swimsuit",
+  "lpic": "res/Assets/Res/Character/lam_swimsuit/lpic_lam_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lam_whiteday",
+  "lpic": "res/Assets/Res/Character/lam_whiteday/lpic_lam_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lewis",
+  "lpic": "res/Assets/Res/Character/lewis/lpic_lewis.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lewis_avg",
+  "lpic": "res/Assets/Res/Character/lewis_avg/lpic_lewis_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "lewis_dress",
+  "lpic": "res/Assets/Res/Character/lewis_dress/lpic_lewis_dress.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lewis_p2",
+  "lpic": "res/Assets/Res/Character/lewis_p2/lpic_lewis_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lewis_p3",
+  "lpic": "res/Assets/Res/Character/lewis_p3/lpic_lewis_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lind",
+  "lpic": "res/Assets/Res/Character/lind/lpic_lind.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lind_avg",
+  "lpic": "res/Assets/Res/Character/lind_avg/lpic_lind_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "lind_bp",
+  "lpic": "res/Assets/Res/Character/lind_bp/lpic_lind_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lind_p2",
+  "lpic": "res/Assets/Res/Character/lind_p2/lpic_lind_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lind_p3",
+  "lpic": "res/Assets/Res/Character/lind_p3/lpic_lind_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "lind_s_avg",
+  "lpic": "res/Assets/Res/Character/lind_s_avg/lpic_lind_s_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "love",
+  "lpic": "res/Assets/Res/Character/love/lpic_love.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "love_avg",
+  "lpic": "res/Assets/Res/Character/love_avg/lpic_love_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "luna",
+  "lpic": "res/Assets/Res/Character/luna/lpic_luna.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "luna_avg",
+  "lpic": "res/Assets/Res/Character/luna_avg/lpic_luna_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "luna_dress",
+  "lpic": "res/Assets/Res/Character/luna_dress/lpic_luna_dress.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "luna_dress_avg",
+  "lpic": "res/Assets/Res/Character/luna_dress_avg/lpic_luna_dress_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "luna_p2",
+  "lpic": "res/Assets/Res/Character/luna_p2/lpic_luna_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "luna_p3",
+  "lpic": "res/Assets/Res/Character/luna_p3/lpic_luna_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "mag2_avg",
+  "lpic": "res/Assets/Res/Character/mag2_avg/lpic_mag2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   21,
+   22,
+   23,
+   23,
+   31,
+   32,
+   33,
+   33,
+   41,
+   42,
+   43,
+   43,
+   51,
+   52,
+   53,
+   53,
+   61,
+   62,
+   63,
+   63,
+   71,
+   72,
+   73,
+   73,
+   81,
+   82,
+   83,
+   83,
+   91,
+   92,
+   93,
+   93,
+   101,
+   102,
+   103,
+   103,
+   111,
+   112,
+   113,
+   113,
+   121,
+   122,
+   123,
+   123,
+   991,
+   992,
+   993,
+   993,
+   1111,
+   1112,
+   1113,
+   1113
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "mag_avg",
+  "lpic": "res/Assets/Res/Character/mag_avg/lpic_mag_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   21,
+   31,
+   41,
+   51,
+   61,
+   71,
+   81,
+   91,
+   101,
+   111,
+   121,
+   991,
+   1111
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "magnhilda",
+  "lpic": "res/Assets/Res/Character/magnhilda/lpic_magnhilda.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "magnhilda_april",
+  "lpic": "res/Assets/Res/Character/magnhilda_april/lpic_magnhilda_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "magnhilda_avg",
+  "lpic": "res/Assets/Res/Character/magnhilda_avg/lpic_magnhilda_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "magnhilda_kongfu_avg",
+  "lpic": "res/Assets/Res/Character/magnhilda_kongfu_avg/lpic_magnhilda_kongfu_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "magnhilda_open",
+  "lpic": "res/Assets/Res/Character/magnhilda_open/lpic_magnhilda_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "magnhilda_p2",
+  "lpic": "res/Assets/Res/Character/magnhilda_p2/lpic_magnhilda_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "magnhilda_p3",
+  "lpic": "res/Assets/Res/Character/magnhilda_p3/lpic_magnhilda_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "magnhilda_theater",
+  "lpic": "res/Assets/Res/Character/magnhilda_theater/lpic_magnhilda_theater.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "magnhilda_whiteday",
+  "lpic": "res/Assets/Res/Character/magnhilda_whiteday/lpic_magnhilda_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "mai",
+  "lpic": "res/Assets/Res/Character/mai/lpic_mai.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "mai_avg",
+  "lpic": "res/Assets/Res/Character/mai_avg/lpic_mai_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "mai_open",
+  "lpic": "res/Assets/Res/Character/mai_open/lpic_mai_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "mai_p2",
+  "lpic": "res/Assets/Res/Character/mai_p2/lpic_mai_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "mai_p3",
+  "lpic": "res/Assets/Res/Character/mai_p3/lpic_mai_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "mai_whiteday",
+  "lpic": "res/Assets/Res/Character/mai_whiteday/lpic_mai_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "malkira_avg",
+  "lpic": "res/Assets/Res/Character/malkira_avg/lpic_malkira_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "malkira_shadow_avg",
+  "lpic": "res/Assets/Res/Character/malkira_shadow_avg/lpic_malkira_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "mara_avg",
+  "lpic": "res/Assets/Res/Character/mara_avg/lpic_mara_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "mara_blue_avg",
+  "lpic": "res/Assets/Res/Character/mara_blue_avg/lpic_mara_blue_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "mara_bluehoukai_avg",
+  "lpic": "res/Assets/Res/Character/mara_bluehoukai_avg/lpic_mara_bluehoukai_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "mara_weapon_avg",
+  "lpic": "res/Assets/Res/Character/mara_weapon_avg/lpic_mara_weapon_avg.png",
+  "faces": [
+   4,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "mara_wrecked_avg",
+  "lpic": "res/Assets/Res/Character/mara_wrecked_avg/lpic_mara_wrecked_avg.png",
+  "faces": [
+   1,
+   4,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "max",
+  "lpic": "res/Assets/Res/Character/max/lpic_max.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "max2_avg",
+  "lpic": "res/Assets/Res/Character/max2_avg/lpic_max2.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "max_open",
+  "lpic": "res/Assets/Res/Character/max_open/lpic_max_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "max_p2",
+  "lpic": "res/Assets/Res/Character/max_p2/lpic_max_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "max_p3",
+  "lpic": "res/Assets/Res/Character/max_p3/lpic_max_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "max_swimsuit",
+  "lpic": "res/Assets/Res/Character/max_swimsuit/lpic_max_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "max_whiteday",
+  "lpic": "res/Assets/Res/Character/max_whiteday/lpic_max_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "mayuri",
+  "lpic": "res/Assets/Res/Character/mayuri/lpic_mayuri.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "mayuri_avg",
+  "lpic": "res/Assets/Res/Character/mayuri_avg/lpic_mayuri_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "mayuri_b_avg",
+  "lpic": "res/Assets/Res/Character/mayuri_b_avg/lpic_mayuri_b_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "mayuri_maid_avg",
+  "lpic": "res/Assets/Res/Character/mayuri_maid_avg/lpic_mayuri_maid_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "mayuri_mayqueen",
+  "lpic": "res/Assets/Res/Character/mayuri_mayqueen/lpic_mayuri_mayqueen.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "mayuri_p2",
+  "lpic": "res/Assets/Res/Character/mayuri_p2/lpic_mayuri_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "mayuri_p3",
+  "lpic": "res/Assets/Res/Character/mayuri_p3/lpic_mayuri_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "mecha_avg",
+  "lpic": "res/Assets/Res/Character/mecha_avg/lpic_mecha_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "mechanic2_avg",
+  "lpic": "res/Assets/Res/Character/mechanic2_avg/lpic_mechanic2_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "mechanic_avg",
+  "lpic": "res/Assets/Res/Character/mechanic_avg/lpic_mechanic_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "meryl_avg",
+  "lpic": "res/Assets/Res/Character/meryl_avg/lpic_meryl_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "meteor_avg",
+  "lpic": "res/Assets/Res/Character/meteor_avg/lpic_meteor_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "miemiezi",
+  "lpic": "res/Assets/Res/Character/miemiezi/lpic_miemiezi.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "mob1_avg",
+  "lpic": "res/Assets/Res/Character/mob1_avg/lpic_mob1_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "mob2_avg",
+  "lpic": "res/Assets/Res/Character/mob2_avg/lpic_mob2_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nameless2_avg",
+  "lpic": "res/Assets/Res/Character/nameless2_avg/lpic_nameless2_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nameless_avg",
+  "lpic": "res/Assets/Res/Character/nameless_avg/lpic_nameless_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nana_avg",
+  "lpic": "res/Assets/Res/Character/nana_avg/lpic_nana_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nanaka",
+  "lpic": "res/Assets/Res/Character/nanaka/lpic_nanaka.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nanaka_avg",
+  "lpic": "res/Assets/Res/Character/nanaka_avg/lpic_nanaka_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   11,
+   21,
+   31,
+   41,
+   111,
+   1111
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nanaka_bp",
+  "lpic": "res/Assets/Res/Character/nanaka_bp/lpic_nanaka_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nanaka_carnival",
+  "lpic": "res/Assets/Res/Character/nanaka_carnival/lpic_nanaka_carnival.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nanaka_holo_avg",
+  "lpic": "res/Assets/Res/Character/nanaka_holo_avg/lpic_nanaka_holo.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nanaka_movie",
+  "lpic": "res/Assets/Res/Character/nanaka_movie/lpic_nanaka_movie.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nanaka_movie_rectify",
+  "lpic": "res/Assets/Res/Character/nanaka_movie_rectify/lpic_nanaka_movie_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nanaka_oath_avg",
+  "lpic": "res/Assets/Res/Character/nanaka_oath_avg/lpic_nanaka_oath_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nanaka_open",
+  "lpic": "res/Assets/Res/Character/nanaka_open/lpic_nanaka_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nanaka_p2",
+  "lpic": "res/Assets/Res/Character/nanaka_p2/lpic_nanaka_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nanaka_p3",
+  "lpic": "res/Assets/Res/Character/nanaka_p3/lpic_nanaka_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nanaka_summer_avg",
+  "lpic": "res/Assets/Res/Character/nanaka_summer_avg/lpic_nanaka_summer_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nanaka_summerb_avg",
+  "lpic": "res/Assets/Res/Character/nanaka_summerb_avg/lpic_nanaka_summerb_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nanaka_swimsuit",
+  "lpic": "res/Assets/Res/Character/nanaka_swimsuit/lpic_nanaka_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nanaka_vow",
+  "lpic": "res/Assets/Res/Character/nanaka_vow/lpic_nanaka_vow.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nanaka_vow_rectify",
+  "lpic": "res/Assets/Res/Character/nanaka_vow_rectify/lpic_nanaka_vow_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nanakap_avg",
+  "lpic": "res/Assets/Res/Character/nanakap_avg/lpic_nanakap_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nascita",
+  "lpic": "res/Assets/Res/Character/nascita/lpic_nascita.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nascita1_avg",
+  "lpic": "res/Assets/Res/Character/nascita1_avg/lpic_nascita1_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nascita2_avg",
+  "lpic": "res/Assets/Res/Character/nascita2_avg/lpic_nascita2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nascita_april",
+  "lpic": "res/Assets/Res/Character/nascita_april/lpic_nascita_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nascita_bp",
+  "lpic": "res/Assets/Res/Character/nascita_bp/lpic_nascita_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nascita_p2",
+  "lpic": "res/Assets/Res/Character/nascita_p2/lpic_nascita_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nascita_p3",
+  "lpic": "res/Assets/Res/Character/nascita_p3/lpic_nascita_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nascita_racer",
+  "lpic": "res/Assets/Res/Character/nascita_racer/lpic_nascita_racer.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nascita_whiteday",
+  "lpic": "res/Assets/Res/Character/nascita_whiteday/lpic_nascita_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "neumann2_avg",
+  "lpic": "res/Assets/Res/Character/neumann2_avg/lpic_neumann2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "neumann_avg",
+  "lpic": "res/Assets/Res/Character/neumann_avg/lpic_neumann_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "neumann_shadow_avg",
+  "lpic": "res/Assets/Res/Character/neumann_shadow_avg/lpic_neumann_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nora",
+  "lpic": "res/Assets/Res/Character/nora/lpic_nora.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nora_april",
+  "lpic": "res/Assets/Res/Character/nora_april/lpic_nora_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nora_bp",
+  "lpic": "res/Assets/Res/Character/nora_bp/lpic_nora_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nora_myth",
+  "lpic": "res/Assets/Res/Character/nora_myth/lpic_nora_myth.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nora_myth_avg",
+  "lpic": "res/Assets/Res/Character/nora_myth_avg/lpic_nora_myth_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nora_p2",
+  "lpic": "res/Assets/Res/Character/nora_p2/lpic_nora_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nora_p3",
+  "lpic": "res/Assets/Res/Character/nora_p3/lpic_nora_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nora_summer_avg",
+  "lpic": "res/Assets/Res/Character/nora_summer_avg/lpic_nora_summer_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "nora_swimsuit",
+  "lpic": "res/Assets/Res/Character/nora_swimsuit/lpic_nora_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "nora_whiteday",
+  "lpic": "res/Assets/Res/Character/nora_whiteday/lpic_nora_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "oasis_01_avg",
+  "lpic": "res/Assets/Res/Character/oasis_01_avg/lpic_oasis_01_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "oasis_01b_avg",
+  "lpic": "res/Assets/Res/Character/oasis_01b_avg/lpic_oasis_01b_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "oasis_02_avg",
+  "lpic": "res/Assets/Res/Character/oasis_02_avg/lpic_oasis_02_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "oasis_03_avg",
+  "lpic": "res/Assets/Res/Character/oasis_03_avg/lpic_oasis_03_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "oasis_a01_avg",
+  "lpic": "res/Assets/Res/Character/oasis_a01_avg/lpic_oasis_a01_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "oasis_a02_avg",
+  "lpic": "res/Assets/Res/Character/oasis_a02_avg/lpic_oasis_a02_avg.png",
+  "faces": [
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "oasis_a02a_avg",
+  "lpic": "res/Assets/Res/Character/oasis_a02a_avg/lpic_oasis_a02a_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "oasis_b01_avg",
+  "lpic": "res/Assets/Res/Character/oasis_b01_avg/lpic_oasis_b01_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "oasis_b02_avg",
+  "lpic": "res/Assets/Res/Character/oasis_b02_avg/lpic_oasis_b02_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "oasis_b02a_avg",
+  "lpic": "res/Assets/Res/Character/oasis_b02a_avg/lpic_oasis_b02a_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "octogen",
+  "lpic": "res/Assets/Res/Character/octogen/lpic_octogen.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "octogen_oath_avg",
+  "lpic": "res/Assets/Res/Character/octogen_oath_avg/lpic_octogen_oath_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "octogen_open",
+  "lpic": "res/Assets/Res/Character/octogen_open/lpic_octogen_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "octogen_p2",
+  "lpic": "res/Assets/Res/Character/octogen_p2/lpic_octogen_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "octogen_p3",
+  "lpic": "res/Assets/Res/Character/octogen_p3/lpic_octogen_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "octogen_theater",
+  "lpic": "res/Assets/Res/Character/octogen_theater/lpic_octogen_theater.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "octogen_vow",
+  "lpic": "res/Assets/Res/Character/octogen_vow/lpic_octogen_vow.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "octogen_whiteday",
+  "lpic": "res/Assets/Res/Character/octogen_whiteday/lpic_octogen_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "odette_avg",
+  "lpic": "res/Assets/Res/Character/odette_avg/lpic_odette_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "odette_b_avg",
+  "lpic": "res/Assets/Res/Character/odette_b_avg/lpic_odette_b_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "odette_s_avg",
+  "lpic": "res/Assets/Res/Character/odette_s_avg/lpic_odette_s_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "odile_b2_avg",
+  "lpic": "res/Assets/Res/Character/odile_b2_avg/lpic_odile_b2_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "odile_b3_avg",
+  "lpic": "res/Assets/Res/Character/odile_b3_avg/lpic_odile_b3_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "odile_b_avg",
+  "lpic": "res/Assets/Res/Character/odile_b_avg/lpic_odile_b_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "odile_shadow_avg",
+  "lpic": "res/Assets/Res/Character/odile_shadow_avg/lpic_odile_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "odile_w_avg",
+  "lpic": "res/Assets/Res/Character/odile_w_avg/lpic_odile_w_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "okabe_avg",
+  "lpic": "res/Assets/Res/Character/okabe_avg/lpic_okabe_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "olivia",
+  "lpic": "res/Assets/Res/Character/olivia/lpic_olivia.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "olivia2_avg",
+  "lpic": "res/Assets/Res/Character/olivia2_avg/lpic_olivia2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "olivia_avg",
+  "lpic": "res/Assets/Res/Character/olivia_avg/lpic_olivia_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   11,
+   22,
+   33,
+   44,
+   55,
+   66,
+   999
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "olivia_p2",
+  "lpic": "res/Assets/Res/Character/olivia_p2/lpic_olivia_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "olivia_p3",
+  "lpic": "res/Assets/Res/Character/olivia_p3/lpic_olivia_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "panakeia",
+  "lpic": "res/Assets/Res/Character/panakeia/lpic_panakeia.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "panakeia_open",
+  "lpic": "res/Assets/Res/Character/panakeia_open/lpic_panakeia_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "panakeia_p2",
+  "lpic": "res/Assets/Res/Character/panakeia_p2/lpic_panakeia_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "panakeia_p3",
+  "lpic": "res/Assets/Res/Character/panakeia_p3/lpic_panakeia_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "panakeia_swimsuit",
+  "lpic": "res/Assets/Res/Character/panakeia_swimsuit/lpic_panakeia_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "panakeia_swimsuit_rectify",
+  "lpic": "res/Assets/Res/Character/panakeia_swimsuit_rectify/lpic_panakeia_swimsuit_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "panakeia_whiteday",
+  "lpic": "res/Assets/Res/Character/panakeia_whiteday/lpic_panakeia_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "patience_avg",
+  "lpic": "res/Assets/Res/Character/patience_avg/lpic_patience_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "patience_b_avg",
+  "lpic": "res/Assets/Res/Character/patience_b_avg/lpic_patience_b_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "penumbra",
+  "lpic": "res/Assets/Res/Character/penumbra/lpic_penumbra.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "penumbra_army",
+  "lpic": "res/Assets/Res/Character/penumbra_army/lpic_penumbra_army.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "penumbra_avg",
+  "lpic": "res/Assets/Res/Character/penumbra_avg/lpic_penumbra_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "penumbra_p2",
+  "lpic": "res/Assets/Res/Character/penumbra_p2/lpic_penumbra_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "penumbra_p3",
+  "lpic": "res/Assets/Res/Character/penumbra_p3/lpic_penumbra_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria",
+  "lpic": "res/Assets/Res/Character/persicaria/lpic_persicaria.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_amusement",
+  "lpic": "res/Assets/Res/Character/persicaria_amusement/lpic_persicaria_amusement.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_anniversary",
+  "lpic": "res/Assets/Res/Character/persicaria_anniversary/lpic_persicaria_anniversary.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_anniversary_rectify",
+  "lpic": "res/Assets/Res/Character/persicaria_anniversary_rectify/lpic_persicaria_anniversary_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_april",
+  "lpic": "res/Assets/Res/Character/persicaria_april/lpic_persicaria_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_avg/lpic_persicaria_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   101
+  ],
+  "layout": true,
+  "avg": true
+ },
+ {
+  "id": "persicaria_bq2_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_bq2_avg/lpic_persicaria_bq2_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_bq_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_bq_avg/lpic_persicaria_bq_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_carnival",
+  "lpic": "res/Assets/Res/Character/persicaria_carnival/lpic_persicaria_carnival.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_christmas",
+  "lpic": "res/Assets/Res/Character/persicaria_christmas/lpic_persicaria_christmas.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_dress2_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_dress2_avg/lpic_persicaria_dress2_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_dress_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_dress_avg/lpic_persicaria_dress_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_hurt_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_hurt_avg/lpic_persicaria_hurt_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_p2",
+  "lpic": "res/Assets/Res/Character/persicaria_p2/lpic_persicaria_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_p3",
+  "lpic": "res/Assets/Res/Character/persicaria_p3/lpic_persicaria_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_s_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_s_avg/lpic_persicaria_s_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_shadow_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_shadow_avg/lpic_persicaria_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_shiningsoul",
+  "lpic": "res/Assets/Res/Character/persicaria_shiningsoul/lpic_persicaria_shiningsoul.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_sp",
+  "lpic": "res/Assets/Res/Character/persicaria_sp/lpic_persicaria_sp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_sp2_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_sp2_avg/lpic_persicaria_sp2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_sp2h2_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_sp2h2_avg/lpic_persicaria_sp2h2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   11,
+   22,
+   33,
+   66,
+   77,
+   999
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_sp2h3_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_sp2h3_avg/lpic_persicaria_sp2h3_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_sp2h_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_sp2h_avg/lpic_persicaria_sp2h_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_sp_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_sp_avg/lpic_persicaria_sp_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_sp_newyear1_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_sp_newyear1_avg/lpic_persicaria_sp_newyear1_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_sp_newyear2_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_sp_newyear2_avg/lpic_persicaria_sp_newyear2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_sp_newyear_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_sp_newyear_avg/lpic_persicaria_sp_newyear_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_species",
+  "lpic": "res/Assets/Res/Character/persicaria_species/lpic_persicaria_species.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_species_bp",
+  "lpic": "res/Assets/Res/Character/persicaria_species_bp/lpic_persicaria_species_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_species_entropy",
+  "lpic": "res/Assets/Res/Character/persicaria_species_entropy/lpic_persicaria_species_entropy.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_species_newyear",
+  "lpic": "res/Assets/Res/Character/persicaria_species_newyear/lpic_persicaria_species_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_species_p2",
+  "lpic": "res/Assets/Res/Character/persicaria_species_p2/lpic_persicaria_species_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_species_p3",
+  "lpic": "res/Assets/Res/Character/persicaria_species_p3/lpic_persicaria_species_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicaria_sph_avg",
+  "lpic": "res/Assets/Res/Character/persicaria_sph_avg/lpic_persicaria_sph_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "persicaria_whiteday",
+  "lpic": "res/Assets/Res/Character/persicaria_whiteday/lpic_persicaria_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "persicariadr_avg",
+  "lpic": "res/Assets/Res/Character/persicariadr_avg/lpic_persicariadr_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "phus_avg",
+  "lpic": "res/Assets/Res/Character/phus_avg/lpic_phus_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "prof_f_avg",
+  "lpic": "res/Assets/Res/Character/prof_f_avg/lpic_prof_f_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   999
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "prof_fs_avg",
+  "lpic": "res/Assets/Res/Character/prof_fs_avg/lpic_prof_fs_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "prof_m_avg",
+  "lpic": "res/Assets/Res/Character/prof_m_avg/lpic_prof_m_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   999
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "prof_ms_avg",
+  "lpic": "res/Assets/Res/Character/prof_ms_avg/lpic_prof_ms_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "ptolomaea_avg",
+  "lpic": "res/Assets/Res/Character/ptolomaea_avg/lpic_ptolomaea_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "ptolomaea_shadow_avg",
+  "lpic": "res/Assets/Res/Character/ptolomaea_shadow_avg/lpic_ptolomaea_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "ptolomaea_slave_avg",
+  "lpic": "res/Assets/Res/Character/ptolomaea_slave_avg/lpic_ptolomaea_slave_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "ptolomaea_slave_gold_avg",
+  "lpic": "res/Assets/Res/Character/ptolomaea_slave_gold_avg/lpic_ptolomaea_slave_gold_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "punish2_avg",
+  "lpic": "res/Assets/Res/Character/punish2_avg/lpic_punish2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "punish_avg",
+  "lpic": "res/Assets/Res/Character/punish_avg/lpic_punish_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "puzzle",
+  "lpic": "res/Assets/Res/Character/puzzle/lpic_puzzle.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "puzzle_april",
+  "lpic": "res/Assets/Res/Character/puzzle_april/lpic_puzzle_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "puzzle_avg",
+  "lpic": "res/Assets/Res/Character/puzzle_avg/lpic_puzzle_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "puzzle_bp",
+  "lpic": "res/Assets/Res/Character/puzzle_bp/lpic_puzzle_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "puzzle_myth",
+  "lpic": "res/Assets/Res/Character/puzzle_myth/lpic_puzzle_myth.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "puzzle_myth_avg",
+  "lpic": "res/Assets/Res/Character/puzzle_myth_avg/lpic_puzzle_myth_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "puzzle_p2",
+  "lpic": "res/Assets/Res/Character/puzzle_p2/lpic_puzzle_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "puzzle_p3",
+  "lpic": "res/Assets/Res/Character/puzzle_p3/lpic_puzzle_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "puzzle_whiteday",
+  "lpic": "res/Assets/Res/Character/puzzle_whiteday/lpic_puzzle_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "puzzlecat_avg",
+  "lpic": "res/Assets/Res/Character/puzzlecat_avg/lpic_puzzlecat_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "puzzlepump_avg",
+  "lpic": "res/Assets/Res/Character/puzzlepump_avg/lpic_puzzlepump_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "python",
+  "lpic": "res/Assets/Res/Character/python/lpic_python.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "python_april",
+  "lpic": "res/Assets/Res/Character/python_april/lpic_python_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "python_avg",
+  "lpic": "res/Assets/Res/Character/python_avg/lpic_python_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   11,
+   22,
+   33,
+   44,
+   55,
+   66,
+   77,
+   88,
+   99
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "python_bathrobe",
+  "lpic": "res/Assets/Res/Character/python_bathrobe/lpic_python_bathrobe.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "python_kongfu_avg",
+  "lpic": "res/Assets/Res/Character/python_kongfu_avg/lpic_python_kongfu_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "python_p2",
+  "lpic": "res/Assets/Res/Character/python_p2/lpic_python_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "python_p2_avg",
+  "lpic": "res/Assets/Res/Character/python_p2_avg/lpic_python_p2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "python_p3",
+  "lpic": "res/Assets/Res/Character/python_p3/lpic_python_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "python_w_avg",
+  "lpic": "res/Assets/Res/Character/python_w_avg/lpic_python_w_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "python_whiteday",
+  "lpic": "res/Assets/Res/Character/python_whiteday/lpic_python_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "ranko_avg",
+  "lpic": "res/Assets/Res/Character/ranko_avg/lpic_ranko_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "rankob_avg",
+  "lpic": "res/Assets/Res/Character/rankob_avg/lpic_rankob_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "refactor_avg",
+  "lpic": "res/Assets/Res/Character/refactor_avg/lpic_refactor_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "refugee1_avg",
+  "lpic": "res/Assets/Res/Character/refugee1_avg/lpic_refugee1_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "refugee2_avg",
+  "lpic": "res/Assets/Res/Character/refugee2_avg/lpic_refugee2_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "refugeeboy_avg",
+  "lpic": "res/Assets/Res/Character/refugeeboy_avg/lpic_refugeeboy_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "reverence_avg",
+  "lpic": "res/Assets/Res/Character/reverence_avg/lpic_reverence_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "rideromega_avg",
+  "lpic": "res/Assets/Res/Character/rideromega_avg/lpic_rideromega_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "rideromega_b_avg",
+  "lpic": "res/Assets/Res/Character/rideromega_b_avg/lpic_rideromega_b_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "ridersol_avg",
+  "lpic": "res/Assets/Res/Character/ridersol_avg/lpic_ridersol_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "ridersol_mask_avg",
+  "lpic": "res/Assets/Res/Character/ridersol_mask_avg/lpic_ridersol_mask_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "riko_avg",
+  "lpic": "res/Assets/Res/Character/riko_avg/lpic_riko_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   101,
+   202,
+   303,
+   404,
+   505,
+   606,
+   707
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "riko_b2_avg",
+  "lpic": "res/Assets/Res/Character/riko_b2_avg/lpic_riko_b2_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "riko_b_avg",
+  "lpic": "res/Assets/Res/Character/riko_b_avg/lpic_riko_b_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "rintaro",
+  "lpic": "res/Assets/Res/Character/rintaro/lpic_rintaro.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "rintaro_p2",
+  "lpic": "res/Assets/Res/Character/rintaro_p2/lpic_rintaro_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "rintaro_p3",
+  "lpic": "res/Assets/Res/Character/rintaro_p3/lpic_rintaro_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "rise",
+  "lpic": "res/Assets/Res/Character/rise/lpic_rise.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "rise_avg",
+  "lpic": "res/Assets/Res/Character/rise_avg/lpic_rise_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "rise_open",
+  "lpic": "res/Assets/Res/Character/rise_open/lpic_rise_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "rise_open_rectify",
+  "lpic": "res/Assets/Res/Character/rise_open_rectify/lpic_rise_open_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "rise_p2",
+  "lpic": "res/Assets/Res/Character/rise_p2/lpic_rise_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "rise_p3",
+  "lpic": "res/Assets/Res/Character/rise_p3/lpic_rise_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "rise_school",
+  "lpic": "res/Assets/Res/Character/rise_school/lpic_rise_school.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "rise_whiteday",
+  "lpic": "res/Assets/Res/Character/rise_whiteday/lpic_rise_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "robotdog_avg",
+  "lpic": "res/Assets/Res/Character/robotdog_avg/lpic_robotdog_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "ruka_avg",
+  "lpic": "res/Assets/Res/Character/ruka_avg/lpic_ruka_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "ruka_shadow_avg",
+  "lpic": "res/Assets/Res/Character/ruka_shadow_avg/lpic_ruka_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sakuya",
+  "lpic": "res/Assets/Res/Character/sakuya/lpic_sakuya.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sakuya_bp",
+  "lpic": "res/Assets/Res/Character/sakuya_bp/lpic_sakuya_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sakuya_g_avg",
+  "lpic": "res/Assets/Res/Character/sakuya_g_avg/lpic_sakuya_g_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sakuya_movie",
+  "lpic": "res/Assets/Res/Character/sakuya_movie/lpic_sakuya_movie.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sakuya_newyear",
+  "lpic": "res/Assets/Res/Character/sakuya_newyear/lpic_sakuya_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sakuya_p2",
+  "lpic": "res/Assets/Res/Character/sakuya_p2/lpic_sakuya_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sakuya_p3",
+  "lpic": "res/Assets/Res/Character/sakuya_p3/lpic_sakuya_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sakuya_spring_avg",
+  "lpic": "res/Assets/Res/Character/sakuya_spring_avg/lpic_sakuya_spring_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sakuya_whiteday",
+  "lpic": "res/Assets/Res/Character/sakuya_whiteday/lpic_sakuya_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "salmon",
+  "lpic": "res/Assets/Res/Character/salmon/lpic_salmon.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "salmon_avg",
+  "lpic": "res/Assets/Res/Character/salmon_avg/lpic_salmon_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "salmon_p2",
+  "lpic": "res/Assets/Res/Character/salmon_p2/lpic_salmon_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "salmon_p3",
+  "lpic": "res/Assets/Res/Character/salmon_p3/lpic_salmon_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sandburg_avg",
+  "lpic": "res/Assets/Res/Character/sandburg_avg/lpic_sandburg_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sangoma",
+  "lpic": "res/Assets/Res/Character/sangoma/lpic_sangoma.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sangoma_avg",
+  "lpic": "res/Assets/Res/Character/sangoma_avg/lpic_sangoma_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sangoma_fake_avg",
+  "lpic": "res/Assets/Res/Character/sangoma_fake_avg/lpic_sangoma_fake_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sangoma_hurt_avg",
+  "lpic": "res/Assets/Res/Character/sangoma_hurt_avg/lpic_sangoma_hurt_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sangoma_oath_avg",
+  "lpic": "res/Assets/Res/Character/sangoma_oath_avg/lpic_sangoma_oath_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sangoma_p2",
+  "lpic": "res/Assets/Res/Character/sangoma_p2/lpic_sangoma_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sangoma_p3",
+  "lpic": "res/Assets/Res/Character/sangoma_p3/lpic_sangoma_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sangoma_shadow_avg",
+  "lpic": "res/Assets/Res/Character/sangoma_shadow_avg/lpic_sangoma_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sangoma_vow",
+  "lpic": "res/Assets/Res/Character/sangoma_vow/lpic_sangoma_vow.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sangoma_vow_rectify",
+  "lpic": "res/Assets/Res/Character/sangoma_vow_rectify/lpic_sangoma_vow_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "santino_avg",
+  "lpic": "res/Assets/Res/Character/santino_avg/lpic_santino_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "security1_avg",
+  "lpic": "res/Assets/Res/Character/security1_avg/lpic_security1_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "security2_avg",
+  "lpic": "res/Assets/Res/Character/security2_avg/lpic_security2_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "security3_avg",
+  "lpic": "res/Assets/Res/Character/security3_avg/lpic_security3_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "serper_avg",
+  "lpic": "res/Assets/Res/Character/serper_avg/lpic_serper_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "shadow_avg",
+  "lpic": "res/Assets/Res/Character/shadow_avg/lpic_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "shale",
+  "lpic": "res/Assets/Res/Character/shale/lpic_shale.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "shale_p2",
+  "lpic": "res/Assets/Res/Character/shale_p2/lpic_shale_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "shale_p3",
+  "lpic": "res/Assets/Res/Character/shale_p3/lpic_shale_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "shell_avg",
+  "lpic": "res/Assets/Res/Character/shell_avg/lpic_shell_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "shuttle_avg",
+  "lpic": "res/Assets/Res/Character/shuttle_avg/lpic_shuttle_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "simo",
+  "lpic": "res/Assets/Res/Character/simo/lpic_simo.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "simo_anniversary",
+  "lpic": "res/Assets/Res/Character/simo_anniversary/lpic_simo_anniversary.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "simo_april",
+  "lpic": "res/Assets/Res/Character/simo_april/lpic_simo_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "simo_avg",
+  "lpic": "res/Assets/Res/Character/simo_avg/lpic_simo_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "simo_p2",
+  "lpic": "res/Assets/Res/Character/simo_p2/lpic_simo_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "simo_p3",
+  "lpic": "res/Assets/Res/Character/simo_p3/lpic_simo_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "simo_shadow2_avg",
+  "lpic": "res/Assets/Res/Character/simo_shadow2_avg/lpic_simo_shadow2_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "simo_shadow_avg",
+  "lpic": "res/Assets/Res/Character/simo_shadow_avg/lpic_simo_shadow_avg.png",
+  "faces": [
+   1,
+   4,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "simo_whiteday",
+  "lpic": "res/Assets/Res/Character/simo_whiteday/lpic_simo_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sin_avg",
+  "lpic": "res/Assets/Res/Character/sin_avg/lpic_sin_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sisy_avg",
+  "lpic": "res/Assets/Res/Character/sisy_avg/lpic_sisy_avg.png",
+  "faces": [
+   1,
+   3,
+   4,
+   5,
+   6
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "slime2_avg",
+  "lpic": "res/Assets/Res/Character/slime2_avg/lpic_slime2_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "slime_avg",
+  "lpic": "res/Assets/Res/Character/slime_avg/lpic_slime_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "slime_can_avg",
+  "lpic": "res/Assets/Res/Character/slime_can_avg/lpic_slime_can_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "slomo_avg",
+  "lpic": "res/Assets/Res/Character/slomo_avg/lpic_slomo_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sockdolager",
+  "lpic": "res/Assets/Res/Character/sockdolager/lpic_sockdolager.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sockdolager_avg",
+  "lpic": "res/Assets/Res/Character/sockdolager_avg/lpic_sockdolager_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sockdolager_falcon_avg",
+  "lpic": "res/Assets/Res/Character/sockdolager_falcon_avg/lpic_sockdolager_falcon_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sockdolager_myth",
+  "lpic": "res/Assets/Res/Character/sockdolager_myth/lpic_sockdolager_myth.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sockdolager_myth_avg",
+  "lpic": "res/Assets/Res/Character/sockdolager_myth_avg/lpic_sockdolager_myth_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sockdolager_myth_falcon_avg",
+  "lpic": "res/Assets/Res/Character/sockdolager_myth_falcon_avg/lpic_sockdolager_myth_falcon_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sockdolager_p2",
+  "lpic": "res/Assets/Res/Character/sockdolager_p2/lpic_sockdolager_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sockdolager_p3",
+  "lpic": "res/Assets/Res/Character/sockdolager_p3/lpic_sockdolager_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sockdolager_whiteday",
+  "lpic": "res/Assets/Res/Character/sockdolager_whiteday/lpic_sockdolager_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sol",
+  "lpic": "res/Assets/Res/Character/sol/lpic_sol.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sol_april",
+  "lpic": "res/Assets/Res/Character/sol_april/lpic_sol_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sol_avg",
+  "lpic": "res/Assets/Res/Character/sol_avg/lpic_sol_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   20
+  ],
+  "layout": true,
+  "avg": true
+ },
+ {
+  "id": "sol_b2_avg",
+  "lpic": "res/Assets/Res/Character/sol_b2_avg/lpic_sol_b2_avg.png",
+  "faces": [
+   1,
+   2,
+   4,
+   5,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sol_b2c_avg",
+  "lpic": "res/Assets/Res/Character/sol_b2c_avg/lpic_sol_b2c_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sol_b2h_avg",
+  "lpic": "res/Assets/Res/Character/sol_b2h_avg/lpic_sol_b2h_avg.png",
+  "faces": [
+   1,
+   2,
+   4,
+   5,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sol_b2s_avg",
+  "lpic": "res/Assets/Res/Character/sol_b2s_avg/lpic_sol_b2s_avg.png",
+  "faces": [
+   1,
+   2,
+   4,
+   5,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sol_b_avg",
+  "lpic": "res/Assets/Res/Character/sol_b_avg/lpic_sol_b_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sol_b_shadow_avg",
+  "lpic": "res/Assets/Res/Character/sol_b_shadow_avg/lpic_sol_b_shadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sol_bh_avg",
+  "lpic": "res/Assets/Res/Character/sol_bh_avg/lpic_sol_bh_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sol_christmas",
+  "lpic": "res/Assets/Res/Character/sol_christmas/lpic_sol_christmas.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sol_hurt_avg",
+  "lpic": "res/Assets/Res/Character/sol_hurt_avg/lpic_sol_hurt_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   16
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sol_juggernaut_avg",
+  "lpic": "res/Assets/Res/Character/sol_juggernaut_avg/lpic_sol_juggernaut_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sol_kamenrider",
+  "lpic": "res/Assets/Res/Character/sol_kamenrider/lpic_sol_kamenrider.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sol_open",
+  "lpic": "res/Assets/Res/Character/sol_open/lpic_sol_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sol_p2",
+  "lpic": "res/Assets/Res/Character/sol_p2/lpic_sol_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sol_p3",
+  "lpic": "res/Assets/Res/Character/sol_p3/lpic_sol_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sol_s_avg",
+  "lpic": "res/Assets/Res/Character/sol_s_avg/lpic_sol_s_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sol_s_hurt_avg",
+  "lpic": "res/Assets/Res/Character/sol_s_hurt_avg/lpic_sol_s_hurt_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sol_shiningsoul",
+  "lpic": "res/Assets/Res/Character/sol_shiningsoul/lpic_sol_shiningsoul.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sol_whiteday",
+  "lpic": "res/Assets/Res/Character/sol_whiteday/lpic_sol_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sold_avg",
+  "lpic": "res/Assets/Res/Character/sold_avg/lpic_sold.png",
+  "faces": [
+   20
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "soldier_elvin_avg",
+  "lpic": "res/Assets/Res/Character/soldier_elvin_avg/lpic_soldier_elvin_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "soldier_elvin_hurt_avg",
+  "lpic": "res/Assets/Res/Character/soldier_elvin_hurt_avg/lpic_soldier_elvin_hurt_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "soldier_glasses_avg",
+  "lpic": "res/Assets/Res/Character/soldier_glasses_avg/lpic_soldier_glasses_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "soldier_helmet2_avg",
+  "lpic": "res/Assets/Res/Character/soldier_helmet2_avg/lpic_soldier_helmet2_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "soldier_helmet_avg",
+  "lpic": "res/Assets/Res/Character/soldier_helmet_avg/lpic_soldier_helmet_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "soldier_hurt_avg",
+  "lpic": "res/Assets/Res/Character/soldier_hurt_avg/lpic_soldier_hurt_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "soldier_mask_avg",
+  "lpic": "res/Assets/Res/Character/soldier_mask_avg/lpic_soldier_mask_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "soldier_opfor_avg",
+  "lpic": "res/Assets/Res/Character/soldier_opfor_avg/lpic_soldier_opfor_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "soldier_tac_avg",
+  "lpic": "res/Assets/Res/Character/soldier_tac_avg/lpic_soldier_tac_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "soldier_weber_avg",
+  "lpic": "res/Assets/Res/Character/soldier_weber_avg/lpic_soldier_weber_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "soldier_weber_hurt_avg",
+  "lpic": "res/Assets/Res/Character/soldier_weber_hurt_avg/lpic_soldier_weber_hurt_avg.png",
+  "faces": [
+   1,
+   2,
+   3
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "solp2_avg",
+  "lpic": "res/Assets/Res/Character/solp2_avg/lpic_solp2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "solp_avg",
+  "lpic": "res/Assets/Res/Character/solp_avg/lpic_solp_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "solsp",
+  "lpic": "res/Assets/Res/Character/solsp/lpic_solsp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "solsp_p2",
+  "lpic": "res/Assets/Res/Character/solsp_p2/lpic_solsp_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "solsp_p3",
+  "lpic": "res/Assets/Res/Character/solsp_p3/lpic_solsp_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "spacebot_01_avg",
+  "lpic": "res/Assets/Res/Character/spacebot_01_avg/lpic_spacebot_01_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "spacebot_02_avg",
+  "lpic": "res/Assets/Res/Character/spacebot_02_avg/lpic_spacebot_02_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "spacebot_02e_avg",
+  "lpic": "res/Assets/Res/Character/spacebot_02e_avg/lpic_spacebot_02e_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "spacebot_03_avg",
+  "lpic": "res/Assets/Res/Character/spacebot_03_avg/lpic_spacebot_03_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "spacebot_03e_avg",
+  "lpic": "res/Assets/Res/Character/spacebot_03e_avg/lpic_spacebot_03e_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "spacebot_xl_avg",
+  "lpic": "res/Assets/Res/Character/spacebot_xl_avg/lpic_spacebot_xl_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sueyoi",
+  "lpic": "res/Assets/Res/Character/sueyoi/lpic_sueyoi.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sueyoi_april",
+  "lpic": "res/Assets/Res/Character/sueyoi_april/lpic_sueyoi_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sueyoi_avg",
+  "lpic": "res/Assets/Res/Character/sueyoi_avg/lpic_sueyoi_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   11,
+   22,
+   33,
+   44,
+   55
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sueyoi_carnival",
+  "lpic": "res/Assets/Res/Character/sueyoi_carnival/lpic_sueyoi_carnival.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sueyoi_honeydearest",
+  "lpic": "res/Assets/Res/Character/sueyoi_honeydearest/lpic_sueyoi_honeydearest.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sueyoi_infected_avg",
+  "lpic": "res/Assets/Res/Character/sueyoi_infected_avg/lpic_sueyoi_infected_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "sueyoi_p2",
+  "lpic": "res/Assets/Res/Character/sueyoi_p2/lpic_sueyoi_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sueyoi_p3",
+  "lpic": "res/Assets/Res/Character/sueyoi_p3/lpic_sueyoi_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "sueyoi_phantom_avg",
+  "lpic": "res/Assets/Res/Character/sueyoi_phantom_avg/lpic_sueyoi_phantom_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "taisch",
+  "lpic": "res/Assets/Res/Character/taisch/lpic_taisch.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "taisch_avg",
+  "lpic": "res/Assets/Res/Character/taisch_avg/lpic_taisch_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "taisch_bp",
+  "lpic": "res/Assets/Res/Character/taisch_bp/lpic_taisch_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "taisch_p2",
+  "lpic": "res/Assets/Res/Character/taisch_p2/lpic_taisch_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "taisch_p3",
+  "lpic": "res/Assets/Res/Character/taisch_p3/lpic_taisch_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "taranum_avg",
+  "lpic": "res/Assets/Res/Character/taranum_avg/lpic_taranum_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   11,
+   22,
+   33,
+   44,
+   55,
+   66,
+   999
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "tony",
+  "lpic": "res/Assets/Res/Character/tony/lpic_tony.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "tony_avg",
+  "lpic": "res/Assets/Res/Character/tony_avg/lpic_tony_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "tony_hurt_avg",
+  "lpic": "res/Assets/Res/Character/tony_hurt_avg/lpic_tony_hurt_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "tony_p2",
+  "lpic": "res/Assets/Res/Character/tony_p2/lpic_tony_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "tony_p3",
+  "lpic": "res/Assets/Res/Character/tony_p3/lpic_tony_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "turing",
+  "lpic": "res/Assets/Res/Character/turing/lpic_turing.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "turing2_avg",
+  "lpic": "res/Assets/Res/Character/turing2_avg/lpic_turing2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "turing_avg",
+  "lpic": "res/Assets/Res/Character/turing_avg/lpic_turing_avg.png",
+  "faces": [
+   1,
+   2,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "turing_bp",
+  "lpic": "res/Assets/Res/Character/turing_bp/lpic_turing_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "turing_bp_rectify",
+  "lpic": "res/Assets/Res/Character/turing_bp_rectify/lpic_turing_bp_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "turing_christmas",
+  "lpic": "res/Assets/Res/Character/turing_christmas/lpic_turing_christmas.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "turing_dress",
+  "lpic": "res/Assets/Res/Character/turing_dress/lpic_turing_dress.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "turing_honeydearest",
+  "lpic": "res/Assets/Res/Character/turing_honeydearest/lpic_turing_honeydearest.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "turing_honeydearest_rectify",
+  "lpic": "res/Assets/Res/Character/turing_honeydearest_rectify/lpic_turing_honeydearest_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "turing_p2",
+  "lpic": "res/Assets/Res/Character/turing_p2/lpic_turing_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "turing_p3",
+  "lpic": "res/Assets/Res/Character/turing_p3/lpic_turing_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "twigs",
+  "lpic": "res/Assets/Res/Character/twigs/lpic_twigs.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "twigs_avg",
+  "lpic": "res/Assets/Res/Character/twigs_avg/lpic_twigs_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "twigs_myth",
+  "lpic": "res/Assets/Res/Character/twigs_myth/lpic_twigs_myth.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "twigs_myth_avg",
+  "lpic": "res/Assets/Res/Character/twigs_myth_avg/lpic_twigs_myth_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "twigs_myth_bird_avg",
+  "lpic": "res/Assets/Res/Character/twigs_myth_bird_avg/lpic_twigs_myth_bird_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "twigs_p2",
+  "lpic": "res/Assets/Res/Character/twigs_p2/lpic_twigs_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "twigs_p3",
+  "lpic": "res/Assets/Res/Character/twigs_p3/lpic_twigs_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "twigs_summer_avg",
+  "lpic": "res/Assets/Res/Character/twigs_summer_avg/lpic_twigs_summer_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "twigs_swimsuit",
+  "lpic": "res/Assets/Res/Character/twigs_swimsuit/lpic_twigs_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "twigs_whiteday",
+  "lpic": "res/Assets/Res/Character/twigs_whiteday/lpic_twigs_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "uncle_avg",
+  "lpic": "res/Assets/Res/Character/uncle_avg/lpic_uncle_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline",
+  "lpic": "res/Assets/Res/Character/undline/lpic_undline.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "undline2_avg",
+  "lpic": "res/Assets/Res/Character/undline2_avg/lpic_undline2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_april",
+  "lpic": "res/Assets/Res/Character/undline_april/lpic_undline_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "undline_avg",
+  "lpic": "res/Assets/Res/Character/undline_avg/lpic_undline_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_bp",
+  "lpic": "res/Assets/Res/Character/undline_bp/lpic_undline_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "undline_christ_avg",
+  "lpic": "res/Assets/Res/Character/undline_christ_avg/lpic_undline_christ_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_christmas",
+  "lpic": "res/Assets/Res/Character/undline_christmas/lpic_undline_christmas.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "undline_christmas_rectify",
+  "lpic": "res/Assets/Res/Character/undline_christmas_rectify/lpic_undline_christmas_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "undline_idol",
+  "lpic": "res/Assets/Res/Character/undline_idol/lpic_undline_idol.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "undline_idol_avg",
+  "lpic": "res/Assets/Res/Character/undline_idol_avg/lpic_undline_idol_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_maid_avg",
+  "lpic": "res/Assets/Res/Character/undline_maid_avg/lpic_undline_maid_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_mayqueen",
+  "lpic": "res/Assets/Res/Character/undline_mayqueen/lpic_undline_mayqueen.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "undline_p2",
+  "lpic": "res/Assets/Res/Character/undline_p2/lpic_undline_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "undline_p3",
+  "lpic": "res/Assets/Res/Character/undline_p3/lpic_undline_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "undline_summer_avg",
+  "lpic": "res/Assets/Res/Character/undline_summer_avg/lpic_undline_summer_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_swimsuit",
+  "lpic": "res/Assets/Res/Character/undline_swimsuit/lpic_undline_swimsuit.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "undline_w1_avg",
+  "lpic": "res/Assets/Res/Character/undline_w1_avg/lpic_undline_w1_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_w1c_avg",
+  "lpic": "res/Assets/Res/Character/undline_w1c_avg/lpic_undline_w1c_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_w1h_avg",
+  "lpic": "res/Assets/Res/Character/undline_w1h_avg/lpic_undline_w1h_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_w2_avg",
+  "lpic": "res/Assets/Res/Character/undline_w2_avg/lpic_undline_w2_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_w2c_avg",
+  "lpic": "res/Assets/Res/Character/undline_w2c_avg/lpic_undline_w2c_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_w2h_avg",
+  "lpic": "res/Assets/Res/Character/undline_w2h_avg/lpic_undline_w2h_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_w3_avg",
+  "lpic": "res/Assets/Res/Character/undline_w3_avg/lpic_undline_w3_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_w3c_avg",
+  "lpic": "res/Assets/Res/Character/undline_w3c_avg/lpic_undline_w3c_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_w3h_avg",
+  "lpic": "res/Assets/Res/Character/undline_w3h_avg/lpic_undline_w3h_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_w4_avg",
+  "lpic": "res/Assets/Res/Character/undline_w4_avg/lpic_undline_w4_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_w4c_avg",
+  "lpic": "res/Assets/Res/Character/undline_w4c_avg/lpic_undline_w4c_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_w4h_avg",
+  "lpic": "res/Assets/Res/Character/undline_w4h_avg/lpic_undline_w4h_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "undline_w_summer_avg",
+  "lpic": "res/Assets/Res/Character/undline_w_summer_avg/lpic_undline_w_summer_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "uranus",
+  "lpic": "res/Assets/Res/Character/uranus/lpic_uranus.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "uranus_avg",
+  "lpic": "res/Assets/Res/Character/uranus_avg/lpic_uranus_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "uranus_idol",
+  "lpic": "res/Assets/Res/Character/uranus_idol/lpic_uranus_idol.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "uranus_p2",
+  "lpic": "res/Assets/Res/Character/uranus_p2/lpic_uranus_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "uranus_p3",
+  "lpic": "res/Assets/Res/Character/uranus_p3/lpic_uranus_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "vee",
+  "lpic": "res/Assets/Res/Character/vee/lpic_vee.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "vee_bp",
+  "lpic": "res/Assets/Res/Character/vee_bp/lpic_vee_bp.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "vee_honeydearest",
+  "lpic": "res/Assets/Res/Character/vee_honeydearest/lpic_vee_honeydearest.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "vee_honeydearest_rectify",
+  "lpic": "res/Assets/Res/Character/vee_honeydearest_rectify/lpic_vee_honeydearest_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "vee_idol",
+  "lpic": "res/Assets/Res/Character/vee_idol/lpic_vee_idol.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "vee_idol_avg",
+  "lpic": "res/Assets/Res/Character/vee_idol_avg/lpic_vee_idol_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "vee_idol_rectify",
+  "lpic": "res/Assets/Res/Character/vee_idol_rectify/lpic_vee_idol_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "vee_p2",
+  "lpic": "res/Assets/Res/Character/vee_p2/lpic_vee_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "vee_p3",
+  "lpic": "res/Assets/Res/Character/vee_p3/lpic_vee_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "vee_underwear",
+  "lpic": "res/Assets/Res/Character/vee_underwear/lpic_vee_underwear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "vee_whiteday",
+  "lpic": "res/Assets/Res/Character/vee_whiteday/lpic_vee_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "willow",
+  "lpic": "res/Assets/Res/Character/willow/lpic_willow.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "willow_april",
+  "lpic": "res/Assets/Res/Character/willow_april/lpic_willow_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "willow_p2",
+  "lpic": "res/Assets/Res/Character/willow_p2/lpic_willow_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "willow_p3",
+  "lpic": "res/Assets/Res/Character/willow_p3/lpic_willow_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "willowshadow_avg",
+  "lpic": "res/Assets/Res/Character/willowshadow_avg/lpic_willowshadow_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "wisdom_b_avg",
+  "lpic": "res/Assets/Res/Character/wisdom_b_avg/lpic_wisdom_b_avg.png",
+  "faces": [
+   1
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "wisdom_bs_avg",
+  "lpic": "res/Assets/Res/Character/wisdom_bs_avg/lpic_wisdom_bs_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "wisdom_w_avg",
+  "lpic": "res/Assets/Res/Character/wisdom_w_avg/lpic_wisdom_w_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   11,
+   22,
+   33,
+   999
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "woman_avg",
+  "lpic": "res/Assets/Res/Character/woman_avg/lpic_woman_avg.png",
+  "faces": [
+   1,
+   2
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "xinghuan",
+  "lpic": "res/Assets/Res/Character/xinghuan/lpic_xinghuan.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "xinghuan_avg",
+  "lpic": "res/Assets/Res/Character/xinghuan_avg/lpic_xinghuan_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "xinghuan_hurt_avg",
+  "lpic": "res/Assets/Res/Character/xinghuan_hurt_avg/lpic_xinghuan_hurt_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "xinghuan_idol",
+  "lpic": "res/Assets/Res/Character/xinghuan_idol/lpic_xinghuan_idol.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "xinghuan_mech_avg",
+  "lpic": "res/Assets/Res/Character/xinghuan_mech_avg/lpic_xinghuan_mech_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "xinghuan_mech_b_avg",
+  "lpic": "res/Assets/Res/Character/xinghuan_mech_b_avg/lpic_xinghuan_mech_b_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "xinghuan_newyear",
+  "lpic": "res/Assets/Res/Character/xinghuan_newyear/lpic_xinghuan_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "xinghuan_newyear_avg",
+  "lpic": "res/Assets/Res/Character/xinghuan_newyear_avg/lpic_xinghuan_newyear_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "xinghuan_p2",
+  "lpic": "res/Assets/Res/Character/xinghuan_p2/lpic_xinghuan_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "xinghuan_p3",
+  "lpic": "res/Assets/Res/Character/xinghuan_p3/lpic_xinghuan_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "xuannv_avg",
+  "lpic": "res/Assets/Res/Character/xuannv_avg/lpic_xuannv_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "yanny",
+  "lpic": "res/Assets/Res/Character/yanny/lpic_yanny.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "yanny0_avg",
+  "lpic": "res/Assets/Res/Character/yanny0_avg/lpic_yanny0_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "yanny_april",
+  "lpic": "res/Assets/Res/Character/yanny_april/lpic_yanny_april.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "yanny_avg",
+  "lpic": "res/Assets/Res/Character/yanny_avg/lpic_yanny_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "yanny_hallo_avg",
+  "lpic": "res/Assets/Res/Character/yanny_hallo_avg/lpic_yanny_hallo_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "yanny_halloween",
+  "lpic": "res/Assets/Res/Character/yanny_halloween/lpic_yanny_halloween.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "yanny_p2",
+  "lpic": "res/Assets/Res/Character/yanny_p2/lpic_yanny_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "yanny_p3",
+  "lpic": "res/Assets/Res/Character/yanny_p3/lpic_yanny_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "yegor_avg",
+  "lpic": "res/Assets/Res/Character/yegor_avg/lpic_yegor_avg.png",
+  "faces": [],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "yelena",
+  "lpic": "res/Assets/Res/Character/yelena/lpic_yelena.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "yelena_avg",
+  "lpic": "res/Assets/Res/Character/yelena_avg/lpic_yelena_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "yelena_open",
+  "lpic": "res/Assets/Res/Character/yelena_open/lpic_yelena_open.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "yelena_open_rectify",
+  "lpic": "res/Assets/Res/Character/yelena_open_rectify/lpic_yelena_open_rectify.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "yelena_p2",
+  "lpic": "res/Assets/Res/Character/yelena_p2/lpic_yelena_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "yelena_p3",
+  "lpic": "res/Assets/Res/Character/yelena_p3/lpic_yelena_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "yuwang",
+  "lpic": "res/Assets/Res/Character/yuwang/lpic_yuwang.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "yuwang2_avg",
+  "lpic": "res/Assets/Res/Character/yuwang2_avg/lpic_yuwang2_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "yuwang_avg",
+  "lpic": "res/Assets/Res/Character/yuwang_avg/lpic_yuwang_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "yuwang_p2",
+  "lpic": "res/Assets/Res/Character/yuwang_p2/lpic_yuwang_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "yuwang_p3",
+  "lpic": "res/Assets/Res/Character/yuwang_p3/lpic_yuwang_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "zion",
+  "lpic": "res/Assets/Res/Character/zion/lpic_zion.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "zion_newyear",
+  "lpic": "res/Assets/Res/Character/zion_newyear/lpic_zion_newyear.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "zion_newyear_avg",
+  "lpic": "res/Assets/Res/Character/zion_newyear_avg/lpic_zion_newyear_avg.png",
+  "faces": [
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7
+  ],
+  "layout": false,
+  "avg": true
+ },
+ {
+  "id": "zion_p2",
+  "lpic": "res/Assets/Res/Character/zion_p2/lpic_zion_p2.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "zion_p3",
+  "lpic": "res/Assets/Res/Character/zion_p3/lpic_zion_p3.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ },
+ {
+  "id": "zion_whiteday",
+  "lpic": "res/Assets/Res/Character/zion_whiteday/lpic_zion_whiteday.png",
+  "faces": [],
+  "layout": false,
+  "avg": false
+ }
+]

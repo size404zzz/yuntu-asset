@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<title>assets harness</title>
+<style>html,body{margin:0;font:14px/1.6 monospace;background:#111;color:#ddd}</style>
+</head>
+<body>
+<pre id="out"></pre>
+<script type="module">
+/**
+ * M8 素材库浏览器回归：IndexedDB 往返 + 「重开库」持久化（刷新等价路径）、
+ * 注册表上传覆盖仓库、标定 layout 的存/读/删、音频键、R13 退化。
+ * 报告 POST 到 /freeze?scene=assets_report，跑者 tools/test-assets.mjs。
+ */
+import {openDB, put, get, del, entries, BLOBS, KV} from '/js/core/idb.js';
+import {AssetRegistry} from '/js/core/assets.js';
+
+const failures = [];
+const problems = [];
+let asserts = 0;
+const check = (label, cond, detail = '') => {
+  asserts++;
+  if (!cond && failures.length < 60) failures.push(label + (detail ? ` —— ${detail}` : ''));
+};
+addEventListener('error', (e) => problems.push(`page: ${e.message} @${e.lineno}`));
+
+/* ---------- idb 原层 ---------- */
+const db = await openDB();
+await put(db, BLOBS, {blob: new Blob(['abc'], {type: 'text/plain'}),
+  meta: {name: 't.txt', kind: 'image', size: 3}}, 'unit/t');
+const rec = await get(db, BLOBS, 'unit/t');
+check('idb get 往返', rec && await rec.blob.text() === 'abc');
+check('idb entries 含游标键',
+  (await entries(db, BLOBS)).some((e) => e.key === 'unit/t'));
+await del(db, BLOBS, 'unit/t');
+check('idb delete', (await get(db, BLOBS, 'unit/t')) === null);
+db.close();
+
+/* 重开库 = 刷新持久化路径 */
+const db2 = await openDB();
+await put(db2, KV, {hello: 1}, 'probe');
+db2.close();
+const db3 = await openDB();
+check('跨连接持久化（刷新等价）', (await get(db3, KV, 'probe'))?.hello === 1);
+await del(db3, KV, 'probe');
+db3.close();
+
+/* ---------- AssetRegistry ---------- */
+const reg = await new AssetRegistry().boot();
+check('repo 可用（同源宿主有 data/index）', reg.repoAvailable);
+check('仓库解析 Lpic', reg.resolve('Lpic_persicaria_avg.png')?.source === 'repo');
+check('缺失返回 null', reg.resolve('Nope_zzz.png') === null);
+
+/* 上传覆盖同名仓库条目 */
+const bytes = new Uint8Array([1, 2, 3, 4]);
+await reg.upload('lpic_persicaria_avg.png',
+    new Blob([bytes], {type: 'image/png'}), {kind: 'image'});
+const over = reg.resolve('Lpic_persicaria_avg.png');
+check('上传覆盖仓库', over?.source === 'upload');
+const fetched = await (await fetch(over.url)).arrayBuffer();
+check('ObjectURL 字节一致', new Uint8Array(fetched).join() === bytes.join());
+check('上传清单', reg.listUploads({kind: 'image'}).some((m) => m.key === 'lpic_persicaria_avg.png'));
+
+/* 重开注册表 = 刷新后素材仍在 */
+const reg2 = await new AssetRegistry().boot();
+check('注册表持久化：重开仍在', reg2.resolve('lpic_persicaria_avg.png')?.source === 'upload');
+
+/* layout 三级：calibrated > repo > null */
+const l0 = reg2.layoutEntry('persicaria_avg');
+check('未标定的仓库已知件 → repo', l0?.source === 'repo');
+await reg2.saveLayout('persicaria_avg', {sizeDelta: 123, calibrated: true});
+check('标定后 → calibrated',
+    reg2.layoutEntry('persicaria_avg').source === 'calibrated');
+const reg3 = await new AssetRegistry().boot();
+check('标定跨重启持久化',
+    reg3.layoutEntry('persicaria_avg')?.layout?.sizeDelta === 123);
+await reg3.removeLayout('persicaria_avg');
+check('删标定后回落到 repo', reg3.layoutEntry('persicaria_avg').source === 'repo');
+
+/* 音频键（M7 的上传通道） */
+await reg3.upload('audio:Mus_Story_Dangerous/Mus_Story_Dangerous',
+    new Blob(['snd'], {type: 'audio/ogg'}), {kind: 'audio'});
+check('音频解析',
+    reg3.resolve('audio:Mus_Story_Dangerous/Mus_Story_Dangerous')?.source === 'upload');
+await reg3.remove('audio:mus_story_dangerous/mus_story_dangerous');
+await reg3.remove('lpic_persicaria_avg.png');
+check('清理后仓库解析恢复', reg3.resolve('Lpic_persicaria_avg.png')?.source === 'repo');
+check('清理上传后条目消失', reg3.listUploads().length === 0);
+
+/* ---------- 标定工具（layout-cal） ---------- */
+const {mountCal} = await import('/js/editor/layout-cal.js');
+const calRoot = document.createElement('div');
+document.body.append(calRoot);
+const cal = await mountCal(calRoot, reg3, {id: 'sol_avg', onSaved: () => {}});
+check('标定挂载返回句柄', !!cal);
+check('槽位标记 5 个', calRoot.querySelectorAll('.cal-slot').length === 5);
+check('脸框覆盖层在场', !!calRoot.querySelector('.cal-face'));
+check('起点=仓库已知件', cal.state.source === 'repo');
+cal.state.layout.AvgHero2.pos = [-101, -421];
+const saveBtn = [...calRoot.querySelectorAll('button')]
+    .find((b) => b.textContent === '保存标定');
+saveBtn.click();
+await new Promise((r) => setTimeout(r, 250));
+const after = reg3.layoutEntry('sol_avg');
+check('保存 → calibrated 生效', after?.source === 'calibrated');
+check('标定值落库', after?.layout?.AvgHero2?.pos?.join() === '-101,-421');
+check('保存后 ⚠ 清除', after?.layout?.derived === false);
+await reg3.removeLayout('sol_avg');
+calRoot.remove();
+
+/* R13 退化 */
+const bare = await new AssetRegistry({
+  fetchImpl: () => Promise.resolve({ok: false, status: 404}),
+}).boot();
+check('无 res/ 退化：repoAvailable=false', bare.repoAvailable === false);
+check('无 res/ 退化：resolve 仍可用上传', bare.resolve('x') === null);
+
+const report = {
+  ok: failures.length === 0 && problems.length === 0,
+  asserts, failureCount: failures.length, failures, problems, done: true,
+};
+await fetch('/freeze?scene=assets_report', {
+  method: 'POST', headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify(report, null, 1),
+});
+document.title = 'assets-report-done';
+</script>
+</body>
+</html>
