@@ -17,7 +17,7 @@ const debounce = (ms, fn) => {
 };
 
 export class Editor {
-  constructor({player, registry, characters, dom, meta, onState}) {
+  constructor({player, registry, characters, dom, meta, onState, onDoc}) {
     this.player = player;
     this.registry = registry;
     this.characters = characters;
@@ -26,6 +26,7 @@ export class Editor {
     this.index = 0;
     this.mode = 'freeze';         // freeze | once | chain
     this.onState = onState ?? (() => {});
+    this.onDoc = onDoc ?? (() => {});
     this._reload = debounce(60, () => this._seekInto('freeze'));
     this._reseek = debounce(120, () => this._seekInto('timed'));
     this._timelineHost = h('div.ins-timeline');
@@ -35,6 +36,7 @@ export class Editor {
     this.doc = new Doc(story);
     this.index = 0;
     this.doc.subscribe((e) => this._invalidate(e));
+    this.onDoc(this.doc);
     this.renderList();
     this.renderInspector();
     this._seekInto('freeze');
