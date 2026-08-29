@@ -17,6 +17,7 @@ const flag = (name, dflt) => {
 };
 const PORT = Number(flag('port', '8092'));
 const ROOT = resolve(process.cwd());
+const SCENE = flag('scene', 'scene1');
 const OUT = join(ROOT, 'data', 'fixtures', 'expected-play_report.json');
 const CHROME = [
   process.env.CHROME_PATH,
@@ -39,7 +40,7 @@ const waitPort = async () => {
       s.on('connect', () => s.destroy(d));
       s.on('error', () => setTimeout(d, 60));
     });
-    if (await fetch(`http://127.0.0.1:${PORT}/data/fixtures/scene1.json`)
+    if (await fetch(`http://127.0.0.1:${PORT}/data/fixtures/${SCENE}.json`)
         .then((r) => r.ok).catch(() => false)) return;
   }
   throw new Error(`宿主 ${PORT} 起不来`);
@@ -53,7 +54,7 @@ try {
     '--headless=new', '--disable-gpu', '--no-sandbox', '--no-first-run',
     '--hide-scrollbars', '--force-device-scale-factor=1', '--mute-audio',
     `--user-data-dir=${PROFILE}`, '--window-size=1600,1200',
-    `http://127.0.0.1:${PORT}/selftest-play.html`,
+    `http://127.0.0.1:${PORT}/selftest-play.html?scene=${SCENE}`,
   ], {cwd: ROOT, stdio: ['ignore', 'ignore', 'inherit']});
   const deadline = Date.now() + Number(flag('timeout', '240')) * 1000;
   while (Date.now() < deadline) {
