@@ -1,14 +1,16 @@
 /* inspector.js —— M9 检查器：按分区把一镜的 wire 字段映射成控件。
    对白 textarea 存 wire 原串（<color=#ff0>、<|>），绝不 round-trip 成 HTML；
    立绘以槽位表为主体（不暴露 delete/imagesToDelete 漂移语义）；
-   音乐行带 ▶ 试听（data/audio 约定或上传件）；效果区是死字段 JSON 兜底。
+   音乐行带「选曲」（openAudioPicker）与 ▶ 试听（解析三级与播放器一致，
+   解析不到时禁用）；效果区是死字段 JSON 兜底。
    第 4 区（动画）由 editor.js 挂 timeline，本模块给挂载点。 */
 
 import {h, clear} from '../ui/dom.js';
 import {CONTENT_TYPES, BUBBLE_POSITIONS, nextSpriteImgId} from '../core/schema.js';
 import {splitPages} from '../core/schema.js';
+import {L1} from '../core/doc.js';
 import {fldRow, fldText, fldArea, fldNumber, fldCheck, fldSelect, fldSpeaker} from './fld.js';
-import {openPicker} from './picker.js';
+import {openPicker, openAudioPicker, toggleAudioPreview} from './picker.js';
 
 const sec = (title, ...rows) => h('details.ins-sec', {open: true},
     h('summary', {text: title}), ...rows);
@@ -29,7 +31,7 @@ export function renderInspector(host, {doc, index, registry, characters, audio,
       ...pages.map((_, n) => h('span.ins-tag', {text: `第${n + 1}页`}))) : null;
   host.append(sec('1 · 对白',
       fldRow('呈现方式', fldSelect(doc, index, 'contentType',
-          Object.entries(CONTENT_TYPES).map(([v, t]) => [Number(v), t]))),
+          Object.entries(CONTENT_TYPES).map(([v, t]) => [Number(v), t.label]))),
       fldRow('说话人', fldSpeaker(doc, index, characters),
           h('datalist', {id: 'hero-list'}, ...Object.entries(characters).map(
               ([id, name]) => h('option', {value: id, text: String(name)})))),
@@ -115,16 +117,64 @@ export function renderInspector(host, {doc, index, registry, characters, audio,
   /* —— 4 动画（timeline 由 editor 提供容器）—— */
   host.append(sec('4 · 动画', timelineHost ?? h('div')));
 
-  /* —— 5 音乐 —— */
-  host.append(sec('5 · 音乐',
+  /* —— 5 音乐 ——
+     选曲回填 cue+sheet（bgm 保留已有淡入淡出、清掉 stop——选了曲就是要它响）；
+     回填用 forceLevel L1：L3 的 patchShot 不触发音频，重装载才能在预览里
+     听见挂载效果。sfx 不随 seek 补放，听效果走行内 ▶。 */
+  const bgm = shot.audio?.bgm;
+  const sfx = shot.audio?.sfx;
+  const hearBtn = (part) => {
+    const a = part === 'bgm' ? bgm : sfx;
+    const url = a?.cue ? registry.resolveAudio(a.sheet, a.cue)?.url ?? null : null;
+    const btn = h('button.tiny', {text: '▶', title: url ? '试听' : '解析不到音频',
+      disabled: !url});
+    if (url) btn.addEventListener('click', () => toggleAudioPreview(url, btn));
+    return btn;
+  };
+  const pickBtn = (part) => h('button.tiny', {text: '选曲', onclick: () =>
+      openAudioPicker(registry, {
+        title: part === 'bgm' ? '选 BGM' : '选音效',
+        onPick: ({sheet, cue}) => {
+          document.querySelector('.picker-overlay')?.remove();
+          P('audio', part === 'bgm'
+              ? {...shot.audio, bgm: {cue, sheet,
+                  fadeIn: bgm?.fadeIn, fadeOut: bgm?.fadeOut}}
+              : {...shot.audio, sfx: {cue, sheet}},
+              {label: part, forceLevel: L1});
+        }})});
+  host.append(sec('5 · 音乐', h('div.ins-music', {},
       fldRow('bgm', fldText(doc, index, 'audio.bgm.cue', {placeholder: 'Mus_...'}),
+          pickBtn('bgm'), hearBtn('bgm'),
           fldNumber(doc, index, 'audio.bgm.fadeIn', {min: 0, step: 0.5}),
           fldNumber(doc, index, 'audio.bgm.fadeOut', {min: 0, step: 0.5}),
           fldCheck(doc, index, 'audio.bgm.stop', {text: '停'})),
       fldRow('sfx', fldText(doc, index, 'audio.sfx.cue', {placeholder: 'AVG_...'}),
-          fldText(doc, index, 'audio.sfx.sheet', {placeholder: 'sheet'}))));
+          fldText(doc, index, 'audio.sfx.sheet', {placeholder: 'sheet'}),
+          pickBtn('sfx'), hearBtn('sfx')))));
 
-  /* —— 6 效果/死字段 JSON 兜底 —— */
+  /* —— 6 CV（M15）—— voice={heroId, voiceId} 由宿主的 resolveVoice 解到
+     VO_<代号>/<代号>_<语音名>.ogg（data/index/voices.json）；解析不到给 ⚠。
+     播放语义：新句掐旧句、seek 不补。 */
+  const voice = shot.voice;
+  const voiceUrl = voice && audio?.resolveVoice ? audio.resolveVoice(voice) : null;
+  const voiceBtn = h('button.tiny', {
+    text: '▶',
+    title: voiceUrl ? '试听 CV' : '解析不到语音包',
+  });
+  if (voiceUrl) {
+    voiceBtn.addEventListener('click', () => toggleAudioPreview(voiceUrl, voiceBtn));
+  } else {
+    voiceBtn.disabled = true;
+  }
+  const voiceTip = voice && !voiceUrl
+      ? h('span.muted', {text: '解析不到语音包'})
+      : null;
+  host.append(sec('6 · CV', h('div.ins-music', {},
+      fldRow('heroId', fldNumber(doc, index, 'voice.heroId', {step: 1})),
+      fldRow('voiceId', fldNumber(doc, index, 'voice.voiceId', {step: 1}),
+          voiceBtn, voiceTip))));
+
+  /* —— 7 效果/死字段 JSON 兜底 —— */
   const RAW = ['effect', 'contentShake', 'bgColor', 'SkipScenario',
     'storyAvgId', 'pre_condition'];
   const rawJson = h('textarea', {rows: 4,

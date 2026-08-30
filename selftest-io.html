@@ -153,13 +153,36 @@ const assetNames = new Set(project.assets.filter((a) => !a.data).map((a) => a.na
 check('bundle 资产数 = repo 资产数',
     names.filter((n) => n.startsWith('assets/')).length === assetNames.size);
 {
-  const pick = entries.find((e) => e.name.startsWith('assets/'));
-  const src = new Uint8Array(await (await fetch('/' +
-      project.assets.find((a) => a.name === pick.name.slice(7)).repoPath
-  )).arrayBuffer());
-  check('资产字节与源一致', src.length === pick.data.length
+  /* 抽查字节：显式选 repo 图片件（音频落在 assets/audio/ 子路径，名字键不同）。 */
+  const imgAsset = project.assets.find((a) => !a.data && a.kind !== 'audio');
+  const pick = entries.find((e) => e.name === `assets/${imgAsset.name}`);
+  const src = new Uint8Array(await (await fetch('/' + imgAsset.repoPath))
+      .arrayBuffer());
+  check('资产字节与源一致', pick && src.length === pick.data.length
       && src.every((v, n) => v === pick.data[n]),
-      `${pick.name} ${src.length} vs ${pick.data.length}`);
+      `${imgAsset.name} ${src.length} vs ${pick?.data.length}`);
+}
+
+/* —— 音频资产：镜头引用 → 工程包 / bundle / 解析 —— */
+{
+  const audioAssets = project.assets.filter((a) => a.kind === 'audio');
+  check('音频资产随镜头引用入库', audioAssets.length >= 1,
+      String(audioAssets.length));
+  const a0 = audioAssets[0];
+  const m = /^audio:(.*)\/(.*)$/.exec(a0.name);
+  check('音频键形如 audio:<sheet>/<cue>', !!m, a0.name);
+  check('audioUrlOf 走 repoPath',
+      projectResolvers(imported).audioUrlOf(m[1], m[2]) === a0.repoPath);
+  check('bundle 落 assets/audio/',
+      names.some((n) => n.startsWith('assets/audio/')));
+  check('bundle 音频与源一致', (() => {
+    const hit = entries.find((e) => e.name === audioFileOfName(a0.name));
+    return hit && hit.data.length > 0;
+  })());
+  function audioFileOfName(name) {
+    const mm = /^audio:(.*)\/(.*)$/.exec(name);
+    return mm ? `assets/audio/${mm[1]}/${mm[2]}.ogg` : `assets/${name}`;
+  }
 }
 
 /* 把 bundle 原样交给跑者：解到仓库子目录后真开一次 play.html?probe=1 */
@@ -187,14 +210,19 @@ check('forget 后为空', (await loadProject(db, 'io-test')) === null);
 {
   const fake = {...project,
     assets: [{name: 'zz-io-test.png', kind: 'image', repoPath: null,
-      data: btoa('hello-io')}],
+      data: btoa('hello-io')},
+      {name: 'audio:AVG_gf/avg_gf_0001', kind: 'audio', repoPath: null,
+        data: btoa('fake-ogg-bytes')}],
     layouts: {'zz-char': {sizeDelta: 1024, m_LocalScale: 1.6}}};
   await importProject(fake, {registry, applyTo: true});
   check('上传件回灌可解析',
       registry.resolve('zz-io-test.png')?.source === 'upload');
+  check('音频上传件回灌走 resolveAudio',
+      registry.resolveAudio('AVG_gf', 'avg_gf_0001')?.source === 'upload');
   check('layout 回灌生效',
       registry.layoutEntry('zz-char')?.layout?.m_LocalScale === 1.6);
   await registry.remove('zz-io-test.png');
+  await registry.remove('audio:AVG_gf/avg_gf_0001');
   await registry.removeLayout('zz-char');
 }
 

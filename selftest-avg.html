@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<title>avg corpus e2e harness</title>
+<link rel="stylesheet" href="/tools/ref/avg.css">
+<link rel="stylesheet" href="/tools/ref/pandect.css">
+<link rel="stylesheet" href="/tools/ref/nav.css">
+<style>
+  html, body { margin: 0; background: #1b1b1b; }
+  html { overflow: hidden; }
+  body {
+    color: black;
+    font-family: "Segoe UI", "Segoe UI Emoji", "Segoe UI Symbol", Lato,
+        "Liberation Sans", "Noto Sans", "Helvetica Neue", Helvetica, sans-serif;
+  }
+</style>
+</head>
+<body>
+<div id="mount"></div>
+<script type="module">
+/**
+ * M13 语料端到端自检：从 res/ 的 AvgCfg/AvgLang 字节码现场解码 →
+ * avgwire 映射成引擎 wire（map 格式）→ Player 真机逐镜 seek 跑通。
+ * 报告 POST 回 /freeze?scene=avg_e2e_report，断言在跑者
+ * tools/test-avg-e2e.mjs 里做（与 Node 侧同源解码对拍）。
+ */
+import {Player} from '/js/engine/player.js';
+import {parseChunk} from '/js/core/lundump.js';
+import {execChunk, toJS} from '/js/core/lvm.js';
+import {storyToWire, replayChain} from '/js/core/avgwire.js';
+import {loadRepoIndex, flatLookup} from '/js/core/repo-index.js';
+import {deriveLayout} from '/js/engine/sprite.js';
+import {VirtualTimer} from '/js/test/harness.js';
+
+const URLP = new URLSearchParams(location.search);
+const ID = URLP.get('id') || 'cpt00_e_01_01';
+
+const problems = [];
+const pageErrors = [];
+addEventListener('error', (e) => pageErrors.push(`${e.message} @ ${e.filename}:${e.lineno}`));
+addEventListener('unhandledrejection', (e) => pageErrors.push(`rejection: ${e.reason?.message || e.reason}`));
+
+const clock = new VirtualTimer();
+const repo = await loadRepoIndex();
+if (!repo.available) problems.push('repo 索引不可用（R13 退化）');
+
+const manifest = await (await fetch('/data/index/avg-scripts.json')).json();
+const meta = manifest.stories.find((s) => s.id === ID);
+if (!meta) { problems.push(`剧本 ${ID} 不在索引里`); }
+
+let wire = null, stats = null;
+if (meta) {
+  const decodeLua = async (path) => {
+    const bytes = new Uint8Array(await (await fetch('/' + path)).arrayBuffer());
+    return toJS(execChunk(parseChunk(bytes))[0]);
+  };
+  const cfg = await decodeLua(meta.cfg);
+  const lang = await decodeLua(meta.lang);
+  ({wire, stats} = storyToWire(cfg, lang));
+}
+
+/* 素材走本地 res/ 树（asset-index 精确解析），缺的落 /images 兜底。 */
+const player = new Player({
+  mount: document.getElementById('mount'),
+  mode: 'clamp',
+  timer: clock,
+  filePathOf: (name) => flatLookup(repo, name) ?? '/images/' + name,
+  layoutOf: async (img) => {
+    /* 编辑器同款三级：标定件 > 仓库 layout > 从 lpic 原图 derive 起点。 */
+    try {
+      return await (await fetch('/data/layouts/' + img.imgPath + '.json')).json();
+    } catch { /* 无标定件，走 derive */ }
+    const path = flatLookup(repo, 'lpic_' + img.imgPath + '.png');
+    if (!path) throw new Error(`立绘缺 lpic：${img.imgPath}`);
+    const blob = await (await fetch('/' + path)).blob();
+    return deriveLayout(await createImageBitmap(blob));
+  },
+  getName: () => '教授',
+  characters: await (await fetch('/data/Avg_character.json')).json(),
+});
+
+const shots = [];
+let lastStep = 'start';
+let brief = '';
+try {
+  if (wire) {
+    /* 遍历引擎重放链上的可停留镜：空内容 + autoContinue 的直通镜停不住。 */
+    lastStep = 'filter';
+    const seekable = replayChain(wire)
+        .filter((id) => {
+          const s = wire[id];
+          return s.content || s.branch || !s.autoContinue;
+        });
+    lastStep = 'setScene';
+    const brief0 = wire['1']?.SkipScenario;
+    player.setScene(wire, '序章', '1', typeof brief0 === 'string' ? brief0 : '', '');
+    brief = player.refs.avgSceneBrief.textContent;
+    lastStep = 'walk';
+    for (const id of seekable) {
+      lastStep = `seek#${id}`;
+      try {
+        /* seekShot 的落点比较是 ===：键必须传数字（shotId 沿链是数字）。 */
+        await player.seekShot(Number(id));
+        await player.idle();
+        shots.push({
+          id,
+          line: player.refs.avgLine.innerHTML,
+          speaker: player.refs.avgSpeaker.textContent,
+          type: wire[id].contentType ?? null,
+          charas: player.refs.avgCharas.children.length,
+        });
+      } catch (e) {
+        problems.push(`seekShot ${id}: ${e.message}`);
+      }
+    }
+    lastStep = 'post';
+  }
+} catch (e) {
+  problems.push(`${lastStep}: ${e.message} @ ${e.stack?.split('\n')[1]?.trim()}`);
+}
+
+const report = {done: true, id: ID, lastStep, seekableCount: wire
+    ? Object.entries(wire).filter(([, s]) => s.content || s.branch || !s.autoContinue).length
+    : -1, stats, brief, shots, problems, pageErrors};
+await fetch('/freeze?scene=avg_e2e_report', {
+  method: 'POST', body: JSON.stringify(report, null, 1)});
+document.title = 'avg-report-done';
+</script>
+</body>
+</html>

@@ -7,6 +7,7 @@ import {
   exportProject, exportZip, importProject, saveProject, touchProjectIndex,
 } from './editor/io.js';
 import {openPicker} from './editor/picker.js';
+import {openStoryPicker, loadStory} from './editor/storylib.js';
 import {Editor} from './editor/editor.js';
 import {Player} from './engine/player.js';
 import {AudioEngine, defaultAudioResolve} from './engine/audio.js';
@@ -50,11 +51,28 @@ const layoutOf = async (img) => {
   return deriveLayout(bmp);
 };
 
-/* 预览 = 真引擎；M7 音频手势前静音、首次 pointerdown 解锁续播。 */
+/* 预览 = 真引擎；M7 音频手势前静音、首次 pointerdown 解锁续播。
+   解析三级：上传件 > 仓库音频索引（sheet/cue）> 全局 cue 表（接住
+   bgm 的 sheet=cue 与省略 sheet 的脚本），最后退 data/audio 约定。
+   M15 CV：data/index/voices.json 把 {heroId, voiceId} 解到
+   VO_<代号>/<代号>_<语音名>（skin.lua 的 src_id_pic + audio_voice 表）。 */
+let voiceIndex = null;
+try {
+  voiceIndex = await (await fetch('data/index/voices.json')).json();
+} catch { /* 无语音映射：CV 静默跳过 */ }
 const audio = new AudioEngine({
   resolve: (sheet, cue) =>
-      registry.resolve(`audio:${sheet}/${cue}`)?.url
+      registry.resolveAudio(sheet, cue)?.url
       ?? defaultAudioResolve(sheet, cue),
+  resolveVoice: voiceIndex ? ({heroId, voiceId}) => {
+    const hero = voiceIndex.byHero[String(heroId)];
+    const line = voiceIndex.byVoiceId[String(voiceId)];
+    if (!hero || !line) return null;
+    const sheet = `VO_${hero.codename}`;
+    const cue = `${hero.codename}_${line}`;
+    return registry.resolveAudio(sheet, cue)?.url
+        ?? `data/audio/${sheet}/${cue}.ogg`;
+  } : null,
   log: (m) => console.warn('[audio]', m),
 });
 addEventListener('pointerdown', () => audio.unlock(), {once: true});
@@ -62,6 +80,7 @@ addEventListener('pointerdown', () => audio.unlock(), {once: true});
 const player = new Player({
   mount: document.getElementById('preview'),
   mode: 'clamp',
+  logClickCloses: true,     // M15：log 面板任意点击收起（参考默认常驻）
   filePathOf,
   layoutOf,
   getName: () => '教授',
@@ -196,6 +215,8 @@ async function useStory(id) {
   stopPlay();
   currentId = id;
   const story = state.stories.get(id);
+  document.getElementById('story-label').textContent =
+      id + (story.title && story.title !== id ? ` · ${story.title}` : '');
   editor.meta = {title: story.title, sector: '绿洲防线'};
   editor.useStory(story);
 }
@@ -251,10 +272,48 @@ document.getElementById('tp-prev').addEventListener('click', () => {
   editor.select(Math.max(0, editor.index - 1));
 });
 
+/* —— M14 剧本库：1878 段 AvgCfg 的浏览与一键装载 ——
+   索引缺席（R13）时按钮禁用并提示构建命令；装载 = loadStory（字节码解码
+   + avgwire 映射）→ normalizeScript → 走与夹具完全相同的 useStory 管线。 */
+let avgManifest = null;
+let storyCatalog = null;
+try {
+  avgManifest = await (await fetch('data/index/avg-scripts.json')).json();
+  storyCatalog = await (await fetch('data/index/story-catalog.json')).json();
+} catch { /* 无索引：纯夹具模式 */ }
+const btnStories = document.getElementById('btn-storylib');
+if (!avgManifest) {
+  btnStories.disabled = true;
+  btnStories.title = '缺 data/index/avg-scripts.json（node tools/build-asset-index.mjs）';
+} else {
+  btnStories.addEventListener('click', () => {
+    openStoryPicker(avgManifest, {catalog: storyCatalog, onPick: async ({id}) => {
+      document.querySelector('.picker-overlay')?.remove();
+      try {
+        flashStatus(`装载 ${id}…`);
+        const story = await loadCorpusStory(id);
+        flashStatus(`已装载 ${id}（${story.shots.length} 镜）`);
+      } catch (error) {
+        flashStatus(`装载失败：${error.message}`);
+      }
+    }});
+  });
+}
+
+async function loadCorpusStory(id) {
+  if (!avgManifest) throw new Error('剧本库索引缺席');
+  if (!state.stories.has(id)) {
+    const meta = avgManifest.stories.find((s) => s.id === id);
+    const {wire} = await loadStory(fetch, meta);
+    const story = normalizeScript(wire);
+    story.title = id;
+    state.stories.set(id, story);
+  }
+  await useStory(id);
+  return state.stories.get(id);
+}
+
 window.addEventListener('resize', () => player.fitToContainer());
-document.getElementById('btn-1to1').addEventListener('click', () => {
-  player.setScale(1);
-});
 
 /* —— 夹具装载（归一化自检报告保留）—— */
 async function loadFixtures() {
@@ -279,25 +338,42 @@ async function loadFixtures() {
           + (badRefs.length ? `  悬空分支: ${badRefs.join(', ')}` : ''),
     }), '\n');
   }
-  const select = document.getElementById('story-select');
-  for (const fixture of FIXTURES) {
-    select.append(h('option', {value: fixture.id, text: fixture.title}));
-  }
-  select.addEventListener('change', () => useStory(select.value));
   await useStory(FIXTURES[0].id);
 }
 
 loadFixtures().then(async () => {
   if (!new URLSearchParams(location.search).get('smoke')) return;
   await new Promise((r) => setTimeout(r, 500));
+  const smoke = {
+    done: true,
+    pos: document.getElementById('tp-pos').textContent,
+    storage: document.getElementById('storage').textContent,
+    shots: document.querySelectorAll('.shot-row').length,
+    charas: document.querySelectorAll('#avg-charas .avg-chara').length,
+  };
+  /* M14 冒烟追加：剧本库装载链在真实编辑器里跑一遍（夹具字段保持原口径）。 */
+  if (avgManifest) {
+    try {
+      const story = await loadCorpusStory('cpt00_e_01_01');
+      /* M15 偏离项冒烟：log 面板开 → 任意点击收起（logClickCloses）。 */
+      const refs = player.refs;
+      refs.avgControlLog.click();
+      const logOpened = refs.avgOverlay.classList.contains('log');
+      player.container.click();
+      const logClosed = !refs.avgOverlay.classList.contains('log');
+      smoke.storylib = {
+        id: currentId,
+        shots: story.shots.length,
+        pos: document.getElementById('tp-pos').textContent,
+        brief: player.refs.avgSceneBrief.textContent.slice(0, 20),
+        logCloses: logOpened && logClosed ? true : `open=${logOpened} closed=${logClosed}`,
+      };
+    } catch (e) {
+      smoke.storylib = {error: e.message};
+    }
+  }
   await fetch('/freeze?scene=editor_smoke', {
     method: 'POST', headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      done: true,
-      pos: document.getElementById('tp-pos').textContent,
-      storage: document.getElementById('storage').textContent,
-      shots: document.querySelectorAll('.shot-row').length,
-      charas: document.querySelectorAll('#avg-charas .avg-chara').length,
-    }, null, 1),
+    body: JSON.stringify(smoke, null, 1),
   });
 });

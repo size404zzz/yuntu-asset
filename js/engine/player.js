@@ -165,10 +165,12 @@ export class Player {
     nouns = null,
     audio = null,
     canvasSize = CANVAS,      // M11：低端设备可降到 512（数学与分辨率无关）
+    logClickCloses = false,   // 宿主偏离项：log 面板任意点击收起（编辑器开）
   } = {}) {
     Object.assign(this, buildStage(mount, {mode}));
     this.sched = new Scheduler(timer);
     this.audio = audio;
+    this.logClickCloses = logClickCloses;
     this.canvasSize = canvasSize;
     this.filePathOf = filePathOf;
     this.layoutOf = layoutOf;
@@ -636,6 +638,12 @@ export class Player {
 
   click(target = this.container) {
     if (!this.scene) return;
+    /* 宿主可选项（编辑器开）：log 面板打开时任意点击先收起——参考的
+       行为是点击照常推进剧情且面板常驻，冻结 UI 测试仍走参考语义。 */
+    if (this.logClickCloses && this.refs.avgOverlay.classList.contains('log')) {
+      this.refs.avgOverlay.classList.remove('log');
+      return;
+    }
     if (this.toAutoPlay) {
       this.toAutoPlay = false;
       this.sched.clear(this.autoPlayHandle);
@@ -671,7 +679,11 @@ export class Player {
     switch (event.target) {
       case avgControlLog:
         if (this.autoPlaying) this.toggleAutoPlay();
-        this.refs.avgOverlay.classList.add('log');
+        if (this.logClickCloses && this.refs.avgOverlay.classList.contains('log')) {
+          this.refs.avgOverlay.classList.remove('log');   /* 再点日志键 = 收起 */
+        } else {
+          this.refs.avgOverlay.classList.add('log');
+        }
         break;
       case avgControlHideUi:
         if (this.autoPlaying) this.toggleAutoPlay();

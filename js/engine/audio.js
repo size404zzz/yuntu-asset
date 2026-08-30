@@ -16,8 +16,9 @@
 const DEF_FADE = 1;
 
 export class AudioEngine {
-  constructor({resolve, ctxFactory = () => new AudioContext(), log = () => {}} = {}) {
+  constructor({resolve, resolveVoice = null, ctxFactory = () => new AudioContext(), log = () => {}} = {}) {
     this.resolve = resolve;
+    this.resolveVoice = resolveVoice;   /* ({heroId, voiceId}) → url|null（M15） */
     this.ctxFactory = ctxFactory;
     this.log = log;
     this.ctx = null;
@@ -29,6 +30,7 @@ export class AudioEngine {
     this.pendingBgm = null;       /* 手势前的 bgm 意图 {key, url, at} */
     this.bgmBuffers = new Map();  /* key → Promise<AudioBuffer> */
     this.activeSfx = new Set();
+    this.voice = null;            /* {source, gain} 剧情语音：单声道，新句掐旧句 */
   }
 
   get unlocked() { return this.ctx !== null; }
@@ -48,15 +50,18 @@ export class AudioEngine {
     }
   }
 
-  /* 镜头进入：bgm 意图 + sfx 一次性。 */
+  /* 镜头进入：bgm 意图 + sfx 一次性 + CV 语音（M15）。 */
   shot(shot) {
     const a = shot?.audio;
-    if (!a) return;
-    if (a.bgm) this.bgmCue(a.bgm);
-    if (a.sfx) this.sfxCue(a.sfx);
+    if (a) {
+      if (a.bgm) this.bgmCue(a.bgm);
+      if (a.sfx) this.sfxCue(a.sfx);
+    }
+    if (shot?.voice) this.voiceCue(shot.voice);
   }
 
-  /* seek 语义：只落 bgm 状态，不补放沿途 sfx。 */
+  /* seek 语义：只落 bgm 状态，不补放沿途 sfx，也不补放 voice（跳着看
+     中途落点时突然念一句台词反而突兀）。 */
   bgmOnly(shot) {
     const a = shot?.audio;
     if (a?.bgm) this.bgmCue(a.bgm);
@@ -106,10 +111,42 @@ export class AudioEngine {
     }).catch(() => this.log(`sfx 解码失败: ${sheet}/${cue}`));
   }
 
-  /* 场景退出：淡出 bgm，掐掉在响的 sfx。 */
+  /* 剧情 CV：单声道，新句掐旧句（对话被顶替时上一句说到一半也停）。
+     解析走 resolveVoice（宿主用 data/index/voices.json 组装），缺素材
+     静默跳过；手势前与 sfx 同语义（丢弃，补放无意义）。 */
+  voiceCue({heroId, voiceId}) {
+    if (!this.ctx || !heroId || voiceId === undefined || voiceId === null) return;
+    const url = this.resolveVoice?.({heroId, voiceId});
+    if (!url) {
+      this.log(`缺语音解析: ${heroId}/${voiceId}`);
+      return;
+    }
+    this._stopVoice();
+    const ctx = this.ctx;
+    this._buffer(url).then((buffer) => {
+      if (!buffer || !this.ctx) return;
+      this._stopVoice();                 // 解码期间可能又来了新句
+      const source = ctx.createBufferSource();
+      source.buffer = buffer;
+      const gain = ctx.createGain();
+      gain.gain.value = 1;
+      source.connect(gain).connect(this.master);
+      source.start();
+      this.voice = {source, gain};
+    }).catch(() => this.log(`voice 解码失败: ${heroId}/${voiceId}`));
+  }
+
+  _stopVoice() {
+    if (!this.voice) return;
+    try { this.voice.source.stop(); } catch { /* 已结束的忽略 */ }
+    this.voice = null;
+  }
+
+  /* 场景退出：淡出 bgm，掐掉在响的 sfx 与 voice。 */
   stopAll({fade = DEF_FADE} = {}) {
     this.pendingBgm = null;
     this._fadeOutBgm(fade);
+    this._stopVoice();
     for (const source of this.activeSfx) {
       try { source.stop(); } catch { /* 已结束的忽略 */ }
     }

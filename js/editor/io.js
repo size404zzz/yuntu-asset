@@ -2,6 +2,8 @@
    工程包（计划口径）：{format, version, meta, stories:[{title, scriptType,
    shots}], layouts, characters, glossary, assets[]}——shots 保留 wire 原字段
    名，归一化只发生在读取边界，raw 游戏脚本可直接导入且不做不可逆翻译。
+   assets 三路：上传件 base64 内联（kind: image|audio，音频键
+   audio:<sheet>/<cue>）；repo 件（图/音频）只记 repoPath，bundle 落真文件。
 
    导出三形态：
    A 工程 JSON：repo 资源只记 repoPath 不内联；上传件 base64 内联。
@@ -40,6 +42,25 @@ function engineNamesOf(shots) {
   return [...names];
 }
 
+/* 镜头引用的音频（bgm/sfx），按键去重；stop 的 bgm 无 cue 自然跳过。
+   键 = audio:<sheet>/<cue>，与 AssetRegistry 上传件/resolveAudio 同约定。 */
+function audioRefsOf(shots) {
+  const refs = new Map();
+  for (const shot of Object.values(shots)) {
+    for (const part of ['bgm', 'sfx']) {
+      const {cue, sheet} = shot.audio?.[part] ?? {};
+      if (cue) refs.set(`audio:${sheet}/${cue}`.toLowerCase(), {sheet, cue});
+    }
+  }
+  return [...refs.values()];
+}
+
+/* audio:<sheet>/<cue> → bundle 里的落盘路径。 */
+function audioFileOf(name) {
+  const m = /^audio:(.*)\/(.*)$/.exec(name);
+  return m ? `assets/audio/${m[1]}/${m[2]}.ogg` : `assets/${name}`;
+}
+
 /* —— A：工程 JSON —— */
 
 export async function exportProject({doc, title, registry, characters, glossary}) {
@@ -63,6 +84,16 @@ export async function exportProject({doc, title, registry, characters, glossary}
     if (hit?.source === 'repo') {
       assets.push({name, kind: 'image', repoPath: hit.url});
       seen.add(name.toLowerCase());
+    }
+  }
+  /* 音频：引用到的 repo 件记 repoPath（转码索引路径），上传件已在上面内联。 */
+  for (const {sheet, cue} of audioRefsOf(shots)) {
+    const key = `audio:${sheet}/${cue}`;
+    if (seen.has(key.toLowerCase())) continue;
+    const hit = registry.resolveAudio(sheet, cue);
+    if (hit?.source === 'repo') {
+      assets.push({name: key, kind: 'audio', repoPath: hit.url});
+      seen.add(key.toLowerCase());
     }
   }
   /* layouts：标定件 + 仓库已知（bundle 必须自带，离线页不再请求 data/layouts）。 */
@@ -109,7 +140,8 @@ export async function importProject(project, {registry, applyTo = false} = {}) {
     for (const a of data.assets) {
       if (!a.data) continue;
       await registry.upload(a.name, new Blob([b64decode(a.data)],
-          {type: 'image/png'}), {kind: a.kind ?? 'image'});
+          {type: a.kind === 'audio' ? 'audio/ogg' : 'image/png'}),
+          {kind: a.kind ?? 'image'});
       urls.set(a.name.toLowerCase(), true);
     }
     for (const [id, layout] of Object.entries(data.layouts)) {
@@ -140,13 +172,28 @@ export function projectResolvers(project, {base = ''} = {}) {
     }
     return `${base}assets/${name}`;
   };
+  /* 音频解析（与 AssetRegistry.resolveAudio 同键约定）：内联 blob >
+     repoPath > bundle 约定路径 assets/audio/<sheet>/<cue>.ogg。 */
+  const audioUrlOf = (sheet, cue) => {
+    const key = `audio:${sheet}/${cue}`.toLowerCase();
+    const a = byName.get(key);
+    if (a?.data) {
+      if (!urls.has(key)) {
+        urls.set(key, URL.createObjectURL(new Blob([b64decode(a.data)],
+            {type: 'audio/ogg'})));
+      }
+      return urls.get(key);
+    }
+    if (a) return `${base}${a.repoPath ?? audioFileOf(a.name)}`;
+    return `${base}assets/audio/${sheet}/${cue}.ogg`;
+  };
   const layouts = project.layouts ?? {};
   const layoutOf = async (img) => {
     const hit = layouts[img.imgPath];
     if (hit) return hit;
     throw new Error(`layout 缺失: ${img.imgPath}`);
   };
-  return {filePathOf, layoutOf};
+  return {filePathOf, layoutOf, audioUrlOf};
 }
 
 /* —— B：独立 ZIP bundle —— */
@@ -214,7 +261,10 @@ export async function exportZip({project, fetchImpl = fetch, assetBytes}) {
     if (a.data) continue;                       // base64 件已在 project.json
     const bytes = assetBytes ? await assetBytes(a)
         : await (await fetchImpl(`/${a.repoPath}`)).arrayBuffer();
-    entries.push({name: `assets/${a.name}`, data: new Uint8Array(bytes)});
+    entries.push({
+      name: a.kind === 'audio' ? audioFileOf(a.name) : `assets/${a.name}`,
+      data: new Uint8Array(bytes),
+    });
   }
   return writeZip(entries);
 }

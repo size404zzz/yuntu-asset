@@ -8,15 +8,13 @@ import {AudioEngine} from './engine/audio.js';
 import {projectResolvers} from './editor/io.js';
 
 export async function bootProject(project, mount, {fetchImpl = fetch} = {}) {
-  const {filePathOf, layoutOf} = projectResolvers(project);
+  const {filePathOf, layoutOf, audioUrlOf} = projectResolvers(project);
   const story = project.stories[0];
   let characters = project.characters;
   if (!characters) {
     characters = await (await fetchImpl('data/Avg_character.json')).json();
   }
-  const audio = new AudioEngine({
-    resolve: (sheet, cue) => `assets/audio/${sheet}/${cue}.ogg`,
-  });
+  const audio = new AudioEngine({resolve: audioUrlOf});
   addEventListener('pointerdown', () => audio.unlock(), {once: true});
   const player = new Player({
     mount,

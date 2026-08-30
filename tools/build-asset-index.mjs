@@ -15,6 +15,9 @@
  */
 import {readdirSync, readFileSync, writeFileSync, mkdirSync, existsSync} from 'node:fs';
 import {join, resolve} from 'node:path';
+import {parseChunk} from '../js/core/lundump.js';
+import {execChunk, toJS} from '../js/core/lvm.js';
+import {storyToWire} from '../js/core/avgwire.js';
 
 const ROOT = resolve(process.cwd());
 const VALIDATE_ONLY = process.argv.includes('--validate');
@@ -157,6 +160,47 @@ const knownLayouts = new Set(existsSync(join(ROOT, 'data', 'layouts'))
 const backgrounds = scanBackgrounds();
 const characters = scanCharacters(knownLayouts);
 
+/* —— M13 剧本清单：res/Assets/Res/LuaScripts 下的 AvgCfg/AvgLang 语料 ——
+   AssetStudio 从 avgconfig.ab 解出的 Lua 5.3 字节码（1878 段剧情 ×
+   演出指令 + 中文台词），加 configs.ab 里剧情相关的 storyline 入口。
+   播放器引擎按 wiki 命名解析图片，剧本则按剧情 ID 枚举，所以单独
+   出一份 {id, cfg, lang} 清单给后续的剧情库/解释器用；缺席（R13
+   无 res/ 树）时输出空清单，不参与验收。 */
+function scanAvgScripts() {
+  const dir = join(ROOT, 'res', 'Assets', 'Res', 'LuaScripts');
+  const stories = new Map();
+  const configs = [];
+  const cfgRe = /^AvgCfg_(.+)\.lua$/i;
+  const langRe = /^AvgLang_(.+)_ZH_CN\.lua$/i;
+  for (const sub of ['Avg', 'Configs']) {
+    let files;
+    try {
+      files = readdirSync(join(dir, sub), {withFileTypes: true});
+    } catch {
+      continue;
+    }
+    for (const e of files) {
+      if (e.isDirectory()) continue;
+      const rel = relOf(join(dir, sub, e.name));
+      const cfg = cfgRe.exec(e.name);
+      const lang = langRe.exec(e.name);
+      if (cfg) {
+        const s = stories.get(cfg[1]) ?? {id: cfg[1], cfg: null, lang: null};
+        s.cfg = rel;
+        stories.set(cfg[1], s);
+      } else if (lang) {
+        const s = stories.get(lang[1]) ?? {id: lang[1], cfg: null, lang: null};
+        s.lang = rel;
+        stories.set(lang[1], s);
+      } else if (sub === 'Configs') {
+        configs.push({name: e.name.replace(/\.lua$/i, ''), path: rel});
+      }
+    }
+  }
+  return {stories: [...stories.values()].sort((a, b) => a.id < b.id ? -1 : 1), configs};
+}
+const avgScripts = scanAvgScripts();
+
 /* M8 验收口径：639 背景；_avg 立绘目录（含 lpic）≥496。
    非 _avg（boss/庆典等）也全部入索引，编辑器可用，但不计验收。 */
 const indexProblems = [];
@@ -172,8 +216,30 @@ for (const name of knownLayouts) {
     indexProblems.push(`已知 layout ${name} 在素材树里没有对应立绘目录`);
   }
 }
+
+/* M14 剧本库增强：全语料现场解码 → 每段补 steps（镜数）与 brief（简介），
+ * 同时把「解码+映射 0 失败」升格为构建门槛——索引生成本身就是一次
+ * 全语料回归。解码失败的段记入 indexProblems（构建 exit 1）。 */
+const corpusT0 = Date.now();
+let corpusFail = 0;
+for (const story of avgScripts.stories) {
+  try {
+    const cfg = toJS(execChunk(parseChunk(readFileSync(join(ROOT, story.cfg))))[0]);
+    const lang = toJS(execChunk(parseChunk(readFileSync(join(ROOT, story.lang))))[0]);
+    const {wire} = storyToWire(cfg, lang);
+    story.steps = Object.keys(wire).length;
+    const brief = wire['1']?.SkipScenario;
+    story.brief = typeof brief === 'string' ? brief : null;
+  } catch (e) {
+    corpusFail++;
+    indexProblems.push(`剧本 ${story.id} 解码失败：${e.message}`);
+  }
+}
 console.log(`可浏览索引：背景 ${backgrounds.length} · 立绘 ${characters.length}`
-    + `（_avg ${avgCount}）· 已标定 layout ${knownLayouts.size}`);
+    + `（_avg ${avgCount}）· 已标定 layout ${knownLayouts.size}`
+    + ` · 剧本 ${avgScripts.stories.length} 段 + ${avgScripts.configs.length} 份剧情配置`
+    + ` · 语料解码 ${corpusFail ? corpusFail + ' 段失败' : '全通过'}`
+    + `（${((Date.now() - corpusT0) / 1000).toFixed(1)}s）`);
 for (const m of indexProblems) console.log('  FAIL ' + m);
 
 /* —— 夹具校验：按引擎的同款变换推出素材名，逐个查索引 —— */
@@ -227,6 +293,8 @@ if (!VALIDATE_ONLY) {
       JSON.stringify(backgrounds, null, 1) + '\n');
   writeFileSync(join(ROOT, 'data', 'index', 'characters.json'),
       JSON.stringify(characters, null, 1) + '\n');
-  console.log('写出 data/asset-index.json + data/index/{backgrounds,characters}.json');
+  writeFileSync(join(ROOT, 'data', 'index', 'avg-scripts.json'),
+      JSON.stringify(avgScripts, null, 1) + '\n');
+  console.log('写出 data/asset-index.json + data/index/{backgrounds,characters,avg-scripts}.json');
 }
 process.exit(misses || indexProblems.length ? 1 : 0);

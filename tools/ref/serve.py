@@ -40,6 +40,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=ROOT, **kwargs)
 
+    def end_headers(self):
+        """开发服务器禁缓存：改完 js/css 刷新即生效，不吃浏览器启发式缓存。"""
+        self.send_header('Cache-Control', 'no-cache')
+        super().end_headers()
+
     def do_GET(self):
         if self.path.startswith('/images/'):
             return self.serve_upload()

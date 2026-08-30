@@ -58,6 +58,7 @@ const makeEngine = () => {
   const logs = [];
   const engine = new AudioEngine({
     resolve: (sheet, cue) => `aud/${sheet}/${cue}`,
+    resolveVoice: ({heroId, voiceId}) => `voice/${heroId}/${voiceId}`,
     ctxFactory: () => ctx,
     log: (m) => logs.push(m),
   });
@@ -203,6 +204,49 @@ const lastSource = (ctx) => ctx.sources[ctx.sources.length - 1];
   engine.shot({audio: {bgm: {sheet: 'X', cue: 'y'}, sfx: {sheet: 'S', cue: 'z'}}});
   assert.equal(logs.length, 2, 'bgm 与 sfx 各记一条缺解析');
   ok('缺素材：静默跳过 + 日志');
+}
+
+/* ---------- 9. M15 剧情 CV：单声道新句掐旧句 ---------- */
+{
+  const {engine, ctx} = makeEngine();
+  engine.unlock();
+  engine.shot({voice: {heroId: 1002, voiceId: 112}}); // shot() 自动分发 voice
+  deferreds[0].settle(buf());
+  await flush();
+  const first = lastSource(ctx);
+  assert.equal(first.started.length, 1, '第一句开播');
+  engine.shot({voice: {heroId: 1002, voiceId: 113}});
+  deferreds[1].settle(buf());
+  await flush();
+  const second = lastSource(ctx);
+  assert.notEqual(second, first, '新句是新源');
+  assert.equal(first.stopped.length, 1, '新句掐掉旧句（对话不叠响）');
+  assert.ok(engine.voice && engine.voice.source === second, 'engine.voice 指向当前句');
+  ok('voice：shot 自动分发，新句掐旧句');
+}
+
+/* ---------- 10. M15 voice：seek 不补、stopAll 掐、缺解析跳过 ---------- */
+{
+  const {engine, ctx, logs} = makeEngine();
+  engine.unlock();
+  engine.bgmOnly({voice: {heroId: 1002, voiceId: 112}});       // seek 落点
+  assert.equal(deferreds.filter((d) => d.url.includes('voice')).length, 0,
+      'seek 语义不补 voice（deferred 未增）');
+  assert.equal(ctx.sources.length, 0);
+  engine.shot({voice: {heroId: 1002, voiceId: 112}});
+  deferreds[0].settle(buf());
+  await flush();
+  const v = lastSource(ctx);
+  engine.stopAll({fade: 0.2});
+  assert.equal(v.stopped.length, 1, 'stopAll 掐掉在响的 voice');
+  // 缺解析：resolveVoice 返回 null → 只记日志
+  const {engine: e2, logs: l2} = makeEngine();
+  e2.resolveVoice = () => null;
+  e2.unlock();
+  e2.shot({voice: {heroId: 1, voiceId: 1}});
+  await flush();
+  assert.equal(l2.filter((m) => m.includes('缺语音解析')).length, 1, '缺语音包记日志');
+  ok('voice：seek 不补、stopAll 掐、缺解析静默');
 }
 
 console.log(`\n${passed} 项通过`);

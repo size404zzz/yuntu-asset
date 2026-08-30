@@ -3,7 +3,8 @@
    立绘条目回的是「角色 id」——选中后由调用方决定拿 lpic 还是进标定。 */
 
 import {h, clear} from '../ui/dom.js';
-import {searchBackgrounds, searchCharacters} from '../core/repo-index.js';
+import {searchBackgrounds, searchCharacters, searchAudio, audioSheets}
+    from '../core/repo-index.js';
 
 const PAGE = 120;
 
@@ -81,6 +82,93 @@ export function openPicker(registry, {title = '选择素材', kind = 'bg', onPic
   box.append(bar, search, grid);
   overlay.append(box);
   overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
+  document.body.append(overlay);
+  search.focus();
+  refill();
+  return overlay;
+}
+
+/* —— 音频选择器：列表式（无缩略图），行内 ▶ 试听，点行选中。
+   数据来自 data/index/audio.json（转码件）；空库给转码指引。 */
+
+const fmtDur = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+let previewAudio = null;      /* 试听单例：跨浮层/检查器只响一条 */
+let previewBtn = null;
+
+function stopPreview() {
+  if (previewAudio) { previewAudio.pause(); previewAudio = null; }
+  if (previewBtn) { previewBtn.textContent = '▶'; previewBtn = null; }
+}
+
+/* ▶/⏹ 切换试听（选择器与检查器音乐区共用同一单例）。 */
+export function toggleAudioPreview(url, btn) {
+  if (previewAudio && previewBtn === btn) { stopPreview(); return; }
+  stopPreview();
+  previewAudio = new Audio(url);
+  previewAudio.play().catch(() => {});
+  previewAudio.addEventListener('ended', stopPreview);
+  previewBtn = btn;
+  btn.textContent = '⏹';
+}
+
+export function openAudioPicker(registry, {title = '选择音频', onPick} = {}) {
+  const overlay = h('div.picker-overlay');
+  const box = h('div.picker-box');
+  const search = h('input', {className: 'picker-search', placeholder: '搜索 cue / sheet…'});
+  const sheetSel = h('select');
+  const grid = h('div.picker-grid');
+  const bar = h('div.picker-bar');
+  let query = '';
+  let sheet = null;
+  let offset = 0;
+  let items = [];
+
+  function refill(reset = true) {
+    if (reset) { offset = 0; clear(grid); }
+    items = searchAudio(registry.repo, query, {sheet});
+    if (!items.length && !offset) {
+      grid.append(h('div.muted', {
+        text: registry.repoAvailable && !audioSheets(registry.repo).length
+            ? '音频库为空：先运行 node tools/media/unpack-acb.mjs 转码'
+            : '没有匹配的音频',
+      }));
+      return;
+    }
+    for (const it of items.slice(offset, offset + PAGE)) {
+      const play = h('button.tiny', {text: '▶', onclick: (e) => {
+        e.stopPropagation();
+        toggleAudioPreview(it.path, play);
+      }});
+      grid.append(h('button.picker-cell.picker-audio', {onclick: () => {
+        stopPreview();
+        onPick({sheet: it.sheet, cue: it.cue, url: it.path});
+      }},
+      play,
+      h('span', {text: it.cue}),
+      h('span.picker-sheet', {text: it.sheet}),
+      h('span.picker-dur', {text: fmtDur(it.duration)})));
+    }
+    offset += PAGE;
+    if (offset < items.length) {
+      grid.append(h('button.picker-more',
+          {text: `加载更多（${items.length - offset}）`, onclick: () => refill(false)}));
+    }
+  }
+
+  search.addEventListener('input', () => { query = search.value.trim(); refill(); });
+  sheetSel.append(h('option', {value: '', text: '全部 sheet'}),
+      ...audioSheets(registry.repo).map((s) => h('option', {value: s, text: s})));
+  sheetSel.addEventListener('change', () => { sheet = sheetSel.value || null; refill(); });
+
+  bar.append(
+      h('b', {text: title}), sheetSel,
+      h('span.spacer'),
+      h('button.tiny', {text: '关闭', onclick: () => { stopPreview(); overlay.remove(); }}));
+  box.append(bar, h('div.row', {style: {display: 'flex', gap: '6px'}}, search), grid);
+  overlay.append(box);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) { stopPreview(); overlay.remove(); }
+  });
   document.body.append(overlay);
   search.focus();
   refill();
