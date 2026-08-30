@@ -18,6 +18,7 @@ import {join, resolve} from 'node:path';
 import {parseChunk} from '../js/core/lundump.js';
 import {execChunk, toJS} from '../js/core/lvm.js';
 import {storyToWire} from '../js/core/avgwire.js';
+import {emptyState, applyImages, applyShotTweens} from '../js/core/state.js';
 
 const ROOT = resolve(process.cwd());
 const VALIDATE_ONLY = process.argv.includes('--validate');
@@ -264,25 +265,80 @@ for (const name of knownLayouts) {
 
 /* M14 剧本库增强：全语料现场解码 → 每段补 steps（镜数）与 brief（简介），
  * 同时把「解码+映射 0 失败」升格为构建门槛——索引生成本身就是一次
- * 全语料回归。解码失败的段记入 indexProblems（构建 exit 1）。 */
+ * 全语料回归。解码失败的段记入 indexProblems（构建 exit 1）。
+ * 顺带统计 imgId → imgPath 声明直方图（仅 imgType 3）：tween 的 imgId 走
+ * 游戏侧全局角色槽位表，声明众数就是该表的估计（分歧 id 的少数派剧本
+ * 本就该用 images[] 覆盖，不进默认值）。 */
 const corpusT0 = Date.now();
 let corpusFail = 0;
+const idVotes = new Map();
+const heroVotes = new Map();      /* heroId → Map(imgPath → {lit, dark}) */
 for (const story of avgScripts.stories) {
   try {
     const cfg = toJS(execChunk(parseChunk(readFileSync(join(ROOT, story.cfg))))[0]);
     const lang = toJS(execChunk(parseChunk(readFileSync(join(ROOT, story.lang))))[0]);
+    const steps = Array.isArray(cfg) ? cfg : Object.values(cfg);
+    for (const shot of steps) {
+      for (const im of (shot?.images ?? [])) {
+        if (!im || !im.imgPath || im.delete || im.imgType !== 3) continue;
+        if (!idVotes.has(im.imgId)) idVotes.set(im.imgId, new Map());
+        const m = idVotes.get(im.imgId);
+        m.set(im.imgPath, (m.get(im.imgPath) ?? 0) + 1);
+      }
+    }
     const {wire} = storyToWire(cfg, lang);
     story.steps = Object.keys(wire).length;
     const brief = wire['1']?.SkipScenario;
     story.brief = typeof brief === 'string' ? brief : null;
+    /* heroSprites 桥表投票：fold 引擎同款状态，统计「heroId 说话时哪张
+       立绘在场/亮着」。修复后的 wire 是可见性的最佳重建；压暗说话的
+       丢数据案是少数派噪音，被亮票占优过滤。 */
+    const state = emptyState();
+    const pathOf = new Map();
+    for (const [k, shot] of Object.entries(wire)) {
+      if (shot.images?.length) {
+        applyImages(state, shot.images);
+        for (const im of shot.images) {
+          if (im.imgPath && !im.delete) pathOf.set(im.imgId, im.imgPath);
+          else if (im.delete) pathOf.delete(im.imgId);
+        }
+      }
+      applyShotTweens(state, shot);
+      const hid = shot.speakerHeroId;
+      if (hid === undefined || hid === null) continue;
+      if (!heroVotes.has(hid)) heroVotes.set(hid, new Map());
+      const vm = heroVotes.get(hid);
+      for (const [imgId, lane] of state.lanes) {
+        const p = pathOf.get(imgId);
+        if (!p || !((lane.alpha ?? 0) > 0)) continue;
+        if (!vm.has(p)) vm.set(p, {lit: 0, dark: 0});
+        vm.get(p)[lane.isDark ? 'dark' : 'lit']++;
+      }
+    }
   } catch (e) {
     corpusFail++;
     indexProblems.push(`剧本 ${story.id} 解码失败：${e.message}`);
   }
 }
+const imgIds = {};
+for (const [id, m] of [...idVotes].sort((a, b) => a[0] - b[0])) {
+  imgIds[id] = [...m.entries()].sort((a, b) => b[1] - a[1])[0][0];
+}
+avgScripts.imgIds = imgIds;
+/* heroSprites：亮票占优（≥3 且 ≥2×暗票）才算桥接成功——暗占优说明该
+   角色本就是阴影演出（反派暗处说话），不修。 */
+const heroSprites = {};
+for (const [hid, m] of [...heroVotes].sort((a, b) => a[0] - b[0])) {
+  const best = [...m.entries()].sort((a, b) => b[1].lit - a[1].lit)[0];
+  if (best && best[1].lit >= 3 && best[1].lit >= best[1].dark * 2) {
+    heroSprites[hid] = best[0];
+  }
+}
+avgScripts.heroSprites = heroSprites;
 console.log(`可浏览索引：背景 ${backgrounds.length} · 立绘 ${characters.length}`
     + `（_avg ${avgCount}）· 已标定 layout ${knownLayouts.size}`
     + ` · 剧本 ${avgScripts.stories.length} 段 + ${avgScripts.configs.length} 份剧情配置`
+    + ` · 全局立绘表 ${Object.keys(imgIds).length} 位 · 说话者桥表 ${Object.keys(heroSprites).length} 位`
     + ` · 语料解码 ${corpusFail ? corpusFail + ' 段失败' : '全通过'}`
     + `（${((Date.now() - corpusT0) / 1000).toFixed(1)}s）`);
 for (const m of indexProblems) console.log('  FAIL ' + m);
