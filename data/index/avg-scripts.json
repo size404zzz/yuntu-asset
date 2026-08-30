@@ -13154,20 +13154,12 @@
   }
  ],
  "imgIds": {
-  "1": "persicaria_avg",
-  "2": "camera_avg",
-  "3": "sol_avg",
-  "6": "turing_avg",
-  "10": "solp_avg",
-  "11": "42lab_npc_01_avg",
   "13": "riko_avg",
   "14": "astronaut_avg",
-  "15": "42lab_npc_02_avg",
   "16": "faith2_avg",
   "17": "kuroryu_avg",
   "18": "hannah_avg",
   "19": "olivia_avg",
-  "20": "arrow_avg",
   "21": "mara_weapon_avg",
   "22": "mara_blue_avg",
   "23": "choco_avg",
@@ -13212,7 +13204,6 @@
   "95": "golem1_avg",
   "96": "eos2_avg",
   "97": "ranko_avg",
-  "100": "oasis_01b_avg",
   "101": "persicaria_avg",
   "102": "anna_avg",
   "103": "sol_avg",
@@ -13425,8 +13416,7 @@
   "10053": "fool_sueyoi_avg",
   "10055": "fool_kuro_avg",
   "10058": "fool_haze_avg",
-  "10059": "fool_nora_avg",
-  "114514": "entropy_avg"
+  "10059": "fool_nora_avg"
  },
  "heroSprites": {
   "1": "atlas_shadow_avg",

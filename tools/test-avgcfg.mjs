@@ -9,6 +9,7 @@ import {join, resolve} from 'node:path';
 import {parseChunk} from '../js/core/lundump.js';
 import {execChunk, toJS} from '../js/core/lvm.js';
 import {storyToWire, replayChain} from '../js/core/avgwire.js';
+import {emptyState, applyImages, applyShotTweens} from '../js/core/state.js';
 
 let passed = 0;
 const ok = (m) => { passed++; console.log('  ok   ' + m); };
@@ -205,6 +206,51 @@ const decodeLua2 = (kind, id) => {
       '完好轨迹不被改写');
   assert.equal(stats.revealedCast, 1, '全剧本只修安吉拉一个');
   ok(`avgwire：永不可见立绘揭示重建（22child_01_03 安吉拉）`);
+}
+{
+  /* 槽位类型门（M21）：低号 imgId 常是背景槽（10：138 段背景声明 /
+     仅 2 段立绘声明），把它们注入成立绘会凭空冒出幻影、真背景黑掉。
+     构建期按「背景票 ≥ 立绘票」滤除；纯立绘槽位（147/13）保留。 */
+  for (const id of ['1', '2', '3', '10', '20']) {
+    assert.ok(!(id in manifest.imgIds), `背景槽 ${id} 不入全局立绘表`);
+  }
+  assert.equal(manifest.imgIds['147'], 'willow_avg', '纯立绘槽位保留（147）');
+  assert.equal(manifest.imgIds['13'], 'riko_avg', '立绘票占优的争议槽位保留（13）');
+  const {wire, stats} = storyToWire(decode('cfg', '22white_choco'),
+      decode('lang', '22white_choco'),
+      {imgIds: manifest.imgIds, heroSprites: manifest.heroSprites});
+  assert.ok(!Object.values(wire).some((s) =>
+      (s.images ?? []).some((im) => im.imgId === 10)),
+      '背景槽 10 不被注入为立绘（22white_choco）');
+  assert.ok(!stats.danglingCast.some((c) => c.imgId === 10), 'stats 无 10 的注入留痕');
+  assert.ok(wire['9'].imgTween.some((t) => t.imgId === 10 && t.alpha === 1),
+      '原 tween 原样保留（未注册跳过，参考语义）');
+  ok(`avgwire：槽位类型门（22white_choco 背景槽 10 不注入）`);
+}
+{
+  /* alpha 缺省 = 继承（M21）：抖动/灯光拍不带 alpha 时保持可见度，
+     不再记 undefined（旧口径判不可见，DOM 却仍可见——态屏分裂，
+     autoLightCast 等按折叠态判可见性的修复层跟着误判）。 */
+  const state = emptyState();
+  applyImages(state, [{imgId: 7, imgType: 3, imgPath: 'x_avg', posId: 3}]);
+  applyShotTweens(state, {imgTween: [
+    {imgId: 7, delay: 0, duration: 0.2, alpha: 0.8, posId: 3, isDark: true}]});
+  assert.equal(state.lanes.get(7).alpha, 0.8);
+  applyShotTweens(state, {imgTween: [
+    {imgId: 7, delay: 1.2, duration: 0.2, posId: 3, isDark: false}]});
+  assert.equal(state.lanes.get(7).alpha, 0.8, '缺省 alpha 继承 0.8');
+  assert.equal(state.lanes.get(7).isDark, false, 'isDark 照常翻转');
+  const s2 = emptyState();
+  applyImages(s2, [{imgId: 9, imgType: 3, imgPath: 'y_avg'}]);
+  applyShotTweens(s2, {imgTween: [
+    {imgId: 9, delay: 0, duration: 0.2, posId: 2, isDark: false}]});
+  assert.equal(s2.lanes.get(9).alpha, 0, '入场缺省 alpha 保持初始 0');
+  const s3 = emptyState();
+  applyImages(s3, [{imgId: 1, imgType: 2, imgPath: 'g/bg001'}]);
+  applyShotTweens(s3, {imgTween: [{imgId: 1, delay: 0, duration: 1, alpha: 1}]});
+  applyShotTweens(s3, {imgTween: [{imgId: 1, delay: 0, duration: 0.6, shake: true}]});
+  assert.equal(s3.bg.alpha, 1, 'bg 缺省 alpha 继承');
+  ok(`引擎折叠：alpha 缺省 = 继承（立绘入场/续条 + bg 三态）`);
 }
 {
   /* 全语料映射口径（M13 普查）：解引用命中/未命中与 0 起始段数。 */

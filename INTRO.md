@@ -44,10 +44,10 @@ python tools/ref/serve.py 8080     # 或任意静态服务器，根 = 本仓库
 | `node tools/test-doc.mjs` | 撤销栈/失效分级 | 7 项 |
 | `node tools/test-zip.mjs` | STORE 打包可复现 | 4 项 |
 | `node tools/test-repo-index.mjs` | 素材索引/搜索/R13 退化（含音频索引与三级解析） | 9 项 |
-| `node tools/test-avgcfg.mjs` | AvgCfg/AvgLang 字节码解释器 + wire 映射层（格式+VM 锚点+悬空立绘落名+揭示重建+全语料口径） | 11 项 |
+| `node tools/test-avgcfg.mjs` | AvgCfg/AvgLang 字节码解释器 + wire 映射层（格式+VM 锚点+悬空立绘落名+揭示重建+槽位类型门+折叠 alpha 继承+全语料口径） | 13 项 |
 | `node tools/test-avg-e2e.mjs` | 语料端到端：现场解码→映射→播放器逐镜 seek（cpt00 主线 + 23concert 立绘/分支） | 2 段全对 |
 | `node tools/test-storylib.mjs` | 剧本库：分组/搜索/loadStory 装载链/索引增强件/语音映射/剧情目录 | 7 项 |
-| `node tools/build-asset-index.mjs` | 重建索引（自带 639/496 验收 + 剧本清单） | — |
+| `node tools/build-asset-index.mjs` | 重建索引（自带 731 背景 / ≥514 _avg 验收 + 剧本清单 + 槽位类型过滤） | — |
 
 scene4 是 M11 补的形态夹具：type1、多页 `<|>`、通讯框、delete、type5、nextId
 跳转——M4 时代「本轮没跑到的形态」现已全部纳入逐字节对拍。

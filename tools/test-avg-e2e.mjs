@@ -40,7 +40,9 @@ const decodeLua = (path) =>
 function expectOf(id) {
   const meta = manifest.stories.find((s) => s.id === id);
   if (!meta) throw new Error(`剧本 ${id} 不在索引里`);
-  const {wire, stats} = storyToWire(decodeLua(meta.cfg), decodeLua(meta.lang));
+  /* 与页面同口径：带全局立绘表/说话者桥表的完整映射链。 */
+  const {wire, stats} = storyToWire(decodeLua(meta.cfg), decodeLua(meta.lang),
+      {imgIds: manifest.imgIds, heroSprites: manifest.heroSprites});
   /* 重放链上的可停留镜（branch[0] 优先、断档即终局），直通镜停不住。 */
   const seekable = replayChain(wire)
       .filter((id) => {
@@ -141,6 +143,14 @@ try {
     const withCharas = report.shots.filter((s) => s.charas > 0).length;
     if (want.spriteShots.length && withCharas === 0) {
       failures.push(`${id}: 有立绘镜 ${want.spriteShots.length} 个但舞台没挂上立绘`);
+    }
+    /* 站位合法性：台上立绘必须都落在 1..5 槽（posundefined 零容忍）。 */
+    for (const s of report.shots) {
+      for (const p of s.posIds ?? []) {
+        if (!['1', '2', '3', '4', '5'].includes(p)) {
+          failures.push(`${id} 镜 ${s.id}: 立绘槽位非法 pos${p}`);
+        }
+      }
     }
     if (report.stats?.resolved !== want.stats.resolved
         || report.stats?.unresolved?.length !== want.stats.unresolved.length) {
