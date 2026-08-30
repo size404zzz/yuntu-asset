@@ -193,6 +193,7 @@ export class Editor {
       doc: this.doc, index: this.index,
       registry: this.registry, characters: this.characters,
       timelineHost: this._timelineHost,
+      audio: this.player?.audio ?? null,
     });
     clear(this._timelineHost);
     if (this.index != null) {

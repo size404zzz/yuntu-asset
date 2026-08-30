@@ -51,6 +51,21 @@ export class AssetRegistry {
     return path ? {url: path, source: 'repo'} : null;
   }
 
+  /* 音频解析三级：上传件（键 audio:<sheet>/<cue>）> 仓库索引精确
+     sheet/cue > byCue 全局兜底——游戏脚本里 bgm 的 sheet=cue（曲名自成一
+     张瘦 sheet），也有省略 sheet 的，都靠全局表接住。缺失返回 null，
+     上层静默跳过（剧情不因缺音频卡死）。 */
+  resolveAudio(sheet, cue) {
+    if (!cue) return null;
+    const key = `audio:${sheet}/${cue}`.toLowerCase();
+    if (this.urls.has(key)) return {url: this.urls.get(key), source: 'upload'};
+    const audio = this.repo.audio;
+    const hit = sheet ? audio?.sheets?.[sheet]?.cues?.[cue] : null;
+    if (hit) return {url: hit.path, source: 'repo'};
+    const global = audio?.byCue?.[cue];
+    return global ? {url: global.path, source: 'repo'} : null;
+  }
+
   /* layout 解析：标定 > 仓库已知 > null（调用方 derive）。返回带 source。 */
   layoutEntry(charaId) {
     if (this.layouts.has(charaId)) {

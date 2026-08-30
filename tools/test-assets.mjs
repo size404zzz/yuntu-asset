@@ -90,8 +90,19 @@ const report = await (async () => {
       if (!smoke.pos.startsWith('#1')) bad.push(`tp-pos=${smoke.pos}`);
       if (!smoke.storage.includes('639')) bad.push(`storage=${smoke.storage}`);
       if (smoke.shots < 50) bad.push(`shots=${smoke.shots}`);
+      if (smoke.storylib?.error) bad.push(`剧本库装载：${smoke.storylib.error}`);
+      if (smoke.storylib?.id !== 'cpt00_e_01_01') {
+        bad.push(`storylib.id=${smoke.storylib?.id ?? '缺席'}`);
+      }
+      if (smoke.storylib?.shots !== 48) bad.push(`storylib.shots=${smoke.storylib?.shots}`);
+      if (!smoke.storylib?.brief?.startsWith('“绿洲”扇区')) {
+        bad.push(`storylib.brief=${smoke.storylib?.brief}`);
+      }
+      if (smoke.storylib?.logCloses !== true) {
+        bad.push(`storylib.logCloses=${smoke.storylib?.logCloses}`);
+      }
       if (bad.length) { console.log('    - 编辑器冒烟：' + bad.join(' | ')); rep.ok = false; }
-      else console.log(`  编辑器冒烟：${smoke.storage}`);
+      else console.log(`  编辑器冒烟：${smoke.storage} · 剧本库 ${smoke.storylib.id} ${smoke.storylib.shots} 镜 · log 收起 ✓`);
     }
     return rep;
   } catch (e) { console.error(String(e)); return {ok: false}; }

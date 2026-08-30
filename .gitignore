@@ -11,3 +11,17 @@ tools/ref/vendor/
 
 # M10 解包探针的临时目录
 .yuntu-bundle/
+
+# M12 音频转码：vgmstream 二进制与转码临时目录不入库。
+vgmstream-win64/
+tools/media/.tmp/
+__pycache__/
+
+# M12 音源原料（acb/awb，1.1GB）不入库：运行时只读 data/audio 的转码件；
+# 本目录仅本地保留，供 unpack-acb.mjs 增量重建。
+res/Assets/media/
+
+# 音频转码产物 data/audio/ 自 M15 起随仓库分发（全量本地部署包）；
+# 仍可由 res/Assets/media 的 acb/awb 经 `node tools/media/unpack-acb.mjs` 重建。
+# test-io 的 zip b64 交接件：selftest-io 每次运行重新生成，不入库。
+data/fixtures/expected-bundle_zip_b64.json

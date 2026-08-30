@@ -5,8 +5,9 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {join, resolve} from 'node:path';
-import {loadRepoIndex, searchBackgrounds, searchCharacters,
-  backgroundGroups, flatLookup} from '../js/core/repo-index.js';
+import {loadRepoIndex, searchBackgrounds, searchCharacters, searchAudio,
+  audioSheets, backgroundGroups, flatLookup} from '../js/core/repo-index.js';
+import {AssetRegistry} from '../js/core/assets.js';
 
 let passed = 0;
 const ok = (m) => { passed++; console.log('  ok   ' + m); };
@@ -55,6 +56,44 @@ assert.equal(uncal.length, searchCharacters(repo, '', {avgOnly: true}).length - 
 assert.ok(searchCharacters(repo, '', {avgOnly: true}).some((c) => c.faces.length > 5));
 ok('立绘搜索：_avg 过滤 / 标定态过滤 / 脸表');
 
+/* M12 音频索引：口径、搜索、sheet 过滤。 */
+const sheetCount = audioSheets(repo).length;
+const totalCues = searchAudio(repo, '').length;
+assert.ok(sheetCount >= 288, `sheet 数 ≥288（实际 ${sheetCount}）`);
+assert.ok(totalCues >= 2000, `cue 总数 ≥2000（实际 ${totalCues}）`);
+ok(`音频口径：${sheetCount} sheet / ${totalCues} cue`);
+
+/* bgm 的 sheet=cue（瘦表），duration 随条目。 */
+const bgm = searchAudio(repo, 'Mus_Story_Dangerous');
+assert.ok(bgm.some((x) => x.sheet === 'Mus_Story_Dangerous'
+    && x.cue === 'Mus_Story_Dangerous' && x.duration > 0));
+assert.ok(searchAudio(repo, 'MUS_STORY_DANGEROUS').length >= 1, '大小写不敏感');
+assert.ok(searchAudio(repo, 'Nope_Missing_Cue_xyz').length === 0);
+ok('音频搜索：bgm 命中 / 大小写 / 缺失空');
+
+/* sfx 挂在 AVG_gf 等 sheet 下；sheet 精确过滤不混入别家同名 cue。 */
+assert.ok(searchAudio(repo, 'AVG_Explode')
+    .some((x) => x.sheet === 'AVG_gf' && x.cue === 'AVG_Explode'));
+const onlyGf = searchAudio(repo, '', {sheet: 'AVG_gf'});
+assert.ok(onlyGf.length > 0 && onlyGf.every((x) => x.sheet === 'AVG_gf'));
+assert.equal(searchAudio(repo, 'AVG_Explode', {sheet: 'Chara_Persicaria'}).length, 0);
+ok('音频搜索：sfx 命中 / sheet 过滤');
+
+/* resolveAudio 三级：上传 > sheet/cue 精确 > byCue 兜底 > null。
+   AssetRegistry 不 boot（不碰 IDB），只喂 repo 与上传键。 */
+const reg = new AssetRegistry();
+reg.repo = repo;
+assert.equal(reg.resolveAudio('Mus_Story_Dangerous', 'Mus_Story_Dangerous')?.source,
+    'repo');
+assert.equal(reg.resolveAudio(null, 'Mus_Story_Dangerous')?.source, 'repo',
+    '省略 sheet 走 byCue 兜底');
+assert.equal(reg.resolveAudio('AVG_gf', 'Nope_Missing'), null);
+assert.equal(reg.resolveAudio('AVG_gf', null), null, '无 cue 直接 null');
+reg.urls.set('audio:avg_gf/avg_explode', 'blob:fake');
+assert.equal(reg.resolveAudio('AVG_gf', 'AVG_Explode')?.url, 'blob:fake',
+    '上传件覆盖仓库');
+ok('resolveAudio 三级：上传 > sheet/cue > byCue，缺失 null');
+
 /* R13 退化：索引缺失 = 纯上传模式，不炸。 */
 const missing = await loadRepoIndex({
   fetchImpl: async () => ({ok: false, status: 404}),
@@ -63,6 +102,10 @@ assert.equal(missing.available, false);
 assert.equal(searchBackgrounds(missing, 'cpt').length, 0);
 assert.equal(searchCharacters(missing, '').length, 0);
 assert.equal(flatLookup(missing, 'anything.png'), null);
+assert.equal(searchAudio(missing, 'Mus_').length, 0);
+assert.deepEqual(audioSheets(missing), []);
+assert.equal(new AssetRegistry().resolveAudio('a', 'b'), null,
+    '未 boot 的 registry 音频解析安全 null');
 ok('R13 退化：无 res/ 时 available=false，全部搜索安全空转');
 
 console.log(`\n${passed} 项通过`);
