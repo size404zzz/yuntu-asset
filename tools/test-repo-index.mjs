@@ -21,8 +21,8 @@ const repo = await loadRepoIndex({
 });
 
 assert.equal(repo.available, true);
-assert.equal(repo.backgrounds.length, 639, '背景 639（M8 验收）');
-assert.ok(repo.characters.filter((c) => c.avg).length >= 496, '_avg 立绘 ≥496（M8 验收）');
+assert.equal(repo.backgrounds.length, 731, '背景 731（全量拆包口径）');
+assert.ok(repo.characters.filter((c) => c.avg).length >= 514, '_avg 立绘 ≥514（全量拆包口径）');
 ok(`口径：背景 ${repo.backgrounds.length} · _avg 立绘 ${repo.characters.filter((c) => c.avg).length}`);
 
 /* 引擎报名的精确解析（大小写不敏感）。 */

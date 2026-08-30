@@ -260,7 +260,16 @@ export class Player {
     }
     for (const {img, reenter} of touched) {
       if (img.imgType !== 3) continue;
-      const config = await this.layoutOf(img);
+      /* 缺素材不致命（M11）补上 layout 侧：单张立绘取不到布局（lpic 404 /
+         标定件缺席，语料里成批剧本踩中）只降级为无规则占位（_degradeChara），
+         不许 rejection 顺 loadImages → idle()/compose 链把整镜的背景、
+         对白和其余立绘全部带走。 */
+      let config;
+      try {
+        config = await this.layoutOf(img);
+      } catch {
+        continue;
+      }
       /* seek 的 bump 会整场重来：跨过 await 后 epoch 已换就立刻收手，
          不把旧场景的 layout/画布写进新回合。 */
       if (epoch !== this.sched.epoch || !this.scene) return;
@@ -296,6 +305,12 @@ export class Player {
       charaImg.onload = () => {
         /* 图片解码是真实异步：seek 重开后旧 onload 不得再写共享状态。 */
         if (born !== this.sched.epoch) return resolve();
+        /* 有图无 layout：尺寸/站位规则整表缺席，合成数学无从谈起，
+           同样按缺素材占位（语料里 lpic 与 layout 可各自缺席）。 */
+        if (!config) {
+          this._degradeChara(chara, config);
+          return resolve();
+        }
         if (img.comm && chara.children.length === 1) {
           chara.append(document.createElement('div'));
         }
@@ -313,12 +328,26 @@ export class Player {
       };
       charaImg.onerror = () => {
         /* M11：缺素材不致命——虚线占位 + 继续播（css/ux.css）。 */
-        chara.classList.add('img-missing');
+        this._degradeChara(chara, config);
         resolve();
       };
       charaImg.src = this.filePathOf('Lpic_' + img.imgPath + '.png');
     });
     return this._track(load);
+  }
+
+  /* 缺素材占位（css/ux.css）。config 也缺席时连尺寸/站位规则都没有，
+     盒子会塌成 0 宽缩在左上角——inline 给个居中默认盒；有规则时绝不写
+     inline，保住「占位站在原立绘位置」的 M11 观感（规则表特异性更高，
+     但同特异性时靠源序取胜，不能赌）。 */
+  _degradeChara(chara, config) {
+    chara.classList.add('img-missing');
+    if (!config) {
+      Object.assign(chara.style, {
+        bottom: '2em', left: '50%', width: '6em', height: '12em',
+        transform: 'translateX(-50%)',
+      });
+    }
   }
 
   _drawFace(chara, img, faceId, region) {
