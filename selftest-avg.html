@@ -57,7 +57,9 @@ if (meta) {
   };
   const cfg = await decodeLua(meta.cfg);
   const lang = await decodeLua(meta.lang);
-  ({wire, stats} = storyToWire(cfg, lang));
+  /* 与编辑器同款装载：带全局立绘表/说话者桥表，修复层全部跑起来。 */
+  ({wire, stats} = storyToWire(cfg, lang,
+      {imgIds: manifest.imgIds, heroSprites: manifest.heroSprites}));
 }
 
 /* 素材走本地 res/ 树（asset-index 精确解析），缺的落 /images 兜底。 */
@@ -109,6 +111,8 @@ try {
           speaker: player.refs.avgSpeaker.textContent,
           type: wire[id].contentType ?? null,
           charas: player.refs.avgCharas.children.length,
+          posIds: [...player.refs.avgCharas.children]
+              .map((el) => el.dataset.posId ?? null),
         });
       } catch (e) {
         problems.push(`seekShot ${id}: ${e.message}`);

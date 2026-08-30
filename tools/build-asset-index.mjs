@@ -272,6 +272,7 @@ for (const name of knownLayouts) {
 const corpusT0 = Date.now();
 let corpusFail = 0;
 const idVotes = new Map();
+const bgVotes = new Map();      /* imgId → imgType-2 声明票（槽位类型普查） */
 const heroVotes = new Map();      /* heroId → Map(imgPath → {lit, dark}) */
 for (const story of avgScripts.stories) {
   try {
@@ -280,10 +281,14 @@ for (const story of avgScripts.stories) {
     const steps = Array.isArray(cfg) ? cfg : Object.values(cfg);
     for (const shot of steps) {
       for (const im of (shot?.images ?? [])) {
-        if (!im || !im.imgPath || im.delete || im.imgType !== 3) continue;
-        if (!idVotes.has(im.imgId)) idVotes.set(im.imgId, new Map());
-        const m = idVotes.get(im.imgId);
-        m.set(im.imgPath, (m.get(im.imgPath) ?? 0) + 1);
+        if (!im || !im.imgPath || im.delete) continue;
+        if (im.imgType === 2) {
+          bgVotes.set(im.imgId, (bgVotes.get(im.imgId) ?? 0) + 1);
+        } else if (im.imgType === 3) {
+          if (!idVotes.has(im.imgId)) idVotes.set(im.imgId, new Map());
+          const m = idVotes.get(im.imgId);
+          m.set(im.imgPath, (m.get(im.imgPath) ?? 0) + 1);
+        }
       }
     }
     const {wire} = storyToWire(cfg, lang);
@@ -321,7 +326,15 @@ for (const story of avgScripts.stories) {
   }
 }
 const imgIds = {};
+let bgSlotFiltered = 0;
 for (const [id, m] of [...idVotes].sort((a, b) => a[0] - b[0])) {
+  /* 槽位类型过滤：低号 imgId 常是背景槽（全语料里既被声明成 imgType-2
+     也被少数剧本声明成 3）。背景票 ≥ 立绘票的一律不入表——宁可不注入
+     （回到参考的「未注册 tween 跳过」），也不把背景交叉淡入误成立绘。 */
+  if ((bgVotes.get(id) ?? 0) >= [...m.values()].reduce((a, b) => a + b, 0)) {
+    bgSlotFiltered++;
+    continue;
+  }
   imgIds[id] = [...m.entries()].sort((a, b) => b[1] - a[1])[0][0];
 }
 avgScripts.imgIds = imgIds;
@@ -338,7 +351,8 @@ avgScripts.heroSprites = heroSprites;
 console.log(`可浏览索引：背景 ${backgrounds.length} · 立绘 ${characters.length}`
     + `（_avg ${avgCount}）· 已标定 layout ${knownLayouts.size}`
     + ` · 剧本 ${avgScripts.stories.length} 段 + ${avgScripts.configs.length} 份剧情配置`
-    + ` · 全局立绘表 ${Object.keys(imgIds).length} 位 · 说话者桥表 ${Object.keys(heroSprites).length} 位`
+    + ` · 全局立绘表 ${Object.keys(imgIds).length} 位（滤除背景槽 ${bgSlotFiltered}）`
+    + ` · 说话者桥表 ${Object.keys(heroSprites).length} 位`
     + ` · 语料解码 ${corpusFail ? corpusFail + ' 段失败' : '全通过'}`
     + `（${((Date.now() - corpusT0) / 1000).toFixed(1)}s）`);
 for (const m of indexProblems) console.log('  FAIL ' + m);

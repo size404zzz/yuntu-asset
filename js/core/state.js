@@ -9,6 +9,11 @@
    - bg overlay 的 dark 同款（contains != isDark 才 toggle）；
    - delete 没有豁免（参考的豁免分支恒 false，是死代码）。 */
 
+/* 槽位仅 1..5 有效；语料里有入场不带 posId（或给 0/越界值）的轨迹，
+   归一到 3（居中槽）——宁可站中间，也不产出无规则的 posundefined。
+   player 的 DOM 侧必须同口径（_blockChara 入场分支）。 */
+export const isValidPos = (p) => Number.isInteger(p) && p >= 1 && p <= 5;
+
 export function emptyState() {
   return {
     imgMap: new Map(),
@@ -68,7 +73,10 @@ export function applyShotTweens(state, shot) {
     if (!img) continue;
     if (img.imgType === 2) {
       for (const entry of entries) {
-        state.bg = {imgId, alpha: entry.alpha, duration: entry.duration};
+        /* alpha 缺省 = 保持（语料的抖动/效果拍不带 alpha）：继承 settled 态，
+           与 DOM 侧「不写 opacity」同口径。 */
+        state.bg = {imgId, alpha: entry.alpha ?? state.bg?.alpha ?? 0,
+          duration: entry.duration};
         if (state.bgOverlayDark != entry.isDark) {
           state.bgOverlayDark = !state.bgOverlayDark;
         }
@@ -84,11 +92,15 @@ export function applyShotTweens(state, shot) {
       }
       let first = entering;
       for (const entry of entries) {
-        lane.alpha = entry.alpha;
+        /* alpha 缺省 = 保持：抖动/灯光拍只动 isDark/pos，不改可见度。
+           旧行为记 undefined（判不可见）而 DOM 侧 opacity 不变（仍可见），
+           态屏分裂；现两侧统一为继承。 */
+        if (entry.alpha !== undefined) lane.alpha = entry.alpha;
         if (first) {
           lane.posId = entry.posId !== undefined ? entry.posId : img.posId;
+          if (!isValidPos(lane.posId)) lane.posId = 3;
           first = false;
-        } else if (entry.posId && lane.posId != entry.posId) {
+        } else if (isValidPos(entry.posId) && lane.posId != entry.posId) {
           lane.posId = entry.posId;
         }
         if (entry.isDark != lane.isDark) lane.isDark = !lane.isDark;

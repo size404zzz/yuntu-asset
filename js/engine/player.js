@@ -1,7 +1,7 @@
 import {dashToCamel} from '../ui/dom.js';
 import {Scheduler} from '../core/scheduler.js';
 import {
-  emptyState, applyImages, applyShotTweens, applyFaces,
+  emptyState, applyImages, applyShotTweens, applyFaces, isValidPos,
 } from '../core/state.js';
 import {formatPages, DEFAULT_VARS, hops} from '../core/markup.js';
 import {Typewriter} from './typewriter.js';
@@ -410,7 +410,7 @@ export class Player {
       bg.style.backgroundImage =
           'url(' + this.filePathOf(img.imgPath.split('/')[1] + '.png') + ')';
       bg.style.transition = `opacity ${entry.duration}s`;
-      bg.style.opacity = entry.alpha;
+      if (entry.alpha !== undefined) bg.style.opacity = entry.alpha;
       const overlay = this.refs.avgBgOverlay;
       if (overlay.classList.contains('dark') != entry.isDark) {
         overlay.style.transition = `background ${entry.duration}s`;
@@ -444,15 +444,23 @@ export class Player {
     this.sched.after((entry.delay || 0) * 1000, () => {
       const duration = entry.duration;
       let posId = entry.posId;
-      Object.assign(chara.style, {
+      /* alpha 缺省 = 保持：不写 opacity（CSSOM 忽略 undefined 会碰巧继承，
+         这里改成显式不写，语义与 reducer 的继承口径一致）。入场没有
+         现值可继承，按新 lane 的初始 0 显式钉住。 */
+      const style = {
         transition: `opacity ${duration}s, left ${duration}s, filter ${duration}s`,
-        opacity: entry.alpha,
-      });
+      };
+      if (entry.alpha !== undefined) style.opacity = entry.alpha;
+      else if (entering) style.opacity = 0;
+      Object.assign(chara.style, style);
       if (entering) {
         if (posId === undefined) posId = this.state.imgMap.get(imgId)?.posId;
+        /* 与 state.js 的 lane 折叠同口径：无有效槽位落居中，不产
+           posundefined（语料的悬空入场/编辑器空选都会走到这里）。 */
+        if (!isValidPos(posId)) posId = 3;
         chara.classList.add('pos' + posId);
         chara.dataset.posId = posId;
-      } else if (posId && chara.dataset.posId != posId) {
+      } else if (isValidPos(posId) && chara.dataset.posId != posId) {
         chara.classList.replace('pos' + chara.dataset.posId, 'pos' + posId);
         chara.dataset.posId = posId;
       }
