@@ -144,6 +144,69 @@ const decodeLua2 = (kind, id) => {
   ok(`avgwire：0 起始平移 + branch 展平（23concert）`);
 }
 {
+  /* 悬空立绘 tween 落名（M16）：147 全语料声明众数 = willow_avg，
+     1year_prologue 里它只被 tween 从未声明——注入后首镜 images 带
+     willow_avg 声明，stats 留痕；不给 imgIds 时保持透传不注。 */
+  const imgIds = {147: 'willow_avg', 103: 'sol_avg'};
+  const heroSprites = {1001: 'persicaria_avg', 1047: 'willow_avg'};
+  const {wire, stats} = storyToWire(decodeLua2('cfg', '1year_prologue'),
+      decodeLua2('lang', '1year_prologue'), {imgIds, heroSprites});
+  const first = wire[Object.keys(wire).find((k) => k !== '0')];
+  const injected = (first.images ?? []).find((im) => im.imgId === 147);
+  assert.ok(injected, '悬空 147 已注入首镜 images');
+  assert.equal(injected.imgPath, 'willow_avg', '注入名取全局表众数');
+  assert.equal(injected.imgType, 3, '注入的是立绘声明');
+  assert.ok((first.images ?? []).some((im) => im.imgId === 103 && im.imgPath === 'sol_avg'),
+      '多张悬空一并注入');
+  assert.ok(stats.danglingCast.some((c) => c.imgId === 147), 'stats 留痕');
+  /* 入场揭示缺失修补：薇洛儿预站位在键 2、原揭示拖到键 6（中间她有
+     台词）——补相邻揭示半拍；键 6 的原条目与键 17 的退场保持原样。 */
+  const w2 = wire['2'].imgTween.filter((t) => t.imgId === 147);
+  assert.deepEqual(w2.map((t) => t.alpha), [0, 1], '预站位后相邻补揭示');
+  assert.equal(w2[1].isDark, false, '入场按亮重建');
+  const w6 = wire['6'].imgTween.find((t) => t.imgId === 147);
+  assert.equal(w6.alpha, 1, '原揭示条目不动');
+  assert.equal(w6.isDark, true, '原条目灯光语义不动');
+  const w17 = wire['17'].imgTween.find((t) => t.imgId === 147);
+  assert.equal(w17.alpha, 0, '退场条目不被改写');
+  /* 说话者复亮（M16）：帕斯卡(1001→persicaria_avg) 在键 3 听教授切暗，
+     键 6/8 自己说话却无复亮条目——autoLight 补亮；教授说话的键 3/7 与
+     聆听压暗一概不动。 */
+  const p6 = wire['6'].imgTween.filter((t) => t.imgId === 101);
+  assert.ok(p6.some((t) => t.alpha === 1 && t.isDark === false),
+      '帕斯卡说话镜补复亮');
+  assert.ok(!wire['3'].imgTween.some((t) => t.imgId === 101 && t.isDark === false),
+      '教授说话镜不补亮（聆听压暗保留）');
+  assert.equal(stats.autoLit, 1, '只有键 6 需要复亮（键 8 沿用修正后状态）');
+  const plain = storyToWire(decodeLua2('cfg', '1year_prologue'),
+      decodeLua2('lang', '1year_prologue')).wire;
+  assert.ok(!Object.values(plain).some((s) => (s.images ?? []).some((im) => im.imgId === 147)),
+      '无 imgIds 时保持原样不注');
+  ok(`avgwire：悬空立绘 tween 落名（1year_prologue 147→willow_avg）`);
+}
+{
+  /* 永不可见立绘的揭示重建（M16）：22child_01_03 的安吉拉（117）只有
+     alpha 0 条目（step 38 预站位 / step 41 灯光），揭示半拍丢失——
+     修复后首条目同镜补揭示、后续 alpha 0 升 1；完好轨迹（kuro 155）不动。 */
+  const {wire, stats} = storyToWire(decodeLua2('cfg', '22child_01_03'),
+      decodeLua2('lang', '22child_01_03'));
+  const angela = wire['39'].imgTween.filter((t) => t.imgId === 117);
+  assert.equal(angela.length, 2, '预站位后补出揭示条目');
+  assert.deepEqual(angela.map((t) => t.alpha), [0, 1], '揭示 alpha 1');
+  assert.equal(angela[1].duration, 0.2, '揭示 duration 0.2');
+  const dark = wire['42'].imgTween.find((t) => t.imgId === 117);
+  assert.equal(dark.alpha, 1, '后续 alpha 0 条目升为 1');
+  assert.equal(dark.isDark, false, '丢失条目按「亮」重建（说话=亮）');
+  const kuro = [];
+  for (const shot of Object.values(wire)) {
+    for (const t of (shot.imgTween ?? [])) if (t.imgId === 155) kuro.push(t.alpha);
+  }
+  assert.ok(Math.max(...kuro) === 1 && kuro.filter((a) => a === 0).length > 0,
+      '完好轨迹不被改写');
+  assert.equal(stats.revealedCast, 1, '全剧本只修安吉拉一个');
+  ok(`avgwire：永不可见立绘揭示重建（22child_01_03 安吉拉）`);
+}
+{
   /* 全语料映射口径（M13 普查）：解引用命中/未命中与 0 起始段数。 */
   let resolved = 0, unresolved = 0, shifted = 0;
   const byField = {};

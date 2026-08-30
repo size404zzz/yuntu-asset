@@ -304,7 +304,8 @@ async function loadCorpusStory(id) {
   if (!avgManifest) throw new Error('剧本库索引缺席');
   if (!state.stories.has(id)) {
     const meta = avgManifest.stories.find((s) => s.id === id);
-    const {wire} = await loadStory(fetch, meta);
+    const {wire} = await loadStory(fetch, meta,
+        {imgIds: avgManifest.imgIds, heroSprites: avgManifest.heroSprites});
     const story = normalizeScript(wire);
     story.title = id;
     state.stories.set(id, story);

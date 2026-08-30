@@ -230,6 +230,17 @@ export class Player {
           : shot;
     }
     this.scene = copy;
+    /* 全场立绘预热：tween 揭示的瞬间就得把图画上画布，冷缓存下
+       2048px 的解码会让登场肉眼可见地迟到（游戏侧是流式预载的）。
+       旁路加载不进 pendingLoads——不影响 idle/fastForward 的收敛判据。 */
+    for (const shot of Object.values(copy)) {
+      for (const im of (shot.images ?? [])) {
+        if (im.imgType === 3 && im.imgPath && !im.delete) {
+          const warm = new Image();
+          warm.src = this.filePathOf('Lpic_' + im.imgPath + '.png');
+        }
+      }
+    }
     this.scriptType = Array.isArray(scene) ? -1 : 0;
     this.shotId = this.scriptType;
     /* 预载回退链：本镜 images → 下一镜 → nextId 镜（参考同序）。 */
