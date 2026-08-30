@@ -245,6 +245,11 @@
   "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg007_6.png"
  },
  {
+  "name": "cpt00_e_bg007_7",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg007_7.png"
+ },
+ {
   "name": "cpt00_e_bg008",
   "group": "cpt00",
   "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg008.png"
@@ -800,6 +805,86 @@
   "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg064.png"
  },
  {
+  "name": "cpt00_e_bg065",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg065.png"
+ },
+ {
+  "name": "cpt00_e_bg065_2",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg065_2.png"
+ },
+ {
+  "name": "cpt00_e_bg066",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg066.png"
+ },
+ {
+  "name": "cpt00_e_bg066_2",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg066_2.png"
+ },
+ {
+  "name": "cpt00_e_bg067",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg067.png"
+ },
+ {
+  "name": "cpt00_e_bg068",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg068.png"
+ },
+ {
+  "name": "cpt00_e_bg068_2",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg068_2.png"
+ },
+ {
+  "name": "cpt00_e_bg069",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg069.png"
+ },
+ {
+  "name": "cpt00_e_bg069_2",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg069_2.png"
+ },
+ {
+  "name": "cpt00_e_bg069_3",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg069_3.png"
+ },
+ {
+  "name": "cpt00_e_bg070",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg070.png"
+ },
+ {
+  "name": "cpt00_e_bg070_2",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg070_2.png"
+ },
+ {
+  "name": "cpt00_e_bg071",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg071.png"
+ },
+ {
+  "name": "cpt00_e_bg072",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg072.png"
+ },
+ {
+  "name": "cpt00_e_bg073",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg073.png"
+ },
+ {
+  "name": "cpt00_e_bg074",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_bg074.png"
+ },
+ {
   "name": "cpt00_e_cg001",
   "group": "cpt00",
   "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg001.png"
@@ -1088,6 +1173,106 @@
   "name": "cpt00_e_cg035",
   "group": "cpt00",
   "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg035.png"
+ },
+ {
+  "name": "cpt00_e_cg036",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg036.png"
+ },
+ {
+  "name": "cpt00_e_cg036_2",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg036_2.png"
+ },
+ {
+  "name": "cpt00_e_cg036_3",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg036_3.png"
+ },
+ {
+  "name": "cpt00_e_cg036_4",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg036_4.png"
+ },
+ {
+  "name": "cpt00_e_cg037",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg037.png"
+ },
+ {
+  "name": "cpt00_e_cg038",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg038.png"
+ },
+ {
+  "name": "cpt00_e_cg039",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg039.png"
+ },
+ {
+  "name": "cpt00_e_cg040",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg040.png"
+ },
+ {
+  "name": "cpt00_e_cg041",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg041.png"
+ },
+ {
+  "name": "cpt00_e_cg042",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg042.png"
+ },
+ {
+  "name": "cpt00_e_cg043",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg043.png"
+ },
+ {
+  "name": "cpt00_e_cg044",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg044.png"
+ },
+ {
+  "name": "cpt00_e_cg045",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg045.png"
+ },
+ {
+  "name": "cpt00_e_cg046",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg046.png"
+ },
+ {
+  "name": "cpt00_e_cg046_2",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg046_2.png"
+ },
+ {
+  "name": "cpt00_e_cg046_3",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg046_3.png"
+ },
+ {
+  "name": "cpt00_e_cg046_4",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg046_4.png"
+ },
+ {
+  "name": "cpt00_e_cg047",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg047.png"
+ },
+ {
+  "name": "cpt00_e_cg048",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg048.png"
+ },
+ {
+  "name": "cpt00_e_cg048_2",
+  "group": "cpt00",
+  "path": "res/Assets/Res/Images/Avg/cpt00/cpt00_e_cg048_2.png"
  },
  {
   "name": "cpt00_e_ef001",
@@ -2455,6 +2640,11 @@
   "path": "res/Assets/Res/Images/Avg/cpt10/cpt10_e_cg004m2.png"
  },
  {
+  "name": "cpt11_e_bg000",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg000.png"
+ },
+ {
   "name": "cpt11_e_bg001",
   "group": "cpt11",
   "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg001.png"
@@ -2478,6 +2668,96 @@
   "name": "cpt11_e_bg004",
   "group": "cpt11",
   "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg004.png"
+ },
+ {
+  "name": "cpt11_e_bg005",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg005.png"
+ },
+ {
+  "name": "cpt11_e_bg005_2",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg005_2.png"
+ },
+ {
+  "name": "cpt11_e_bg005_3",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg005_3.png"
+ },
+ {
+  "name": "cpt11_e_bg005_4",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg005_4.png"
+ },
+ {
+  "name": "cpt11_e_bg006",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg006.png"
+ },
+ {
+  "name": "cpt11_e_bg006_2",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg006_2.png"
+ },
+ {
+  "name": "cpt11_e_bg006_3",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg006_3.png"
+ },
+ {
+  "name": "cpt11_e_bg007",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg007.png"
+ },
+ {
+  "name": "cpt11_e_bg007_2",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg007_2.png"
+ },
+ {
+  "name": "cpt11_e_bg007_3",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg007_3.png"
+ },
+ {
+  "name": "cpt11_e_bg007_4",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg007_4.png"
+ },
+ {
+  "name": "cpt11_e_bg007_5",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg007_5.png"
+ },
+ {
+  "name": "cpt11_e_bg007_6",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg007_6.png"
+ },
+ {
+  "name": "cpt11_e_bg008",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg008.png"
+ },
+ {
+  "name": "cpt11_e_bg008_2",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg008_2.png"
+ },
+ {
+  "name": "cpt11_e_bg009",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg009.png"
+ },
+ {
+  "name": "cpt11_e_bg010",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg010.png"
+ },
+ {
+  "name": "cpt11_e_bg011",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_bg011.png"
  },
  {
   "name": "cpt11_e_cg001",
@@ -2515,6 +2795,146 @@
   "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg005_2.png"
  },
  {
+  "name": "cpt11_e_cg006",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg006.png"
+ },
+ {
+  "name": "cpt11_e_cg007",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg007.png"
+ },
+ {
+  "name": "cpt11_e_cg007_2",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg007_2.png"
+ },
+ {
+  "name": "cpt11_e_cg007_3",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg007_3.png"
+ },
+ {
+  "name": "cpt11_e_cg008",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg008.png"
+ },
+ {
+  "name": "cpt11_e_cg009",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg009.png"
+ },
+ {
+  "name": "cpt11_e_cg009_2",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg009_2.png"
+ },
+ {
+  "name": "cpt11_e_cg010",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg010.png"
+ },
+ {
+  "name": "cpt11_e_cg011",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg011.png"
+ },
+ {
+  "name": "cpt11_e_cg012",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg012.png"
+ },
+ {
+  "name": "cpt11_e_cg013",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg013.png"
+ },
+ {
+  "name": "cpt11_e_cg014",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg014.png"
+ },
+ {
+  "name": "cpt11_e_cg015",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg015.png"
+ },
+ {
+  "name": "cpt11_e_cg015_2",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg015_2.png"
+ },
+ {
+  "name": "cpt11_e_cg015_3",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg015_3.png"
+ },
+ {
+  "name": "cpt11_e_cg016f",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg016f.png"
+ },
+ {
+  "name": "cpt11_e_cg016m",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg016m.png"
+ },
+ {
+  "name": "cpt11_e_cg017",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg017.png"
+ },
+ {
+  "name": "cpt11_e_cg018",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg018.png"
+ },
+ {
+  "name": "cpt11_e_cg018_2",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg018_2.png"
+ },
+ {
+  "name": "cpt11_e_cg019",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg019.png"
+ },
+ {
+  "name": "cpt11_e_cg020",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg020.png"
+ },
+ {
+  "name": "cpt11_e_cg020_2",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg020_2.png"
+ },
+ {
+  "name": "cpt11_e_cg021",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg021.png"
+ },
+ {
+  "name": "cpt11_e_cg022",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg022.png"
+ },
+ {
+  "name": "cpt11_e_cg022_2",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg022_2.png"
+ },
+ {
+  "name": "cpt11_e_cg022_3",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg022_3.png"
+ },
+ {
+  "name": "cpt11_e_cg022_4",
+  "group": "cpt11",
+  "path": "res/Assets/Res/Images/Avg/cpt11/cpt11_e_cg022_4.png"
+ },
+ {
   "name": "oath_angela",
   "group": "oath",
   "path": "res/Assets/Res/Images/Avg/oath/oath_angela.png"
@@ -2540,6 +2960,11 @@
   "path": "res/Assets/Res/Images/Avg/oath/oath_eos.png"
  },
  {
+  "name": "oath_hubblesp",
+  "group": "oath",
+  "path": "res/Assets/Res/Images/Avg/oath/oath_hubblesp.png"
+ },
+ {
   "name": "oath_kimie",
   "group": "oath",
   "path": "res/Assets/Res/Images/Avg/oath/oath_kimie.png"
@@ -2553,6 +2978,11 @@
   "name": "oath_octogen",
   "group": "oath",
   "path": "res/Assets/Res/Images/Avg/oath/oath_octogen.png"
+ },
+ {
+  "name": "oath_sangoma",
+  "group": "oath",
+  "path": "res/Assets/Res/Images/Avg/oath/oath_sangoma.png"
  },
  {
   "name": "p_aki",
@@ -3193,5 +3623,35 @@
   "name": "summer_e_cg005",
   "group": "summer",
   "path": "res/Assets/Res/Images/Avg/summer/summer_e_cg005.png"
+ },
+ {
+  "name": "back",
+  "group": "其他",
+  "path": "res/Assets/Res/Images/Avg/其他/back.png"
+ },
+ {
+  "name": "cpt_taisch",
+  "group": "其他",
+  "path": "res/Assets/Res/Images/Avg/其他/cpt_taisch.png"
+ },
+ {
+  "name": "ef001",
+  "group": "其他",
+  "path": "res/Assets/Res/Images/Avg/其他/ef001.png"
+ },
+ {
+  "name": "end",
+  "group": "其他",
+  "path": "res/Assets/Res/Images/Avg/其他/end.png"
+ },
+ {
+  "name": "fin",
+  "group": "其他",
+  "path": "res/Assets/Res/Images/Avg/其他/fin.png"
+ },
+ {
+  "name": "mie",
+  "group": "其他",
+  "path": "res/Assets/Res/Images/Avg/其他/mie.png"
  }
 ]

@@ -52,6 +52,33 @@ walk(join(ROOT, 'res', 'Assets', 'Res', 'Character'), (name) =>
     /^lpic_.*\.png$/i.test(name));
 walkFace(join(ROOT, 'res', 'Assets', 'Res', 'Character'));
 
+/* dump 命名适配：语料引用的立绘名是 X_avg，但拆出来的文件名有两类怪癖
+   （已核对全树每个 X_avg 文件夹至多一份 lpic，无歧义）：
+   - 文件名少 _avg 尾：X_avg/lpic_X.png（chelsea_avg/lpic_chelsea.png 等
+     绝大多数新拆件；florence_avg 里那份叫 lpic_florence_p2.png，同文件夹
+     的表情都姓 florence_avg，按文件夹口径归它）；
+   - 文件夹里只有表情：身体在基础文件夹 X/lpic_X.png（hubble_avg、sold_avg
+     等——游戏里 avg 变体的身体资源名本就不带尾）。
+   这里把两条路都补成 lpic_X_avg.png 别名键；正式命名的同名件优先，
+   永不覆盖。 */
+const charRoot = join(ROOT, 'res', 'Assets', 'Res', 'Character');
+for (const e of readdirSync(charRoot, {withFileTypes: true})) {
+  if (!e.isDirectory() || !/_avg$/i.test(e.name)) continue;
+  const key = `lpic_${e.name}.png`;
+  if (index[key]) continue;                 /* 正式命名已入库 */
+  const dir = join(charRoot, e.name);
+  const inDir = readdirSync(dir)
+      .filter((f) => /^lpic_.*\.png$/i.test(f));
+  if (inDir.length === 1) {
+    index[key] = relOf(join(dir, inDir[0]));
+    continue;
+  }
+  if (inDir.length > 1) continue;           /* 歧义防御：理论上不存在 */
+  const stem = e.name.replace(/_avg$/i, '');
+  const baseLpic = join(charRoot, stem, `lpic_${stem}.png`);
+  if (existsSync(baseLpic)) index[key] = relOf(baseLpic);
+}
+
 function walkFace(dir) {
   let entries;
   try {
@@ -60,25 +87,29 @@ function walkFace(dir) {
     return;
   }
   for (const entry of entries) {
-    const path = join(dir, entry.name);
     if (!entry.isDirectory()) continue;
-    const faceDir = join(path, 'Face');
-    let faces;
-    try {
-      faces = readdirSync(faceDir, {withFileTypes: true});
-    } catch {
-      continue;
-    }
-    for (const face of faces) {
-      if (!/\.png$/i.test(face.name)) continue;
-      const rel = join(faceDir, face.name).slice(ROOT.length + 1).replaceAll('\\', '/');
-      index[face.name.toLowerCase()] = rel;
-      /* 别名：Icon_face_<stem>_<fid>.png ← <dir>_face_<fid>.png。 */
-      const alias = face.name.replace(/^_*/, '');
-      const m = /^(.+)_face_(\d+)\.png$/i.exec(alias);
-      if (m) {
-        const stem = m[1].replace(/_avg$/i, '');
-        index[`icon_face_${stem}_${m[2]}`.toLowerCase() + '.png'] = rel;
+    const path = join(dir, entry.name);
+    /* 表情图两代布局：老库收在 <dir>/Face/ 子目录，新拆件平铺在 <dir> 根。
+       只收 _face_<N>.png 命名的文件（根上还有 lpic 等别的图）。 */
+    for (const faceDir of [join(path, 'Face'), path]) {
+      let faces;
+      try {
+        faces = readdirSync(faceDir, {withFileTypes: true});
+      } catch {
+        continue;
+      }
+      for (const face of faces) {
+        if (face.isDirectory() || !/_face_\d+\.png$/i.test(face.name)) continue;
+        const rel = join(faceDir, face.name).slice(ROOT.length + 1)
+            .replaceAll('\\', '/');
+        index[face.name.toLowerCase()] = rel;
+        /* 别名：Icon_face_<stem>_<fid>.png ← <dir>_face_<fid>.png。 */
+        const alias = face.name.replace(/^_*/, '');
+        const m = /^(.+)_face_(\d+)\.png$/i.exec(alias);
+        if (m) {
+          const stem = m[1].replace(/_avg$/i, '');
+          index[`icon_face_${stem}_${m[2]}`.toLowerCase() + '.png'] = rel;
+        }
       }
     }
   }
@@ -130,19 +161,33 @@ function scanCharacters(knownLayouts) {
     if (!e.isDirectory()) continue;
     const dir = join(root, e.name);
     const files = readdirSync(dir);
-    const lpic = files.find((f) => f.toLowerCase() === `lpic_${e.name}.png`)
+    /* lpic 与 flat 索引同口径：文件夹内有就用（名字可缺 _avg 尾），
+       没有退基础文件夹 X/lpic_X.png（hubble_avg 等身体在 X/ 里）。 */
+    const stem = e.name.replace(/_avg$/i, '');
+    const inDir = files.find((f) => f.toLowerCase() === `lpic_${e.name}.png`)
         ?? files.find((f) => /^lpic_.*\.png$/i.test(f));
+    let lpic = inDir ? join(dir, inDir) : null;
+    if (!lpic) {
+      const baseLpic = join(root, stem, `lpic_${stem}.png`);
+      if (existsSync(baseLpic)) lpic = baseLpic;
+    }
     if (!lpic) continue;
-    let faces = [];
+    /* 表情两代布局：老库 Face/ 子目录，新拆件平铺在根。 */
+    const faceIds = new Set();
+    for (const f of files) {
+      const n = Number(/_face_(\d+)\.png$/i.exec(f)?.[1]);
+      if (Number.isFinite(n)) faceIds.add(n);
+    }
     try {
-      faces = readdirSync(join(dir, 'Face'))
-          .map((f) => Number(/_face_(\d+)\.png$/i.exec(f)?.[1]))
-          .filter((n) => Number.isFinite(n))
-          .sort((a, b) => a - b);
-    } catch { /* 无脸图目录 */ }
+      for (const f of readdirSync(join(dir, 'Face'))) {
+        const n = Number(/_face_(\d+)\.png$/i.exec(f)?.[1]);
+        if (Number.isFinite(n)) faceIds.add(n);
+      }
+    } catch { /* 无 Face/ 子目录（新拆件平铺在根） */ }
+    const faces = [...faceIds].sort((a, b) => a - b);
     out.push({
       id: e.name,
-      lpic: relOf(join(dir, lpic)),
+      lpic: relOf(lpic),
       faces,
       layout: knownLayouts.has(e.name),
       avg: /_avg$/i.test(e.name),
@@ -201,15 +246,15 @@ function scanAvgScripts() {
 }
 const avgScripts = scanAvgScripts();
 
-/* M8 验收口径：639 背景；_avg 立绘目录（含 lpic）≥496。
-   非 _avg（boss/庆典等）也全部入索引，编辑器可用，但不计验收。 */
+/* 验收口径（随库基线走）：全量拆包件 731 背景；_avg 立绘目录（含 lpic）
+   ≥514。非 _avg（boss/庆典等）也全部入索引，编辑器可用，但不计验收。 */
 const indexProblems = [];
 const avgCount = characters.filter((c) => c.avg).length;
-if (backgrounds.length !== 639) {
-  indexProblems.push(`背景数 ${backgrounds.length} != 计划口径 639`);
+if (backgrounds.length !== 731) {
+  indexProblems.push(`背景数 ${backgrounds.length} != 计划口径 731`);
 }
-if (avgCount < 496) {
-  indexProblems.push(`_avg 立绘数 ${avgCount} < 计划口径 496`);
+if (avgCount < 514) {
+  indexProblems.push(`_avg 立绘数 ${avgCount} < 计划口径 514`);
 }
 for (const name of knownLayouts) {
   if (!characters.some((c) => c.id === name)) {

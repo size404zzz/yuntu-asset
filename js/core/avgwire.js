@@ -13,6 +13,9 @@
  * 2. branch 双形态归一：数组原样；对象形态（数字键 = 选项 +
  *    disableSelected/finalAct 旗标）展平为引擎要的数组，旗标挪到 shot 根
  *    （引擎忽略未知字段，无损）。
+ * 3. 首张 bg 的隐现物化（materializeFirstBg）：游戏引擎里 images 声明的
+ *    第一张 imgType-2 直接可见；wiki 玩家只认 imgTween，语料里四成剧本
+ *    从不 tween 它——不物化就是几十镜黑屏。
  *
  * voice={heroId,voiceId} 是 CV 引用（468 处），引擎 M7 尚无 voice 通道，
  * 原样透传；images/imgTween/heroFace/effect/audio/ppv 等与 wire 同形直接过。
@@ -23,7 +26,7 @@
  * 首镜在 0）。凡键 '0' 存在的剧本，全部键与 nextId/jumpAct 统一 +1；
  * 1 起始的 323 段原样不动。 */
 export function storyToWire(cfg, lang) {
-  const stats = {resolved: 0, unresolved: [], shifted: false};
+  const stats = {resolved: 0, unresolved: [], shifted: false, bgReveal: null};
   const shift = '0' in cfg ? 1 : 0;
   stats.shifted = shift === 1;
   const wire = {};
@@ -31,7 +34,44 @@ export function storyToWire(cfg, lang) {
     wire[String(Number(id) + shift)] =
         resolveStep(step ?? {}, lang, id, stats, shift);
   }
+  materializeFirstBg(wire, stats);
   return {wire, stats};
+}
+
+/* 首张 bg 的隐现物化。游戏语义：images 声明的第一张 imgType-2 注册即
+ * 可见（语料普查：九成剧本初见 bg 的 alpha 都是 0，且四成从不 tween 它
+ * ——可见性是引擎隐行为，wiki 玩家只认 tween，直接播就是黑屏到底）。
+ * 映射层在注册镜补一条 duration 0 的揭示 tween；若故事自己会在前 3 镜
+ * 内揭示它（标准淡入开场），不插，保住原演出节奏。键序 = 数字升序
+ * （整数键的遍历序），±shift 对距离无影响。 */
+function materializeFirstBg(wire, stats) {
+  let regKey = null;
+  let regId = null;
+  for (const k of Object.keys(wire)) {
+    for (const im of (wire[k].images ?? [])) {
+      if (im?.imgType === 2 && im.imgPath) {
+        regKey = k;
+        regId = im.imgId;
+        break;
+      }
+    }
+    if (regKey !== null) break;
+  }
+  if (regKey === null) return;
+  let tweenKey = null;
+  for (const k of Object.keys(wire)) {
+    if ((wire[k].imgTween ?? []).some((t) => t?.imgId === regId)) {
+      tweenKey = k;
+      break;
+    }
+  }
+  if (tweenKey !== null && Number(tweenKey) - Number(regKey) <= 2) return;
+  const shot = wire[regKey];
+  shot.imgTween = [
+    {imgId: regId, delay: 0, duration: 0, alpha: 1, isDark: false},
+    ...(shot.imgTween ?? []),
+  ];
+  stats.bgReveal = {key: regKey, imgId: regId};
 }
 
 function resolveStep(step, lang, id, stats, shift) {
