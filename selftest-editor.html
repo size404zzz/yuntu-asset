@@ -26,6 +26,8 @@
  *    150ms 采样 computed opacity：prev 起点 ≈0.45，残留起点 ≈0.88。
  * 2) L3 定点补丁：改文案 → 行 DOM 更新、shotId 不变、不重装载。
  * 3) L2 防抖 re-seek、undo 回批、结构操作 L1。
+ * 4) 并发 seek：连点分镜时陈旧轮当场撒手，屏上镜 = 后一轮目标镜。
+ * 5) M23 退场建议面板：无说话人镜列出滞留立绘 → 收 α0/0.2 → 不再重复建议。
  */
 import {Player} from '/js/engine/player.js';
 import {Editor} from '/js/editor/editor.js';
@@ -134,6 +136,53 @@ editor.doc.structure((s) => s.shots.splice(2, 0, {content: '插', contentType: 4
 await sleep(400);
 check('structure 后列表 +1',
     document.querySelectorAll('.shot-row').length === rowsBefore + 1);
+
+/* —— 并发 seek（连点分镜）：陈旧轮必须当场撒手 ——
+   旧版 seekShot 的重放循环不看 epoch，被新一轮接管后仍一路 playShot 推到
+   场景末尾，镜号与屏上镜全不相干（立绘/对白都是别镜的）。 */
+player.setScene(scene, 'M9', '1', '回归', '');
+const staleRound = player.seekShot(2);
+const liveRound = player.seekShot(1);
+const [landedStale, landedLive] = await Promise.all([staleRound, liveRound]);
+await sleep(700);
+check('陈旧 seek 撒手（null），后一轮落在自己的目标镜',
+    landedStale === null && landedLive === 1,
+    `${landedStale} / ${landedLive}`);
+check('屏上镜 = 读数镜（不串台）',
+    player.shotId === 1
+    && player.refs.avgLine.textContent === scene[1].content
+    && !player.refs.avgLine.textContent.includes('第二镜'),
+    `shot=${player.shotId} line=${player.refs.avgLine.textContent}`);
+
+/* —— M23 退场建议面板（UI 冒烟）：列表 → 收 α0/0.2 → 列表刷新 —— */
+{
+  const adviceStory = normalizeScript([
+    {contentType: 3, speakerHeroId: 1001, content: '甲上台',
+      images: [{imgId: 101, imgType: 3, imgPath: 'sol_avg', alpha: 0}],
+      imgTween: [{imgId: 101, alpha: 1, delay: 0, duration: 0.2, posId: 1}]},
+    {content: '旁白：甲还留在台上', contentType: 4},
+    {contentType: 3, speakerHeroId: 1001, content: '甲又说话',
+      imgTween: [{imgId: 101, alpha: 1, delay: 0, duration: 0.2}]},
+  ]);
+  editor.useStory(adviceStory);
+  await sleep(500);
+  const {openFadeAdvice} = await import('/js/editor/advice.js');
+  const overlay = openFadeAdvice({editor});
+  await sleep(80);
+  const rows = overlay.querySelectorAll('.advice-row');
+  check('退场建议：无说话人镜列出滞留立绘', rows.length === 1,
+      String(rows.length));
+  rows[0].querySelector('button').click();          /* 收 α0/0.2 */
+  await sleep(150);
+  check('收场落笔：imgTween 追加 α0/d0.2（走 doc.patch）',
+      !!adviceStory.shots[1].imgTween?.some(
+          (t) => t.imgId === 101 && t.alpha === 0 && t.duration === 0.2));
+  check('落笔后不再重复建议', overlay.querySelectorAll('.advice-row').length === 0,
+      String(overlay.querySelectorAll('.advice-row').length));
+  check('落笔进撤销栈', editor.doc.canUndo);
+  editor.doc.undo();
+  overlay.remove();
+}
 
 const report = {
   ok: failures.length === 0 && problems.length === 0,

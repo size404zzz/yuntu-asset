@@ -101,8 +101,11 @@ const report = await (async () => {
       if (smoke.storylib?.logCloses !== true) {
         bad.push(`storylib.logCloses=${smoke.storylib?.logCloses}`);
       }
+      /* M23 退场建议：按钮接线 + 面板可开（行数随映射结果浮动，不硬断）。 */
+      if (smoke.fadeAdvice?.error) bad.push(`退场建议：${smoke.fadeAdvice.error}`);
+      if (!smoke.fadeAdvice?.opened) bad.push('退场建议面板没开');
       if (bad.length) { console.log('    - 编辑器冒烟：' + bad.join(' | ')); rep.ok = false; }
-      else console.log(`  编辑器冒烟：${smoke.storage} · 剧本库 ${smoke.storylib.id} ${smoke.storylib.shots} 镜 · log 收起 ✓`);
+      else console.log(`  编辑器冒烟：${smoke.storage} · 剧本库 ${smoke.storylib.id} ${smoke.storylib.shots} 镜 · log 收起 · 退场建议面板 ✓`);
     }
     return rep;
   } catch (e) { console.error(String(e)); return {ok: false}; }

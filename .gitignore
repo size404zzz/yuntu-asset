@@ -9,6 +9,12 @@ tools/ref/harness.html
 tools/ref/cache/
 tools/ref/vendor/
 
+# 游戏本体 AVG 逻辑脚本（`res/luascripts/luascripts.ab` 里 Game.Avg.* 33 支
+# Lua 5.3 字节码，剥掉 TextAsset Raw 前缀后落此）：同属第三方代码，本地保留。
+# 重导：AssetStudio.CLI.exe luascripts.ab <out> --game FakeHeader
+#       --export_type Raw --names "^Game\.Avg\."   再用 tools/lua-disasm.mjs 读
+res/Assets/Res/LuaScripts/_logic/
+
 # M10 解包探针的临时目录
 .yuntu-bundle/
 

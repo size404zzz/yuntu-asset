@@ -30,12 +30,23 @@
  *    有的角色只有 alpha 0 条目、alpha 1 的揭示半拍在数据里缺失
  *    （22child_01_03 的安吉拉：台词连连却整段隐身），按完好剧本的
  *    成对模式补齐。
- * 6. 说话者复亮（autoLightCast）：完好数据里明暗跟随说话节拍
- *    （说话=亮、聆听=暗），但部分剧本丢了「复亮」半拍（1year_prologue
- *    的帕斯卡：键 3 听教授切暗后，键 6/8/10/11 自己说话却一直压暗）。
- *    依 heroSprites 桥表（heroId → 立绘，构建器对全语料「说话×亮」
- *    投票估出，暗占优的阴影说话者天然落选）在说话镜补复亮条目。
- *    只修亮面：聆听面本就有数据，且隐身说话（电台台词）是合法演出。
+ * 6. 说话者节拍补齐（autoLightCast）：完好数据里明暗与在场跟随说话节拍
+ *    （说话=亮、聆听=暗），但部分剧本丢了半拍（依 heroSprites 桥表——
+ *    heroId → 立绘，构建器对全语料「说话×亮」投票估出，暗占优的阴影说话者
+ *    天然落选——在说话镜补条目；桥表路径在这段剧本从未注册时先按同角色
+ *    换装件改宗 retargetHeroSprites，否则换装/周年剧本整条门哑火）：
+ *    - 丢了「复亮」半拍（1year_prologue 的帕斯卡：键 3 听教授切暗后，
+ *      键 6/8/10/11 自己说话却一直压暗）→ 补 {alpha 1, 亮}；
+ *    - 丢了入场「揭示」整拍（22child_01_03 的卡萝键 2、1year_prologue 的
+ *      薇洛儿键 21：本镜只有 alpha 0 + duration 0 的预站位，揭示缺失或拖到
+ *      十几镜之后，开口第一句人在台上却隐身）→ 把揭示补回本镜。
+ *    判据是「隐身来路」：duration 0 的 alpha 0（含按 alpha 0 的 images[]
+ *    注册）是等揭示的预站位，补；duration>0 的 alpha 0 是作者真把她淡出
+ *    了画面，反打/画外音是合法调度，不碰。聆听压暗同样不碰。
+ *    - 收场：补出来的揭示不能淌进下一场。本镜摆了预站位（舞台重排）就把
+ *       **只由本修复点亮**的立绘淡出收掉（注册与 lane 都留着，后续揭示照常）。
+ *       作者自己点亮的立绘不收到场外的判据还没找到——「重排」「换背景」
+ *       「两者都」三种按「作者后面还提到它」严判误清率都在 23% 上下。
  *
  * voice={heroId,voiceId} 是 CV 引用（468 处），引擎 M7 尚无 voice 通道，
  * 原样透传；images/imgTween/heroFace/effect/audio/ppv 等与 wire 同形直接过。
@@ -48,7 +59,7 @@ import {emptyState, applyImages, applyShotTweens} from './state.js';
  * 1 起始的 323 段原样不动。 */
 export function storyToWire(cfg, lang, {imgIds, heroSprites} = {}) {
   const stats = {resolved: 0, unresolved: [], shifted: false, bgReveal: null,
-    danglingCast: [], autoLit: 0};
+    danglingCast: [], autoLit: 0, entranceLit: 0, entranceExit: 0};
   const shift = '0' in cfg ? 1 : 0;
   stats.shifted = shift === 1;
   const wire = {};
@@ -59,19 +70,85 @@ export function storyToWire(cfg, lang, {imgIds, heroSprites} = {}) {
   materializeDanglingCast(wire, imgIds, stats);
   revealNeverVisibleCast(wire, stats);
   materializeFirstBg(wire, stats);
-  autoLightCast(wire, heroSprites, stats);
+  const speakers = retargetHeroSprites(wire, heroSprites);
+  autoLightCast(wire, speakers, stats);
   return {wire, stats};
 }
 
-/* 说话者复亮：fold 引擎同款状态（state.js 的纯 reducer），在每个
- * speakerHeroId 命中桥表的镜检查其立绘 lane——可见但压暗就是丢了
- * 复亮半拍，补 {alpha 1, 亮} 并同步进模拟状态（后续镜的判定基于
- * 修正后的世界线）。隐身说话（电台台词）与聆听压暗都不碰。 */
-function autoLightCast(wire, heroSprites, stats) {
-  if (!heroSprites) return;
+/* 说话者桥表的剧本内改宗。heroSprites 给的是该角色**全语料**的众数立绘
+ * （帕斯卡 = persicaria_avg），换装/周年剧本里她穿的是 persicaria_dress_avg
+ * —— 精确路径匹配不上，autoLightCast 的「开口却隐身」补揭示整条门哑火
+ * （1year_anniversary_persicaria 键 16：帕斯卡连说六句，人在台上却是 α0）。
+ * 桥表路径在本段剧本从未注册时，认「同一角色的换装件 + 本段剧本点亮过 +
+ * 不是别的角色的众数件」的立绘为她的替身，返回 hid → 路径集。
+ * 同一角色 = 两个 imgPath 去掉 `_avg` 尾后，**一方按 `_` 切的词列是另一方的
+ * 前缀**：换装件多出的词（persicaria → persicaria_dress）与剧本只留基础件
+ * （evelyn_rookie → evelyn）都算；只是同命名属的不同角色不算
+ * （fool_anna 与 fool_mie、burbank_npc1 与 burbank_npc3、undline_w1 与
+ * undline_w2、sol 与 sold 首词列就在数字/词根上分家）。
+ * 从未点亮的候选（换装备用件、整段没上台）不算替身，免得凭空立个幻影；
+ * 一个候选都没有就不改（宁可不修，也不凭命名猜身份）。 */
+const stemTokens = (path) => path.replace(/_avg\d*$/, '').split('_');
+
+/* 一方词列是另一方的前导段（等长即同 stem，已被精确匹配吃掉）。 */
+const sameCast = (a, b) => {
+  const n = Math.min(a.length, b.length);
+  for (let i = 0; i < n; i++) if (a[i] !== b[i]) return false;
+  return true;
+};
+
+function retargetHeroSprites(wire, heroSprites) {
+  const registered = new Set();
+  const lit = new Set();
+  const pathOf = new Map();
+  for (const shot of Object.values(wire)) {
+    for (const im of (shot.images ?? [])) {
+      if (!im?.imgPath || im.delete) continue;
+      pathOf.set(im.imgId, im.imgPath);
+      if (im.imgType === 3) registered.add(im.imgPath);
+    }
+    for (const t of (shot.imgTween ?? [])) {
+      const p = t && pathOf.get(t.imgId);
+      if (p && (t.alpha ?? 0) > 0) lit.add(p);
+    }
+  }
+  /* 别的角色的众数件不能当替身：认领过的路径一律排除。 */
+  const claimed = new Set(Object.values(heroSprites ?? {}));
+  const out = new Map();
+  for (const [hid, base] of Object.entries(heroSprites ?? {})) {
+    const want = new Set([base]);
+    if (!registered.has(base)) {
+      const stem = stemTokens(base);
+      for (const p of registered) {
+        if (!lit.has(p) || claimed.has(p)) continue;
+        if (sameCast(stem, stemTokens(p))) want.add(p);
+      }
+    }
+    out.set(String(hid), want);
+  }
+  return out;
+}
+
+/* 说话者节拍补齐（两路）：fold 引擎同款状态（state.js 的纯 reducer），在每个
+ * speakerHeroId 命中桥表的镜检查其立绘 lane——
+ * - 可见却压暗 = 丢了「复亮」半拍，补 {alpha 1, 亮}；
+ * - 不可见且隐身来自「预站位」= 丢了入场「揭示」整拍，同样在本镜补揭示。
+ * 预站位 = alpha 0 且 duration 0 的条目（或 images[] 按 alpha 0 注册），
+ * 它只是把立绘摆到槽位上等揭示；duration>0 的 alpha 0 是真淡出退场。
+ * 只召回前者：后者是作者的镜头调度（反打/画外音），一概不碰。
+ * speakers 是 retargetHeroSprites 解析出的 hid → 本段剧本认得的立绘路径集。
+ * 补完同步进模拟状态（后续镜的判定基于修正后的世界线）。 */
+function autoLightCast(wire, speakers, stats) {
+  if (!speakers) return;
   const state = emptyState();
   const pathOf = new Map();
+  /* imgId → 最后一次「变不可见」的来路：pre = 预站位待揭示，fade = 退场。 */
+  const hiddenBy = new Map();
+  /* 只由本修复点亮的立绘集合：换景时由本修复负责收场（作者点亮的不动）。 */
+  const ours = new Set();
   let fixed = 0;
+  let entrance = 0;
+  let exit = 0;
   for (const k of Object.keys(wire)) {
     const shot = wire[k];
     if (shot.images?.length) {
@@ -79,23 +156,62 @@ function autoLightCast(wire, heroSprites, stats) {
       for (const im of shot.images) {
         if (im.imgPath && !im.delete) pathOf.set(im.imgId, im.imgPath);
         else if (im.delete) pathOf.delete(im.imgId);
+        if (im.imgType !== 3) continue;
+        if (im.alpha === undefined || im.alpha > 0) hiddenBy.delete(im.imgId);
+        else hiddenBy.set(im.imgId, 'pre');   /* 按 alpha 0 注册 = 待揭示 */
       }
     }
     const want = shot.speakerHeroId !== undefined && shot.speakerHeroId !== null
-      ? heroSprites[String(shot.speakerHeroId)] : null;
+      ? speakers.get(String(shot.speakerHeroId)) : null;
     applyShotTweens(state, shot);
+    let pre = false;
+    for (const t of (shot.imgTween ?? [])) {
+      if (!t || t.alpha === undefined) continue;   /* 缺省 alpha 不改可见度 */
+      if (t.alpha > 0) hiddenBy.delete(t.imgId);
+      else hiddenBy.set(t.imgId, t.duration > 0 ? 'fade' : 'pre');
+      if (t.alpha === 0 && !t.duration) pre = true;   /* 本镜摆了预站位 = 重排 */
+    }
+    /* 换景收场：补出来的揭示不能淌进下一场。本镜摆了预站位（舞台重排）就把
+     * 只由本修复点亮的立绘淡出收掉——它本来就没被作者揭示过，收它不会跟原稿
+     * 对着干。作者自己点亮的立绘**不收**：试过「重排」「换背景」「两者都」三种
+     * 判据，按「作者后面还提到它」严判的误清率分别是 1846/7197、281/1070、
+     * 80/351（≈23%），比它补的洞更难看，这种数据缺口留给编辑器人工补。 */
+    if (pre) {
+      for (const id of ours) {
+        const lane = state.lanes.get(id);
+        if (!lane || (lane.alpha ?? 0) <= 0) { ours.delete(id); continue; }
+        if (want && want.has(pathOf.get(id))) continue;   /* 本镜说话者，留着 */
+        if ((shot.imgTween ?? []).some((t) => t && t.imgId === id)) continue;
+        shot.imgTween = [...(shot.imgTween ?? []),
+          {imgId: id, delay: 0, duration: 0.2, alpha: 0, isDark: false}];
+        lane.alpha = 0;
+        hiddenBy.set(id, 'fade');
+        ours.delete(id);
+        exit++;
+      }
+    }
     if (!want) continue;
     for (const [imgId, lane] of state.lanes) {
-      if (pathOf.get(imgId) !== want) continue;    /* 不是说话者的立绘 */
-      if (!((lane.alpha ?? 0) > 0) || lane.isDark === false) continue;
+      if (!want.has(pathOf.get(imgId))) continue;    /* 不是说话者的立绘 */
+      if ((lane.alpha ?? 0) > 0) {
+        if (lane.isDark === false) continue;
+        fixed++;
+      } else {
+        if (hiddenBy.get(imgId) !== 'pre') continue;   /* 作者让她在画外 */
+        entrance++;
+        lane.alpha = 1;
+        ours.add(imgId);
+      }
       const arr = [...(shot.imgTween ?? [])];
       arr.push({imgId, delay: 0, duration: 0.2, alpha: 1, isDark: false});
       shot.imgTween = arr;
       lane.isDark = false;
-      fixed++;
+      hiddenBy.delete(imgId);
     }
   }
-  if (fixed) stats.autoLit = fixed;
+  stats.autoLit = fixed;
+  stats.entranceLit = entrance;
+  stats.entranceExit = exit;
 }
 
 /* 永不可见立绘的揭示修复：成对模式是「预站位 alpha 0/dur 0 → 揭示

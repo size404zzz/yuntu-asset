@@ -113,6 +113,10 @@ try {
           charas: player.refs.avgCharas.children.length,
           posIds: [...player.refs.avgCharas.children]
               .map((el) => el.dataset.posId ?? null),
+          absPos: [...player.refs.avgCharas.children].map((el) => ({
+            imgId: el.dataset.imgId,
+            pos: el.style.left ? [el.style.left, el.style.bottom] : null,
+          })),
         });
       } catch (e) {
         problems.push(`seekShot ${id}: ${e.message}`);

@@ -37,16 +37,17 @@ python tools/ref/serve.py 8080     # 或任意静态服务器，根 = 本仓库
 | `node tools/test-play.mjs [--scene=sceneN]` | 播放器逐镜（scene1/scene4） | 2164 断言级 |
 | `node tools/test-seek.mjs` | seek ≡ 连播暂停 | 120 到达点全等 |
 | `node tools/test-ui.mjs` | 交互路径（面板/词典/自动/skip/分支） | 908 断言 |
-| `node tools/test-editor.mjs` | 编辑器失效 + prev 起值回归 | 真实钟采样 |
+| `node tools/test-editor.mjs` | 编辑器失效 + prev 起值回归 + 并发 seek 交接 + 退场建议面板 | 真实钟采样 |
 | `node tools/test-io.mjs` | 导出→导入→连播快照全等 + 解包离线探针（含音频资产） | 59 断言 |
 | `node tools/test-assets.mjs` | IDB/注册表/标定挂载 + 编辑器冒烟 | 27+冒烟 |
 | `node tools/test-audio.mjs` | 音频编排（FakeCtx 纯 Node，含 M15 CV 语音通道） | 10 项 |
 | `node tools/test-doc.mjs` | 撤销栈/失效分级 | 7 项 |
 | `node tools/test-zip.mjs` | STORE 打包可复现 | 4 项 |
 | `node tools/test-repo-index.mjs` | 素材索引/搜索/R13 退化（含音频索引与三级解析） | 9 项 |
-| `node tools/test-avgcfg.mjs` | AvgCfg/AvgLang 字节码解释器 + wire 映射层（格式+VM 锚点+悬空立绘落名+揭示重建+槽位类型门+折叠 alpha 继承+全语料口径） | 13 项 |
-| `node tools/test-avg-e2e.mjs` | 语料端到端：现场解码→映射→播放器逐镜 seek（cpt00 主线 + 23concert 立绘/分支） | 2 段全对 |
+| `node tools/test-avgcfg.mjs` | AvgCfg/AvgLang 字节码解释器 + wire 映射层（格式+VM 锚点+悬空立绘落名+揭示重建+槽位类型门+折叠 alpha 继承+pos/scale 折叠+说话镜入场揭示+全语料口径） | 16 项 |
+| `node tools/test-avg-e2e.mjs` | 语料端到端：现场解码→映射→播放器逐镜 seek（cpt00 主线 + 23concert 立绘/分支 + cpt_kimie 绝对定位），台词/站位/绝对定位对拍 | 3 段全对 |
 | `node tools/test-storylib.mjs` | 剧本库：分组/搜索/loadStory 装载链/索引增强件/语音映射/剧情目录 | 7 项 |
+| `node tools/test-fadeadvice.mjs` | 退场建议：触发器/排除项/分档/落笔幂等 + wiki 淡出真值下的梯度锚点 | 7 项 |
 | `node tools/build-asset-index.mjs` | 重建索引（自带 731 背景 / ≥514 _avg 验收 + 剧本清单 + 槽位类型过滤） | — |
 
 scene4 是 M11 补的形态夹具：type1、多页 `<|>`、通讯框、delete、type5、nextId
@@ -56,14 +57,14 @@ scene4 是 M11 补的形态夹具：type1、多页 `<|>`、通讯框、delete、
 
 ```
 css/       avg.css pandect.css（参考逐声明移植）· app.css（编辑器）· ux.css（动效降级/缺素材占位）
-js/core/   schema markup scheduler state script doc idb repo-index assets lundump lvm avgwire
+js/core/   schema markup scheduler state script doc idb repo-index assets lundump lvm avgwire fadeadvice
 js/engine/ player sprite typewriter nouns audio
-js/editor/ editor inspector fld picker storylib timeline layout-cal io
+js/editor/ editor inspector fld picker storylib timeline layout-cal io advice
 js/ui/     dom zip
 js/test/   harness.js（观测件：虚拟钟/settle/snapshot，两套回归共用）
 js/play.js 离线 bundle 播放入口
-data/      fixtures（夹具+冻结表）· index（可浏览素材索引）· layouts · fonts · ui
-tools/     test-*.mjs 回归跑者 · build-asset-index.mjs · avg-dump.mjs · media/unpack-{acb,avgconfig}.mjs · media/build-voice-index.mjs · shot.mjs
+data/      fixtures（夹具+冻结表+外源淡出真值）· index（可浏览素材索引）· layouts · fonts · ui
+tools/     test-*.mjs 回归跑者 · build-asset-index.mjs · build-fade-fixture.mjs · avg-dump.mjs · media/unpack-{acb,avgconfig}.mjs · media/build-voice-index.mjs · shot.mjs
 tools/ref/ 参考件（.gitignore 排除）+ driver/uidriver/serve/setup（我们写的观测工具）
 ```
 
@@ -209,6 +210,34 @@ node tools/media/unpack-acb.mjs --voice      # Voice/JA_JP 转码（约 690MB og
 `build-voice-index.mjs` 消费 configs.ab 解出件产出 voices.json（语料
 468 对引用 **100% 命中**真实 cue）与 `story-catalog.json`（story_avg.lua
 剧情目录：1137 组 / 1067 段在册），剧本库随之新增「剧情线」分组视图。
+
+## 退场建议（M23）
+
+M22 遗留的「作者点亮却从不写退场」不再找自动判据，改为**编辑器内一键建议**
+（`js/core/fadeadvice.js` 纯函数 + `js/editor/advice.js` 面板，顶栏「退场建议」）：
+机器只在**无说话人镜**（wiki 淡出 68% 的落点，1186/1734）上把滞留者列出来、
+预检「收掉之后她会不会回来、以什么形态回来」并按实测命中率分档，收与不收由人
+读旁白拍板（22christ_02#15 的炽：旁白「黑影又出现在了炽的身后」要求人必须在台
+上，任何结构判据都读不出这句话）。落笔 `α0/d0.2` 走 doc.patch('imgTween') →
+L2 timed seek 预览、撤销栈可回退，参数与 autoLightCast 收场条目同口径。
+
+**外源对拍**（GFWiki「行动记录/无律背反」= 23carnival，39 段转写件冻结为
+`data/fixtures/wiki-fades-23carnival.json`；`node tools/build-fade-fixture.mjs`
+可重采，需 wiki 可达）：转写件是游戏 dump 的超集（+2887/−1 条立绘条目，台词
+逐镜对位 100% 命中），即「演出实际发生过」的调度的显式化。两个硬结论：
+
+1. 「作者后面还提到它」当严判基准本身是错的——wiki 淡出里 50%（860/1734）
+   在 ≤3 镜后重新点亮，「淡出+再亮」是正常语法对；这就是 M22 三种判据
+   23% 误清率的根因。
+2. 换景滞留 wiki 留 19/21；「之后再不提」档命中率垫底（本镜 1.7%/±1 7.4%）
+   ——wiki 转写者遇到「点亮后再无条目」一律不收，她只是静静站到段落结束。
+   与 M22「只修自造部分」的停手决策互为印证。
+
+建议分档取「下次提及距离」这条实测梯度（39 段 / 1133 条候选）：imminent
+（≤3 镜，本镜 20.7%/±1 65.2%）> distant（4-10 镜，±1 43%）> far（>10 镜，±1
+22%）> silent（之后再不提，±1 7%，**默认不列**）。另一处直觉修正：落点规律
+不能反着用——P(无说话人|淡出)=68% 不等于 P(淡出|无说话人+滞留)=8%（基率倒
+置），所以无说话人镜只是候选收集器，不做任何判定。
 
 ## 已知边界
 

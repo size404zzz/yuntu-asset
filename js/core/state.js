@@ -14,6 +14,12 @@
    player 的 DOM 侧必须同口径（_blockChara 入场分支）。 */
 export const isValidPos = (p) => Number.isInteger(p) && p >= 1 && p <= 5;
 
+/* pos/scale 向量守卫：长度 2 且两分量皆有限数才算（语料有 [0] 脏形态）。
+   与 player 的行内定位同口径——折叠态与屏上定位必须一致。 */
+export const isValidPosVec = (p) =>
+    Array.isArray(p) && p.length === 2
+    && Number.isFinite(p[0]) && Number.isFinite(p[1]);
+
 export function emptyState() {
   return {
     imgMap: new Map(),
@@ -86,7 +92,7 @@ export function applyShotTweens(state, shot) {
       let lane = state.lanes.get(imgId);
       const entering = !lane;
       if (!lane) {
-        lane = {alpha: 0, posId: img.posId, isDark: false};
+        lane = {alpha: 0, posId: img.posId, isDark: false, pos: null, scale: null};
         state.lanes.set(imgId, lane);
         state.laneOrder.push(imgId);
       }
@@ -96,6 +102,12 @@ export function applyShotTweens(state, shot) {
            旧行为记 undefined（判不可见）而 DOM 侧 opacity 不变（仍可见），
            态屏分裂；现两侧统一为继承。 */
         if (entry.alpha !== undefined) lane.alpha = entry.alpha;
+        /* pos/scale 同款继承：条目缺省 = 保持当前绝对定位/缩放；
+           带有效 posId 的回槽条目消费绝对定位（与 DOM 行内清除同口径）。 */
+        if (isValidPosVec(entry.pos)) lane.pos = entry.pos;
+        else if (isValidPos(entry.posId)) lane.pos = null;
+        if (isValidPosVec(entry.scale)) lane.scale = entry.scale;
+        else if (isValidPos(entry.posId)) lane.scale = null;
         if (first) {
           lane.posId = entry.posId !== undefined ? entry.posId : img.posId;
           if (!isValidPos(lane.posId)) lane.posId = 3;
