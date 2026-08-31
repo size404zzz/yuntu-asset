@@ -8,6 +8,7 @@ import {
 } from './editor/io.js';
 import {openPicker} from './editor/picker.js';
 import {openStoryPicker, loadStory} from './editor/storylib.js';
+import {openFadeAdvice} from './editor/advice.js';
 import {Editor} from './editor/editor.js';
 import {Player} from './engine/player.js';
 import {AudioEngine, defaultAudioResolve} from './engine/audio.js';
@@ -208,6 +209,12 @@ document.getElementById('btn-import').addEventListener('click',
     () => importFile.click());
 document.body.append(importFile);
 
+/* —— M23 退场建议：无说话人镜上的滞留立绘清单，人读旁白拍板 ——
+   core 只列候选 + 预检收掉之后的语法后果（分档命中率见 fadeadvice 头注），
+   落笔走 doc.patch('imgTween') → L2 timed seek，撤销栈可回退。 */
+document.getElementById('btn-fade').addEventListener('click',
+    () => openFadeAdvice({editor}));
+
 const state = {stories: new Map(), playing: false, playTimer: null};
 const tpPlay = document.getElementById('tp-play');
 
@@ -373,6 +380,21 @@ loadFixtures().then(async () => {
       smoke.storylib = {error: e.message};
     }
   }
+  /* M23 冒烟追加：退场建议按钮接线 + 面板可开（行数随语料映射结果浮动，
+     只断「开了、没报错」。cpt00_e_01_01 刚装载，通常有建议行）。 */
+  let fadeAdvice = {opened: false, rows: 0};
+  try {
+    document.getElementById('btn-fade').click();
+    const overlay = document.querySelector('.picker-overlay');
+    fadeAdvice = {
+      opened: !!overlay,
+      rows: overlay?.querySelectorAll('.advice-row').length ?? 0,
+    };
+    overlay?.remove();
+  } catch (e) {
+    fadeAdvice = {opened: false, error: e.message};
+  }
+  smoke.fadeAdvice = fadeAdvice;
   await fetch('/freeze?scene=editor_smoke', {
     method: 'POST', headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(smoke, null, 1),

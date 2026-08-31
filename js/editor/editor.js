@@ -29,6 +29,9 @@ export class Editor {
     this.onDoc = onDoc ?? (() => {});
     this._reload = debounce(60, () => this._seekInto('freeze'));
     this._reseek = debounce(120, () => this._seekInto('timed'));
+    /* 在途 seek 的世代号：连点分镜会让多轮 _seekInto 交叠，陈旧轮不许
+       再写位置读数（它读到的是新一轮的 shotId，与屏上镜对不上）。 */
+    this._seekGen = 0;
     this._timelineHost = h('div.ins-timeline');
   }
 
@@ -90,6 +93,7 @@ export class Editor {
   }
 
   async _seekInto(mode) {
+    const gen = ++this._seekGen;
     const story = this.doc.story;
     let key = this.key;
     if (!this._pausable(this.index)) {
@@ -107,9 +111,13 @@ export class Editor {
       this.player.setScene(serializeScript(story),
           this.meta?.title ?? story.title ?? '未命名',
           '1', this.meta?.sector ?? '', '');
-      await this.player.seekShot(key, {timed: mode === 'timed'});
+      const landed = await this.player.seekShot(key, {timed: mode === 'timed'});
+      /* landed === null = 播放器侧判陈旧撒手；gen 过期 = 宿主侧又起了一轮。
+         两种都交给新一轮去写读数，陈旧轮一律闭嘴。 */
+      if (landed === null || this._seekGen !== gen) return;
       this._syncPos();
     } catch (error) {
+      if (this._seekGen !== gen) return;
       this.dom.pos.textContent = String(error.message);
     }
   }

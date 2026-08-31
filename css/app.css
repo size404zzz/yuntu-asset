@@ -199,3 +199,19 @@ textarea { width: 100%; min-height: 64px; resize: vertical; }
   cursor: ew-resize; }
 .tl-detail { font-size: 12px; margin-left: 44px; }
 textarea.bad { outline: 2px solid var(--err, #e55); }
+
+/* —— M23 退场建议（js/editor/advice.js）—— */
+.advice-row { display: flex; align-items: baseline; gap: 8px; padding: 4px 8px;
+  border-bottom: 1px solid #ffffff10; font-size: 12px; }
+.advice-row:hover { background: #ffffff18; }
+.advice-row .spacer { flex: 1; }
+.advice-shot { width: 96px; font: 11px monospace; color: var(--fg-dim); }
+.advice-id { width: 150px; word-break: break-all; }
+.advice-tier { width: 160px; font-size: 11px; }
+.advice-next { width: 200px; font-size: 11px; color: var(--fg-dim); }
+.advice-text { max-width: 32%; color: var(--fg-dim); overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+.advice-row.imminent .advice-tier { color: #7ee0a8; }
+.advice-row.distant .advice-tier { color: var(--accent); }
+.advice-row.far .advice-tier { color: var(--warn); }
+.advice-row.silent .advice-tier { color: var(--err); }

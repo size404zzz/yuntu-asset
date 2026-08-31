@@ -15,13 +15,15 @@ import {parseChunk} from '../js/core/lundump.js';
 import {execChunk, toJS} from '../js/core/lvm.js';
 import {storyToWire, replayChain} from '../js/core/avgwire.js';
 import {stripMarkup, splitPages} from '../js/core/schema.js';
+import {emptyState, applyImages, applyShotTweens} from '../js/core/state.js';
 
 const flag = (name, dflt) => {
   const hit = process.argv.find((a) => a.startsWith(`--${name}=`));
   return hit ? hit.slice(name.length + 3) : dflt;
 };
 const PORT = Number(flag('port', '8094'));
-const IDS = flag('id', 'cpt00_e_01_01,23concert_undline_03').split(',');
+const IDS = flag('id',
+    'cpt00_e_01_01,23concert_undline_03,cpt_kimie_03_04').split(',');
 const ROOT = resolve(process.cwd());
 const OUT = join(ROOT, 'data', 'fixtures', 'expected-avg_e2e_report.json');
 const CHROME = [
@@ -60,7 +62,22 @@ function expectOf(id) {
   const brief = typeof wire['1']?.SkipScenario === 'string' ? wire['1'].SkipScenario : '';
   const spriteShots = seekable.filter((id2) =>
       (wire[id2].images ?? []).some((img) => img.imgType === 3));
-  return {wire, stats, seekable, lines, brief, spriteShots};
+  /* 沿重放链折叠状态（页面 seekShot 逐镜重放的同款路径），为每镜记录
+     各立绘的期望行内绝对定位：有 pos → "left,bottom"（em），否则 null。 */
+  const absPosAt = new Map();
+  const foldState = emptyState();
+  for (const id2 of replayChain(wire)) {
+    const shot = wire[id2];
+    if (shot.images?.length) applyImages(foldState, shot.images);
+    applyShotTweens(foldState, shot);
+    const per = new Map();
+    for (const [imgId, lane] of foldState.lanes) {
+      per.set(String(imgId), lane.pos
+          ? `${lane.pos[0] / 32}em,${lane.pos[1] / 32}em` : null);
+    }
+    absPosAt.set(id2, per);
+  }
+  return {wire, stats, seekable, lines, brief, spriteShots, absPosAt};
 }
 
 /* —— 宿主（一次）与每段剧本一轮浏览器 —— */
@@ -152,6 +169,19 @@ try {
         }
       }
     }
+    /* 绝对定位对拍：行内 [left,bottom] 与折叠态 lane.pos（÷32 成 em）一致。 */
+    let absChecked = 0;
+    for (const s of report.shots) {
+      const wantPos = want.absPosAt.get(s.id) ?? new Map();
+      for (const {imgId, pos} of s.absPos ?? []) {
+        absChecked++;
+        const exp = wantPos.get(String(imgId)) ?? null;
+        const got = pos ? pos.join(',') : null;
+        if (got !== exp) {
+          failures.push(`${id} 镜 ${s.id}: 立绘 ${imgId} 绝对定位 ${got} ≠ 期望 ${exp}`);
+        }
+      }
+    }
     if (report.stats?.resolved !== want.stats.resolved
         || report.stats?.unresolved?.length !== want.stats.unresolved.length) {
       failures.push(`${id}: 映射统计不符 页面 ${report.stats?.resolved} vs Node ${want.stats.resolved}`);
@@ -160,6 +190,7 @@ try {
     for (const m of report.pageErrors ?? []) failures.push(`${id} 页面错误：${m}`);
     summaries.push(`${id}: 镜 ${report.shots.length}/${want.seekable.length}`
         + ` · 台词核对 ${lineChecked} · 立绘镜 ${withCharas}/${want.spriteShots.length}`
+        + ` · 绝对定位 ${absChecked}`
         + ` · 解引用 ${want.stats.resolved}+${want.stats.unresolved.length}`);
   }
 } catch (e) { console.error(String(e)); code = 1; }

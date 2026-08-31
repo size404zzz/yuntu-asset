@@ -2,12 +2,14 @@ import {dashToCamel} from '../ui/dom.js';
 import {Scheduler} from '../core/scheduler.js';
 import {
   emptyState, applyImages, applyShotTweens, applyFaces, isValidPos,
+  isValidPosVec,
 } from '../core/state.js';
 import {formatPages, DEFAULT_VARS, hops} from '../core/markup.js';
 import {Typewriter} from './typewriter.js';
 import {createPandect} from './nouns.js';
 import {
   CANVAS, buildCharaRules, faceRegion, compositeBody, drawFace, buildChara,
+  baseTranslate,
 } from './sprite.js';
 
 /* 舞台骨架：逐字符照抄参考的 Template:剧情播放器。
@@ -444,14 +446,44 @@ export class Player {
     this.sched.after((entry.delay || 0) * 1000, () => {
       const duration = entry.duration;
       let posId = entry.posId;
+      /* pos/scale 扩展演出（参考不实现、语料 421+734 条）：绝对坐标与
+         缩放入行内样式。普通条目完全不碰这些属性，夹具字节不变。 */
+      const hasPos = isValidPosVec(entry.pos);
+      const hasScale = isValidPosVec(entry.scale);
+      const backToSlot = isValidPos(entry.posId)
+          && !chara.classList.contains('img-missing');  /* 占位盒的行内居中不清 */
       /* alpha 缺省 = 保持：不写 opacity（CSSOM 忽略 undefined 会碰巧继承，
          这里改成显式不写，语义与 reducer 的继承口径一致）。入场没有
          现值可继承，按新 lane 的初始 0 显式钉住。 */
       const style = {
-        transition: `opacity ${duration}s, left ${duration}s, filter ${duration}s`,
+        /* 带 pos/scale 的条目多出 bottom/transform 过渡轴，移动/缩放才动画。 */
+        transition: (hasPos || hasScale)
+            ? `opacity ${duration}s, left ${duration}s, bottom ${duration}s,`
+                + ` transform ${duration}s, filter ${duration}s`
+            : `opacity ${duration}s, left ${duration}s, filter ${duration}s`,
       };
       if (entry.alpha !== undefined) style.opacity = entry.alpha;
       else if (entering) style.opacity = 0;
+      if (hasPos) {
+        /* 与 AvgHeroN 槽位同一坐标空间：÷32 得 em；行内覆盖 posN 规则。 */
+        style.left = entry.pos[0] / 32 + 'em';
+        style.bottom = entry.pos[1] / 32 + 'em';
+      } else if (backToSlot && chara.style.left) {
+        style.left = null;      /* 回槽：定位交还 posN 规则 */
+        style.bottom = null;
+      }
+      if (hasScale) {
+        const config = this.layouts.get(imgId);
+        if (config) {   /* 缺标定件走占位，缩放数学无依据，跳过 */
+          const fontSize = parseFloat(getComputedStyle(this.container).fontSize);
+          const t = baseTranslate(config, {width: this.container.clientWidth,
+            height: this.container.clientHeight, fontSize});
+          style.transform = `translate(${t.x}em, ${t.y}em)`
+              + ` scale(${entry.scale[0]}, ${entry.scale[1]})`;
+        }
+      } else if (backToSlot && chara.style.transform) {
+        style.transform = null;   /* 恢复类规则的基础位移 */
+      }
       Object.assign(chara.style, style);
       if (entering) {
         if (posId === undefined) posId = this.state.imgMap.get(imgId)?.posId;
@@ -847,19 +879,27 @@ export class Player {
     /* 重放沿途会逐镜触发 playShot 的音频——整程静音，落点只补目标镜的 bgm。 */
     const audio = this.audio;
     this.audio = null;
+    /* 重放循环直接驱动共享的 playShot()：新一轮 seek 一起步（setScene 的
+       clearStage bump）旧轮就该立刻撒手，否则旧循环会把镜号推到场景末尾、
+       把宿主没要的镜画上去（连点分镜时预览串台）。 */
+    let epoch = this.sched.epoch;
+    const stale = () => this.sched.epoch !== epoch;
     try {
       this.setScene(this.rawScene, this.sceneMeta.title, this.sceneMeta.number,
           this.sceneMeta.sector, this.sceneMeta.sectorEn);
+      epoch = this.sched.epoch;
       if (!(key in this.scene) || Number(key) === this.scriptType) {
         throw new Error(`seekShot: 镜 ${key} 不是可停留的镜`);
       }
       await this.idle();
+      if (stale()) return null;
       const guard = (Array.isArray(this.scene)
           ? this.scene.length : Object.keys(this.scene).length) + 4;
       /* timed：先定格重放到目标镜的前一镜，再真实推进最后一跳。 */
       const prevKey = timed ? this._prevKeyOf(key) : null;
       const landOn = timed && prevKey !== null ? prevKey : key;
       for (let left = guard; this.shotId !== landOn; left--) {
+        if (stale()) return null;
         if (this.playEnd || left <= 0) {
           throw new Error(
               `seekShot: 停不到镜 ${key}（autoContinue 直通或不在首选项路线上）`);
@@ -871,14 +911,18 @@ export class Player {
         }
         await this.fastForward();
       }
+      if (stale()) return null;
       if (timed && prevKey !== null) {
         void this.container.offsetWidth;   // 前一镜样式落定 = 过渡起值
         this.playShot();
       }
       return this.shotId;
     } finally {
-      this.audio = audio;
-      if (audio && this.scene && !timed) audio.bgmOnly(this.scene[this.shotId]);
+      /* 陈旧回合不许还原 audio：新一轮正靠 this.audio === null 静音重放。 */
+      if (!stale()) {
+        this.audio = audio;
+        if (audio && this.scene && !timed) audio.bgmOnly(this.scene[this.shotId]);
+      }
     }
   }
 

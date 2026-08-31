@@ -20,16 +20,26 @@ export function imgSizeOf(config) {
   return sizeDeltaOf(config) * Math.abs(config.m_LocalScale) / 2;
 }
 
+/* 立绘盒子的基础位移（把画布中心挪到舞台坐标原点的平移量）。
+   规则表与播放器的行内 pos/scale transform 共用，口径必须一致。 */
+export function baseTranslate(config, stage) {
+  const imgSize = imgSizeOf(config);
+  const {width: stageWidth, height: stageHeight, fontSize} = stage;
+  return {
+    x: stageWidth / (2 * fontSize) - imgSize / 32,
+    y: imgSize / 32 - stageHeight / (2 * fontSize),
+  };
+}
+
 /* —— 单个立绘的 CSS 规则（参考 presetCharaImgStyle:228 的移植）——
    顺序固定为「基础盒 → 通讯框 → pos1..5」，与参考一致；多立绘时由调用方按
    imgId 排序拼接（参考的顺序是网络竞态，见冻结结论，这里改成可复现）。 */
 export function charaRulesFor(imgId, config, stage) {
   const imgSize = imgSizeOf(config);
-  const {width: stageWidth, height: stageHeight, fontSize} = stage;
-  const transX = stageWidth / (2 * fontSize) - imgSize / 32;
-  const transY = imgSize / 32 - stageHeight / (2 * fontSize);
+  const {fontSize} = stage;
+  const t = baseTranslate(config, stage);
   const transform =
-      `transform: translate(${transX.toFixed(4)}em, ${transY.toFixed(4)}em)`;
+      `transform: translate(${t.x.toFixed(4)}em, ${t.y.toFixed(4)}em)`;
   const styles = [];
   styles.push(`.avg-chara[data-img-id="${imgId}"] {\n`
       + `  height: ${(imgSize / 16).toFixed(4)}em;\n`
