@@ -413,4 +413,86 @@ const decodeLua2 = (kind, id) => {
   ok(`avgwire：全语料 ${resolved} 解引用 + ${unresolved} 保数字 · 平移 ${shifted} 段`);
 }
 
+/* —— lvm.js：EQ/LT/LE/SETTABUP 字节码语义锚点（bug 修复回归） —— */
+{
+  /* 手工构造最小 Proto 直接验证 opcode 语义。数据脚本（AvgCfg/AvgLang）
+     不触发这四个 opcode 故全语料绿，但 Game.Avg.* 逻辑脚本会中招
+    （EQ 404 / LT 28 / LE 3 / SETTABUP 14 条，见 tools/_scan-opcodes.mjs）。
+     旧实现：EQ/LT/LE 的 A（标志位）与 C（操作数）角色互换；
+             SETTABUP 的 B 硬取 K[B] 而非 rk(B)。 */
+  const iABx = (op, A, Bx) => (op & 0x3F) | ((A & 0xFF) << 6) | ((Bx & 0x3FFFF) << 14);
+  const iABC = (op, A, B, C) => (op & 0x3F) | ((A & 0xFF) << 6) | ((C & 0x1FF) << 14) | ((B & 0x1FF) << 23);
+  const SBX = 131071;
+  const KC = (v) => ({value: v});
+  const P = {LOADK:1, GETTABUP:6, SETTABUP:8, JMP:30, EQ:31, LT:32, LE:33, RETURN:38};
+
+  function runRaw(code, constants, maxStack) {
+    return execChunk({code, constants, maxStack, isVararg:1,
+      lineInfo: new Array(code.length).fill(0), source:'=test', protos:[], upvalues:[]});
+  }
+
+  /* EQ A=0：1==1 → 跳过 JMP → "yes"
+     旧代码 equals(R[A=0], rk(B=0)) = equals(R[0], R[0]) = true，
+     (C=1!==0)=true, true!==true=false → 不跳 → JMP → "no"（错）。 */
+  assert.equal(runRaw([
+    iABx(P.LOADK, 0, 0), iABx(P.LOADK, 1, 0),
+    iABC(P.EQ, 0, 0, 1), iABx(P.JMP, 0, SBX+2),
+    iABx(P.LOADK, 2, 1), iABC(P.RETURN, 2, 2),
+    iABx(P.LOADK, 2, 2), iABC(P.RETURN, 2, 2),
+  ], [KC(1), KC('yes'), KC('no')], 4)[0], 'yes',
+    'EQ A=0：1==1 跳过 JMP');
+
+  /* EQ A=1：1==1 → 不跳 → JMP → "no"（A=1 期望不等，相等走 else） */
+  assert.equal(runRaw([
+    iABx(P.LOADK, 0, 0), iABx(P.LOADK, 1, 0),
+    iABC(P.EQ, 1, 0, 1), iABx(P.JMP, 0, SBX+2),
+    iABx(P.LOADK, 2, 1), iABC(P.RETURN, 2, 2),
+    iABx(P.LOADK, 2, 2), iABC(P.RETURN, 2, 2),
+  ], [KC(1), KC('yes'), KC('no')], 4)[0], 'no',
+    'EQ A=1：1==1 不跳（期望不等）');
+
+  /* LT A=0：1<2 → 跳过 JMP → "yes" */
+  assert.equal(runRaw([
+    iABx(P.LOADK, 0, 0), iABx(P.LOADK, 1, 1),
+    iABC(P.LT, 0, 0, 1), iABx(P.JMP, 0, SBX+2),
+    iABx(P.LOADK, 2, 2), iABC(P.RETURN, 2, 2),
+    iABx(P.LOADK, 2, 3), iABC(P.RETURN, 2, 2),
+  ], [KC(1), KC(2), KC('yes'), KC('no')], 4)[0], 'yes',
+    'LT A=0：1<2 跳过 JMP');
+
+  /* LE A=0：1<=1 → 跳过 JMP → "yes"
+     旧代码 compare(R[A=0], rk(B=0)) = 1<=1=true，(C=1!==0)=true，
+     true!==true=false → 不跳 → "no"（错）。 */
+  assert.equal(runRaw([
+    iABx(P.LOADK, 0, 0), iABx(P.LOADK, 1, 0),
+    iABC(P.LE, 0, 0, 1), iABx(P.JMP, 0, SBX+2),
+    iABx(P.LOADK, 2, 1), iABC(P.RETURN, 2, 2),
+    iABx(P.LOADK, 2, 2), iABC(P.RETURN, 2, 2),
+  ], [KC(1), KC('yes'), KC('no')], 4)[0], 'yes',
+    'LE A=0：1<=1 跳过 JMP');
+
+  /* SETTABUP 常量键（B=256→K[0]）：env["greeting"]="hello"，读回验证。
+     旧代码 K[B=256] 越界 → 崩溃。 */
+  assert.equal(runRaw([
+    iABx(P.LOADK, 0, 1),          /* R0 = K1 = "hello" */
+    iABC(P.SETTABUP, 0, 256, 0),  /* env[K[0]] = R0 */
+    iABC(P.GETTABUP, 0, 0, 256),  /* R0 = env[K[0]] */
+    iABC(P.RETURN, 0, 2),         /* return R0 */
+  ], [KC('greeting'), KC('hello')], 2)[0], 'hello',
+    'SETTABUP 常量键写入 + GETTABUP 读回');
+
+  /* SETTABUP 寄存器键（B=1→R[1]）：R[1]="greeting"（≠K[1]="wrong"），
+     验证取 R[1] 而非 K[1] 作键。旧代码 K[1]="wrong" → 读 env["greeting"]=nil。 */
+  assert.equal(runRaw([
+    iABx(P.LOADK, 0, 0),          /* R0 = K0 = "hello" */
+    iABx(P.LOADK, 1, 2),          /* R1 = K2 = "greeting" */
+    iABC(P.SETTABUP, 0, 1, 0),    /* env[R[1]] = R0 → env["greeting"] = "hello" */
+    iABC(P.GETTABUP, 2, 0, 258),  /* R2 = env[K[2]] = env["greeting"] */
+    iABC(P.RETURN, 2, 2),         /* return R2 */
+  ], [KC('hello'), KC('wrong'), KC('greeting')], 4)[0], 'hello',
+    'SETTABUP 寄存器键（R[1]≠K[1]，验证取 R 而非 K）');
+
+  ok('lvm：EQ/LT/LE/SETTABUP 语义锚点（手工 Proto 验证 bug 修复）');
+}
+
 console.log(`\n${passed} 项通过`);

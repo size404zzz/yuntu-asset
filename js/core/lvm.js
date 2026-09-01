@@ -425,7 +425,9 @@ function run(proto, upvals, args, opts = {}) {
          全语料仅此 1 条 GETTABUP）。 */
       case 6: R[A] = index(upvals[B].v, rk(C)); break;               /* GETTABUP */
       case 7: R[A] = index(R[B], rk(C)); break;                      /* GETTABLE */
-      case 8: setIndex(upvals[A].v, K[B].value, rk(C)); break;       /* SETTABUP */
+      /* SETTABUP 的 B 也是 RK（与 SETTABLE 一致；AvgCfg 数据脚本零使用，
+         Game.Avg. 逻辑脚本写 _ENV 表时需要寄存器键）。 */
+      case 8: setIndex(upvals[A].v, rk(B), rk(C)); break;             /* SETTABUP */
       case 9: upvals[B].v = R[A]; break;                             /* SETUPVAL */
       /* SETTABLE/GETTABLE 的 B/C 是 RK（≥256 取常量池）——本 fork 的改动，
          表构造因此几乎不用 LOADK；寄存器操作数（<256）两种解读等价。 */
@@ -466,13 +468,13 @@ function run(proto, upvals, args, opts = {}) {
       }
       case 30: pc += sBx; break;                                     /* JMP */
       case 31:                                                       /* EQ */
-        if (equals(R[A], rk(B)) !== (C !== 0)) pc++;
+        if (equals(rk(B), rk(C)) !== (A !== 0)) pc++;
         break;
       case 32:                                                       /* LT */
-        if (compare('lt', R[A], rk(B)) !== (C !== 0)) pc++;
+        if (compare('lt', rk(B), rk(C)) !== (A !== 0)) pc++;
         break;
       case 33:                                                       /* LE */
-        if (compare('le', R[A], rk(B)) !== (C !== 0)) pc++;
+        if (compare('le', rk(B), rk(C)) !== (A !== 0)) pc++;
         break;
       case 34:                                                       /* TEST */
         if (truthy(R[A]) !== (C !== 0)) pc++;
