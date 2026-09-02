@@ -13154,2793 +13154,548 @@
   }
  ],
  "imgIds": {
-  "13": [
-   "riko_avg",
-   "meryl_avg",
-   "riko_b2_avg"
-  ],
-  "14": [
-   "astronaut_avg",
-   "defender_avg",
-   "burbank_npc3_avg",
-   "oasis_a01_avg",
-   "oasis_a02_avg",
-   "cyclopes_npc_03_avg",
-   "oasis_01_avg",
-   "oasis_03_avg",
-   "cyclopes_npc_02_avg"
-  ],
-  "16": [
-   "faith2_avg",
-   "faith_avg",
-   "puzzlecat_avg",
-   "turing2_avg"
-  ],
-  "17": [
-   "kuroryu_avg",
-   "puzzlecat_avg",
-   "defender_avg",
-   "patience_avg",
-   "refactor_avg"
-  ],
-  "18": [
-   "hannah_avg",
-   "42lab_npc_01_avg"
-  ],
-  "19": [
-   "olivia_avg",
-   "olivia2_avg"
-  ],
-  "21": [
-   "mara_weapon_avg",
-   "mara_wrecked_avg",
-   "mara_avg"
-  ],
-  "22": [
-   "mara_blue_avg",
-   "mara_bluehoukai_avg"
-  ],
-  "23": [
-   "choco_avg",
-   "choco_christ_avg"
-  ],
-  "26": [
-   "beelneith_avg",
-   "beelneith_2_avg",
-   "beelneith_b_avg"
-  ],
-  "27": [
-   "adele_avg"
-  ],
-  "28": [
-   "neumann_avg",
-   "neumann2_avg",
-   "puzzlecat_avg"
-  ],
-  "29": [
-   "eniac_avg",
-   "eniac2_avg"
-  ],
-  "30": [
-   "gabriel2_avg",
-   "gabriel_avg"
-  ],
-  "33": [
-   "odette_avg",
-   "odette_s_avg",
-   "odette_b_avg"
-  ],
-  "34": [
-   "odile_b3_avg",
-   "odile_w_avg",
-   "odile_b2_avg",
-   "odile_b_avg"
-  ],
-  "35": [
-   "wisdom_b_avg",
-   "wisdom_w_avg",
-   "wisdom_bs_avg"
-  ],
-  "37": [
-   "eosphorus_wings_avg",
-   "eosphorus_avg",
-   "sangoma_fake_avg",
-   "eosphorus_shadow_avg",
-   "eosphorus_w1_avg",
-   "eosphorus_w2_avg",
-   "eosphorus_b_avg"
-  ],
-  "38": [
-   "hesperus_weapon_avg",
-   "hesperus_weapon2_avg",
-   "hesperus_avg"
-  ],
-  "41": [
-   "irida_avg",
-   "irida_shadow_avg"
-  ],
-  "42": [
-   "cyclopes_npc_02_avg"
-  ],
-  "43": [
-   "helios_robotgreen_avg",
-   "helios_robotred_avg",
-   "botaiko_avg"
-  ],
-  "44": [
-   "helios_robotyellow_avg",
-   "helios_robotred_avg",
-   "helios_robotgreen_avg",
-   "botaiko_avg"
-  ],
-  "45": [
-   "helios_robotgreen_avg",
-   "helios_robotyellow_avg"
-  ],
-  "46": [
-   "helios_firewood_avg",
-   "helios_robotgreen_avg"
-  ],
-  "47": [
-   "demi_lava2_avg",
-   "demiurge_avg",
-   "demi_lava_avg"
-  ],
-  "50": [
-   "odile_w_avg"
-  ],
-  "51": [
-   "refactor_avg"
-  ],
-  "52": [
-   "love_avg"
-  ],
-  "55": [
-   "taranum_avg"
-  ],
-  "58": [
-   "soldier_mask_avg"
-  ],
-  "59": [
-   "soldier_tac_avg"
-  ],
-  "62": [
-   "soldier_elvin_avg"
-  ],
-  "65": [
-   "reverence_avg"
-  ],
-  "72": [
-   "eosphorus_shadow_avg",
-   "sold_avg"
-  ],
-  "74": [
-   "elaugh_mask_avg",
-   "elaugh_avg"
-  ],
-  "76": [
-   "undline_w1_avg",
-   "undline_w_summer_avg"
-  ],
-  "77": [
-   "sin_avg",
-   "undline_w2_avg"
-  ],
-  "78": [
-   "undline_w3_avg",
-   "punish_avg",
-   "punish2_avg"
-  ],
-  "79": [
-   "fakegod_avg",
-   "undline_w4_avg"
-  ],
-  "80": [
-   "judge_avg",
-   "judge3_avg",
-   "judge2_avg"
-  ],
-  "84": [
-   "refugeeboy_avg"
-  ],
-  "85": [
-   "refugee1_avg",
-   "refugee2_avg"
-  ],
-  "88": [
-   "boxer1_avg",
-   "boxer2_avg"
-  ],
-  "90": [
-   "santino_avg"
-  ],
-  "92": [
-   "helios_firewood_avg",
-   "spacebot_01_avg"
-  ],
-  "93": [
-   "helios_firewood_avg"
-  ],
-  "95": [
-   "golem1_avg"
-  ],
-  "96": [
-   "eos2_avg",
-   "eos_avg",
-   "eos2_wrecked_avg",
-   "eos_oath_avg",
-   "eos_shadow_avg"
-  ],
-  "97": [
-   "ranko_avg",
-   "rankob_avg"
-  ],
-  "101": [
-   "persicaria_avg",
-   "persicaria_sp_avg",
-   "persicaria_s_avg",
-   "persicaria_sph_avg",
-   "persicaria_hurt_avg",
-   "persicaria_bq_avg",
-   "persicaria_sp2h_avg",
-   "persicaria_sp_newyear_avg",
-   "persicaria_shadow_avg",
-   "persicaria_sp2_avg",
-   "persicaria_dress_avg",
-   "simo_avg",
-   "gabriel_avg"
-  ],
-  "102": [
-   "anna_avg",
-   "anna_hallo_avg",
-   "anna_shadow_avg",
-   "beelneith_avg",
-   "haze_avg",
-   "persicaria_avg"
-  ],
-  "103": [
-   "sol_avg",
-   "sol_b_avg",
-   "ridersol_avg",
-   "sol_s_hurt_avg",
-   "sol_hurt_avg",
-   "meryl_avg",
-   "sol_s_avg",
-   "sol_b2h_avg",
-   "sol_juggernaut_avg",
-   "sol_b_shadow_avg",
-   "sold_avg",
-   "sol_bh_avg",
-   "eosphorus_avg",
-   "ridersol_mask_avg"
-  ],
-  "104": [
-   "simo_avg",
-   "burbank_npc3_avg"
-  ],
-  "105": [
-   "croque_avg",
-   "croque_kid_avg",
-   "croque_spring_avg",
-   "croque_g_avg",
-   "croque2_avg"
-  ],
-  "106": [
-   "fresnel_avg",
-   "fresnel_hurt_avg",
-   "puzzlecat_avg"
-  ],
-  "107": [
-   "chelsea_avg",
-   "puzzlecat_avg",
-   "chelsea_kid_avg"
-  ],
-  "108": [
-   "gin_avg"
-  ],
-  "109": [
-   "mai_avg"
-  ],
-  "110": [
-   "sangoma_avg",
-   "evelyn_rookie_avg",
-   "evelyn_avg",
-   "evelyn_summer_avg",
-   "sangoma_hurt_avg",
-   "sangoma_shadow_avg"
-  ],
-  "112": [
-   "max_avg"
-  ],
-  "113": [
-   "betty_avg",
-   "riko_avg",
-   "betty_oath_avg"
-  ],
-  "114": [
-   "entropy_avg",
-   "asagent_avg",
-   "golem1_avg",
-   "soldier_opfor_avg",
-   "ptolomaea_slave_avg",
-   "golem1b_avg",
-   "burbank_npc1_avg",
-   "slime_avg",
-   "defender_avg",
-   "cyclopes_npc_01_avg",
-   "fool_mie_avg",
-   "astronaut_avg",
-   "cyclopes_npc_02_avg",
-   "asagentc_avg",
-   "oasis_01_avg",
-   "hallopump_avg",
-   "burbank_npc3_avg",
-   "asagentb_avg",
-   "sueyoi_phantom_avg",
-   "oasis_03_avg",
-   "golem2_avg",
-   "golem2b_avg",
-   "robotdog_avg",
-   "security1_avg",
-   "refactor_avg"
-  ],
-  "115": [
-   "aki_avg",
-   "aki_spring_avg",
-   "aki2_avg"
-  ],
-  "116": [
-   "banxsy_avg",
-   "banxsy_summer_avg"
-  ],
-  "117": [
-   "angela_avg",
-   "refactor_avg",
-   "angela_summer_avg",
-   "angela_oath_avg",
-   "angela_summerb_avg"
-  ],
-  "118": [
-   "nanaka_avg",
-   "nana_avg",
-   "nanaka_summer_avg"
-  ],
-  "119": [
-   "olivia_avg"
-  ],
-  "120": [
-   "yanny_avg",
-   "xuannv_avg",
-   "yanny0_avg",
-   "helios_firewood_avg"
-  ],
-  "121": [
-   "groove_avg"
-  ],
-  "123": [
-   "bonee_avg"
-  ],
-  "124": [
-   "helix_avg",
-   "helix_hallo_avg"
-  ],
-  "125": [
-   "nameless_avg",
-   "nameless2_avg"
-  ],
-  "126": [
-   "octogen_avg",
-   "cyclopes_npc_03_avg",
-   "cyclopes_npc_02_avg"
-  ],
-  "127": [
-   "zion_avg",
-   "zion_newyear_avg"
-  ],
-  "128": [
-   "mag2_avg",
-   "mag_avg",
-   "magnhilda_kongfu_avg",
-   "magnhilda_avg"
-  ],
-  "129": [
-   "slime_avg",
-   "tony_avg",
-   "slime2_avg"
-  ],
-  "130": [
-   "uncle_avg"
-  ],
-  "131": [
-   "imhotep_avg",
-   "oasis_a01_avg",
-   "imhotep_wreck_avg",
-   "imhotep_hurt_avg",
-   "imhotep_wreck2_avg"
-  ],
-  "133": [
-   "defender_avg"
-  ],
-  "134": [
-   "abigail_avg"
-  ],
-  "135": [
-   "patience_avg",
-   "jessie_avg"
-  ],
-  "136": [
-   "lam_avg"
-  ],
-  "137": [
-   "hubble_avg",
-   "hubble_christ_avg",
-   "hubble_hurt_avg",
-   "hubble_sp_avg"
-  ],
-  "138": [
-   "sakuya_avg",
-   "sakuya_spring_avg"
-  ],
-  "139": [
-   "centaureissi_avg",
-   "centaureissi_sp_avg",
-   "centaureissi_idol_avg",
-   "centaureissi_mil_avg",
-   "centaureissi_summer_avg",
-   "persicariadr_avg",
-   "centaureissi_hurt_avg"
-  ],
-  "140": [
-   "clukay_ent_avg",
-   "clukay_gf_avg",
-   "clukay_cloud_avg"
-  ],
-  "141": [
-   "burbank_npc1_avg",
-   "fern_avg",
-   "oasis_a01_avg",
-   "oasis_a02_avg",
-   "fern_myth_avg",
-   "defender_avg",
-   "spacebot_02_avg",
-   "cyclopes_npc_01_avg"
-  ],
-  "142": [
-   "florence_avg",
-   "burbank_npc2_avg",
-   "florence_spring_avg",
-   "florence_swim_avg",
-   "oasis_b01_avg",
-   "defender_avg",
-   "oasis_b02_avg"
-  ],
-  "143": [
-   "hel_avg",
-   "panakeia_avg",
-   "burbank_npc3_avg"
-  ],
-  "144": [
-   "twigs_avg",
-   "twigs_myth_avg",
-   "twigs_summer_avg",
-   "soldier_helmet_avg"
-  ],
-  "145": [
-   "vee_avg",
-   "vee_idol_avg",
-   "oasis_a02a_avg"
-  ],
-  "146": [
-   "earhart_avg",
-   "soldier_glasses_avg"
-  ],
-  "147": [
-   "willow_avg",
-   "soldier_helmet_avg"
-  ],
-  "148": [
-   "dusevnyj_avg",
-   "soldier_tac_avg"
-  ],
-  "149": [
-   "rise_avg",
-   "soldier_mask_avg"
-  ],
-  "150": [
-   "ksenia_avg"
-  ],
-  "151": [
-   "delacey_avg",
-   "soldier_hurt_avg"
-  ],
-  "152": [
-   "hatsuchiri_avg",
-   "oasis_a02a_avg",
-   "oasis_b02a_avg"
-  ],
-  "153": [
-   "sueyoi_avg"
-  ],
-  "154": [
-   "python_avg",
-   "python_p2_avg"
-  ],
-  "155": [
-   "kuro_avg",
-   "kuro_spring_avg",
-   "kuro_kid_avg"
-  ],
-  "156": [
-   "lind_avg",
-   "lind_s_avg"
-  ],
-  "157": [
-   "sockdolager_avg",
-   "sockdolager_myth_avg"
-  ],
-  "158": [
-   "haze_avg"
-  ],
-  "159": [
-   "nora_avg",
-   "nora_summer_avg"
-  ],
-  "160": [
-   "crypter_avg"
-  ],
-  "161": [
-   "helix_avg",
-   "faith_avg",
-   "faith_avatar_avg"
-  ],
-  "162": [
-   "puzzle_avg",
-   "puzzlepump_avg"
-  ],
-  "163": [
-   "nascita2_avg",
-   "nascita1_avg"
-  ],
-  "164": [
-   "gastronomie_avg",
-   "security3_avg"
-  ],
-  "165": [
-   "uranus_avg"
-  ],
-  "166": [
-   "clukay_avg",
-   "clukay_full_avg",
-   "clukay_idol_avg",
-   "clukay_summer_avg",
-   "clukay2_avg",
-   "clukay_cloud_avg",
-   "santino_avg"
-  ],
-  "167": [
-   "clotho_avg",
-   "clotho2_avg",
-   "mob1_avg",
-   "clotho_summerb_avg",
-   "clotho_summer_avg",
-   "clotho_oath_avg"
-  ],
-  "168": [
-   "dupin_avg"
-  ],
-  "169": [
-   "security1_avg"
-  ],
-  "170": [
-   "undline_avg",
-   "undline_christ_avg",
-   "undline_idol_avg",
-   "undline_maid_avg",
-   "undline_summer_avg",
-   "undline2_avg"
-  ],
-  "171": [
-   "yelena_avg",
-   "defender_avg",
-   "luna_avg",
-   "patience_avg",
-   "undline_w1_avg"
-  ],
-  "172": [
-   "jiangyu_avg",
-   "jiangyu_summer_avg",
-   "jiangyu_dress_avg",
-   "jiangyu2_avg",
-   "undline_w2_avg"
-  ],
-  "173": [
-   "horizon_avg",
-   "horizon_s_avg",
-   "luna_dress_avg",
-   "undline_w3_avg"
-  ],
-  "174": [
-   "luna_avg",
-   "elaugh_mask_avg",
-   "luna_dress_avg"
-  ],
-  "175": [
-   "havoc_avg",
-   "havoc2_avg",
-   "asagentb_avg"
-  ],
-  "176": [
-   "erika_avg",
-   "undline_w1_avg",
-   "undline_w1c_avg",
-   "erika_newyear_avg",
-   "undline_w1h_avg",
-   "erika_hurt_avg",
-   "undline_w_summer_avg"
-  ],
-  "177": [
-   "undline_w2_avg",
-   "cascadia_avg",
-   "undline_w2c_avg",
-   "undline_w2h_avg",
-   "sin_avg"
-  ],
-  "178": [
-   "undline_w3_avg",
-   "taisch_avg",
-   "undline_w3c_avg",
-   "undline_w3h_avg",
-   "punish_avg"
-  ],
-  "179": [
-   "xinghuan_mech_avg",
-   "xinghuan_avg",
-   "xinghuan_newyear_avg",
-   "xinghuan_mech_b_avg",
-   "undline_w4c_avg",
-   "undline_w4_avg",
-   "xinghuan_hurt_avg",
-   "fakegod_avg"
-  ],
-  "180": [
-   "yuwang_avg",
-   "gentle_avg",
-   "yuwang2_avg",
-   "judge_avg"
-  ],
-  "181": [
-   "hubble_sp_avg",
-   "42lab_npc_01_avg",
-   "mechanic_avg"
-  ],
-  "182": [
-   "kimie_avg",
-   "kimie_newyear_avg",
-   "mechanic_avg"
-  ],
-  "183": [
-   "penumbra_avg"
-  ],
-  "184": [
-   "bonneville_avg"
-  ],
-  "185": [
-   "shell_avg",
-   "burbank_npc2_avg",
-   "burbank_npc1_avg"
-  ],
-  "186": [
-   "belladonna_avg"
-  ],
-  "187": [
-   "lewis_avg",
-   "python_kongfu_avg"
-  ],
-  "188": [
-   "kuro_spring_avg",
-   "hannah_avg"
-  ],
-  "189": [
-   "boxer1_avg",
-   "sol_b2s_avg"
-  ],
-  "190": [
-   "oasis_b02a_avg",
-   "inola_avg"
-  ],
-  "193": [
-   "chris_avg",
-   "boy_avg"
-  ],
-  "194": [
-   "security1_avg"
-  ],
-  "195": [
-   "woman_avg"
-  ],
-  "196": [
-   "ptolomaea_avg",
-   "ptolomaea_shadow_avg"
-  ],
-  "197": [
-   "cocytus_avg",
-   "entropy_star_avg",
-   "ptolomaea_slave_avg",
-   "entropy_avg",
-   "ptolomaea_slave_gold_avg"
-  ],
-  "198": [
-   "fortitude_avg"
-  ],
-  "199": [
-   "lind_avg"
-  ],
-  "200": [
-   "knot_shadow_avg",
-   "dog_avg"
-  ],
-  "201": [
-   "okabe_avg",
-   "refugee2_avg"
-  ],
-  "202": [
-   "kurisu_avg",
-   "kurisu_maid_avg",
-   "kurisu_b_avg",
-   "burbank_npc1_avg"
-  ],
-  "203": [
-   "mayuri_avg",
-   "mayuri_maid_avg",
-   "mayuri_b_avg",
-   "burbank_npc2_avg"
-  ],
-  "204": [
-   "twigs_myth_bird_avg"
-  ],
-  "205": [
-   "slomo_avg"
-  ],
-  "206": [
-   "fireman3_avg"
-  ],
-  "207": [
-   "fireman_avg"
-  ],
-  "213": [
-   "cyclopes_npc_01_avg",
-   "oasis_b01_avg"
-  ],
-  "214": [
-   "cyclopes_npc_01_avg"
-  ],
-  "215": [
-   "spacebot_01_avg"
-  ],
-  "216": [
-   "meteor_avg"
-  ],
-  "217": [
-   "spacebot_01_avg"
-  ],
-  "218": [
-   "spacebot_02_avg",
-   "gagarin_avg"
-  ],
-  "219": [
-   "spacebot_03_avg"
-  ],
-  "220": [
-   "xuannv_avg",
-   "mecha_avg"
-  ],
-  "221": [
-   "gagarin_avg",
-   "gagarin_b_avg"
-  ],
-  "223": [
-   "spacebot_02e_avg"
-  ],
-  "224": [
-   "spacebot_03e_avg"
-  ],
-  "230": [
-   "chocoshadow_avg"
-  ],
-  "231": [
-   "ksenia_avg"
-  ],
-  "232": [
-   "kuro_maid_avg"
-  ],
-  "234": [
-   "oasis_b01_avg",
-   "oasis_a01_avg"
-  ],
-  "240": [
-   "soldier_helmet_avg"
-  ],
-  "241": [
-   "soldier_helmet_avg"
-  ],
-  "242": [
-   "chris_avg"
-  ],
-  "243": [
-   "soldier_weber_hurt_avg",
-   "soldier_weber_avg"
-  ],
-  "244": [
-   "soldier_tac_avg"
-  ],
-  "245": [
-   "soldier_mask_avg"
-  ],
-  "247": [
-   "soldier_helmet_avg"
-  ],
-  "249": [
-   "soldier_tac_avg"
-  ],
-  "250": [
-   "soldier_helmet2_avg"
-  ],
-  "251": [
-   "oasis_a02a_avg"
-  ],
-  "253": [
-   "serper_avg"
-  ],
-  "257": [
-   "oasis_a02a_avg"
-  ],
-  "260": [
-   "beelneith_b_avg"
-  ],
-  "262": [
-   "hope_avg"
-  ],
-  "263": [
-   "slime2_avg",
-   "slime_avg"
-  ],
-  "264": [
-   "prof_f_avg"
-  ],
-  "281": [
-   "neumann_shadow_avg"
-  ],
-  "291": [
-   "eniac_shadow_avg"
-  ],
-  "333": [
-   "odette_b_avg"
-  ],
-  "341": [
-   "odile_b_avg"
-  ],
-  "344": [
-   "odile_shadow_avg"
-  ],
-  "350": [
-   "wisdom_b_avg"
-  ],
-  "351": [
-   "wisdom_b_avg"
-  ],
-  "370": [
-   "eos_avg",
-   "eosphorus_shadow_avg",
-   "eosphorus_b_avg"
-  ],
-  "470": [
-   "demiurge_avg",
-   "slime_avg"
-  ],
-  "501": [
-   "atlas_avg",
-   "atlas_hurt_avg",
-   "atlas_shadow_avg"
-  ],
-  "502": [
-   "ira_avg",
-   "ira_b_avg",
-   "ira_shadow_avg"
-  ],
-  "503": [
-   "alcyone_avg",
-   "alcyone_shadow_avg"
-  ],
-  "504": [
-   "caina_avg"
-  ],
-  "505": [
-   "caina_avg",
-   "caina_star2_avg",
-   "caina_star_avg"
-  ],
-  "506": [
-   "antenora_avg"
-  ],
-  "507": [
-   "malkira_avg"
-  ],
-  "514": [
-   "entropy_avg",
-   "oasis_02_avg",
-   "fool_mie_avg",
-   "cyclopes_npc_02_avg",
-   "cyclopes_npc_03_avg",
-   "burbank_npc2_avg",
-   "golem1b_avg",
-   "soldier_opfor_avg",
-   "golem2_avg"
-  ],
-  "601": [
-   "itaru_avg"
-  ],
-  "602": [
-   "faris_avg"
-  ],
-  "603": [
-   "ruka_avg"
-  ],
-  "850": [
-   "refugee1_avg"
-  ],
-  "881": [
-   "boxer2_avg"
-  ],
-  "960": [
-   "eos2_shadow_avg"
-  ],
-  "999": [
-   "prof_f_avg"
-  ],
-  "1001": [
-   "persicaria_shadow_avg",
-   "persicariadr_avg"
-  ],
-  "1002": [
-   "anna_myth_avg"
-  ],
-  "1003": [
-   "sol_avg",
-   "sol_juggernaut_avg",
-   "sol_s_hurt_avg"
-  ],
-  "1010": [
-   "fool_persicaria_avg"
-  ],
-  "1011": [
-   "fool_persicaria_avg",
-   "persicaria_dress2_avg"
-  ],
-  "1022": [
-   "fool_anna_avg"
-  ],
-  "1030": [
-   "fool_sol_avg"
-  ],
-  "1031": [
-   "sol_b2s_avg",
-   "sol_b2_avg",
-   "ridersol_mask_avg",
-   "sold_avg",
-   "sol_b2h_avg"
-  ],
-  "1033": [
-   "fool_sol_avg",
-   "sold_avg"
-  ],
-  "1040": [
-   "fool_simo_avg"
-  ],
-  "1044": [
-   "fool_simo_avg"
-  ],
-  "1050": [
-   "fool_croque_avg",
-   "fool_delacey_avg"
-  ],
-  "1055": [
-   "fool_croque_avg"
-  ],
-  "1088": [
-   "fool_gin_avg"
-  ],
-  "1101": [
-   "sangoma_shadow_avg"
-  ],
-  "1102": [
-   "sangoma_shadow_avg"
-  ],
-  "1118": [
-   "nanaka_avg"
-  ],
-  "1131": [
-   "betty_oath2_avg"
-  ],
-  "1141": [
-   "asagentb_avg",
-   "golem1b_avg"
-  ],
-  "1142": [
-   "asagentc_avg"
-  ],
-  "1144": [
-   "asagentc_avg"
-  ],
-  "1155": [
-   "fool_aki_avg"
-  ],
-  "1280": [
-   "mag2_avg"
-  ],
-  "1370": [
-   "fool_hubble_avg"
-  ],
-  "1390": [
-   "fool_centaureissi_avg"
-  ],
-  "1399": [
-   "centaureissi_avg"
-  ],
-  "1470": [
-   "willowshadow_avg"
-  ],
-  "1520": [
-   "hatsuchiri_shadow_avg",
-   "fool_hatsuchiri_avg"
-  ],
-  "1540": [
-   "fool_python_avg"
-  ],
-  "1550": [
-   "fool_kuro_avg"
-  ],
-  "1590": [
-   "fool_nora_avg"
-  ],
-  "1591": [
-   "nora_myth_avg"
-  ],
-  "1620": [
-   "golem2_avg"
-  ],
-  "1621": [
-   "puzzle_myth_avg"
-  ],
-  "1631": [
-   "nascita1_avg"
-  ],
-  "1633": [
-   "nascita2_avg"
-  ],
-  "1861": [
-   "belladonna_shadow_avg"
-  ],
-  "1862": [
-   "belladonna_shadow_avg"
-  ],
-  "1960": [
-   "ptolomaea_avg"
-  ],
-  "1971": [
-   "entropy_star_avg",
-   "ptolomaea_slave_avg",
-   "entropy_avg"
-  ],
-  "1972": [
-   "entropy_avg"
-  ],
-  "1977": [
-   "patience_b_avg"
-  ],
-  "2002": [
-   "kurisu_maid_avg"
-  ],
-  "2003": [
-   "mayuri_maid_avg"
-  ],
-  "2631": [
-   "slime_avg"
-  ],
-  "5070": [
-   "malkira_shadow_avg"
-  ],
-  "10022": [
-   "fool_anna_avg",
-   "fool_anna2_avg"
-  ],
-  "10037": [
-   "fool_hubble_avg"
-  ],
-  "10039": [
-   "fool_centaureissi_avg"
-  ],
-  "10042": [
-   "fool_florence_avg"
-  ],
-  "10051": [
-   "fool_delacey_avg"
-  ],
-  "10052": [
-   "fool_hatsuchiri_avg"
-  ],
-  "10053": [
-   "fool_sueyoi_avg"
-  ],
-  "10055": [
-   "fool_kuro_avg"
-  ],
-  "10058": [
-   "fool_haze_avg"
-  ],
-  "10059": [
-   "fool_nora_avg"
-  ]
+  "13": "riko_avg",
+  "14": "astronaut_avg",
+  "16": "faith2_avg",
+  "17": "kuroryu_avg",
+  "18": "hannah_avg",
+  "19": "olivia_avg",
+  "21": "mara_weapon_avg",
+  "22": "mara_blue_avg",
+  "23": "choco_avg",
+  "26": "beelneith_avg",
+  "27": "adele_avg",
+  "28": "neumann_avg",
+  "29": "eniac_avg",
+  "30": "gabriel2_avg",
+  "33": "odette_avg",
+  "34": "odile_b3_avg",
+  "35": "wisdom_b_avg",
+  "37": "eosphorus_wings_avg",
+  "38": "hesperus_weapon_avg",
+  "41": "irida_avg",
+  "42": "cyclopes_npc_02_avg",
+  "43": "helios_robotgreen_avg",
+  "44": "helios_robotyellow_avg",
+  "45": "helios_robotgreen_avg",
+  "46": "helios_firewood_avg",
+  "47": "demi_lava2_avg",
+  "50": "odile_w_avg",
+  "51": "refactor_avg",
+  "52": "love_avg",
+  "55": "taranum_avg",
+  "58": "soldier_mask_avg",
+  "59": "soldier_tac_avg",
+  "62": "soldier_elvin_avg",
+  "65": "reverence_avg",
+  "72": "eosphorus_shadow_avg",
+  "74": "elaugh_mask_avg",
+  "76": "undline_w1_avg",
+  "77": "sin_avg",
+  "78": "undline_w3_avg",
+  "79": "fakegod_avg",
+  "80": "judge_avg",
+  "84": "refugeeboy_avg",
+  "85": "refugee1_avg",
+  "88": "boxer1_avg",
+  "90": "santino_avg",
+  "92": "helios_firewood_avg",
+  "93": "helios_firewood_avg",
+  "95": "golem1_avg",
+  "96": "eos2_avg",
+  "97": "ranko_avg",
+  "101": "persicaria_avg",
+  "102": "anna_avg",
+  "103": "sol_avg",
+  "104": "simo_avg",
+  "105": "croque_avg",
+  "106": "fresnel_avg",
+  "107": "chelsea_avg",
+  "108": "gin_avg",
+  "109": "mai_avg",
+  "110": "sangoma_avg",
+  "112": "max_avg",
+  "113": "betty_avg",
+  "114": "entropy_avg",
+  "115": "aki_avg",
+  "116": "banxsy_avg",
+  "117": "angela_avg",
+  "118": "nanaka_avg",
+  "119": "olivia_avg",
+  "120": "yanny_avg",
+  "121": "groove_avg",
+  "123": "bonee_avg",
+  "124": "helix_avg",
+  "125": "nameless_avg",
+  "126": "octogen_avg",
+  "127": "zion_avg",
+  "128": "mag2_avg",
+  "129": "slime_avg",
+  "130": "uncle_avg",
+  "131": "imhotep_avg",
+  "133": "defender_avg",
+  "134": "abigail_avg",
+  "135": "patience_avg",
+  "136": "lam_avg",
+  "137": "hubble_avg",
+  "138": "sakuya_avg",
+  "139": "centaureissi_avg",
+  "140": "clukay_ent_avg",
+  "141": "burbank_npc1_avg",
+  "142": "florence_avg",
+  "143": "hel_avg",
+  "144": "twigs_avg",
+  "145": "vee_avg",
+  "146": "earhart_avg",
+  "147": "willow_avg",
+  "148": "dusevnyj_avg",
+  "149": "rise_avg",
+  "150": "ksenia_avg",
+  "151": "delacey_avg",
+  "152": "hatsuchiri_avg",
+  "153": "sueyoi_avg",
+  "154": "python_avg",
+  "155": "kuro_avg",
+  "156": "lind_avg",
+  "157": "sockdolager_avg",
+  "158": "haze_avg",
+  "159": "nora_avg",
+  "160": "crypter_avg",
+  "161": "helix_avg",
+  "162": "puzzle_avg",
+  "163": "nascita2_avg",
+  "164": "gastronomie_avg",
+  "165": "uranus_avg",
+  "166": "clukay_avg",
+  "167": "clotho_avg",
+  "168": "dupin_avg",
+  "169": "security1_avg",
+  "170": "undline_avg",
+  "171": "yelena_avg",
+  "172": "jiangyu_avg",
+  "173": "horizon_avg",
+  "174": "luna_avg",
+  "175": "havoc_avg",
+  "176": "erika_avg",
+  "177": "undline_w2_avg",
+  "178": "undline_w3_avg",
+  "179": "xinghuan_mech_avg",
+  "180": "yuwang_avg",
+  "181": "hubble_sp_avg",
+  "182": "kimie_avg",
+  "183": "penumbra_avg",
+  "184": "bonneville_avg",
+  "185": "shell_avg",
+  "186": "belladonna_avg",
+  "187": "lewis_avg",
+  "188": "kuro_spring_avg",
+  "189": "boxer1_avg",
+  "190": "oasis_b02a_avg",
+  "193": "chris_avg",
+  "194": "security1_avg",
+  "195": "woman_avg",
+  "196": "ptolomaea_avg",
+  "197": "cocytus_avg",
+  "198": "fortitude_avg",
+  "199": "lind_avg",
+  "200": "knot_shadow_avg",
+  "201": "okabe_avg",
+  "202": "kurisu_avg",
+  "203": "mayuri_avg",
+  "204": "twigs_myth_bird_avg",
+  "205": "slomo_avg",
+  "206": "fireman3_avg",
+  "207": "fireman_avg",
+  "213": "cyclopes_npc_01_avg",
+  "214": "cyclopes_npc_01_avg",
+  "215": "spacebot_01_avg",
+  "216": "meteor_avg",
+  "217": "spacebot_01_avg",
+  "218": "spacebot_02_avg",
+  "219": "spacebot_03_avg",
+  "220": "xuannv_avg",
+  "221": "gagarin_avg",
+  "223": "spacebot_02e_avg",
+  "224": "spacebot_03e_avg",
+  "230": "chocoshadow_avg",
+  "231": "ksenia_avg",
+  "232": "kuro_maid_avg",
+  "234": "oasis_b01_avg",
+  "240": "soldier_helmet_avg",
+  "241": "soldier_helmet_avg",
+  "242": "chris_avg",
+  "243": "soldier_weber_hurt_avg",
+  "244": "soldier_tac_avg",
+  "245": "soldier_mask_avg",
+  "247": "soldier_helmet_avg",
+  "249": "soldier_tac_avg",
+  "250": "soldier_helmet2_avg",
+  "251": "oasis_a02a_avg",
+  "253": "serper_avg",
+  "257": "oasis_a02a_avg",
+  "260": "beelneith_b_avg",
+  "262": "hope_avg",
+  "263": "slime2_avg",
+  "264": "prof_f_avg",
+  "281": "neumann_shadow_avg",
+  "291": "eniac_shadow_avg",
+  "333": "odette_b_avg",
+  "341": "odile_b_avg",
+  "344": "odile_shadow_avg",
+  "350": "wisdom_b_avg",
+  "351": "wisdom_b_avg",
+  "370": "eos_avg",
+  "470": "demiurge_avg",
+  "501": "atlas_avg",
+  "502": "ira_avg",
+  "503": "alcyone_avg",
+  "504": "caina_avg",
+  "505": "caina_avg",
+  "506": "antenora_avg",
+  "507": "malkira_avg",
+  "514": "entropy_avg",
+  "601": "itaru_avg",
+  "602": "faris_avg",
+  "603": "ruka_avg",
+  "850": "refugee1_avg",
+  "881": "boxer2_avg",
+  "960": "eos2_shadow_avg",
+  "999": "prof_f_avg",
+  "1001": "persicaria_shadow_avg",
+  "1002": "anna_myth_avg",
+  "1003": "sol_avg",
+  "1010": "fool_persicaria_avg",
+  "1011": "fool_persicaria_avg",
+  "1022": "fool_anna_avg",
+  "1030": "fool_sol_avg",
+  "1031": "sol_b2s_avg",
+  "1033": "fool_sol_avg",
+  "1040": "fool_simo_avg",
+  "1044": "fool_simo_avg",
+  "1050": "fool_croque_avg",
+  "1055": "fool_croque_avg",
+  "1088": "fool_gin_avg",
+  "1101": "sangoma_shadow_avg",
+  "1102": "sangoma_shadow_avg",
+  "1118": "nanaka_avg",
+  "1131": "betty_oath2_avg",
+  "1141": "asagentb_avg",
+  "1142": "asagentc_avg",
+  "1144": "asagentc_avg",
+  "1155": "fool_aki_avg",
+  "1280": "mag2_avg",
+  "1370": "fool_hubble_avg",
+  "1390": "fool_centaureissi_avg",
+  "1399": "centaureissi_avg",
+  "1470": "willowshadow_avg",
+  "1520": "hatsuchiri_shadow_avg",
+  "1540": "fool_python_avg",
+  "1550": "fool_kuro_avg",
+  "1590": "fool_nora_avg",
+  "1591": "nora_myth_avg",
+  "1620": "golem2_avg",
+  "1621": "puzzle_myth_avg",
+  "1631": "nascita1_avg",
+  "1633": "nascita2_avg",
+  "1861": "belladonna_shadow_avg",
+  "1862": "belladonna_shadow_avg",
+  "1960": "ptolomaea_avg",
+  "1971": "entropy_star_avg",
+  "1972": "entropy_avg",
+  "1977": "patience_b_avg",
+  "2002": "kurisu_maid_avg",
+  "2003": "mayuri_maid_avg",
+  "2631": "slime_avg",
+  "5070": "malkira_shadow_avg",
+  "10022": "fool_anna_avg",
+  "10037": "fool_hubble_avg",
+  "10039": "fool_centaureissi_avg",
+  "10042": "fool_florence_avg",
+  "10051": "fool_delacey_avg",
+  "10052": "fool_hatsuchiri_avg",
+  "10053": "fool_sueyoi_avg",
+  "10055": "fool_kuro_avg",
+  "10058": "fool_haze_avg",
+  "10059": "fool_nora_avg"
  },
  "heroSprites": {
-  "1": [
-   "ira_shadow_avg",
-   "hatsuchiri_avg",
-   "42lab_npc_02_avg",
-   "banxsy_avg",
-   "turing_avg",
-   "bonneville_avg",
-   "anna_avg",
-   "sol_avg"
-  ],
-  "2": [
-   "prof_f_avg",
-   "kurisu_avg",
-   "lewis_avg",
-   "cocytus_avg",
-   "persicaria_sp_avg",
-   "beelneith_avg",
-   "ruka_avg",
-   "persicaria_avg"
-  ],
-  "4": [
-   "sol_avg"
-  ],
-  "6": [
-   "turing2_avg",
-   "turing_avg",
-   "sol_avg",
-   "persicaria_avg",
-   "42lab_npc_02_avg",
-   "hannah_avg"
-  ],
-  "11": [
-   "turing_avg",
-   "42lab_npc_01_avg"
-  ],
-  "13": [
-   "riko_avg",
-   "persicaria_avg",
-   "sol_avg",
-   "ranko_avg",
-   "undline_maid_avg"
-  ],
-  "14": [
-   "burbank_npc1_avg",
-   "asagent_avg",
-   "burbank_npc2_avg",
-   "astronaut_avg",
-   "asagentc_avg",
-   "asagentb_avg",
-   "delacey_avg",
-   "sueyoi_avg",
-   "cyclopes_npc_01_avg"
-  ],
-  "15": [
-   "hannah_avg"
-  ],
-  "16": [
-   "faith2_avg",
-   "faith_avg",
-   "sol_avg",
-   "anna_avg",
-   "42lab_npc_02_avg",
-   "turing_avg"
-  ],
-  "18": [
-   "hannah_avg",
-   "42lab_npc_01_avg",
-   "croque_avg",
-   "sol_avg",
-   "anna_avg"
-  ],
-  "19": [
-   "olivia2_avg",
-   "olivia_avg",
-   "simo_avg"
-  ],
-  "20": [
-   "olivia_avg"
-  ],
-  "21": [
-   "mara_weapon_avg",
-   "mara_wrecked_avg",
-   "cyclopes_npc_02_avg",
-   "beelneith_avg",
-   "olivia_avg"
-  ],
-  "22": [
-   "mara_wrecked_avg",
-   "croque_avg",
-   "persicaria_avg",
-   "anna_avg"
-  ],
-  "23": [
-   "choco_avg",
-   "choco_christ_avg",
-   "undline_christ_avg",
-   "zion_avg"
-  ],
-  "26": [
-   "beelneith_avg",
-   "beelneith_b_avg",
-   "beelneith_2_avg"
-  ],
-  "27": [
-   "eniac_avg"
-  ],
-  "28": [
-   "neumann_avg",
-   "anna_avg",
-   "clukay_avg"
-  ],
-  "29": [
-   "eniac2_avg",
-   "eniac_avg",
-   "neumann_avg",
-   "clukay_avg",
-   "neumann2_avg",
-   "persicaria_avg",
-   "persicaria_bq_avg"
-  ],
-  "30": [
-   "gabriel2_avg",
-   "gabriel_avg",
-   "beelneith_avg",
-   "punish_avg"
-  ],
-  "33": [
-   "odette_avg",
-   "odile_w_avg",
-   "sol_avg"
-  ],
-  "34": [
-   "odile_w_avg",
-   "odile_b3_avg",
-   "odile_b_avg",
-   "odette_avg",
-   "anna_avg",
-   "wisdom_w_avg",
-   "turing_avg",
-   "odette_b_avg"
-  ],
-  "35": [
-   "wisdom_w_avg",
-   "wisdom_b_avg",
-   "sol_avg",
-   "love_avg",
-   "angela_avg"
-  ],
-  "36": [
-   "42lab_npc_02_avg",
-   "turing_avg",
-   "42lab_npc_01_avg"
-  ],
-  "37": [
-   "eosphorus_wings_avg",
-   "eosphorus_avg",
-   "eosphorus_w1_avg",
-   "eosphorus_shadow_avg",
-   "eosphorus_b_avg"
-  ],
-  "38": [
-   "hesperus_weapon_avg",
-   "hesperus_weapon2_avg",
-   "punish_avg",
-   "eosphorus_avg",
-   "faith2_avg",
-   "reverence_avg",
-   "alcyone_avg",
-   "patience_b_avg",
-   "hesperus_avg",
-   "eosphorus_wings_avg"
-  ],
-  "41": [
-   "eosphorus_wings_avg",
-   "anna_avg"
-  ],
-  "42": [
-   "cyclopes_npc_02_avg",
-   "olivia2_avg"
-  ],
-  "43": [
-   "helios_robotred_avg",
-   "botaiko_avg",
-   "helios_robotyellow_avg",
-   "helios_robotgreen_avg"
-  ],
-  "44": [
-   "helios_robotyellow_avg",
-   "helios_robotgreen_avg",
-   "helios_robotred_avg"
-  ],
-  "45": [
-   "helios_robotgreen_avg",
-   "helios_robotyellow_avg",
-   "helios_robotred_avg"
-  ],
-  "46": [
-   "helios_firewood_avg",
-   "croque_avg"
-  ],
-  "47": [
-   "demi_lava2_avg",
-   "sol_avg"
-  ],
-  "51": [
-   "refactor_avg"
-  ],
-  "52": [
-   "love_avg",
-   "wisdom_w_avg"
-  ],
-  "54": [
-   "odile_b_avg"
-  ],
-  "55": [
-   "taranum_avg",
-   "delacey_avg",
-   "sol_avg",
-   "persicaria_avg"
-  ],
-  "56": [
-   "refactor_avg"
-  ],
-  "57": [
-   "refactor_avg"
-  ],
-  "58": [
-   "soldier_mask_avg",
-   "soldier_elvin_avg",
-   "soldier_tac_avg"
-  ],
-  "59": [
-   "soldier_tac_avg",
-   "soldier_elvin_avg",
-   "soldier_mask_avg",
-   "evelyn_rookie_avg"
-  ],
-  "60": [
-   "evelyn_rookie_avg"
-  ],
-  "61": [
-   "python_avg"
-  ],
-  "62": [
-   "soldier_elvin_avg",
-   "evelyn_rookie_avg"
-  ],
-  "65": [
-   "reverence_avg",
-   "patience_b_avg"
-  ],
-  "67": [
-   "nana_avg",
-   "kuro_avg"
-  ],
-  "71": [
-   "vee_avg"
-  ],
-  "72": [
-   "crypter_avg",
-   "gabriel2_avg",
-   "sueyoi_avg",
-   "defender_avg",
-   "xinghuan_avg",
-   "alcyone_avg",
-   "sol_bh_avg",
-   "nameless_avg"
-  ],
-  "73": [
-   "anna_shadow_avg"
-  ],
-  "74": [
-   "elaugh_mask_avg",
-   "lind_avg",
-   "elaugh_avg"
-  ],
-  "75": [
-   "delacey_avg",
-   "asagentb_avg",
-   "asagent_avg",
-   "sueyoi_avg"
-  ],
-  "76": [
-   "elaugh_mask_avg",
-   "asagentb_avg"
-  ],
-  "77": [
-   "sin_avg",
-   "punish_avg",
-   "delacey_avg",
-   "asagent_avg"
-  ],
-  "78": [
-   "punish_avg",
-   "sin_avg",
-   "punish2_avg",
-   "delacey_avg",
-   "asagent_avg"
-  ],
-  "80": [
-   "judge_avg",
-   "reverence_avg"
-  ],
-  "83": [
-   "sueyoi_avg"
-  ],
-  "85": [
-   "refugee1_avg",
-   "nora_avg"
-  ],
-  "86": [
-   "nora_avg",
-   "refugee1_avg",
-   "crypter_avg"
-  ],
-  "88": [
-   "nora_avg"
-  ],
-  "90": [
-   "vee_avg",
-   "mag2_avg"
-  ],
-  "92": [
-   "spacebot_01_avg"
-  ],
-  "93": [
-   "helios_firewood_avg",
-   "anna_avg"
-  ],
-  "94": [
-   "oasis_03_avg",
-   "oasis_02_avg"
-  ],
-  "96": [
-   "eos2_avg",
-   "eos_avg",
-   "eosphorus_shadow_avg",
-   "burbank_npc1_avg",
-   "nascita2_avg",
-   "persicaria_sp_avg",
-   "persicaria_avg",
-   "eos_oath_avg"
-  ],
-  "97": [
-   "ranko_avg",
-   "rideromega_avg",
-   "golem2b_avg"
-  ],
-  "100": [
-   "nascita1_avg",
-   "burbank_npc1_avg",
-   "kuro_avg",
-   "ridersol_mask_avg"
-  ],
-  "101": [
-   "rideromega_avg"
-  ],
-  "102": [
-   "ridersol_mask_avg",
-   "kuro_avg",
-   "burbank_npc1_avg",
-   "ridersol_avg"
-  ],
-  "103": [
-   "nascita2_avg",
-   "puzzlecat_avg",
-   "meryl_avg"
-  ],
-  "104": [
-   "burbank_npc3_avg",
-   "golem1_avg",
-   "lewis_avg",
-   "nanaka_avg",
-   "sol_avg"
-  ],
-  "105": [
-   "puzzle_avg",
-   "persicaria_avg"
-  ],
-  "107": [
-   "puzzlecat_avg",
-   "golem2b_avg",
-   "shell_avg",
-   "kuro_avg",
-   "golem2_avg"
-  ],
-  "110": [
-   "ridersol_avg"
-  ],
-  "112": [
-   "helios_robotgreen_avg"
-  ],
-  "114": [
-   "croque_kid_avg",
-   "kuroryu_avg",
-   "chelsea_kid_avg",
-   "chelsea_avg"
-  ],
-  "115": [
-   "helios_robotgreen_avg",
-   "chelsea_kid_avg"
-  ],
-  "117": [
-   "croque_kid_avg"
-  ],
-  "118": [
-   "kuro_kid_avg",
-   "chelsea_kid_avg",
-   "kuroryu_avg"
-  ],
-  "119": [
-   "burbank_npc2_avg"
-  ],
-  "120": [
-   "burbank_npc2_avg",
-   "chelsea_kid_avg",
-   "burbank_npc1_avg"
-  ],
-  "121": [
-   "burbank_npc2_avg"
-  ],
-  "124": [
-   "croque_kid_avg"
-  ],
-  "125": [
-   "nameless_avg",
-   "crypter_avg"
-  ],
-  "126": [
-   "crypter_avg",
-   "cyclopes_npc_03_avg"
-  ],
-  "129": [
-   "anna_avg",
-   "slime_avg",
-   "fresnel_avg",
-   "hubble_sp_avg"
-  ],
-  "130": [
-   "willow_avg",
-   "gastronomie_avg"
-  ],
-  "131": [
-   "croque_avg",
-   "oasis_a01_avg",
-   "xuannv_avg"
-  ],
-  "133": [
-   "defender_avg"
-  ],
-  "134": [
-   "anna_avg"
-  ],
-  "139": [
-   "persicariadr_avg",
-   "persicaria_avg",
-   "clukay_gf_avg"
-  ],
-  "140": [
-   "clukay_ent_avg",
-   "clukay_gf_avg",
-   "persicaria_avg",
-   "persicariadr_avg",
-   "clukay_avg"
-  ],
-  "143": [
-   "hel_avg",
-   "clotho_avg",
-   "centaureissi_avg"
-  ],
-  "144": [
-   "oasis_a02a_avg"
-  ],
-  "146": [
-   "soldier_glasses_avg",
-   "centaureissi_mil_avg"
-  ],
-  "147": [
-   "soldier_helmet_avg",
-   "soldier_tac_avg",
-   "soldier_mask_avg"
-  ],
-  "148": [
-   "soldier_tac_avg",
-   "soldier_helmet_avg",
-   "soldier_mask_avg"
-  ],
-  "149": [
-   "soldier_mask_avg",
-   "soldier_helmet_avg",
-   "soldier_tac_avg"
-  ],
-  "150": [
-   "soldier_helmet_avg",
-   "soldier_tac_avg"
-  ],
-  "151": [
-   "soldier_hurt_avg"
-  ],
-  "152": [
-   "clotho_avg"
-  ],
-  "157": [
-   "anna_hallo_avg"
-  ],
-  "158": [
-   "helix_hallo_avg",
-   "clotho_avg",
-   "anna_avg",
-   "anna_hallo_avg"
-  ],
-  "159": [
-   "yanny0_avg",
-   "helix_hallo_avg",
-   "clotho_avg"
-  ],
-  "160": [
-   "helix_hallo_avg",
-   "anna_avg",
-   "clotho_avg"
-  ],
-  "161": [
-   "clotho_avg",
-   "helix_hallo_avg"
-  ],
-  "164": [
-   "dupin_avg",
-   "security3_avg"
-  ],
-  "166": [
-   "dupin_avg"
-  ],
-  "167": [
-   "mob1_avg"
-  ],
-  "168": [
-   "mob1_avg",
-   "security1_avg"
-  ],
-  "171": [
-   "sakuya_avg"
-  ],
-  "176": [
-   "undline_w1_avg",
-   "undline_w1c_avg",
-   "undline_w2c_avg",
-   "undline_w3c_avg",
-   "chelsea_avg",
-   "undline_w4c_avg",
-   "undline_avg"
-  ],
-  "177": [
-   "undline_w2_avg",
-   "undline_w2c_avg",
-   "undline_w4c_avg",
-   "undline_w1c_avg",
-   "undline_w3c_avg",
-   "chelsea_avg",
-   "undline_christ_avg",
-   "undline_w1_avg",
-   "undline_avg"
-  ],
-  "178": [
-   "undline_w3c_avg",
-   "undline_w3_avg",
-   "undline_w1c_avg",
-   "undline_w2c_avg",
-   "chelsea_avg",
-   "undline_w4c_avg",
-   "undline_avg"
-  ],
-  "179": [
-   "undline_w2c_avg",
-   "undline_w1c_avg",
-   "undline_w3c_avg",
-   "chelsea_avg",
-   "undline_christ_avg",
-   "undline_w4c_avg",
-   "undline_avg"
-  ],
-  "181": [
-   "undline_avg"
-  ],
-  "182": [
-   "mechanic_avg",
-   "delacey_avg"
-  ],
-  "183": [
-   "mechanic_avg"
-  ],
-  "185": [
-   "yelena_avg",
-   "kuro_spring_avg",
-   "jiangyu_avg",
-   "burbank_npc2_avg"
-  ],
-  "187": [
-   "python_kongfu_avg",
-   "nascita2_avg",
-   "jiangyu_avg"
-  ],
-  "188": [
-   "kuro_spring_avg"
-  ],
-  "193": [
-   "yelena_avg",
-   "boy_avg",
-   "luna_avg"
-  ],
-  "195": [
-   "woman_avg",
-   "luna_avg"
-  ],
-  "196": [
-   "ptolomaea_avg",
-   "ptolomaea_shadow_avg"
-  ],
-  "197": [
-   "cocytus_avg",
-   "entropy_star_avg",
-   "entropy_avg",
-   "dusevnyj_avg",
-   "mayuri_avg"
-  ],
-  "201": [
-   "erika_avg"
-  ],
-  "202": [
-   "oasis_a02_avg",
-   "burbank_npc1_avg",
-   "oasis_b02_avg"
-  ],
-  "203": [
-   "oasis_a02_avg",
-   "erika_avg"
-  ],
-  "206": [
-   "fireman3_avg",
-   "cascadia_avg"
-  ],
-  "207": [
-   "fireman_avg",
-   "cascadia_avg"
-  ],
-  "211": [
-   "taisch_avg"
-  ],
-  "214": [
-   "cyclopes_npc_01_avg",
-   "olivia2_avg"
-  ],
-  "215": [
-   "spacebot_01_avg",
-   "hubble_avg"
-  ],
-  "216": [
-   "meteor_avg",
-   "xinghuan_mech_avg"
-  ],
-  "217": [
-   "yuwang_avg",
-   "spacebot_01_avg"
-  ],
-  "218": [
-   "spacebot_02_avg",
-   "spacebot_03_avg",
-   "meteor_avg",
-   "entropy_star_avg",
-   "yuwang_avg",
-   "spacebot_01_avg"
-  ],
-  "219": [
-   "spacebot_03_avg",
-   "spacebot_02_avg",
-   "meteor_avg"
-  ],
-  "220": [
-   "xuannv_avg",
-   "yuwang_avg",
-   "fresnel_avg",
-   "meteor_avg"
-  ],
-  "221": [
-   "gagarin_avg",
-   "xuannv_avg",
-   "yuwang_avg"
-  ],
-  "223": [
-   "spacebot_02e_avg"
-  ],
-  "224": [
-   "spacebot_02e_avg"
-  ],
-  "225": [
-   "riko_avg",
-   "kuro_avg"
-  ],
-  "231": [
-   "faris_avg",
-   "ksenia_avg"
-  ],
-  "232": [
-   "okabe_avg"
-  ],
-  "235": [
-   "xinghuan_newyear_avg"
-  ],
-  "237": [
-   "kimie_newyear_avg"
-  ],
-  "238": [
-   "persicaria_sp_newyear_avg"
-  ],
-  "240": [
-   "soldier_helmet_avg",
-   "centaureissi_sp_avg"
-  ],
-  "241": [
-   "soldier_helmet_avg"
-  ],
-  "242": [
-   "chris_avg",
-   "soldier_helmet_avg"
-  ],
-  "243": [
-   "soldier_weber_hurt_avg"
-  ],
-  "245": [
-   "soldier_mask_avg"
-  ],
-  "247": [
-   "soldier_helmet_avg"
-  ],
-  "248": [
-   "soldier_helmet_avg"
-  ],
-  "249": [
-   "soldier_tac_avg"
-  ],
-  "250": [
-   "soldier_tac_avg"
-  ],
-  "251": [
-   "chris_avg"
-  ],
-  "253": [
-   "serper_avg",
-   "bonneville_avg"
-  ],
-  "256": [
-   "oasis_a02a_avg"
-  ],
-  "257": [
-   "oasis_a02a_avg"
-  ],
-  "258": [
-   "oasis_a02a_avg"
-  ],
-  "261": [
-   "olivia_avg"
-  ],
-  "265": [
-   "eosphorus_wings_avg"
-  ],
-  "371": [
-   "sol_avg",
-   "eosphorus_wings_avg"
-  ],
-  "501": [
-   "atlas_hurt_avg",
-   "alcyone_avg",
-   "atlas_avg",
-   "eosphorus_wings_avg",
-   "eosphorus_shadow_avg"
-  ],
-  "502": [
-   "ira_avg",
-   "alcyone_avg",
-   "ira_b_avg"
-  ],
-  "503": [
-   "alcyone_avg",
-   "ira_avg"
-  ],
-  "504": [
-   "caina_avg"
-  ],
-  "505": [
-   "caina_avg",
-   "caina_star2_avg",
-   "entropy_star_avg",
-   "xinghuan_mech_b_avg"
-  ],
-  "506": [
-   "antenora_avg",
-   "riko_avg",
-   "caina_avg"
-  ],
-  "507": [
-   "malkira_avg",
-   "slime2_avg",
-   "ptolomaea_avg",
-   "neumann_avg",
-   "anna_avg",
-   "malkira_shadow_avg",
-   "eosphorus_wings_avg"
-  ],
-  "601": [
-   "itaru_avg",
-   "mayuri_avg",
-   "anna_avg"
-  ],
-  "602": [
-   "faris_avg",
-   "kurisu_avg",
-   "kurisu_maid_avg"
-  ],
-  "603": [
-   "ruka_avg",
-   "erika_avg",
-   "kimie_avg"
-  ],
-  "1000": [
-   "sangoma_avg",
-   "oasis_01b_avg"
-  ],
-  "1001": [
-   "persicaria_avg",
-   "persicaria_sp_avg",
-   "persicaria_s_avg",
-   "persicaria_sph_avg",
-   "persicaria_hurt_avg",
-   "persicaria_bq_avg",
-   "persicaria_sp2h_avg",
-   "persicaria_dress_avg",
-   "sol_avg",
-   "persicaria_sp2_avg",
-   "persicaria_dress2_avg",
-   "sol_s_avg",
-   "sol_b_avg",
-   "persicaria_sp_newyear_avg",
-   "persicaria_shadow_avg",
-   "sol_b2h_avg",
-   "sol_s_hurt_avg",
-   "sol_b2_avg"
-  ],
-  "1002": [
-   "anna_avg",
-   "irida_avg",
-   "persicaria_avg",
-   "persicaria_sp_avg",
-   "persicaria_s_avg",
-   "persicaria_sp2h_avg",
-   "persicaria_sph_avg"
-  ],
-  "1003": [
-   "sol_avg",
-   "sol_s_hurt_avg",
-   "sol_s_avg",
-   "sol_hurt_avg",
-   "meryl_avg",
-   "sol_juggernaut_avg",
-   "sol_b2s_avg",
-   "rideromega_avg",
-   "persicaria_avg",
-   "anna_avg",
-   "persicaria_sph_avg",
-   "persicaria_s_avg",
-   "sol_b2h_avg",
-   "sol_b2_avg",
-   "persicaria_shadow_avg"
-  ],
-  "1004": [
-   "simo_avg",
-   "croque_avg",
-   "persicaria_avg",
-   "persicaria_hurt_avg"
-  ],
-  "1005": [
-   "croque_avg",
-   "croque_spring_avg",
-   "persicaria_avg",
-   "persicaria_sp_avg",
-   "croque_g_avg"
-  ],
-  "1006": [
-   "fresnel_avg",
-   "fresnel_hurt_avg",
-   "hubble_avg",
-   "hubble_sp_avg"
-  ],
-  "1007": [
-   "chelsea_avg",
-   "chelsea_kid_avg",
-   "cascadia_avg",
-   "croque_kid_avg",
-   "slomo_avg",
-   "entropy_avg"
-  ],
-  "1008": [
-   "gin_avg",
-   "crypter_avg"
-  ],
-  "1009": [
-   "mai_avg",
-   "haze_avg",
-   "ptolomaea_slave_avg",
-   "mag2_avg"
-  ],
-  "1010": [
-   "evelyn_rookie_avg",
-   "evelyn_avg",
-   "evelyn_summer_avg",
-   "soldier_elvin_avg"
-  ],
-  "1012": [
-   "max_avg",
-   "imhotep_avg"
-  ],
-  "1013": [
-   "betty_avg",
-   "choco_avg",
-   "betty_oath2_avg"
-  ],
-  "1015": [
-   "aki_avg",
-   "aki_spring_avg",
-   "dupin_avg",
-   "jiangyu_avg"
-  ],
-  "1016": [
-   "banxsy_avg",
-   "banxsy_summer_avg"
-  ],
-  "1017": [
-   "angela_avg",
-   "angela_summer_avg",
-   "nanaka_avg",
-   "angela_oath_avg"
-  ],
-  "1018": [
-   "nanaka_avg",
-   "kuro_avg"
-  ],
-  "1020": [
-   "yanny_avg",
-   "anna_avg",
-   "hel_avg",
-   "hallopump_avg",
-   "puzzle_avg"
-  ],
-  "1021": [
-   "banxsy_avg",
-   "groove_avg"
-  ],
-  "1023": [
-   "bonee_avg",
-   "persicaria_s_avg",
-   "angela_avg"
-  ],
-  "1024": [
-   "helix_avg"
-  ],
-  "1026": [
-   "octogen_avg",
-   "helix_avg"
-  ],
-  "1027": [
-   "zion_avg",
-   "zion_newyear_avg",
-   "choco_avg",
-   "helios_robotgreen_avg"
-  ],
-  "1028": [
-   "mag2_avg",
-   "mag_avg",
-   "vee_avg",
-   "jiangyu_avg"
-  ],
-  "1029": [
-   "tony_avg",
-   "soldier_helmet_avg",
-   "chris_avg"
-  ],
-  "1031": [
-   "imhotep_avg",
-   "max_avg",
-   "persicaria_hurt_avg"
-  ],
-  "1034": [
-   "abigail_avg",
-   "shell_avg",
-   "dusevnyj_avg",
-   "golem2_avg"
-  ],
-  "1036": [
-   "lam_avg",
-   "yelena_avg",
-   "undline_christ_avg",
-   "persicaria_avg"
-  ],
-  "1037": [
-   "hubble_avg",
-   "fresnel_avg",
-   "fresnel_hurt_avg"
-  ],
-  "1038": [
-   "sakuya_spring_avg",
-   "sakuya_avg",
-   "croque_avg",
-   "dupin_avg",
-   "jiangyu_avg",
-   "croque_spring_avg",
-   "croque_g_avg"
-  ],
-  "1039": [
-   "centaureissi_avg",
-   "centaureissi_idol_avg",
-   "centaureissi_mil_avg",
-   "soldier_helmet_avg",
-   "chris_avg",
-   "centaureissi_sp_avg",
-   "clotho2_avg",
-   "clotho_avg",
-   "centaureissi_summer_avg",
-   "centaureissi_hurt_avg"
-  ],
-  "1041": [
-   "fern_avg",
-   "sockdolager_avg",
-   "cascadia_avg",
-   "sockdolager_myth_avg"
-  ],
-  "1042": [
-   "florence_avg",
-   "florence_spring_avg",
-   "panakeia_avg",
-   "florence_swim_avg"
-  ],
-  "1043": [
-   "panakeia_avg",
-   "florence_avg",
-   "bonee_avg"
-  ],
-  "1044": [
-   "twigs_avg",
-   "twigs_summer_avg",
-   "jiangyu_avg",
-   "cascadia_avg",
-   "nascita2_avg",
-   "angela_summer_avg",
-   "twigs_myth_avg"
-  ],
-  "1045": [
-   "vee_avg",
-   "vee_idol_avg",
-   "mag_avg",
-   "mag2_avg"
-  ],
-  "1046": [
-   "earhart_avg",
-   "luna_avg"
-  ],
-  "1047": [
-   "willow_avg",
-   "gastronomie_avg"
-  ],
-  "1048": [
-   "dusevnyj_avg",
-   "erika_avg",
-   "erika_hurt_avg"
-  ],
-  "1049": [
-   "rise_avg",
-   "nora_avg"
-  ],
-  "1050": [
-   "ksenia_avg",
-   "jiangyu_dress_avg",
-   "jiangyu_avg"
-  ],
-  "1051": [
-   "delacey_avg",
-   "sueyoi_avg"
-  ],
-  "1052": [
-   "hatsuchiri_avg",
-   "anna_avg",
-   "sueyoi_avg"
-  ],
-  "1053": [
-   "sueyoi_avg",
-   "delacey_avg"
-  ],
-  "1054": [
-   "python_avg",
-   "python_p2_avg"
-  ],
-  "1055": [
-   "kuro_avg",
-   "kuro_spring_avg"
-  ],
-  "1056": [
-   "lind_avg",
-   "lind_s_avg",
-   "elaugh_mask_avg",
-   "delacey_avg",
-   "sueyoi_avg"
-  ],
-  "1057": [
-   "sockdolager_avg",
-   "sockdolager_myth_avg",
-   "haze_avg",
-   "kuro_avg"
-  ],
-  "1058": [
-   "haze_avg"
-  ],
-  "1059": [
-   "nora_avg",
-   "crypter_avg",
-   "nora_summer_avg"
-  ],
-  "1060": [
-   "crypter_avg",
-   "nora_avg"
-  ],
-  "1061": [
-   "banxsy_avg",
-   "helix_avg"
-  ],
-  "1062": [
-   "puzzle_avg",
-   "anna_avg",
-   "hallopump_avg",
-   "yanny_avg"
-  ],
-  "1063": [
-   "nascita2_avg",
-   "jiangyu_avg",
-   "sol_avg"
-  ],
-  "1064": [
-   "gastronomie_avg"
-  ],
-  "1065": [
-   "penumbra_avg",
-   "helios_robotgreen_avg",
-   "bonee_avg"
-  ],
-  "1066": [
-   "clukay_avg",
-   "clukay_full_avg",
-   "clukay_idol_avg",
-   "clukay_summer_avg",
-   "beelneith_avg",
-   "neumann_avg",
-   "centaureissi_idol_avg",
-   "eniac_avg",
-   "clukay_ent_avg"
-  ],
-  "1067": [
-   "clotho_avg",
-   "clotho2_avg",
-   "centaureissi_avg",
-   "hel_avg",
-   "centaureissi_hurt_avg"
-  ],
-  "1068": [
-   "dupin_avg",
-   "security1_avg",
-   "aki_avg",
-   "sakuya_avg"
-  ],
-  "1069": [
-   "dupin_avg",
-   "sakuya_avg"
-  ],
-  "1070": [
-   "undline_avg",
-   "undline_christ_avg",
-   "undline_idol_avg",
-   "undline_summer_avg",
-   "undline2_avg",
-   "undline_maid_avg",
-   "delacey_avg",
-   "choco_christ_avg",
-   "undline_w2_avg",
-   "undline_w2c_avg",
-   "undline_w1_avg",
-   "undline_w4c_avg",
-   "undline_w_summer_avg",
-   "undline_w3_avg"
-  ],
-  "1071": [
-   "yelena_avg",
-   "luna_avg"
-  ],
-  "1072": [
-   "jiangyu_avg",
-   "jiangyu_summer_avg",
-   "jiangyu_dress_avg"
-  ],
-  "1073": [
-   "horizon_avg",
-   "horizon_s_avg",
-   "haze_avg",
-   "persicaria_avg",
-   "mai_avg",
-   "persicaria_hurt_avg",
-   "ptolomaea_slave_avg"
-  ],
-  "1074": [
-   "luna_avg",
-   "boy_avg",
-   "luna_dress_avg"
-  ],
-  "1075": [
-   "havoc2_avg",
-   "havoc_avg",
-   "lind_avg",
-   "beelneith_avg",
-   "delacey_avg",
-   "lind_s_avg"
-  ],
-  "1076": [
-   "erika_avg",
-   "erika_hurt_avg",
-   "erika_newyear_avg",
-   "dusevnyj_avg"
-  ],
-  "1077": [
-   "cascadia_avg",
-   "slomo_avg"
-  ],
-  "1078": [
-   "taisch_avg",
-   "imhotep_avg",
-   "max_avg"
-  ],
-  "1079": [
-   "xinghuan_mech_avg",
-   "xinghuan_mech_b_avg",
-   "xinghuan_newyear_avg",
-   "xinghuan_avg",
-   "meteor_avg",
-   "yuwang_avg",
-   "entropy_star_avg",
-   "xinghuan_hurt_avg"
-  ],
-  "1080": [
-   "yuwang_avg",
-   "mecha_avg",
-   "yuwang2_avg",
-   "xinghuan_mech_avg",
-   "meteor_avg",
-   "xinghuan_avg",
-   "xuannv_avg",
-   "spacebot_03_avg",
-   "spacebot_01_avg",
-   "xinghuan_mech_b_avg"
-  ],
-  "1081": [
-   "hubble_sp_avg",
-   "fresnel_avg",
-   "hubble_avg"
-  ],
-  "1082": [
-   "kimie_avg",
-   "kimie_newyear_avg",
-   "erika_avg",
-   "octogen_avg",
-   "croque_avg",
-   "kuro_avg",
-   "choco_avg",
-   "helix_avg"
-  ],
-  "1083": [
-   "penumbra_avg",
-   "bonee_avg"
-  ],
-  "1084": [
-   "bonneville_avg"
-  ],
-  "1085": [
-   "shell_avg",
-   "bonneville_avg"
-  ],
-  "1086": [
-   "belladonna_avg"
-  ],
-  "1087": [
-   "lewis_avg",
-   "prof_f_avg",
-   "burbank_npc3_avg"
-  ],
-  "1088": [
-   "beelneith_avg"
-  ],
-  "1089": [
-   "sol_avg",
-   "sol_b2s_avg"
-  ],
-  "1090": [
-   "inola_avg",
-   "sol_avg"
-  ],
-  "1100": [
-   "sangoma_avg",
-   "defender_avg",
-   "persicaria_sp_avg",
-   "persicaria_avg",
-   "sangoma_hurt_avg",
-   "sangoma_fake_avg"
-  ],
-  "1200": [
-   "knot_shadow_avg"
-  ],
-  "2001": [
-   "okabe_avg",
-   "kurisu_avg",
-   "kurisu_maid_avg"
-  ],
-  "2002": [
-   "kurisu_avg",
-   "kurisu_b_avg",
-   "kurisu_maid_avg"
-  ],
-  "2003": [
-   "mayuri_avg",
-   "kurisu_avg",
-   "mayuri_b_avg"
-  ],
-  "2041": [
-   "entropy_avg"
-  ],
-  "2631": [
-   "slime_avg"
-  ],
-  "2632": [
-   "slime_avg"
-  ],
-  "3711": [
-   "eosphorus_wings_avg"
-  ],
-  "10001": [
-   "fool_sol_avg"
-  ],
-  "10002": [
-   "fool_anna_avg"
-  ],
-  "10003": [
-   "sol_b2h_avg",
-   "sol_b_avg",
-   "sol_b2_avg",
-   "sol_bh_avg",
-   "demi_lava2_avg",
-   "sol_avg"
-  ],
-  "10004": [
-   "fool_simo_avg"
-  ],
-  "10005": [
-   "fool_sol_avg"
-  ],
-  "10055": [
-   "fool_sol_avg"
-  ],
-  "10059": [
-   "fool_nora_avg"
-  ],
-  "10371": [
-   "fresnel_avg"
-  ],
-  "10391": [
-   "centaureissi_sp_avg",
-   "chris_avg"
-  ],
-  "10411": [
-   "entropy_avg"
-  ],
-  "10441": [
-   "entropy_avg"
-  ],
-  "10571": [
-   "sockdolager_avg",
-   "entropy_avg"
-  ],
-  "10591": [
-   "puzzle_myth_avg",
-   "nora_myth_avg"
-  ],
-  "10621": [
-   "puzzle_myth_avg"
-  ],
-  "10891": [
-   "sol_avg",
-   "sol_b2s_avg"
-  ],
-  "11002": [
-   "sangoma_fake_avg"
-  ],
-  "20002": [
-   "kurisu_maid_avg"
-  ],
-  "20003": [
-   "mayuri_maid_avg",
-   "kurisu_maid_avg",
-   "kurisu_avg"
-  ],
-  "100022": [
-   "fool_anna_avg"
-  ]
- },
- "pathOwner": {
-  "florence_avg": "1042",
-  "persicaria_dress_avg": "1001",
-  "croque_avg": "1005",
-  "puzzlecat_avg": "107",
-  "aki_avg": "1015",
-  "evelyn_avg": "1010",
-  "persicaria_avg": "1001",
-  "simo_avg": "1004",
-  "python_avg": "1054",
-  "crypter_avg": "1060",
-  "bonee_avg": "1023",
-  "chelsea_avg": "1007",
-  "kuro_avg": "1055",
-  "angela_avg": "1017",
-  "helios_robotgreen_avg": "45",
-  "helios_robotred_avg": "43",
-  "chelsea_kid_avg": "1007",
-  "croque_kid_avg": "114",
-  "kuro_kid_avg": "118",
-  "burbank_npc1_avg": "14",
-  "burbank_npc2_avg": "14",
-  "nanaka_avg": "1018",
-  "botaiko_avg": "43",
-  "choco_christ_avg": "23",
-  "undline_christ_avg": "1070",
-  "undline_w1c_avg": "176",
-  "undline_w2c_avg": "177",
-  "undline_w3c_avg": "178",
-  "undline_w4c_avg": "177",
-  "lam_avg": "1036",
-  "hubble_avg": "1037",
-  "ksenia_avg": "1050",
-  "dusevnyj_avg": "1048",
-  "willow_avg": "1047",
-  "sol_avg": "1003",
-  "fool_anna_avg": "10002",
-  "imhotep_avg": "1031",
-  "twigs_avg": "1044",
-  "clotho_avg": "1067",
-  "anna_hallo_avg": "157",
-  "helix_avg": "1024",
-  "anna_avg": "1002",
-  "helix_hallo_avg": "158",
-  "hel_avg": "143",
-  "yanny0_avg": "159",
-  "yanny_avg": "1020",
-  "puzzle_avg": "1062",
-  "vee_avg": "1045",
-  "haze_avg": "1058",
-  "mag_avg": "1028",
-  "nascita2_avg": "1063",
-  "nora_avg": "1059",
-  "nameless_avg": "125",
-  "betty_avg": "1013",
-  "centaureissi_avg": "1039",
-  "hannah_avg": "18",
-  "odile_b3_avg": "34",
-  "faith2_avg": "16",
-  "turing2_avg": "6",
-  "42lab_npc_01_avg": "18",
-  "earhart_avg": "1046",
-  "riko_avg": "13",
-  "fern_avg": "1041",
-  "max_avg": "1012",
-  "fresnel_avg": "1006",
-  "choco_avg": "23",
-  "gin_avg": "1008",
-  "cascadia_avg": "1077",
-  "sockdolager_myth_avg": "1057",
-  "sockdolager_avg": "1057",
-  "yelena_avg": "1071",
-  "undline_avg": "1070",
-  "undline_w2_avg": "177",
-  "undline_w3_avg": "178",
-  "alcyone_avg": "503",
-  "ira_avg": "502",
-  "caina_avg": "505",
-  "atlas_hurt_avg": "501",
-  "ptolomaea_avg": "196",
-  "eos2_avg": "96",
-  "eosphorus_wings_avg": "37",
-  "neumann_avg": "28",
-  "malkira_avg": "507",
-  "eosphorus_w1_avg": "37",
-  "persicaria_sp_avg": "1001",
-  "undline_idol_avg": "1070",
-  "centaureissi_idol_avg": "1039",
-  "clukay_idol_avg": "1066",
-  "clukay_full_avg": "1066",
-  "cyclopes_npc_02_avg": "42",
-  "cyclopes_npc_01_avg": "214",
-  "vee_idol_avg": "1045",
-  "undline_w1_avg": "176",
-  "taisch_avg": "1078",
-  "jiangyu_avg": "1072",
-  "ruka_avg": "603",
-  "faris_avg": "602",
-  "kurisu_avg": "2002",
-  "mayuri_avg": "2003",
-  "undline_maid_avg": "1070",
-  "okabe_avg": "2001",
-  "erika_avg": "1076",
-  "kimie_avg": "1082",
-  "kurisu_maid_avg": "20002",
-  "mayuri_maid_avg": "20003",
-  "cocytus_avg": "197",
-  "luna_avg": "1074",
-  "defender_avg": "133",
-  "aki_spring_avg": "1015",
-  "sakuya_spring_avg": "1038",
-  "florence_spring_avg": "1042",
-  "croque_spring_avg": "1005",
-  "horizon_avg": "1073",
-  "xinghuan_avg": "1079",
-  "entropy_star_avg": "197",
-  "xinghuan_mech_avg": "1079",
-  "meteor_avg": "216",
-  "yuwang_avg": "1080",
-  "spacebot_02_avg": "218",
-  "spacebot_03_avg": "219",
-  "xuannv_avg": "220",
-  "xinghuan_mech_b_avg": "1079",
-  "caina_star2_avg": "505",
-  "gagarin_avg": "221",
-  "mecha_avg": "1080",
-  "astronaut_avg": "14",
-  "yuwang2_avg": "1080",
-  "fresnel_hurt_avg": "1006",
-  "persicaria_hurt_avg": "1001",
-  "beelneith_avg": "26",
-  "mag2_avg": "1028",
-  "mai_avg": "1009",
-  "horizon_s_avg": "1073",
-  "lind_avg": "1056",
-  "persicaria_s_avg": "1001",
-  "sol_hurt_avg": "1003",
-  "oasis_a02_avg": "202",
-  "havoc_avg": "1075",
-  "sol_s_avg": "1003",
-  "lind_s_avg": "1056",
-  "sol_juggernaut_avg": "1003",
-  "sol_s_hurt_avg": "1003",
-  "sangoma_avg": "1100",
-  "bonneville_avg": "1084",
-  "ira_shadow_avg": "1",
-  "irida_avg": "1002",
-  "persicaria_sph_avg": "1001",
-  "gabriel2_avg": "30",
-  "havoc2_avg": "1075",
-  "delacey_avg": "1051",
-  "sueyoi_avg": "1053",
-  "hatsuchiri_avg": "1052",
-  "persicaria_sp2h_avg": "1001",
-  "persicaria_bq_avg": "1001",
-  "olivia2_avg": "19",
-  "nascita1_avg": "100",
-  "penumbra_avg": "1083",
-  "panakeia_avg": "1043",
-  "eniac2_avg": "29",
-  "clukay_avg": "1066",
-  "sol_b2s_avg": "1003",
-  "demi_lava2_avg": "47",
-  "sol_b_avg": "10003",
-  "sol_bh_avg": "10003",
-  "sol_b2h_avg": "10003",
-  "sol_b2_avg": "10003",
-  "belladonna_avg": "1086",
-  "puzzle_myth_avg": "10591",
-  "xinghuan_newyear_avg": "1079",
-  "persicaria_sp_newyear_avg": "238",
-  "kimie_newyear_avg": "1082",
-  "zion_newyear_avg": "1027",
-  "erika_newyear_avg": "1076",
-  "angela_summer_avg": "1017",
-  "twigs_summer_avg": "1044",
-  "clukay_summer_avg": "1066",
-  "undline_summer_avg": "1070",
-  "evelyn_summer_avg": "1010",
-  "reverence_avg": "65",
-  "punish_avg": "78",
-  "sin_avg": "77",
-  "hesperus_weapon_avg": "38",
-  "love_avg": "52",
-  "wisdom_b_avg": "35",
-  "eosphorus_avg": "37",
-  "mara_weapon_avg": "21",
-  "beelneith_b_avg": "26",
-  "judge_avg": "80",
-  "hesperus_weapon2_avg": "38",
-  "chris_avg": "242",
-  "soldier_weber_hurt_avg": "243",
-  "tony_avg": "1029",
-  "soldier_mask_avg": "149",
-  "soldier_tac_avg": "148",
-  "luna_dress_avg": "1074",
-  "42lab_npc_02_avg": "36",
-  "faith_avg": "16",
-  "mara_wrecked_avg": "21",
-  "zion_avg": "1027",
-  "helios_robotyellow_avg": "44",
-  "gabriel_avg": "30",
-  "wisdom_w_avg": "35",
-  "odette_avg": "33",
-  "odile_w_avg": "34",
-  "odile_b_avg": "34",
-  "taranum_avg": "55",
-  "oasis_a02a_avg": "257",
-  "serper_avg": "253",
-  "entropy_avg": "197",
-  "fireman_avg": "207",
-  "clotho2_avg": "1067",
-  "soldier_hurt_avg": "151",
-  "centaureissi_mil_avg": "1039",
-  "persicariadr_avg": "139",
-  "eniac_avg": "29",
-  "clukay_gf_avg": "140",
-  "clukay_ent_avg": "140",
-  "dupin_avg": "1068",
-  "security1_avg": "1068",
-  "abigail_avg": "1034",
-  "erika_hurt_avg": "1076",
-  "elaugh_mask_avg": "74",
-  "asagentb_avg": "14",
-  "asagent_avg": "14",
-  "asagentc_avg": "14",
-  "oasis_03_avg": "94",
-  "oasis_02_avg": "94",
-  "hubble_sp_avg": "1081",
-  "spacebot_02e_avg": "223",
-  "eos_avg": "96",
-  "ranko_avg": "97",
-  "rideromega_avg": "1003",
-  "meryl_avg": "1003",
-  "ridersol_mask_avg": "102",
-  "inola_avg": "1090",
-  "python_kongfu_avg": "187",
-  "nana_avg": "67",
-  "refugee1_avg": "85",
-  "evelyn_rookie_avg": "1010",
-  "soldier_elvin_avg": "62",
-  "shell_avg": "1085",
-  "mechanic_avg": "182",
-  "undline2_avg": "1070",
-  "woman_avg": "195",
-  "boy_avg": "1074"
+  "1": "atlas_shadow_avg",
+  "2": "prof_f_avg",
+  "6": "faith_avg",
+  "11": "turing_avg",
+  "13": "riko_avg",
+  "14": "asagent_avg",
+  "16": "faith_avg",
+  "18": "hannah_avg",
+  "19": "olivia_avg",
+  "20": "arrow_avg",
+  "21": "mara_weapon_avg",
+  "22": "croque_avg",
+  "23": "choco_avg",
+  "26": "beelneith_avg",
+  "27": "gabriel_avg",
+  "28": "neumann_avg",
+  "29": "gabriel_avg",
+  "30": "gabriel_avg",
+  "33": "odette_avg",
+  "34": "anna_avg",
+  "35": "wisdom_w_avg",
+  "36": "42lab_npc_01_avg",
+  "37": "eosphorus_wings_avg",
+  "38": "hesperus_weapon2_avg",
+  "41": "irida_avg",
+  "42": "cyclopes_npc_02_avg",
+  "43": "helios_robotred_avg",
+  "45": "helios_robotgreen_avg",
+  "46": "helios_firewood_avg",
+  "47": "taranum_avg",
+  "49": "beelneith_avg",
+  "51": "refactor_avg",
+  "52": "eosphorus_avg",
+  "54": "odile_b_avg",
+  "55": "taranum_avg",
+  "56": "taranum_avg",
+  "57": "odile_b2_avg",
+  "58": "soldier_mask_avg",
+  "62": "soldier_elvin_avg",
+  "65": "reverence_avg",
+  "67": "nana_avg",
+  "71": "mag_avg",
+  "72": "eos2_avg",
+  "73": "anna_shadow_avg",
+  "74": "elaugh_mask_avg",
+  "75": "asagentb_avg",
+  "76": "asagentb_avg",
+  "77": "sin_avg",
+  "78": "punish_avg",
+  "80": "eosphorus_wings_avg",
+  "84": "refugeeboy_avg",
+  "85": "refugee1_avg",
+  "86": "refugee1_avg",
+  "88": "mag_avg",
+  "90": "santino_avg",
+  "92": "spacebot_01_avg",
+  "94": "oasis_02_avg",
+  "96": "eos2_avg",
+  "97": "ranko_avg",
+  "99": "eos_avg",
+  "100": "nascita1_avg",
+  "101": "rideromega_avg",
+  "102": "meryl_avg",
+  "103": "meryl_avg",
+  "104": "burbank_npc3_avg",
+  "106": "puzzlecat_avg",
+  "107": "puzzlecat_avg",
+  "110": "ridersol_avg",
+  "114": "croque_kid_avg",
+  "115": "kuroryu_avg",
+  "116": "kuroryu_avg",
+  "117": "kuroryu_avg",
+  "118": "kuroryu_avg",
+  "119": "kuroryu_avg",
+  "120": "kuroryu_avg",
+  "121": "kuroryu_avg",
+  "124": "croque_kid_avg",
+  "125": "nameless_avg",
+  "126": "cyclopes_npc_03_avg",
+  "129": "patience_avg",
+  "130": "uncle_avg",
+  "131": "oasis_a01_avg",
+  "133": "anna_avg",
+  "134": "anna_avg",
+  "135": "oasis_a01_avg",
+  "136": "entropy_avg",
+  "139": "willow_avg",
+  "140": "clukay_ent_avg",
+  "143": "hel_avg",
+  "146": "soldier_glasses_avg",
+  "147": "soldier_helmet_avg",
+  "148": "soldier_tac_avg",
+  "149": "soldier_mask_avg",
+  "150": "soldier_glasses_avg",
+  "151": "soldier_hurt_avg",
+  "152": "oasis_a02a_avg",
+  "157": "anna_hallo_avg",
+  "158": "helix_hallo_avg",
+  "159": "helix_hallo_avg",
+  "160": "anna_avg",
+  "161": "clotho_avg",
+  "164": "security3_avg",
+  "166": "security3_avg",
+  "167": "mob1_avg",
+  "171": "security3_avg",
+  "176": "undline_w1_avg",
+  "177": "undline_w2_avg",
+  "178": "undline_w3_avg",
+  "179": "chelsea_avg",
+  "180": "gentle_avg",
+  "182": "undline_w2_avg",
+  "183": "undline_w2_avg",
+  "185": "burbank_npc2_avg",
+  "187": "python_kongfu_avg",
+  "188": "kuro_spring_avg",
+  "189": "boxer1_avg",
+  "195": "woman_avg",
+  "196": "ptolomaea_avg",
+  "197": "entropy_avg",
+  "198": "fortitude_avg",
+  "200": "dog_avg",
+  "201": "entropy_avg",
+  "202": "erika_avg",
+  "203": "entropy_avg",
+  "205": "slomo_avg",
+  "207": "fireman_avg",
+  "214": "centaureissi_idol_avg",
+  "215": "yuwang_avg",
+  "216": "meteor_avg",
+  "217": "spacebot_01_avg",
+  "218": "spacebot_02_avg",
+  "219": "spacebot_03_avg",
+  "220": "fresnel_avg",
+  "221": "gagarin_avg",
+  "222": "entropy_star_avg",
+  "223": "spacebot_02e_avg",
+  "225": "riko_avg",
+  "231": "ksenia_avg",
+  "232": "ksenia_avg",
+  "234": "persicaria_sp_avg",
+  "235": "xinghuan_newyear_avg",
+  "236": "erika_newyear_avg",
+  "237": "kimie_newyear_avg",
+  "238": "persicaria_sp_newyear_avg",
+  "242": "chris_avg",
+  "244": "soldier_tac_avg",
+  "245": "chris_avg",
+  "247": "soldier_helmet_avg",
+  "248": "soldier_helmet_avg",
+  "249": "soldier_tac_avg",
+  "250": "soldier_tac_avg",
+  "251": "chris_avg",
+  "254": "bonneville_avg",
+  "257": "oasis_a02a_avg",
+  "260": "prof_f_avg",
+  "261": "arrow_avg",
+  "263": "malkira_avg",
+  "265": "eosphorus_wings_avg",
+  "371": "sol_avg",
+  "501": "atlas_avg",
+  "502": "ira_avg",
+  "503": "alcyone_avg",
+  "504": "entropy_avg",
+  "505": "entropy_star_avg",
+  "506": "eos2_wrecked_avg",
+  "507": "demi_lava2_avg",
+  "602": "faris_avg",
+  "603": "ruka_avg",
+  "1001": "persicaria_avg",
+  "1002": "anna_avg",
+  "1003": "sol_avg",
+  "1004": "simo_avg",
+  "1005": "croque_avg",
+  "1006": "fresnel_avg",
+  "1007": "chelsea_avg",
+  "1008": "gin_avg",
+  "1009": "haze_avg",
+  "1010": "evelyn_rookie_avg",
+  "1012": "max_avg",
+  "1013": "betty_avg",
+  "1015": "aki_avg",
+  "1016": "banxsy_avg",
+  "1017": "angela_avg",
+  "1018": "nanaka_avg",
+  "1020": "yanny_avg",
+  "1021": "groove_avg",
+  "1023": "bonee_avg",
+  "1024": "helix_avg",
+  "1027": "zion_avg",
+  "1028": "mag2_avg",
+  "1029": "tony_avg",
+  "1031": "imhotep_avg",
+  "1034": "dog_avg",
+  "1036": "lam_avg",
+  "1037": "hubble_avg",
+  "1038": "sakuya_avg",
+  "1039": "centaureissi_avg",
+  "1041": "fern_avg",
+  "1042": "florence_avg",
+  "1043": "panakeia_avg",
+  "1044": "twigs_avg",
+  "1045": "vee_avg",
+  "1046": "earhart_avg",
+  "1047": "willow_avg",
+  "1048": "dusevnyj_avg",
+  "1049": "rise_avg",
+  "1050": "ksenia_avg",
+  "1051": "delacey_avg",
+  "1052": "hatsuchiri_avg",
+  "1053": "sueyoi_avg",
+  "1054": "python_avg",
+  "1055": "kuro_avg",
+  "1056": "lind_avg",
+  "1057": "sockdolager_avg",
+  "1058": "haze_avg",
+  "1059": "nora_avg",
+  "1060": "crypter_avg",
+  "1061": "helix_avg",
+  "1062": "puzzle_avg",
+  "1063": "nascita2_avg",
+  "1064": "gastronomie_avg",
+  "1065": "helios_robotgreen_avg",
+  "1066": "clukay_avg",
+  "1067": "clotho_avg",
+  "1069": "sakuya_avg",
+  "1070": "undline_avg",
+  "1072": "jiangyu_avg",
+  "1073": "florence_avg",
+  "1074": "luna_avg",
+  "1075": "havoc2_avg",
+  "1076": "erika_avg",
+  "1077": "cascadia_avg",
+  "1078": "taisch_avg",
+  "1079": "entropy_star_avg",
+  "1080": "entropy_star_avg",
+  "1081": "anna_avg",
+  "1082": "kimie_avg",
+  "1083": "penumbra_avg",
+  "1084": "bonneville_avg",
+  "1085": "prof_f_avg",
+  "1087": "prof_f_avg",
+  "1088": "beelneith_avg",
+  "1089": "prof_f_avg",
+  "1090": "inola_avg",
+  "1100": "sangoma_avg",
+  "1200": "lind_avg",
+  "1977": "cocytus_avg",
+  "2001": "okabe_avg",
+  "2002": "kurisu_avg",
+  "2003": "mayuri_avg",
+  "2041": "slomo_avg",
+  "3711": "eosphorus_wings_avg",
+  "10001": "fool_delacey_avg",
+  "10002": "fool_anna_avg",
+  "10003": "demi_lava2_avg",
+  "10004": "fool_simo_avg",
+  "10005": "fool_centaureissi_avg",
+  "10008": "gin_avg",
+  "10037": "fool_hubble_avg",
+  "10039": "fool_centaureissi_avg",
+  "10042": "florence_avg",
+  "10051": "fool_delacey_avg",
+  "10052": "fool_hatsuchiri_avg",
+  "10053": "sueyoi_avg",
+  "10054": "fool_python_avg",
+  "10055": "fool_kuro_avg",
+  "10058": "haze_avg",
+  "10059": "fool_nora_avg",
+  "10371": "fresnel_avg",
+  "10391": "centaureissi_sp_avg",
+  "10411": "slomo_avg",
+  "10441": "slomo_avg",
+  "10571": "slomo_avg",
+  "10621": "puzzle_myth_avg",
+  "11002": "sangoma_fake_avg",
+  "20002": "kurisu_maid_avg",
+  "20003": "kurisu_maid_avg",
+  "100022": "fool_anna_avg"
  }
 }

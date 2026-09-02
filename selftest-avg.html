@@ -59,7 +59,7 @@ if (meta) {
   const lang = await decodeLua(meta.lang);
   /* 与编辑器同款装载：带全局立绘表/说话者桥表，修复层全部跑起来。 */
   ({wire, stats} = storyToWire(cfg, lang,
-      {imgIds: manifest.imgIds, heroSprites: manifest.heroSprites}));
+      {imgIds: manifest.imgIds, heroSprites: manifest.heroSprites, pathOwner: manifest.pathOwner}));
 }
 
 /* 素材走本地 res/ 树（asset-index 精确解析），缺的落 /images 兜底。 */

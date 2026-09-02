@@ -15,10 +15,12 @@ import {AudioEngine, defaultAudioResolve} from './engine/audio.js';
 import {deriveLayout} from './engine/sprite.js';
 
 const FIXTURES = [
-  {id: 'scene1', title: '临危受命 · 数组格式'},
   {id: 'scene2', title: '背水一战 · 对象 map 格式'},
   {id: 'scene3', title: '绝处逢生 · 数组格式'},
 ];
+
+/* 默认剧本 = 序章：契约已换成游戏本体，直接吃语料（走剧本库同一条解码链）。 */
+const DEFAULT_STORY = 'cpt00_e_01_01';
 
 /* M8 素材库：仓库索引 + IndexedDB 上传的统一注册表（R13：无 res/ 退化）。 */
 const registry = await new AssetRegistry().boot();
@@ -126,7 +128,7 @@ document.getElementById('btn-assets').addEventListener('click', () => {
 
 /* —— M9 编辑器 —— */
 const glossary = await (await fetch('data/Noun_des.json')).json();
-let currentId = 'scene1';
+let currentId = DEFAULT_STORY;
 
 const editor = new Editor({
   player, registry,
@@ -312,7 +314,7 @@ async function loadCorpusStory(id) {
   if (!state.stories.has(id)) {
     const meta = avgManifest.stories.find((s) => s.id === id);
     const {wire} = await loadStory(fetch, meta,
-        {imgIds: avgManifest.imgIds, heroSprites: avgManifest.heroSprites});
+        {imgIds: avgManifest.imgIds, heroSprites: avgManifest.heroSprites, pathOwner: avgManifest.pathOwner});
     const story = normalizeScript(wire);
     story.title = id;
     state.stories.set(id, story);
@@ -323,7 +325,7 @@ async function loadCorpusStory(id) {
 
 window.addEventListener('resize', () => player.fitToContainer());
 
-/* —— 夹具装载（归一化自检报告保留）—— */
+/* —— 夹具装载（归一化自检报告保留）+ 默认剧本 —— */
 async function loadFixtures() {
   const report = document.getElementById('report');
   report.append('剧本归一化自检\n', '─'.repeat(38), '\n');
@@ -346,7 +348,8 @@ async function loadFixtures() {
           + (badRefs.length ? `  悬空分支: ${badRefs.join(', ')}` : ''),
     }), '\n');
   }
-  await useStory(FIXTURES[0].id);
+  if (avgManifest) await loadCorpusStory(DEFAULT_STORY);
+  else await useStory(FIXTURES[0].id);
 }
 
 loadFixtures().then(async () => {
@@ -354,6 +357,7 @@ loadFixtures().then(async () => {
   await new Promise((r) => setTimeout(r, 500));
   const smoke = {
     done: true,
+    story: currentId,
     pos: document.getElementById('tp-pos').textContent,
     storage: document.getElementById('storage').textContent,
     shots: document.querySelectorAll('.shot-row').length,

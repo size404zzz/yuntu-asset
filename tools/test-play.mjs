@@ -1,6 +1,6 @@
 /**
  * M4 播放器自检跑者：起本地同源宿主（serve.py）→ 无头 Chrome 打开
- * selftest-play.html（虚拟钟回放 scene1 + 与冻结表对拍）→ 页面把报告
+ * selftest-play.html（虚拟钟回放一个夹具，有基准件则对拍、无则冒烟）→ 页面把报告
  * POST 回 /freeze?scene=play_report → 读回、断言、清理。
  *
  * 用法：node tools/test-play.mjs [--port=8092] [--timeout=240]
@@ -17,7 +17,7 @@ const flag = (name, dflt) => {
 };
 const PORT = Number(flag('port', '8092'));
 const ROOT = resolve(process.cwd());
-const SCENE = flag('scene', 'scene1');
+const SCENE = flag('scene', 'scene2');
 const OUT = join(ROOT, 'data', 'fixtures', 'expected-play_report.json');
 const CHROME = [
   process.env.CHROME_PATH,

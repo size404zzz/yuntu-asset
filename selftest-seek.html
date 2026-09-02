@@ -37,9 +37,9 @@
  *
  * 快照剥掉 phase/settleMs 后整包 JSON 对字节（相位是时序产物，不进 settled 态）。
  * 附加探针：脏寻址（seek 过一sort再往回 seek）、playShot+fastForward 中途接力、
- * seekTime 时间线映射、终局清场。场景覆盖 scene1（数组）+ scene2（map 格式、
- * nextId 跳转、分支）+ scene3（数组、终点 isEnd）。
- * ?scene=scene1 可只跑一个场景（约 1/3 时长）。
+ * seekTime 时间线映射、终局清场。场景覆盖 scene2（map 格式、nextId 跳转、
+ * 分支）+ scene3（数组、终点 isEnd）。
+ * ?scene=scene2 可只跑一个场景（约 1/2 时长）。
  */
 import {Player} from '/js/engine/player.js';
 import {
@@ -156,7 +156,6 @@ async function driveOracle(rig, scene, tag) {
 /* ---------- 开跑 ---------- */
 
 const FIXTURES = [
-  {id: 'scene1', title: '临危受命'},
   {id: 'scene2', title: '背水一战'},
   {id: 'scene3', title: '绝处逢生'},
 ];

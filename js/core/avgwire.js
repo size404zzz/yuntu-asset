@@ -16,34 +16,29 @@
  * 3. 首张 bg 的隐现物化（materializeFirstBg）：游戏引擎里 images 声明的
  *    第一张 imgType-2 直接可见；wiki 玩家只认 imgTween，语料里四成剧本
  *    从不 tween 它——不物化就是几十镜黑屏。
- * 4. 悬空立绘 tween 的落名（materializeDanglingCast）：tween 的 imgId 走
- *    游戏侧的全局角色槽位表（147 在 31 段剧本里都是薇洛儿），images[]
- *    只在换装/换人时覆盖——94% 的剧本都有 tween 引用从未声明的 id，
- *    wiki 玩家对未注册 tween 一律跳过，角色整段隐身。imgIds 表由
- *    build-asset-index 对全语料声明直方图取众数估出（候选分歧的 id
- *    少数派剧本本就该用 images[] 覆盖，不影响默认值估计）。
+ * 4. 悬空立绘 tween 的落名（materializeDanglingCast）：tween 的 imgId 是**槽位
+ *    序号**而不是身份，images[] 只在换装/换人时覆盖——94% 的剧本都有 tween
+ *    引用从未声明的 id，wiki 玩家对未注册 tween 一律跳过，角色整段隐身。
+ *    imgIds 表由 build-asset-index 从全语料声明直方图估出，每个槽位给的是
+ *    **按票数降序的候选路径集**（[0] 即全局众数），本段就地按「谁在说话」
+ *    仲裁：取第一个归属人在本段开过口的候选（22child_02 的槽 105 全局众数
+ *    是克罗琦成人件，同剧情段声明的是小克罗琦，而本段只认 114 说话）。
  *    槽位类型门：低号 id 常是背景槽（如 10：138 段声明成背景、仅 2 段
  *    声明成立绘），把它们的悬空交叉淡入注入成立绘会凭空冒出幻影、
  *    真背景反而黑掉——表在构建期就滤掉「背景票 ≥ 立绘票」的 id，
  *    这类悬空 tween 回到参考的未注册跳过语义。
- * 5. 永不可见立绘的揭示重建（revealNeverVisibleCast）：613 段剧本里
- *    有的角色只有 alpha 0 条目、alpha 1 的揭示半拍在数据里缺失
- *    （22child_01_03 的安吉拉：台词连连却整段隐身），按完好剧本的
- *    成对模式补齐。
- * 6. 说话者节拍补齐（autoLightCast）：完好数据里明暗与在场跟随说话节拍
- *    （说话=亮、聆听=暗），但部分剧本丢了半拍（依 heroSprites 桥表——
- *    heroId → 立绘，构建器对全语料「说话×亮」投票估出，暗占优的阴影说话者
- *    天然落选——在说话镜补条目；桥表路径在这段剧本从未注册时先按同角色
- *    换装件改宗 retargetHeroSprites，否则换装/周年剧本整条门哑火）：
- *    - 丢了「复亮」半拍（1year_prologue 的帕斯卡：键 3 听教授切暗后，
- *      键 6/8/10/11 自己说话却一直压暗）→ 补 {alpha 1, 亮}；
- *    - 丢了入场「揭示」整拍（22child_01_03 的卡萝键 2、1year_prologue 的
- *      薇洛儿键 21：本镜只有 alpha 0 + duration 0 的预站位，揭示缺失或拖到
- *      十几镜之后，开口第一句人在台上却隐身）→ 把揭示补回本镜。
- *    判据是「隐身来路」：duration 0 的 alpha 0（含按 alpha 0 的 images[]
- *    注册）是等揭示的预站位，补；duration>0 的 alpha 0 是作者真把她淡出
- *    了画面，反打/画外音是合法调度，不碰。聆听压暗同样不碰。
- *    - 收场：补出来的揭示不能淌进下一场。本镜摆了预站位（舞台重排）就把
+ * 5. 说话者节拍补齐（autoLightCast，游戏契约下立绘可见度的唯一合成点）：
+ *    原版行为是「说话镜 ⇒ 说话人现身」（实机逐镜核对 + 全语料量化坐实，
+ *    见 plan「契约切换」D6），数据里的 α 条目只覆盖作者自己那部分调度。
+ *    依 heroSprites 桥表——heroId → 她的立绘路径集（众数件 + 揭示跳变票
+ *    归属件），在说话镜补揭示/复亮；桥表路径在这段从未注册时先按同角色
+ *    换装件改宗（retargetHeroSprites），否则换装/周年剧本整条门哑火。
+ *    判据是「隐身来路」：`α0 + duration>0` 是作者显式画外（全语料仅 198 条
+ *    落在本人说话镜），一概不碰；`α0 / duration:0` 预站位不阻止现身。
+ *    不变量：**同族同镜最多一件 α>0**，除非作者本镜显式点亮多件——点亮
+ *    一件的同时收掉只由本层点亮的兄弟件（换装退场），这是双件同屏
+ *    （tools/audit-dual-lit.mjs）的防线。
+ *    收场：补出来的揭示不能淌进下一场。本镜摆了预站位（舞台重排）就把
  *       **只由本修复点亮**的立绘淡出收掉（注册与 lane 都留着，后续揭示照常）。
  *       作者自己点亮的立绘不收到场外的判据还没找到——「重排」「换背景」
  *       「两者都」三种按「作者后面还提到它」严判误清率都在 23% 上下。
@@ -57,7 +52,7 @@ import {emptyState, applyImages, applyShotTweens} from './state.js';
  * 「开局之前」，永远渲染不到（语料 1555 段 0 起始：21 段纯视频 + 1534 段
  * 首镜在 0）。凡键 '0' 存在的剧本，全部键与 nextId/jumpAct 统一 +1；
  * 1 起始的 323 段原样不动。 */
-export function storyToWire(cfg, lang, {imgIds, heroSprites} = {}) {
+export function storyToWire(cfg, lang, {imgIds, heroSprites, pathOwner} = {}) {
   const stats = {resolved: 0, unresolved: [], shifted: false, bgReveal: null,
     danglingCast: [], autoLit: 0, entranceLit: 0, entranceExit: 0};
   const shift = '0' in cfg ? 1 : 0;
@@ -67,19 +62,19 @@ export function storyToWire(cfg, lang, {imgIds, heroSprites} = {}) {
     wire[String(Number(id) + shift)] =
         resolveStep(step ?? {}, lang, id, stats, shift);
   }
-  materializeDanglingCast(wire, imgIds, stats);
-  revealNeverVisibleCast(wire, stats);
+  materializeDanglingCast(wire, imgIds, pathOwner, stats);
   materializeFirstBg(wire, stats);
-  const speakers = retargetHeroSprites(wire, heroSprites);
+  const speakers = retargetHeroSprites(wire, heroSprites, pathOwner);
   autoLightCast(wire, speakers, stats);
   return {wire, stats};
 }
 
-/* 说话者桥表的剧本内改宗。heroSprites 给的是该角色**全语料**的众数立绘
- * （帕斯卡 = persicaria_avg），换装/周年剧本里她穿的是 persicaria_dress_avg
- * —— 精确路径匹配不上，autoLightCast 的「开口却隐身」补揭示整条门哑火
+/* 说话者桥表的剧本内改宗。heroSprites 给的是该角色的立绘路径**集**（字符串
+ * 或按权威度降序的数组：众数件在前，语料投票出的换装/别名件在后），换装/周年
+ * 剧本里她穿的可能是 persicaria_dress_avg —— 路径全对不上时，
+ * autoLightCast 的「开口却隐身」补揭示整条门哑火
  * （1year_anniversary_persicaria 键 16：帕斯卡连说六句，人在台上却是 α0）。
- * 桥表路径在本段剧本从未注册时，认「同一角色的换装件 + 本段剧本点亮过 +
+ * 桥表路径在这段剧本从未注册时，认「同一角色的换装件 + 本段剧本点亮过 +
  * 不是别的角色的众数件」的立绘为她的替身，返回 hid → 路径集。
  * 同一角色 = 两个 imgPath 去掉 `_avg` 尾后，**一方按 `_` 切的词列是另一方的
  * 前缀**：换装件多出的词（persicaria → persicaria_dress）与剧本只留基础件
@@ -96,8 +91,23 @@ const sameCast = (a, b) => {
   for (let i = 0; i < n; i++) if (a[i] !== b[i]) return false;
   return true;
 };
+const charRoot = (p) => stemTokens(p).join('_').replace(/\d+$/, '');
+/* 同一角色的两件：前缀同族，或者只差一个数字尾变体（olivia2_avg 之于
+   olivia_avg —— 克罗琦的二代装、信的二号装都是这种编号换装件）。
+   数字尾不能无条件并族：eos2_avg 属 hid 96/72、eos_avg 属 hid 99，mag2_avg
+   属 1028、mag_avg 属 71/88，那是两个角色。所以只在 pathOwner 没有把两件
+   判给不同人时才并。 */
+const sameChar = (a, b, owner) => {
+  if (sameCast(stemTokens(a), stemTokens(b))) return true;
+  if (a === b || charRoot(a) !== charRoot(b)) return false;
+  const oa = owner?.[a];
+  const ob = owner?.[b];
+  return !oa || !ob || oa === ob;
+};
 
-function retargetHeroSprites(wire, heroSprites) {
+const asPaths = (v) => (Array.isArray(v) ? v.filter(Boolean) : (v ? [v] : []));
+
+function retargetHeroSprites(wire, heroSprites, pathOwner) {
   const registered = new Set();
   const lit = new Set();
   const pathOf = new Map();
@@ -112,19 +122,26 @@ function retargetHeroSprites(wire, heroSprites) {
       if (p && (t.alpha ?? 0) > 0) lit.add(p);
     }
   }
-  /* 别的角色的众数件不能当替身：认领过的路径一律排除。 */
-  const claimed = new Set(Object.values(heroSprites ?? {}));
+  /* 别的角色的件不能当替身：认领过的路径一律排除。 */
+  const entries = Object.entries(heroSprites ?? {}).map(([h, v]) => [h, asPaths(v)]);
+  const claimed = new Set(entries.flatMap(([, ps]) => ps));
   const out = new Map();
-  for (const [hid, base] of Object.entries(heroSprites ?? {})) {
-    const want = new Set([base]);
-    if (!registered.has(base)) {
-      const stem = stemTokens(base);
+  for (const [hid, bases] of entries) {
+    const want = [...bases];
+    for (const base of bases) {
+      if (registered.has(base)) continue;
       for (const p of registered) {
         if (!lit.has(p) || claimed.has(p)) continue;
-        if (sameCast(stem, stemTokens(p))) want.add(p);
+        if (sameChar(base, p, pathOwner) && !want.includes(p)) want.push(p);
       }
     }
-    out.set(String(hid), want);
+    /* 选件优先级要认身份：桥表是召回口径，可能 admit 到她说话时同台路人的件；
+       按「她的主件 > 同族换装件 > 其他」排，才不会出现「为她的台词点亮别人」。 */
+    const primary = want[0];
+    out.set(String(hid), {
+      set: new Set(want),
+      rank: (p) => (p === primary ? 0 : primary && sameChar(primary, p, pathOwner) ? 1 : 2),
+    });
   }
   return out;
 }
@@ -142,8 +159,8 @@ function autoLightCast(wire, speakers, stats) {
   if (!speakers) return;
   const state = emptyState();
   const pathOf = new Map();
-  /* imgId → 最后一次「变不可见」的来路：pre = 预站位待揭示，fade = 退场。 */
-  const hiddenBy = new Map();
+  /* imgId → 最后一次注册它的镜序：换装段里同角色多件在台时用来选「当前那件」 */
+  const lastReg = new Map();
   /* 只由本修复点亮的立绘集合：换景时由本修复负责收场（作者点亮的不动）。 */
   const ours = new Set();
   let fixed = 0;
@@ -154,11 +171,13 @@ function autoLightCast(wire, speakers, stats) {
     if (shot.images?.length) {
       applyImages(state, shot.images);
       for (const im of shot.images) {
-        if (im.imgPath && !im.delete) pathOf.set(im.imgId, im.imgPath);
-        else if (im.delete) pathOf.delete(im.imgId);
-        if (im.imgType !== 3) continue;
-        if (im.alpha === undefined || im.alpha > 0) hiddenBy.delete(im.imgId);
-        else hiddenBy.set(im.imgId, 'pre');   /* 按 alpha 0 注册 = 待揭示 */
+        if (im.imgPath && !im.delete) {
+          pathOf.set(im.imgId, im.imgPath);
+          if (im.imgType === 3) lastReg.set(im.imgId, Number(k));
+        } else if (im.delete) {
+          pathOf.delete(im.imgId);
+          lastReg.delete(im.imgId);
+        }
       }
     }
     const want = shot.speakerHeroId !== undefined && shot.speakerHeroId !== null
@@ -167,8 +186,6 @@ function autoLightCast(wire, speakers, stats) {
     let pre = false;
     for (const t of (shot.imgTween ?? [])) {
       if (!t || t.alpha === undefined) continue;   /* 缺省 alpha 不改可见度 */
-      if (t.alpha > 0) hiddenBy.delete(t.imgId);
-      else hiddenBy.set(t.imgId, t.duration > 0 ? 'fade' : 'pre');
       if (t.alpha === 0 && !t.duration) pre = true;   /* 本镜摆了预站位 = 重排 */
     }
     /* 换景收场：补出来的揭示不能淌进下一场。本镜摆了预站位（舞台重排）就把
@@ -180,98 +197,85 @@ function autoLightCast(wire, speakers, stats) {
       for (const id of ours) {
         const lane = state.lanes.get(id);
         if (!lane || (lane.alpha ?? 0) <= 0) { ours.delete(id); continue; }
-        if (want && want.has(pathOf.get(id))) continue;   /* 本镜说话者，留着 */
+        if (want && want.set.has(pathOf.get(id))) continue;   /* 本镜说话者，留着 */
         if ((shot.imgTween ?? []).some((t) => t && t.imgId === id)) continue;
         shot.imgTween = [...(shot.imgTween ?? []),
           {imgId: id, delay: 0, duration: 0.2, alpha: 0, isDark: false}];
         lane.alpha = 0;
-        hiddenBy.set(id, 'fade');
         ours.delete(id);
         exit++;
       }
     }
     if (!want) continue;
+    /* —— 唯一的合成点亮点（三层已合一，见 plan「契约切换」D6）——
+       原版行为（实机 + 全语料坐实）：说话镜 ⇒ 说话人的立绘现身；
+       `α0 + duration>0` 才是作者显式画外（全语料仅 198 条）；
+       `α0 / duration:0` 预站位不阻止现身（22child_03 键6 就是预站位同镜现身）。
+       不变量：**同族（说话者的变体集）同镜最多一件 α>0**，除非作者本镜显式点亮多件。 */
+    const entries = shot.imgTween ?? [];
+    const outThisShot = new Set(entries
+        .filter((t) => t && t.alpha === 0 && (t.duration ?? 0) > 0).map((t) => t.imgId));
+    const cand = [];
     for (const [imgId, lane] of state.lanes) {
-      if (!want.has(pathOf.get(imgId))) continue;    /* 不是说话者的立绘 */
-      if ((lane.alpha ?? 0) > 0) {
-        if (lane.isDark === false) continue;
-        fixed++;
-      } else {
-        if (hiddenBy.get(imgId) !== 'pre') continue;   /* 作者让她在画外 */
-        entrance++;
-        lane.alpha = 1;
-        ours.add(imgId);
-      }
-      const arr = [...(shot.imgTween ?? [])];
-      arr.push({imgId, delay: 0, duration: 0.2, alpha: 1, isDark: false});
-      shot.imgTween = arr;
-      lane.isDark = false;
-      hiddenBy.delete(imgId);
+      const path = pathOf.get(imgId);
+      if (!want.set.has(path)) continue;                 /* 不是说话者的立绘 */
+      let last = -1;
+      entries.forEach((t, i) => { if (t?.imgId === imgId) last = i; });
+      cand.push({imgId, lane, path, rank: want.rank(path),
+        last, reg: lastReg.get(imgId) ?? -1,
+        lit: (lane.alpha ?? 0) > 0,
+        authorLit: entries.some((t) => t && t.imgId === imgId && (t.alpha ?? 0) > 0)});
     }
+    if (!cand.length) continue;
+    /* 本层只动她自己的件：主件（rank 0）与同族换装件（rank 1）。桥表是召回
+       口径，rank 2 是「她说话时同台的路人」——点亮它就是凭空立一个幻影，
+       连复亮都不许（聆听压暗是原版的镜头语言，不是要修的洞）。
+       选件序：作者本镜显式点亮的那件（换装新件）> 已在台上亮着的 > 预站位补揭示。 */
+    cand.sort((x, y) => (x.rank - y.rank) || (y.last - x.last)
+        || (y.reg - x.reg) || (x.imgId - y.imgId));
+    const own = cand.filter((c) => c.rank <= 1
+        && !outThisShot.has(c.imgId));                  /* 作者本镜淡出她的 = 画外音 */
+    const litOwn = own.filter((c) => c.lit);
+    const authorOwn = litOwn.filter((c) => c.authorLit);
+    if (authorOwn.length > 1) continue;                 /* 作者本镜就要她的两件同屏 */
+    const pick = authorOwn[0] ?? litOwn[0] ?? own[0];
+    if (!pick) continue;
+    const {imgId, lane} = pick;
+    const added = [];
+    if (pick.lit) {
+      if (lane.isDark === false) continue;               /* 已在台上且亮着，不动数据 */
+      fixed++;
+    } else {
+      entrance++;
+      lane.alpha = 1;
+      ours.add(imgId);
+    }
+    added.push({imgId, delay: 0, duration: 0.2, alpha: 1, isDark: false});
+    /* 点亮这一件的同时，收掉同族里只由本层点亮过的兄弟件（换装退场）。
+       作者本镜显式点亮的不许动——同屏两尊是合法调度。 */
+    for (const other of cand) {
+      if (other.imgId === imgId || !other.lit) continue;
+      if (other.authorLit || !ours.has(other.imgId)) continue;
+      added.push({imgId: other.imgId, delay: 0, duration: 0.2, alpha: 0, isDark: false});
+      other.lane.alpha = 0;
+      ours.delete(other.imgId);
+      exit++;
+    }
+    shot.imgTween = [...entries, ...added];
+    lane.isDark = false;
   }
   stats.autoLit = fixed;
   stats.entranceLit = entrance;
   stats.entranceExit = exit;
 }
 
-/* 永不可见立绘的揭示修复：成对模式是「预站位 alpha 0/dur 0 → 揭示
- * alpha 1/dur 0.2」（可同镜可隔镜），但 613 段剧本里有的角色只有
- * alpha 0 条目、揭示半拍在数据里缺失（如 22child_01_03 的安吉拉——
- * 台词连连却在台上隐身；隐身角色不需要 tween，所以这不是故意隐身）。
- * 重建：首条目同镜补揭示，后续 alpha 0 条目升为 1 并复亮（完好数据里
- * 明暗跟着说话节拍走：说话=亮、聆听=暗，丢失的条目一律按「亮」重建，
- * 免得重建角色在自己的台词里还压着阴影）。有揭示的轨迹一律不动。
- * 注意 imgTween 数组与解码件共享，改前必须克隆；先做条目替换再做
- * 插入，避免下标漂移。 */
-function revealNeverVisibleCast(wire, stats) {
-  const keys = Object.keys(wire);
-  const traj = new Map();
-  for (const k of keys) {
-    const shot = wire[k];
-    for (const im of (shot.images ?? [])) {
-      if (im && im.imgType === 3 && im.imgPath && !im.delete && !traj.has(im.imgId)) {
-        traj.set(im.imgId, {path: im.imgPath, refs: []});
-      }
-    }
-    for (const [i, t] of (shot.imgTween ?? []).entries()) {
-      const e = t && traj.get(t.imgId);
-      if (e) e.refs.push({k, i, t});
-    }
-  }
-  let fixed = 0;
-  for (const e of traj.values()) {
-    if (!e.refs.length || e.refs.some(({t}) => (t.alpha ?? 0) > 0)) continue;
-    const edits = new Map();                    /* key → 克隆后的数组 */
-    const clone = (k) => {
-      if (!edits.has(k)) edits.set(k, [...wire[k].imgTween]);
-      return edits.get(k);
-    };
-    e.refs.forEach(({k, i, t}, n) => {
-      const arr = clone(k);
-      if (n === 0) {
-        arr.splice(i + 1, 0, {imgId: t.imgId, delay: 0, duration: 0.2,
-          posId: t.posId, alpha: 1, isDark: false});
-      } else {
-        arr[i] = {...t, alpha: 1, isDark: false};
-      }
-    });
-    for (const [k, arr] of edits) wire[k].imgTween = arr;
-    fixed++;
-  }
-  if (fixed) stats.revealedCast = fixed;
-}
-
 /* 悬空立绘 tween 落名：收集 wire 里所有 tween 引用过的 imgId，凡 images[]
  * 从未声明、而全局表里有名字的，在首个可渲染镜补一条 imgType-3 声明
  * （注册先行，之后该角色的 tween 才会被引擎看见；alpha 0 起步，登场
  * 时机仍完全由原 tween 驱动）。键 0 是永不渲染的「开局之前」，跳过。
- *
- * 入场揭示缺失修补：完好剧本的入场对（预站位 → 揭示）是相邻镜（1→2、
- * 9→10）或同镜，但全表角色常丢揭示半拍（1year_prologue 薇洛儿：预站位
- * 在键 2、揭示拖到键 6——她键 4-5 的台词整段隐身）。若首个 alpha 1 与
- * 首条目相隔超过一镜，就在预站位后按揭示半拍补 {alpha 1, 亮}，后续
- * 原有条目照常接管明暗循环。 */
-function materializeDanglingCast(wire, imgIds, stats) {
+ * 揭示不在这里补：可见度统一归 autoLightCast（三层各自点亮是双件同屏的
+ * 根因，见 plan「契约切换」D6 与 tools/audit-dual-lit.mjs）。 */
+function materializeDanglingCast(wire, imgIds, pathOwner, stats) {
   if (!imgIds) return;
   const keys = Object.keys(wire);
   const declared = new Set();
@@ -286,37 +290,36 @@ function materializeDanglingCast(wire, imgIds, stats) {
       }
     }
   }
-  const cast = tweened
-      .filter((id) => !declared.has(id) && imgIds[String(id)])
-      .map((id) => ({imgId: id, imgType: 3, imgPath: imgIds[String(id)],
-        alpha: 0}));
+  /* 槽位是序号不是身份：同一槽在全语料被不同剧本声明成不同立绘，本段只
+     tween 不声明时，全局众数就可能挑错人（22child_02 的槽 105：全局众数
+     croque_avg 84 段，同剧情的 03..06 声明的却是 croque_kid_avg，而本段
+     唯一开口的立绘角色是 114）。就地仲裁：候选按声明票数降序进来，取第一个
+     「精确归属人在本段说过话」的，否则退回票数最高者（= 旧的全局众数）。
+     这里刻意用 pathOwner（严）而不是 heroSprites（宽）：认错人会把别人的脸
+     摆到她的台词上，比这一镜没立绘更难看。 */
+  const speakers = new Set();
+  for (const k of keys) {
+    const h = wire[k]?.speakerHeroId;
+    if (h !== undefined && h !== null) speakers.add(String(h));
+  }
+  const pathOf = (id) => {
+    const alts = asPaths(imgIds[String(id)]);
+    if (!alts.length) return null;
+    return alts.find((p) => pathOwner?.[p] !== undefined
+        && speakers.has(pathOwner[p])) ?? alts[0];
+  };
+  const cast = [];
+  for (const id of tweened) {
+    if (declared.has(id)) continue;
+    const imgPath = pathOf(id);
+    if (imgPath) cast.push({imgId: id, imgType: 3, imgPath, alpha: 0});
+  }
   if (!cast.length) return;
   const firstKey = keys.find((k) => k !== '0');
   if (firstKey === undefined) return;
   const first = wire[firstKey];
   first.images = [...(first.images ?? []), ...cast];
   stats.danglingCast = cast;
-
-  for (const member of cast) {
-    const refs = [];
-    for (const k of keys) {
-      const shot = wire[k];
-      for (const [i, t] of (shot.imgTween ?? []).entries()) {
-        if (t && t.imgId === member.imgId) refs.push({k, i, t});
-      }
-    }
-    if (!refs.length) continue;
-    const firstLit = refs.find(({t}) => (t.alpha ?? 0) > 0);
-    if (firstLit && Number(firstLit.k) - Number(refs[0].k) <= 1) continue;
-
-    /* 只补入场揭示半拍（预站位同镜，亮起）；其后的 alpha 0 条目是完好
-       数据（退场/换位循环），一概不动。imgTween 与解码件共享，克隆后改。 */
-    const {k, i, t} = refs[0];
-    const arr = [...wire[k].imgTween];
-    arr.splice(i + 1, 0, {imgId: t.imgId, delay: 0, duration: 0.2,
-      posId: t.posId, alpha: 1, isDark: false});
-    wire[k].imgTween = arr;
-  }
 }
 
 /* 首张 bg 的隐现物化。游戏语义：images 声明的第一张 imgType-2 注册即

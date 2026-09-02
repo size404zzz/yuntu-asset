@@ -41,7 +41,7 @@ const waitPort = async () => {
       s.on('connect', () => s.destroy(d));
       s.on('error', () => setTimeout(d, 60));
     });
-    if (await fetch(`http://127.0.0.1:${PORT}/data/fixtures/scene1.json`)
+    if (await fetch(`http://127.0.0.1:${PORT}/data/fixtures/scene2.json`)
         .then((r) => r.ok).catch(() => false)) return;
   }
   throw new Error(`宿主 ${PORT} 起不来`);
@@ -70,17 +70,12 @@ if (!existsSync(OUT)) { console.error('没拿到自检报告（页面可能抛�
 const report = JSON.parse(readFileSync(OUT, 'utf8'));
 rmSync(OUT);
 
-console.log(`  页数 ${report.pages} · 断言 ${report.asserts} · `
-    + `冻结表对拍 ${report.freezeChecked} 镜`);
+console.log(`  页数 ${report.pages} · 断言 ${report.asserts}`);
+for (const m of (report.skipped ?? [])) console.log('    · 跳写：' + m);
 if (report.failureCount) {
   code = 1;
   console.log(`  FAIL ${report.failureCount} 条：`);
   for (const m of report.failures) console.log('    - ' + m);
-}
-if (report.freezeMismatch.length) {
-  code = 1;
-  console.log('  FAIL 冻结表回读不一致：');
-  for (const m of report.freezeMismatch) console.log('    - ' + m);
 }
 console.log(report.ok ? '\nM2 markup 通过' : '\nM2 markup 未通过');
 process.exit(code);

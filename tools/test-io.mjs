@@ -39,7 +39,7 @@ const waitPort = async () => {
       s.on('connect', () => s.destroy(d));
       s.on('error', () => setTimeout(d, 60));
     });
-    if (await fetch(`http://127.0.0.1:${PORT}/data/fixtures/scene1.json`)
+    if (await fetch(`http://127.0.0.1:${PORT}/data/fixtures/scene2.json`)
         .then((r) => r.ok).catch(() => false)) return;
   }
   throw new Error(`宿主 ${PORT} 起不来`);

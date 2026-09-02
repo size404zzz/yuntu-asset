@@ -1,0 +1,38 @@
+解码成功段 1878
+规则 R: 160 人 · 多件 50
+规则 L: 210 人 · 多件 134
+规则 L2: 229 人 · 多件 156
+规则 LR: 226 人 · 多件 140
+规则 LR2: 232 人 · 多件 157
+规则 RM3: 232 人 · 多件 62
+规则 U: 291 人 · 多件 91
+规则 V2 自举: 369 人 · 多件 232
+V2+严仲裁 自举第二遍亮票 ∪ LR2: 说话镜 59725 · 屏上无立绘 3607 (6.04%) · 说话人不可见 3897 (6.52%) · 同族双件同屏 51
+V0 旧表（lit 众数 + 全局槽位）: 说话镜 59725 · 屏上无立绘 9383 (15.71%) · 说话人不可见 18321 (30.68%) · 同族双件同屏 336
+RM3+仲裁 众数件不受否决 + 就地仲裁: 说话镜 59725 · 屏上无立绘 6834 (11.44%) · 说话人不可见 10292 (17.23%) · 同族双件同屏 216
+U+仲裁 上界：再并旧表件 + 就地仲裁: 说话镜 59725 · 屏上无立绘 5686 (9.52%) · 说话人不可见 8533 (14.29%) · 同族双件同屏 219
+L+仲裁 密 lit 票（每人全部过门件）+ 就地仲裁: 说话镜 59725 · 屏上无立绘 8560 (14.33%) · 说话人不可见 13746 (23.02%) · 同族双件同屏 127
+LR+仲裁 密 lit 票 ∪ 严格 reveal + 就地仲裁: 说话镜 59725 · 屏上无立绘 6112 (10.23%) · 说话人不可见 8760 (14.67%) · 同族双件同屏 138
+LR2+严仲裁 亮票不设暗率门 ∪ 严格 reveal: 说话镜 59725 · 屏上无立绘 4879 (8.17%) · 说话人不可见 6425 (10.76%) · 同族双件同屏 119
+LR+严仲裁 密 want 集，但槽位身份只认严格 reveal: 说话镜 59725 · 屏上无立绘 6115 (10.24%) · 说话人不可见 8871 (14.85%) · 同族双件同屏 138
+RM3+仲裁: 按「屏上无立绘」变好 418 段 / 变差 138 段
+   变差: 22child_03 2→6 | 22child_04 1→2 | 22child_05 4→33 | 22fool_centaureissi 1→3 | 22fool_delacey 1→4 | 22fool_end 54→77 | 22fool_florence 3→4 | 22fool_gin 3→4 | 22fool_hatsuchiri 2→5 | 22fool_haze 2→3 | 22fool_hubble 1→4 | 22fool_kuro 1→4
+U+仲裁: 按「屏上无立绘」变好 457 段 / 变差 10 段
+   变差: 23carnival_00 5→18 | 23sg_a00_2 2→9 | 23sg_bs03_1 0→1 | 23summer_s04 9→27 | 23winter_s07 2→6 | cpt_bonneville_00_01 0→1 | cpt_clukay_02_03 5→6 | cpt_dupin_04_02 0→1 | cpt_undline_03_03 0→1 | cpt_yelena_03_02 1→3
+L+仲裁: 按「屏上无立绘」变好 363 段 / 变差 226 段
+   变差: 1year_prologue 2→9 | 22child_03 2→6 | 22child_04 1→2 | 22child_05 4→38 | 22fool_centaureissi 1→3 | 22fool_delacey 1→4 | 22fool_end 54→65 | 22fool_florence 3→4 | 22fool_gin 3→4 | 22fool_hatsuchiri 2→5 | 22fool_haze 2→3 | 22fool_hubble 1→4
+LR+仲裁: 按「屏上无立绘」变好 487 段 / 变差 127 段
+   变差: 22child_03 2→6 | 22child_04 1→2 | 22child_05 4→33 | 22fool_centaureissi 1→3 | 22fool_delacey 1→4 | 22fool_end 54→65 | 22fool_florence 3→4 | 22fool_gin 3→4 | 22fool_hatsuchiri 2→5 | 22fool_haze 2→3 | 22fool_hubble 1→4 | 22fool_kuro 1→4
+LR+严仲裁: 按「屏上无立绘」变好 481 段 / 变差 127 段
+   变差: 22child_03 2→6 | 22child_04 1→2 | 22child_05 4→33 | 22fool_centaureissi 1→3 | 22fool_delacey 1→4 | 22fool_end 54→65 | 22fool_florence 3→4 | 22fool_gin 3→4 | 22fool_hatsuchiri 2→5 | 22fool_haze 2→3 | 22fool_hubble 1→4 | 22fool_kuro 1→4
+LR2+严仲裁: 按「屏上无立绘」变好 566 段 / 变差 72 段
+   变差: 22child_03 2→6 | 22child_04 1→2 | 22child_05 4→33 | 22fool_centaureissi 1→3 | 22fool_delacey 1→4 | 22fool_florence 3→4 | 22fool_gin 3→4 | 22fool_hatsuchiri 2→4 | 22fool_haze 2→3 | 22fool_hubble 1→4 | 22fool_kuro 1→4 | 22fool_python 1→5
+V2+严仲裁: 按「屏上无立绘」变好 639 段 / 变差 51 段
+   变差: 22child_03 2→5 | 22child_04 1→2 | 22child_05 4→21 | 22fool_centaureissi 1→2 | 22fool_delacey 1→3 | 22fool_florence 3→4 | 22fool_gin 3→4 | 22fool_hatsuchiri 2→3 | 22fool_haze 2→3 | 22fool_hubble 1→3 | 22fool_kuro 1→3 | 22fool_python 1→4
+   变差全量（按增幅降序）: 23carnival_s02 1→25 | cpt06_e_08 1→23 | 22child_05 4→21 | cpt_magnhilda_03_01 17→31 | 24fe2_s18 30→42 | cpt06_h_03 6→18 | cpt_nora_03_01 0→9 | cpt03_e_11_01 0→8 | 24fe_s06 12→19 | cpt_nora_04_04 4→11 | cpt_nora_01_04 0→6 | cpt_nora_02_04 0→6 | 23summer_s07 3→8 | cpt06_tutorial_103 4→9 | cpt_imr_s03 4→9 | cpt_jiangyu_chess_601_3 0→5 | cpt_nora_01_01 0→5 | 23april_prologue 1→5 | 23winter_s19 0→4 | cpt03_h_01_01 1→5 | cpt_undline_01_03 2→6 | 22child_03 2→5 | 22fool_python 1→4 | 23april_end 1→4 | 24fe2_s00 3→6 | cpt04_e_12_01 0→3 | cpt_undline_01_05 2→5 | 22fool_delacey 1→3 | 22fool_hubble 1→3 | 22fool_kuro 1→3 | cpt_erika_00_01 0→2 | cpt_jiangyu_chess_601_1 0→2 | cpt_magnhilda_03_04 0→2 | cpt_magnhilda_04_01 0→2 | cpt_shale_00 5→7 | cpt_undline_00_01 1→3 | 22child_04 1→2 | 22fool_centaureissi 1→2 | 22fool_florence 3→4 | 22fool_gin 3→4 | 22fool_hatsuchiri 2→3 | 22fool_haze 2→3 | 23winter_s19_2 0→1 | 24fe2_s10 6→7 | cpt_cascadia_03_03 0→1 | cpt_erika_03_02 1→2 | cpt_jiangyu_chess_601_2 0→1 | cpt_magnhilda_04_03 3→4 | cpt_nora_02_01 0→1 | cpt_nora_02_03 0→1 | cpt_penumbra_02_02 0→1
+   变好 top20（按减幅降序）: 24spring_persicaria 78→0 | 24spring_prologue 70→4 | 22child_02 62→4 | 22white_octogen 55→0 | end_00 55→0 | 24summer_s00 54→1 | 23summer_s12 52→0 | 24myth_01 53→1 | 24summer_s05 57→6 | cpt_belladonna_01 65→14 | cpt04_h_02_01 50→0 | cpt06_h_05 51→1 | 22tana_puzzle 48→0 | cpt_olivia_00 52→5 | cpt_belladonna_00 46→0 | 23summer_s15 43→0 | cpt_imr_s04 42→0 | end_01 43→1 | 22summer_s07 42→1 | 24winter_s05 54→13
+  22child_02: V0 {"speak":62,"m1":62,"m2":62,"dual":0} → RM3 {"speak":62,"m1":4,"m2":4,"dual":0} → LR严 {"speak":62,"m1":4,"m2":4,"dual":0} → LR2严 {"speak":62,"m1":4,"m2":4,"dual":0} → V2 {"speak":62,"m1":4,"m2":4,"dual":0}
+  cpt_olivia_00: V0 {"speak":230,"m1":52,"m2":163,"dual":0} → RM3 {"speak":230,"m1":23,"m2":69,"dual":0} → LR严 {"speak":230,"m1":18,"m2":52,"dual":0} → LR2严 {"speak":230,"m1":18,"m2":52,"dual":0} → V2 {"speak":230,"m1":5,"m2":10,"dual":0}
+  23summer_s03: V0 {"speak":155,"m1":33,"m2":142,"dual":0} → RM3 {"speak":155,"m1":10,"m2":35,"dual":0} → LR严 {"speak":155,"m1":7,"m2":13,"dual":0} → LR2严 {"speak":155,"m1":7,"m2":13,"dual":0} → V2 {"speak":155,"m1":6,"m2":7,"dual":0}
+  cpt_inola_01: V0 {"speak":76,"m1":25,"m2":76,"dual":0} → RM3 {"speak":76,"m1":0,"m2":0,"dual":0} → LR严 {"speak":76,"m1":0,"m2":0,"dual":0} → LR2严 {"speak":76,"m1":0,"m2":0,"dual":0} → V2 {"speak":76,"m1":0,"m2":0,"dual":0}
+  end_00: V0 {"speak":164,"m1":55,"m2":90,"dual":0} → RM3 {"speak":164,"m1":9,"m2":21,"dual":0} → LR严 {"speak":164,"m1":4,"m2":20,"dual":0} → LR2严 {"speak":164,"m1":2,"m2":18,"dual":0} → V2 {"speak":164,"m1":0,"m2":0,"dual":0}

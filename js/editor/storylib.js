@@ -33,10 +33,11 @@ export function storyGroups(manifest) {
 }
 
 /* 解码 + 映射一条龙；meta = avg-scripts.json 的条目 {id, cfg, lang}。
-   imgIds / heroSprites 是全局立绘表与说话者立绘桥表（build-asset-index
-   生成，随 manifest 一起取），供映射层给悬空 tween 落名、给说话者复亮；
-   缺席时该两步跳过（纯夹具/旧索引模式）。 */
-export async function loadStory(fetchImpl, meta, {imgIds, heroSprites} = {}) {
+   三张构建期估出的表（build-asset-index 生成，随 manifest 一起取）：
+   imgIds 槽位 → 立绘候选路径（票数降序）、heroSprites 角色 → 她的立绘集、
+   pathOwner 立绘 → 精确归属角色。映射层用它们给悬空 tween 落名、给说话者
+   补揭示；缺席时该两步跳过（纯夹具/旧索引模式）。 */
+export async function loadStory(fetchImpl, meta, {imgIds, heroSprites, pathOwner} = {}) {
   const decode = async (path) => {
     const res = await fetchImpl('/' + path);
     if (!res.ok) throw new Error(`${path} → ${res.status}`);
@@ -45,7 +46,7 @@ export async function loadStory(fetchImpl, meta, {imgIds, heroSprites} = {}) {
   };
   const cfg = await decode(meta.cfg);
   const lang = await decode(meta.lang);
-  return storyToWire(cfg, lang, {imgIds, heroSprites});
+  return storyToWire(cfg, lang, {imgIds, heroSprites, pathOwner});
 }
 
 export function openStoryPicker(manifest, {title = '剧本库', catalog = null, onPick} = {}) {

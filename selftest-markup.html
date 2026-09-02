@@ -38,11 +38,9 @@ const immediate = () => Promise.resolve();
 const fixedRand = (len) => 'A'.repeat(Math.max(0, len));
 
 const scenes = {
-  scene1: await (await fetch('data/fixtures/scene1.json')).json(),
   scene2: await (await fetch('data/fixtures/scene2.json')).json(),
   scene3: await (await fetch('data/fixtures/scene3.json')).json(),
 };
-const expected = await (await fetch('data/fixtures/expected-scene1.json')).json();
 
 const flat = (raw) => (Array.isArray(raw) ? raw : Object.values(raw));
 const failures = [];
@@ -92,18 +90,6 @@ for (const [name, raw] of Object.entries(scenes)) {
 }
 await Promise.all(tasks);
 
-/* ---- 冻结表对拍：reformat 的 DOM 回读 == 参考实测 lineHTML ---- */
-const freezeMismatch = [];
-const tmp = document.createElement('div');
-for (const shot of expected.shots.filter((s) => !s.endOfScene)) {
-  const wire = scenes.scene1[shot.shot].content;
-  tmp.innerHTML = reformat(wire, DEFAULT_VARS);
-  if (tmp.innerHTML !== shot.lineHTML) {
-    freezeMismatch.push(`shot ${shot.shot}: ${JSON.stringify(tmp.innerHTML)}`
-        + ` != ${JSON.stringify(shot.lineHTML)}`);
-  }
-}
-
 /* ---- 三态可视化 ---- */
 const cards = document.getElementById('cards');
 const makeBox = (title, html) => {
@@ -138,12 +124,11 @@ for (const [name, raw] of Object.entries(scenes)) {
 }
 
 /* ---- 报告 ---- */
-const ok = failures.length === 0 && freezeMismatch.length === 0;
+const ok = failures.length === 0;
 const report = {
   done: true, ok, pages: pageCount, asserts,
   failures: failures.slice(0, 30), failureCount: failures.length,
-  freezeChecked: expected.shots.filter((s) => !s.endOfScene).length,
-  freezeMismatch: freezeMismatch.slice(0, 20),
+  skipped: ['wiki 基准件与夹具 scene1 已删（契约换游戏本体）：逐镜 lineHTML 对拍退役'],
 };
 document.getElementById('report').textContent = JSON.stringify(report);
 await fetch('/freeze?scene=markup_report', {
@@ -152,9 +137,8 @@ await fetch('/freeze?scene=markup_report', {
 });
 const summary = document.getElementById('summary');
 summary.innerHTML = ok
-    ? `<b class="ok">✓ M2 markup 通过</b> —— ${pageCount} 页 / ${asserts} 断言 / `
-      + `冻结表 ${report.freezeChecked} 镜全等`
-    : `<b class="bad">✗ ${failures.length + freezeMismatch.length} 处失败</b>（见 report）`;
+    ? `<b class="ok">✓ M2 markup 通过</b> —— ${pageCount} 页 / ${asserts} 断言`
+    : `<b class="bad">✗ ${failures.length} 处失败</b>（见 report）`;
 </script>
 </body>
 </html>
