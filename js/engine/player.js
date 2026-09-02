@@ -496,8 +496,10 @@ export class Player {
         chara.classList.replace('pos' + chara.dataset.posId, 'pos' + posId);
         chara.dataset.posId = posId;
       }
-      if (entry.isDark != chara.classList.contains('dark')) {
-        chara.classList.toggle('dark');
+      /* 赋值不是翻转：条目不带 isDark 时不碰明暗（与 state.js 折叠同口径；
+         旧写法在 isDark 缺省时把 undefined 与 false 相比，白翻一次）。 */
+      if (entry.isDark !== undefined) {
+        chara.classList.toggle('dark', entry.isDark === true);
       }
       if (entering) this.refs.avgCharas.append(chara);
     });

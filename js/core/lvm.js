@@ -1,10 +1,18 @@
-/* lvm.js —— AvgCfg/AvgLang 字节码的解释执行（Lua 5.3 语义子集）。
+/* lvm.js —— 云图 Lua 5.3 字节码的解释执行（数据脚本 + 游戏逻辑脚本）。
  *
- * 指令集完整实现（46 个 opcode、标准编码，见 lundump.js 头注），但按
- * 「数据脚本」的现实裁剪语义：
+ * 操作数字段布局（与官方 5.3 不同，实测自 `luascripts.ab` 的逻辑脚本）：
+ *   op = 低 6 位｜A = 8 位@6｜C = 9 位@14｜B = 9 位@23（5.4 风格的 C/B 顺序、
+ *   但 B/C 都扩到 9 位且走 RK 编码，≥256 取常量池）。
+ *   `EQ/LT/LE` 的 **A 是 1 位取反标志**不是寄存器号（普查 33 支逻辑脚本：A 只
+ *   出现 0/1）；`SETTABUP` 的键也按 RK 编码。这两条在只跑 AvgCfg 的时期是错得
+ *   出来的——数据语料零比较指令，改坏了没有测试会红；回归锚点在
+ *   `tools/test-avgcfg.mjs` 的手工 Proto 断言块（提交 2e9677a2）。
+ *
+ * 仍按「数据脚本」的现实裁剪语义：
  *   - 数值不区分 int/float（JS number 一身二任）；位运算走 BigInt 保 64 位；
- *   - 闭包 upvalue 按值快照（不做 open-upvalue 别名）——语料 3756 文件
- *     零 CLOSURE 指令，纯表构造；census 出现 CLOSURE 时再补别名；
+ *   - 闭包 upvalue 按值快照（不做 open-upvalue 别名）——3756 支数据脚本零
+ *     CLOSURE 所以够用；**逻辑脚本大量用闭包且会改写 upvalue，真要跑它们
+ *     得先补 open-upvalue 别名**；
  *   - pairs 用插入序快照键序（5.3 本就未定义序）；
  *   - 无协程/goto（goto 编译为 JMP，天然支持）、无 __call/__lt 等元方法。
  * 崩溃面控制：步数护栏 + 明确的 LuaError 消息，坏文件不静默。

@@ -3,7 +3,7 @@
  * 用法：node tools/test-repo-index.mjs
  */
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
+import {readdirSync, readFileSync} from 'node:fs';
 import {join, resolve} from 'node:path';
 import {loadRepoIndex, searchBackgrounds, searchCharacters, searchAudio,
   audioSheets, backgroundGroups, flatLookup} from '../js/core/repo-index.js';
@@ -48,13 +48,22 @@ ok('背景搜索：子串/分组/分页/组清单');
 assert.ok(searchCharacters(repo, 'persicaria', {avgOnly: true})
     .some((c) => c.id === 'persicaria_avg'));
 assert.ok(searchCharacters(repo, '', {avgOnly: true}).length >= 496);
+/* layout 现在由 tools/build-hero-layouts.py 从 bundle 全量生成（人眼标定退休），
+   所以这里按盘上文件数派生断言，而不是钉一个魔数。 */
+const onDisk = new Set(readdirSync(join(ROOT, 'data', 'layouts'))
+    .filter((f) => f.endsWith('.json')).map((f) => f.replace(/\.json$/, '')));
 const calibrated = searchCharacters(repo, '', {layoutState: 'calibrated'});
-assert.equal(calibrated.length, 3, '已知 layout 三件套');
-assert.ok(calibrated.every((c) => c.layout));
+assert.equal(calibrated.length, onDisk.size, '标定态数 = data/layouts 文件数');
+assert.ok(calibrated.every((c) => c.layout && onDisk.has(c.id)));
+const avgAll = searchCharacters(repo, '', {avgOnly: true});
+/* 游戏 bundle 里没有 CommonPicController 的角色就生成不出 layout——这是数据事实，钉住 */
+const NO_TABLE = ['hubble_avg', 'max2_avg', 'sold_avg'];
 const uncal = searchCharacters(repo, '', {layoutState: 'uncalibrated', avgOnly: true});
-assert.equal(uncal.length, searchCharacters(repo, '', {avgOnly: true}).length - 3);
-assert.ok(searchCharacters(repo, '', {avgOnly: true}).some((c) => c.faces.length > 5));
-ok('立绘搜索：_avg 过滤 / 标定态过滤 / 脸表');
+assert.deepEqual(uncal.map((c) => c.id).filter((id) => NO_TABLE.includes(id)).sort(), NO_TABLE,
+    '未标定只应是 bundle 里无槽位表的三个角色');
+assert.equal(uncal.length, avgAll.length - onDisk.size);
+assert.ok(avgAll.some((c) => c.faces.length > 5));
+ok(`立绘搜索：_avg 过滤 / 标定态（${onDisk.size} 份官方 layout）/ 脸表`);
 
 /* M12 音频索引：口径、搜索、sheet 过滤。 */
 const sheetCount = audioSheets(repo).length;

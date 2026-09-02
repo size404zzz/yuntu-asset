@@ -3,10 +3,12 @@
    player 增量调用它们，seek 时从 emptyState() 折叠 0..N 重放（代价 O(N)，
    200 镜约几十微秒；不缓存快照，编辑器改 shot i 不需要作废任何东西）。
 
-   语义全部来自参考冻结结论，不是常识：
-   - 立绘在场以 imgTween lane 为依据（images[] 声明不算）；
-   - 明暗是累积翻转：不带 isDark 的条目也会翻转（undefined != false 为真）；
-   - bg overlay 的 dark 同款（contains != isDark 才 toggle）；
+   语义出处 = 游戏本体（契约于 2026-08-31 从 wiki 参考件换成游戏，见 plan
+   「契约切换」节；对账链 tools/test-gameplay.mjs）：
+   - 立绘在场以 imgTween lane 为依据（images[] 声明算不算入场是**已知分歧**，见下）；
+   - 明暗是**赋值**：`AvgImgTweenUntil` L96-103 `if tweenCfg.isDark ~= nil then
+     rgb = isDark and 0.5 or 1` —— 缺省不碰。参考件那套「缺省也翻转」已废；
+   - bg overlay 同款（原版每条背景图各有一个 color.rgb，我们只有一个遮罩层）；
    - delete 没有豁免（参考的豁免分支恒 false，是死代码）。 */
 
 /* 槽位仅 1..5 有效；语料里有入场不带 posId（或给 0/越界值）的轨迹，
@@ -32,31 +34,33 @@ export function emptyState() {
 }
 
 /* loadImages 的数据层。返回 {touched, deletions}：
-   touched —— 本批注册/重注册的条目（DOM 层据此取 layout、补规则）；
-   deletions —— 被本批 delete 标记且未撤销的 imgId。
-   参考的「撤销」语义：同一批里先 delete 后又列出同一 imgId → 不删。 */
+   touched —— 本批注册条目（DOM 据此取 layout、补规则；reenter = 本镜先回收过）；
+   deletions —— 本批 delete 标记的 imgId（先回收，再注册）。 */
 export function applyImages(state, images) {
-  const deleteCache = new Set();
-  const touched = [];
-  for (const img of images) {
-    if (img.delete) {
-      deleteCache.add(img.imgId);
-    } else if (deleteCache.has(img.imgId)) {
-      deleteCache.delete(img.imgId);
-      state.imgMap.set(img.imgId, img);
-      touched.push({img, reenter: true});
-    } else {
-      state.imgMap.set(img.imgId, img);
-      touched.push({img, reenter: false});
-    }
-  }
-  const deletions = [...deleteCache];
+  /* 两遍扫描（SYS f24 L517-527）：先把所有 delete 回收完，再逐条注册。
+     所以同镜「delete + 又列出」不是撤销，而是**回收后重建一个全新 item**
+     （换装：可见度/明暗都从新条目重算，不继承旧 item）。
+     参考件那套「同批撤销」是它 loadImages 里恒 false 的死代码，已废。 */
+  const deletions = [...new Set(images.filter((i) => i?.delete).map((i) => i.imgId))];
+  const gone = new Set(deletions);
   for (const imgId of deletions) {
     state.imgMap.delete(imgId);
     state.lanes.delete(imgId);
     const slot = state.laneOrder.indexOf(imgId);
     if (slot >= 0) state.laneOrder.splice(slot, 1);
   }
+  const touched = [];
+  for (const img of images) {
+    if (!img || img.delete) continue;
+    state.imgMap.set(img.imgId, img);
+    touched.push({img, reenter: gone.has(img.imgId)});
+  }
+  /* 「注册即定可见度/重置明暗」（InitAvgHeroPicParam 当场写 color）**暂未实现**：
+     注册条目 7489 条全是 alpha=0，游戏里就是"摆位并先隐"，与现在「无 lane = 不可见」
+     同观感；但若在此建 lane，lane 群体一变大会喂给 avgwire 的 autoLightCast
+     （它按说话者路径匹配，会把同角色的多个换装件一起点亮 ⇒ 两个帕斯卡同屏）。
+     等「autoLightCast 在游戏契约下是否保留」定了再一并做。见 plan 的 D 类。 */
+
   return {touched, deletions};
 }
 
@@ -83,19 +87,20 @@ export function applyShotTweens(state, shot) {
            与 DOM 侧「不写 opacity」同口径。 */
         state.bg = {imgId, alpha: entry.alpha ?? state.bg?.alpha ?? 0,
           duration: entry.duration};
-        if (state.bgOverlayDark != entry.isDark) {
-          state.bgOverlayDark = !state.bgOverlayDark;
-        }
+        if (entry.isDark !== undefined) state.bgOverlayDark = entry.isDark === true;
       }
       events.push({imgId, imgType: 2, entries});
     } else if (img.imgType === 3) {
+      /* 注册可以先建 lane（见 applyImages），所以「入场」另用 entered 记：
+         首次 tween 事件才建/挂 DOM 元素，与旧行为逐字一致。 */
       let lane = state.lanes.get(imgId);
-      const entering = !lane;
+      const entering = !lane?.entered;
       if (!lane) {
         lane = {alpha: 0, posId: img.posId, isDark: false, pos: null, scale: null};
         state.lanes.set(imgId, lane);
         state.laneOrder.push(imgId);
       }
+      lane.entered = true;
       let first = entering;
       for (const entry of entries) {
         /* alpha 缺省 = 保持：抖动/灯光拍只动 isDark/pos，不改可见度。
@@ -115,7 +120,9 @@ export function applyShotTweens(state, shot) {
         } else if (isValidPos(entry.posId) && lane.posId != entry.posId) {
           lane.posId = entry.posId;
         }
-        if (entry.isDark != lane.isDark) lane.isDark = !lane.isDark;
+        /* 赋值而不是翻转：缺省 = 不碰这条的明暗（原版只在该条目带 isDark 时
+           才写 color.rgb）。 */
+        if (entry.isDark !== undefined) lane.isDark = entry.isDark === true;
       }
       events.push({imgId, imgType: 3, entering, entries});
     }

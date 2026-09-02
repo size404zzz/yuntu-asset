@@ -87,9 +87,11 @@ const report = await (async () => {
       const smoke = JSON.parse(readFileSync(SMOKE, 'utf8'));
       rmSync(SMOKE);
       const bad = [];
+      /* 默认页 = 序章 cpt00_e_01_01（游戏本体语料），wiki 夹具 scene1 已退役。 */
+      if (smoke.story !== 'cpt00_e_01_01') bad.push(`默认剧本=${smoke.story}`);
       if (!smoke.pos.startsWith('#1')) bad.push(`tp-pos=${smoke.pos}`);
       if (!smoke.storage.includes('731')) bad.push(`storage=${smoke.storage}`);
-      if (smoke.shots < 50) bad.push(`shots=${smoke.shots}`);
+      if (smoke.shots !== 48) bad.push(`shots=${smoke.shots}`);
       if (smoke.storylib?.error) bad.push(`剧本库装载：${smoke.storylib.error}`);
       if (smoke.storylib?.id !== 'cpt00_e_01_01') {
         bad.push(`storylib.id=${smoke.storylib?.id ?? '缺席'}`);

@@ -22,7 +22,7 @@ import {emptyState, applyImages, applyShotTweens} from '../js/core/state.js';
 
 const ROOT = resolve(process.cwd());
 const VALIDATE_ONLY = process.argv.includes('--validate');
-const FIXTURES = ['scene1', 'scene2', 'scene3'];
+const FIXTURES = ['scene2', 'scene3'];
 
 const index = {};
 
@@ -266,14 +266,50 @@ for (const name of knownLayouts) {
 /* M14 剧本库增强：全语料现场解码 → 每段补 steps（镜数）与 brief（简介），
  * 同时把「解码+映射 0 失败」升格为构建门槛——索引生成本身就是一次
  * 全语料回归。解码失败的段记入 indexProblems（构建 exit 1）。
- * 顺带统计 imgId → imgPath 声明直方图（仅 imgType 3）：tween 的 imgId 走
- * 游戏侧全局角色槽位表，声明众数就是该表的估计（分歧 id 的少数派剧本
- * 本就该用 images[] 覆盖，不进默认值）。 */
+ * 顺带统计两张身份表与一份槽位候选表（立绘可见度修复的地基）：
+ *   imgIds     槽位 → 该槽在全语料声明过的立绘路径（票数降序，[0]=众数）
+ *   heroSprites 角色 → 她的立绘集（召回口径，供说话镜补揭示判「这条 lane 是不是她」）
+ *   pathOwner  立绘 → 精确归属角色（只认作者的揭示跳变证据，供悬空槽位就地认人）
+ * tween 的 imgId 只是槽位序号不是身份，同一槽在不同剧本会换成别人，所以
+ * imgIds 给的是候选集而不是单一众数。 */
 const corpusT0 = Date.now();
 let corpusFail = 0;
 const idVotes = new Map();
 const bgVotes = new Map();      /* imgId → imgType-2 声明票（槽位类型普查） */
-const heroVotes = new Map();      /* heroId → Map(imgPath → {lit, dark}) */
+const heroVotes = new Map();      /* heroId → Map(imgPath → 亮票数) */
+const revealVotes = new Map();    /* imgPath → Map(heroId → 揭示跳变票数) —— 精确归属用 */
+/* fold 一份 wire 并计票：亮票进 lit，「α≤0 → α>0」的揭示跳变进 revealVotes。 */
+function foldVotes(wire, lit, reveal) {
+  const state = emptyState();
+  const pathOf = new Map();
+  for (const shot of Object.values(wire)) {
+    if (shot.images?.length) {
+      applyImages(state, shot.images);
+      for (const im of shot.images) {
+        if (im.imgPath && !im.delete) pathOf.set(im.imgId, im.imgPath);
+        else if (im.delete) pathOf.delete(im.imgId);
+      }
+    }
+    const before = new Map([...state.lanes].map(([i, l]) => [i, l.alpha ?? 0]));
+    applyShotTweens(state, shot);
+    const hid = shot.speakerHeroId;
+    if (hid === undefined || hid === null) continue;
+    if (!lit.has(hid)) lit.set(hid, new Map());
+    const vm = lit.get(hid);
+    for (const [imgId, lane] of state.lanes) {
+      const p = pathOf.get(imgId);
+      if (!p || !((lane.alpha ?? 0) > 0)) continue;
+      vm.set(p, (vm.get(p) ?? 0) + 1);
+      /* 揭示跳变（α≤0 → α>0）才归给本镜说话人：同台的聆听者一直是亮的，
+         持续亮票会把别人的件算到她头上（demi_lava2_avg 的亮票 55% 落在
+         帕斯卡说话镜，而 100% 的揭示跳变落在 47）。 */
+      if (!reveal || (before.get(imgId) ?? 0) > 0) continue;
+      if (!revealVotes.has(p)) revealVotes.set(p, new Map());
+      const rm = revealVotes.get(p);
+      rm.set(hid, (rm.get(hid) ?? 0) + 1);
+    }
+  }
+}
 for (const story of avgScripts.stories) {
   try {
     const cfg = toJS(execChunk(parseChunk(readFileSync(join(ROOT, story.cfg))))[0]);
@@ -295,31 +331,8 @@ for (const story of avgScripts.stories) {
     story.steps = Object.keys(wire).length;
     const brief = wire['1']?.SkipScenario;
     story.brief = typeof brief === 'string' ? brief : null;
-    /* heroSprites 桥表投票：fold 引擎同款状态，统计「heroId 说话时哪张
-       立绘在场/亮着」。修复后的 wire 是可见性的最佳重建；压暗说话的
-       丢数据案是少数派噪音，被亮票占优过滤。 */
-    const state = emptyState();
-    const pathOf = new Map();
-    for (const [k, shot] of Object.entries(wire)) {
-      if (shot.images?.length) {
-        applyImages(state, shot.images);
-        for (const im of shot.images) {
-          if (im.imgPath && !im.delete) pathOf.set(im.imgId, im.imgPath);
-          else if (im.delete) pathOf.delete(im.imgId);
-        }
-      }
-      applyShotTweens(state, shot);
-      const hid = shot.speakerHeroId;
-      if (hid === undefined || hid === null) continue;
-      if (!heroVotes.has(hid)) heroVotes.set(hid, new Map());
-      const vm = heroVotes.get(hid);
-      for (const [imgId, lane] of state.lanes) {
-        const p = pathOf.get(imgId);
-        if (!p || !((lane.alpha ?? 0) > 0)) continue;
-        if (!vm.has(p)) vm.set(p, {lit: 0, dark: 0});
-        vm.get(p)[lane.isDark ? 'dark' : 'lit']++;
-      }
-    }
+    /* 第一遍在裸 wire 上投票（不注入、不落名、不补揭示）= 纯作者证据 */
+    foldVotes(wire, heroVotes, true);
   } catch (e) {
     corpusFail++;
     indexProblems.push(`剧本 ${story.id} 解码失败：${e.message}`);
@@ -335,24 +348,103 @@ for (const [id, m] of [...idVotes].sort((a, b) => a[0] - b[0])) {
     bgSlotFiltered++;
     continue;
   }
-  imgIds[id] = [...m.entries()].sort((a, b) => b[1] - a[1])[0][0];
+  /* 槽位是序号不是身份：同一槽在全语料被不同剧本声明成不同立绘。整份候选
+     按票数降序交给映射层，由「本段谁在说话」就地仲裁（22child_02 的槽 105：
+     全局众数 croque_avg 84 段，同剧情的 03..06 声明的却是 croque_kid_avg，
+     而本段唯一开口的立绘角色是 114）。[0] 就是旧的全局众数。 */
+  imgIds[id] = [...m.entries()].sort((a, b) => b[1] - a[1]).map(([p]) => p);
 }
 avgScripts.imgIds = imgIds;
-/* heroSprites：亮票占优（≥3 且 ≥2×暗票）才算桥接成功——暗占优说明该
-   角色本就是阴影演出（反派暗处说话），不修。 */
+/* 两张身份表，各司其职（选型实测见 plan「契约切换」D6 的重做记录）：
+   heroSprites[hid] = **召回集**：她说话时亮过 ≥3 次的全部立绘（亮票降序）
+     ∪ 被她严格揭示占有的件。autoLightCast 用它判断「台上这条 lane 是不是她」，
+     宁可宽——漏一个件就是她开口时整段隐身（用户报的 22child_02 那类）。
+   pathOwner[path] = **精确归属**：只认「揭示跳变」（α≤0 → α>0 落在谁的说话镜）
+     且总票 ≥3、份额 ≥0.4、≥1.5×次名。悬空槽位就地认人用它——
+     那里认错人比不出现更难看（会把成人克罗琦摆在小克罗琦的台词上）。
+   亮票的「暗率门」（lit ≥ 2×dark）已废：它按 isDark 计数，而 isDark 从翻转
+   改成赋值后口径全变，无声砍掉约 50 人的覆盖（22fool_* 整片 NPC 说话人失声）。 */
 const heroSprites = {};
-for (const [hid, m] of [...heroVotes].sort((a, b) => a[0] - b[0])) {
-  const best = [...m.entries()].sort((a, b) => b[1].lit - a[1].lit)[0];
-  if (best && best[1].lit >= 3 && best[1].lit >= best[1].dark * 2) {
-    heroSprites[hid] = best[0];
+const pathOwner = {};
+const ownedBy = new Map();                  /* hid → [[path, 揭示票数]] */
+for (const [p, m] of revealVotes) {
+  const ranked = [...m].sort((a, b) => b[1] - a[1]);
+  const tot = ranked.reduce((a, [, c]) => a + c, 0);
+  const [top, second] = ranked;
+  if (tot < 3 || top[1] / tot < 0.4 || top[1] < (second?.[1] ?? 0) * 1.5) continue;
+  pathOwner[p] = String(top[0]);
+  if (!ownedBy.has(top[0])) ownedBy.set(top[0], []);
+  ownedBy.get(top[0]).push([p, top[1]]);
+}
+/* 召回集门槛：票数 ≥3、≥她最强件的 25%、每人最多 8 件。相对份额这一道不能省：
+   亮票只说明「她说话时这件在台上有亮」，同台的别人自然一起亮，不设份额门槛
+   就会把同台者一并收进名下（1001 名下出现 sol_avg / anna_avg / croque_avg）。
+   揭示归属件是作者一手证据，不受该门槛约束。 */
+const RECALL_MIN = 3;
+const RECALL_SHARE = 0.25;
+const RECALL_CAP = 8;
+const stemTokens = (p) => String(p).replace(/_avg\d*$/, '').split('_');
+/* 一方词列是另一方的前导段 = 同一角色的换装件（persicaria ⊂ persicaria_dress） */
+const sameFamily = (a, b) => {
+  const x = stemTokens(a), y = stemTokens(b);
+  const n = Math.min(x.length, y.length);
+  for (let i = 0; i < n; i++) if (x[i] !== y[i]) return false;
+  return true;
+};
+const buildRecall = (litSource) => {
+  const out = {};
+  for (const [hid, m] of litSource) {
+    const ranked = [...m].filter(([, c]) => c >= RECALL_MIN).sort((a, b) => b[1] - a[1]);
+    const lit = ranked.filter(([, c]) => c >= (ranked[0]?.[1] ?? 0) * RECALL_SHARE)
+        .slice(0, RECALL_CAP).map(([p]) => p);
+    const rev = (ownedBy.get(hid) ?? []).sort((a, b) => b[1] - a[1]).map(([p]) => p);
+    /* 顺序就是身份优先级：retargetHeroSprites 拿 want[0] 当「她的主件」，
+       揭示选件按「主件 > 同族 > 其他」排。精确归属件必须排在亮票件前面，
+       否则同台路人的件会顶掉她自己的件、把揭示挡在 rank 2 外
+       （1year_prologue 键 21 薇洛儿：gastrainomie_avg 亮票比 willow_avg 高，
+       结果她自己开口时没人现身）。 */
+    const paths = [...new Set([...rev, ...lit])];
+    if (paths.length) out[String(hid)] = paths;
   }
+  return out;
+};
+Object.assign(heroSprites, buildRecall(heroVotes));
+/* 自举第二遍：拿第一遍的表跑完整映射链（落名 + 补揭示全开），在「修好的」
+   wire 上再数一次亮票。第一遍只看得见作者显式点亮的件，那些整段只有 α0
+   条目的角色（22child_05 的克罗琉、23carnival_s02 的那几位）一票也拿不到，
+   揭示门对她们哑火；第二遍看得见补出来的亮态，正好把这类人接回桥表。
+   两条护栏：① 只喂召回集，pathOwner 仍由第一遍的作者证据定，身份创建不许
+   自我强化（否则认错的人会一轮轮锁死）；② 第二遍只许「补空白的人」或「给
+   已有件加同族换装件」，不许把她说话时台上亮过的陌生件都收进名下——不设这条
+   时 1055 累积到 32 件，家族不变量选件漂到别人的件上反倒收掉她自己那件。 */
+const heroVotes2 = new Map();
+for (const story of avgScripts.stories) {
+  try {
+    const cfg = toJS(execChunk(parseChunk(readFileSync(join(ROOT, story.cfg))))[0]);
+    const lang = toJS(execChunk(parseChunk(readFileSync(join(ROOT, story.lang))))[0]);
+    const {wire} = storyToWire(cfg, lang, {imgIds, heroSprites, pathOwner});
+    foldVotes(wire, heroVotes2, false);
+  } catch { /* 第一遍已记过账 */ }
+}
+for (const [hid, m] of heroVotes2) {
+  const h = String(hid);
+  const base = heroSprites[h];
+  const ranked = [...m].filter(([, c]) => c >= RECALL_MIN)
+      .sort((a, b) => b[1] - a[1]).map(([p]) => p);
+  const add = base ? ranked.filter((p) => base.some((b) => sameFamily(b, p)))
+      : ranked.slice(0, RECALL_CAP);
+  if (add.length) heroSprites[h] = [...new Set([...(base ?? []), ...add])];
 }
 avgScripts.heroSprites = heroSprites;
+avgScripts.pathOwner = pathOwner;
+const multi = Object.values(heroSprites).filter((a) => a.length > 1).length;
 console.log(`可浏览索引：背景 ${backgrounds.length} · 立绘 ${characters.length}`
     + `（_avg ${avgCount}）· 已标定 layout ${knownLayouts.size}`
     + ` · 剧本 ${avgScripts.stories.length} 段 + ${avgScripts.configs.length} 份剧情配置`
-    + ` · 全局立绘表 ${Object.keys(imgIds).length} 位（滤除背景槽 ${bgSlotFiltered}）`
-    + ` · 说话者桥表 ${Object.keys(heroSprites).length} 位`
+    + ` · 全局立绘表 ${Object.keys(imgIds).length} 位（多候选 `
+    + `${Object.values(imgIds).filter((a) => a.length > 1).length}`
+    + `，滤除背景槽 ${bgSlotFiltered}）`
+    + ` · 说话者桥表 ${Object.keys(heroSprites).length} 位（多件 ${multi}）`
     + ` · 语料解码 ${corpusFail ? corpusFail + ' 段失败' : '全通过'}`
     + `（${((Date.now() - corpusT0) / 1000).toFixed(1)}s）`);
 for (const m of indexProblems) console.log('  FAIL ' + m);

@@ -27,8 +27,9 @@
 <div id="mount"></div>
 <script type="module">
 /**
- * M4 播放器自检：用虚拟时钟驱动我们自己的 Player 跑完 scene1 全部 53 镜，
- * 逐镜抓 settled state + phase 时序，与参考冻结表 expected-scene1.json 对拍。
+ * M4 播放器自检：用虚拟时钟驱动我们自己的 Player 推完一个夹具的全部镜次，
+ * 逐镜抓 settled state + phase 时序；有基准件时逐项对拍，没有（wiki 冻结件
+ * 已随契约切换删除）就只跑冒烟并把跳写进报告。
  *
  * 与参考驱动（tools/ref/driver.mjs）的对应关系：
  * - 观测器 / at() / ticks() / snapshot() 逐项照抄，performance.now() 换成虚拟钟；
@@ -39,6 +40,7 @@
  * 与 M5 seek 回归共用同一份。
  */
 import {Player} from '/js/engine/player.js';
+import {loadRepoIndex, flatLookup} from '/js/core/repo-index.js';
 import {
   makeSettler, makeSnapshotter, createTimeline, VirtualTimer,
 } from '/js/test/harness.js';
@@ -48,11 +50,11 @@ import {
 const URLP = new URLSearchParams(location.search);
 const MAX_SHOTS = Number(URLP.get('max') || 0);
 const REPORT_SLUG = URLP.get('slug') || 'play_report';
-const SCENE = URLP.get('scene') || 'scene1';
-const TITLES = {scene1: '临危受命', scene2: '背水一战', scene3: '绝处逢生',
-  scene4: 'M11 形态'};
+const SCENE = URLP.get('scene') || 'scene2';
+const TITLES = {scene2: '背水一战', scene3: '绝处逢生', scene4: 'M11 形态'};
 
 const problems = [];
+const skipped = [];   /* 契约切换后缺基准时，跳过了什么要写进报告 */
 const pageErrors = [];
 addEventListener('error', (e) => pageErrors.push(`${e.message} @ ${e.filename}:${e.lineno}`));
 addEventListener('unhandledrejection', (e) => pageErrors.push(`rejection: ${e.reason?.message || e.reason}`));
@@ -61,7 +63,12 @@ addEventListener('unhandledrejection', (e) => pageErrors.push(`rejection: ${e.re
 
 const clock = new VirtualTimer();
 
-const filePathOf = (name) => '/images/' + name[0].toUpperCase() + name.slice(1);
+/* 素材优先走本地 res/ 树（与 selftest-avg 同款）。/images/ 是外源代理，
+   缺失文件按 GFWiki 的怪癖返回 200 的 HTML 提示页 —— 纹理永远到不了，
+   「纹理到达才开」的门不落地，打字机与点击推进会一起卡死。 */
+const repo = await loadRepoIndex();
+const filePathOf = (name) => flatLookup(repo, name)
+    ?? '/images/' + name[0].toUpperCase() + name.slice(1);
 const layoutCache = new Map();
 const layoutOf = async (img) => {
   if (!layoutCache.has(img.imgPath)) {
@@ -89,10 +96,10 @@ const snapshot = makeSnapshotter({player, timeline});
 /* ---------- 开跑 ---------- */
 
 const scene = await (await fetch(`/data/fixtures/${SCENE}.json`)).json();
-const expected = await (await fetch(`/data/fixtures/expected-${SCENE}.json`)).json();
-const contentOrder =
-    scene.map((shot, i) => (shot.content ? i : -1)).filter((i) => i >= 0);
-
+/* 契约已换成游戏本体（2026-08-31），wiki 冻结件随之删除：缺基准时只跑冒烟
+   （真实推进全镜 + 结构自证），并在报告里显式声明未对拍。 */
+const expected = await fetch(`/data/fixtures/expected-${SCENE}.json`)
+    .then((r) => r.ok ? r.json() : null);
 player.setScene(scene, TITLES[SCENE] ?? SCENE, '1', '绿洲防线', '');
 const header = {
   skipTitle: refs.avgSkipTitle.textContent,
@@ -127,14 +134,24 @@ for (let click = 0; click < 120; click++) {
   timeline.startWindow();
   const before = refs.avgLogBox.children.length;
   const lineBefore = refs.avgLine.innerHTML;
-  const guess = nextFrom(pointer);
-  player.container.click();
+  /* 分支镜在等选项，点背景不动（player 的 avgChoices 门）；取第一个选项，
+     与重放链 branch[0] 优先同口径。 */
+  const choice = refs.avgChoices?.querySelector('.avg-choice');
+  let guess;
+  if (choice) {
+    guess = pointer = Number(choice.dataset.jumpAct);
+    choice.click();
+  } else {
+    guess = nextFrom(pointer);
+    player.container.click();
+  }
   /* 与 driver.mjs 同款 v3：settle 判据 =「行文本离开点击值 且 ∈
      下一内容镜∪上一落点的页」，分类放到 settle 后。页取 player.scene
      格式化副本（原始 fixture 的 content 是字符串）。 */
   const waited = await settle({
     content: [...(player.scene?.[guess]?.content ?? []),
       ...(lastLanded == null ? [] : player.scene?.[lastLanded]?.content ?? [])],
+    branch: scene[guess]?.branch,
   }, guess, lineBefore);
   if (!player.container.classList.contains('empty')) {
     if (refs.avgLogBox.children.length) logNow = readLog();
@@ -188,6 +205,7 @@ check('meta.stage', player.container.clientWidth === 1200
     `${player.container.clientWidth}x${player.container.clientHeight}`
     + ` ${getComputedStyle(player.container).fontSize}`);
 
+if (expected) {
 check('header', JSON.stringify(header) === JSON.stringify(expected.header),
     JSON.stringify(header));
 check('problems', problems.length === 0, problems.join(' | '));
@@ -277,6 +295,9 @@ check('charaRules',
     JSON.stringify([...new Set(rulesOf(rulesNow))].sort())
         === JSON.stringify([...new Set(rulesOf(expected.charaRules))].sort()),
     `ours=${rulesOf(rulesNow).length}块 oracle=${rulesOf(expected.charaRules).length}块`);
+} else {
+  skipped.push('无 wiki 基准件：已跳过逐镜对拍（P1 换 gamefold oracle）');
+}
 
 const report = {
   ok: failures.length === 0 && problems.length === 0 && pageErrors.length === 0,
@@ -284,6 +305,7 @@ const report = {
   failureCount: failures.length,
   failures,
   problems,
+  skipped,
   pageErrors,
   shotsObserved: shots.length,
   done: true,

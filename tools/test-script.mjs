@@ -38,7 +38,7 @@ function referenceNext(raw, shotId) {
 }
 
 for (const [name, expectedFormat, expectedCount] of [
-  ['scene1', 'array', 53], ['scene2', 'map', 49], ['scene3', 'array', 34]]) {
+  ['scene2', 'map', 49], ['scene3', 'array', 34]]) {
   test(`${name}: 格式=${expectedFormat} shots=${expectedCount}`, () => {
     const raw = load(name);
     const story = normalizeScript(raw);

@@ -44,7 +44,7 @@ function expectOf(id) {
   if (!meta) throw new Error(`剧本 ${id} 不在索引里`);
   /* 与页面同口径：带全局立绘表/说话者桥表的完整映射链。 */
   const {wire, stats} = storyToWire(decodeLua(meta.cfg), decodeLua(meta.lang),
-      {imgIds: manifest.imgIds, heroSprites: manifest.heroSprites});
+      {imgIds: manifest.imgIds, heroSprites: manifest.heroSprites, pathOwner: manifest.pathOwner});
   /* 重放链上的可停留镜（branch[0] 优先、断档即终局），直通镜停不住。 */
   const seekable = replayChain(wire)
       .filter((id) => {

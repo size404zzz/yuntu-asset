@@ -3,8 +3,8 @@
  * selftest-seek.html（A 路逐点击驱动 vs B 路 seekShot 重放，逐字节对拍）
  * → 页面把报告 POST 回 /freeze?scene=seek_report → 读回、断言、清理。
  *
- * 用法：node tools/test-seek.mjs [--port=8093] [--timeout=900] [--scene=scene1]
- * （--scene 只跑一个夹具，约 1/3 时长；全量三个场景约 6-7 分钟，
+ * 用法：node tools/test-seek.mjs [--port=8093] [--timeout=900] [--scene=scene2]
+ * （--scene 只跑一个夹具，约 1/2 时长；全量两个场景约 4-5 分钟，
  *   大头是每到达点等待 CSS 过渡的真实 1.15s——虚拟钟推不动过渡。）
  */
 import {spawn} from 'node:child_process';
@@ -43,7 +43,7 @@ const waitPort = async () => {
       s.on('connect', () => s.destroy(d));
       s.on('error', () => setTimeout(d, 60));
     });
-    if (await fetch(`http://127.0.0.1:${PORT}/data/fixtures/scene1.json`)
+    if (await fetch(`http://127.0.0.1:${PORT}/data/fixtures/scene2.json`)
         .then((r) => r.ok).catch(() => false)) return;
   }
   throw new Error(`宿主 ${PORT} 起不来`);

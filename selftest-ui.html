@@ -44,8 +44,8 @@ addEventListener('error', (e) => pageErrors.push(`${e.message} @ ${e.filename}:$
 addEventListener('unhandledrejection', (e) => pageErrors.push(`rejection: ${e.reason?.message || e.reason}`));
 
 const params = new URLSearchParams(location.search);
-const SCENE = params.get('scene') || 'scene1';
-const TITLES = {scene1: '临危受命', scene2: '背水一战', scene3: '绝处逢生'};
+const SCENE = params.get('scene') || 'scene2';
+const TITLES = {scene2: '背水一战', scene3: '绝处逢生'};
 const TICK_MS = 60;
 const STABLE_TICKS = 6;
 

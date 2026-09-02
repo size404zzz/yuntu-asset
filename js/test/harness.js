@@ -208,15 +208,19 @@ export function makeSettler({player, clock, problems}) {
   return async function settle(shot, label = '?', lineBefore = null) {
     const pages = Array.isArray(shot?.content) && shot.content.length
         ? shot.content.map(plain) : null;
+    const waitingBranch = !!shot?.branch;
     const start = clock.now();
     let previous = null;
     let same = 0;
     let done = false;
+    let lastTyped = false;              /* 循环内变量的落定快照，供失败诊断 */
     for (let guard = 0; guard < 4000 && !done; guard++) {
       await player.idle();
       await clock.advance(TICK_MS);
       await player.idle();
+      /* 分支镜进镜就清空台词行（无 contentType），它的「内容」就是选项本身 */
       const typed = !pages || player.container.classList.contains('empty')
+          || (waitingBranch && refs.avgChoices.children.length > 0)
           || (refs.avgLine.innerHTML !== lineBefore
               && pages.includes(refs.avgLine.textContent));
       const current = [
@@ -224,11 +228,18 @@ export function makeSettler({player, clock, problems}) {
         refs.avgOverlay.className, charaSignature(refs), refs.avgBg.style.opacity,
         refs.avgLogBox.children.length,
       ].join('\u0000');
+      lastTyped = typed;
       same = current === previous ? same + 1 : 0;
       previous = current;
-      done = typed && player.shotEnd && same >= STABLE_TICKS && clock.nextDelay() > 400;
+      /* 分支镜的 shotEnd 要等人选项才落：选项挂出即视为落定。 */
+      const settled = player.shotEnd
+          || (waitingBranch && refs.avgChoices.children.length);
+      done = typed && settled && same >= STABLE_TICKS && clock.nextDelay() > 400;
     }
-    if (!done) problems.push(`第 ${label} 镜虚拟钟内没打完`);
+    if (!done) problems.push(`第 ${label} 镜虚拟钟内没打完`
+        + `（shotEnd=${player.shotEnd} choices=${refs.avgChoices.children.length}`
+        + ` branch=${!!waitingBranch} typed=${lastTyped} same=${same}`
+        + ` nextDelay=${clock.nextDelay()}）`);
     await clock.advance(TRAIL_MS);
     await player.idle();
     /* CSS transition 走真实文档时间线、不吃虚拟钟：立绘的 left/filter 过渡
