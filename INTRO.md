@@ -47,6 +47,7 @@ python tools/ref/serve.py 8080     # 或任意静态服务器，根 = 本仓库
 | `node tools/test-avgcfg.mjs` | AvgCfg/AvgLang 字节码解释器 + wire 映射层（格式+VM 锚点+悬空立绘落名+揭示重建+槽位类型门+折叠 alpha 继承+pos/scale 折叠+说话镜入场揭示+全语料口径） | 16 项 |
 | `node tools/test-avg-e2e.mjs` | 语料端到端：现场解码→映射→播放器逐镜 seek（cpt00 主线 + 23concert 立绘/分支 + cpt_kimie 绝对定位），台词/站位/绝对定位对拍 | 3 段全对 |
 | `node tools/test-storylib.mjs` | 剧本库：分组/搜索/loadStory 装载链/索引增强件/语音映射/剧情目录 | 7 项 |
+| `node tools/test-avg-runtime.mjs` | Frida 运行时 JSONL → 可重放 Act/场景导入链 | 1 项 |
 | `node tools/test-fadeadvice.mjs` | 退场建议：触发器/排除项/分档/落笔幂等 + wiki 淡出真值下的梯度锚点 | 7 项 |
 | `node tools/build-asset-index.mjs` | 重建索引（自带 731 背景 / ≥514 _avg 验收 + 剧本清单 + 槽位类型过滤） | — |
 

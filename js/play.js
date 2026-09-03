@@ -7,8 +7,10 @@ import {Player} from './engine/player.js';
 import {AudioEngine} from './engine/audio.js';
 import {projectResolvers} from './editor/io.js';
 
-export async function bootProject(project, mount, {fetchImpl = fetch} = {}) {
-  const {filePathOf, layoutOf, audioUrlOf} = projectResolvers(project);
+export async function bootProject(project, mount,
+    {fetchImpl = fetch, bundle = false} = {}) {
+  const {filePathOf, layoutOf, audioUrlOf, effectAssetOf} =
+      projectResolvers(project, {bundle});
   const story = project.stories[0];
   let characters = project.characters;
   if (!characters) {
@@ -20,6 +22,7 @@ export async function bootProject(project, mount, {fetchImpl = fetch} = {}) {
     mount,
     mode: 'clamp',
     filePathOf,
+    effectAssetOf,
     layoutOf,
     getName: () => '教授',
     getGender: () => 'TA',

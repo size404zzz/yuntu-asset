@@ -67,6 +67,7 @@ const clock = new VirtualTimer();
    缺失文件按 GFWiki 的怪癖返回 200 的 HTML 提示页 —— 纹理永远到不了，
    「纹理到达才开」的门不落地，打字机与点击推进会一起卡死。 */
 const repo = await loadRepoIndex();
+const effectIndex = await (await fetch('/data/index/avg-effects.json')).json();
 const filePathOf = (name) => flatLookup(repo, name)
     ?? '/images/' + name[0].toUpperCase() + name.slice(1);
 const layoutCache = new Map();
@@ -83,6 +84,7 @@ const player = new Player({
   mode: 'clamp',
   timer: clock,
   filePathOf,
+  effectAssetOf: (prefab) => effectIndex[prefab] ?? null,
   layoutOf,
   getName: () => '教授',
   getGender: () => 'TA',

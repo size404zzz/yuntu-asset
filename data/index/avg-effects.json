@@ -1,0 +1,146 @@
+{
+  "avg/FXP_smook": {
+    "url": "data/effects/FXT_ckui_06.png",
+    "columns": 2,
+    "rows": 2,
+    "frames": 4,
+    "fps": 30.0,
+    "duration": 1000,
+    "loop": true,
+    "opacity": 1.0,
+    "blendMode": "screen",
+    "tint": null,
+    "maskMode": null,
+    "textureSlot": "_MainTex",
+    "sourceBundle": "res/effect/prefabs/avg/fxp_smook.ab",
+    "nodes": 7
+  },
+  "avg/FXP_AVG_Hit-knife": {
+    "parts": [
+      {
+        "url": "data/effects/FXT_HIT4.png",
+        "className": "blade",
+        "opacity": 1.0,
+        "tint": null,
+        "maskMode": null,
+        "columns": 1,
+        "rows": 1,
+        "frames": 1,
+        "rotate": 0.0
+      },
+      {
+        "url": "data/effects/FXT_Sparks016.png",
+        "className": "spark",
+        "opacity": 1.0,
+        "tint": null,
+        "maskMode": "luminance",
+        "columns": 1,
+        "rows": 1,
+        "frames": 1,
+        "rotate": 0.0
+      }
+    ],
+    "duration": 5000,
+    "loop": false,
+    "blendMode": "screen",
+    "sourceBundle": "res/effect/prefabs/avg/fxp_avg_hit-knife.ab",
+    "dependencies": [],
+    "nodes": 2
+  },
+  "avg/FXP_AVG_snow_high": {
+    "parts": [
+      {
+        "url": "data/effects/FXT_Smoke_001.png",
+        "className": "somke__1_",
+        "opacity": 1.0,
+        "tint": null,
+        "maskMode": null,
+        "columns": 1,
+        "rows": 1,
+        "frames": 1,
+        "rotate": 1.26
+      },
+      {
+        "url": "data/effects/FXT_Mask_003_05_1.png",
+        "className": "xue__5_",
+        "opacity": 0.412,
+        "tint": null,
+        "maskMode": "luminance",
+        "columns": 1,
+        "rows": 1,
+        "frames": 1,
+        "rotate": 0.0
+      }
+    ],
+    "duration": 5000,
+    "loop": true,
+    "blendMode": "screen",
+    "sourceBundle": "res/effect/prefabs/avg/fxp_avg_snow_high.ab",
+    "dependencies": [],
+    "nodes": 2
+  },
+  "avg/FXP_Scene": {
+    "url": "data/effects/FXT_UltimateSkill_Florence_05.png",
+    "columns": 2,
+    "rows": 2,
+    "frames": 4,
+    "fps": 30.0,
+    "duration": 500,
+    "loop": true,
+    "opacity": 0.361,
+    "blendMode": "screen",
+    "tint": null,
+    "maskMode": null,
+    "textureSlot": "_Main_tex",
+    "sourceBundle": "res/effect/prefabs/avg/fxp_scene.ab",
+    "nodes": 3
+  },
+  "avg/FXP_AVG_Hit-knife-blue": {
+    "parts": [
+      {
+        "url": "data/effects/FXT_HIT4.png",
+        "className": "blade",
+        "opacity": 1.0,
+        "tint": "rgb(76, 140, 255)",
+        "maskMode": null,
+        "columns": 1,
+        "rows": 1,
+        "frames": 1,
+        "rotate": 0.0
+      },
+      {
+        "url": "data/effects/FXT_Sparks016.png",
+        "className": "spark",
+        "opacity": 1.0,
+        "tint": "rgb(76, 140, 255)",
+        "maskMode": "luminance",
+        "columns": 1,
+        "rows": 1,
+        "frames": 1,
+        "rotate": 0.0
+      }
+    ],
+    "duration": 5000,
+    "loop": false,
+    "blendMode": "screen",
+    "sourceBundle": "res/effect/prefabs/avg/fxp_avg_hit-knife-blue.ab",
+    "dependencies": [],
+    "nodes": 2
+  },
+  "avg/FXP_AVG_Hit_yellow": {
+    "url": "data/effects/FXT_Glow01.png",
+    "columns": 1,
+    "rows": 1,
+    "frames": 1,
+    "fps": 30.0,
+    "duration": 5000,
+    "loop": false,
+    "opacity": 1.0,
+    "blendMode": "screen",
+    "tint": "rgb(255, 159, 59)",
+    "maskMode": "luminance",
+    "textureSlot": "_MainTex",
+    "sourceBundle": "res/effect/prefabs/avg/fxp_avg_hit_yellow.ab",
+    "nodes": 2
+  }
+}

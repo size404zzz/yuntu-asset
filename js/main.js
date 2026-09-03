@@ -25,6 +25,14 @@ const DEFAULT_STORY = 'cpt00_e_01_01';
 /* M8 素材库：仓库索引 + IndexedDB 上传的统一注册表（R13：无 res/ 退化）。 */
 const registry = await new AssetRegistry().boot();
 
+/* AVG 专用 prefab 的浏览器侧贴图索引。Unity ParticleSystem 本身不能由
+   浏览器直接实例化，索引把已确认的 sprite-sheet/时长交给 Player；没有
+   导出件的 prefab 仍走可识别的降级占位。 */
+let avgEffects = {};
+try {
+  avgEffects = await (await fetch('data/index/avg-effects.json')).json();
+} catch { /* 纯上传/精简部署包可没有特效索引 */ }
+
 const loadBitmap = (url) => new Promise((resolve, reject) => {
   const img = new Image();
   img.onload = () => resolve(img);
@@ -44,6 +52,21 @@ const filePathOf = (name) => {
         + `${face[1]}_avg/Face/${face[1]}_avg_face_${face[2]}.png`;
   }
   return '/images/' + name[0].toUpperCase() + name.slice(1);
+};
+
+/* 游戏的 MovieManager 用无扩展名的 vedioPath；本地资源库/用户上传件则
+   通常带扩展名。先按原名，再试常见容器，给 Player 一个可选的视频解析器。 */
+const videoPathOf = (path) => {
+  for (const name of [path, `${path}.mp4`, `${path}.webm`, `${path}.mov`]) {
+    const hit = registry.resolve(name);
+    if (hit) return hit.url;
+  }
+  return null;
+};
+
+const effectAssetOf = (prefab) => {
+  const entry = avgEffects[prefab];
+  return entry ? {...entry} : null;
 };
 
 const layoutOf = async (img) => {
@@ -85,6 +108,8 @@ const player = new Player({
   mode: 'clamp',
   logClickCloses: true,     // M15：log 面板任意点击收起（参考默认常驻）
   filePathOf,
+  videoPathOf,
+  effectAssetOf,
   layoutOf,
   getName: () => '教授',
   getGender: () => 'TA',
@@ -156,7 +181,7 @@ function debounceSave() {
 async function buildProject() {
   return exportProject({
     doc: editor.doc, title: editor.doc.story.title ?? currentId,
-    registry, characters: editor.characters, glossary,
+    registry, characters: editor.characters, glossary, effects: avgEffects,
   });
 }
 async function doSave(silent) {
@@ -314,7 +339,7 @@ async function loadCorpusStory(id) {
   if (!state.stories.has(id)) {
     const meta = avgManifest.stories.find((s) => s.id === id);
     const {wire} = await loadStory(fetch, meta,
-        {imgIds: avgManifest.imgIds, heroSprites: avgManifest.heroSprites, pathOwner: avgManifest.pathOwner});
+        {heroSprites: avgManifest.heroSprites, pathOwner: avgManifest.pathOwner});
     const story = normalizeScript(wire);
     story.title = id;
     state.stories.set(id, story);

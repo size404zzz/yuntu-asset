@@ -40,6 +40,7 @@ import {
   exportProject, projectResolvers, exportZip, saveProject, loadProject,
   forgetProject, importProject,
 } from '/js/editor/io.js';
+import {bootProject} from '/js/play.js';
 import {readZip} from '/js/ui/zip.js';
 
 const problems = [];
@@ -58,6 +59,7 @@ const check = (label, cond, detail = '') => {
 
 const characters = await (await fetch('/data/Avg_character.json')).json();
 const scene = await (await fetch('/data/fixtures/scene2.json')).json();
+const effects = await (await fetch('/data/index/avg-effects.json')).json();
 const registry = await new AssetRegistry().boot();
 
 /* —— 双播放器 —— */
@@ -121,6 +123,7 @@ check('A 路有到达点', snapsA.length >= 20, String(snapsA.length));
 const doc = new Doc(normalizeScript(scene));
 const project = await exportProject({
   doc, title: '背水一战', registry, characters,
+  effects,
   glossary: await (await fetch('/data/Noun_des.json')).json(),
 });
 const wire = JSON.stringify(project);
@@ -149,6 +152,20 @@ for (const need of ['play.html', 'project.json', 'js/play.js',
     'js/engine/player.js', 'css/avg.css']) {
   check(`bundle 含 ${need}`, names.includes(need));
 }
+check('工程保留特效索引', project.effects['avg/FXP_smook']?.url
+    === 'effects/FXT_ckui_06.png');
+const effectAsset = project.assets.find((a) => a.name === 'effects/FXT_ckui_06.png');
+check('特效贴图列入工程资产', !!effectAsset && effectAsset.bundlePath
+    === 'assets/effects/FXT_ckui_06.png');
+check('bundle 含特效贴图', names.includes('assets/effects/FXT_ckui_06.png'));
+check('ZIP 解析特效路径', projectResolvers(imported, {bundle: true})
+    .effectAssetOf('avg/FXP_smook')?.url
+    === 'assets/effects/FXT_ckui_06.png');
+const bundleMount = document.createElement('div');
+document.body.append(bundleMount);
+const bundlePlayer = await bootProject(imported, bundleMount, {bundle: true});
+check('独立播放器接入特效解析', bundlePlayer.effectAssetOf('avg/FXP_smook')?.url
+    === 'assets/effects/FXT_ckui_06.png');
 const assetNames = new Set(project.assets.filter((a) => !a.data).map((a) => a.name));
 check('bundle 资产数 = repo 资产数',
     names.filter((n) => n.startsWith('assets/')).length === assetNames.size);

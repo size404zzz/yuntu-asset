@@ -31,6 +31,42 @@ export function baseTranslate(config, stage) {
   };
 }
 
+/* 槽位镜像符号：`AvgHeroN.scale[0] < 0` ⇒ 该槽要左右翻。全部 2490 个槽位里
+   只有 [1,1] 与 [-1,1] 两种，所以这个符号就是镜像开关。
+   实机定案（2026-09-02，Frida 钩活的 Lua VM）：净镜像 = sign(HeroItem.localScale.x)，
+   由「槽位符号 × scale 条目的补间量级」相乘得到；立绘根的负 `m_LocalScale`
+   会被引擎运行时补的 180° Y 旋转抵消，**不参与**镜像判定（故尺寸仍用
+   Math.abs）。行内 transform 会整条覆盖 .posN 类规则的 transform ⇒ 播放器写
+   scale 条目时必须把这个符号乘回 X 分量，否则镜像槽一遇缩放条目就翻正。 */
+export function slotMirrorSign(config, posId) {
+  const hero = config?.['AvgHero' + posId];
+  return hero?.scale && hero.scale[0] < 0 ? -1 : 1;
+}
+
+/* 震屏抖动。游戏侧是 `transform:DOShakePosition(duration,
+   Vector3(10,10,0) * (shakeIntensity or 1), 20 * shakeIntensity)`
+   —— 振幅 10·si 设计单位、约 20·si 次振荡、随时间衰减。DOTween 的随机曲线
+   无法逐帧复刻，这里复刻的是可观测特征，并用线性同余按 seed 定种，
+   使同一镜重放逐字节一致（夹具对拍要求可复现）。单位沿用本模块口径：÷32 得 em。 */
+export function shakeKeyframes(seed, intensity) {
+  const si = intensity || 1;
+  const amp = 10 * si;
+  const vibrato = Math.min(96, Math.max(6, Math.round(20 * si)));
+  let s = (seed >>> 0) || 1;
+  const rnd = () => {
+    s = (s * 1103515245 + 12345) & 0x7fffffff;
+    return s / 0x3fffffff - 1;                 /* [-1, 1) */
+  };
+  const frames = [];
+  for (let i = 0; i <= vibrato; i++) {
+    const decay = 1 - i / vibrato;
+    frames.push({transform: `translate(${(rnd() * amp * decay / 32).toFixed(4)}em,`
+        + ` ${(rnd() * amp * decay / 32).toFixed(4)}em)`});
+  }
+  frames.push({transform: 'translate(0em, 0em)'});
+  return frames;
+}
+
 /* —— 单个立绘的 CSS 规则（参考 presetCharaImgStyle:228 的移植）——
    顺序固定为「基础盒 → 通讯框 → pos1..5」，与参考一致；多立绘时由调用方按
    imgId 排序拼接（参考的顺序是网络竞态，见冻结结论，这里改成可复现）。 */

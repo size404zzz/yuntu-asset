@@ -42,6 +42,56 @@ function engineNamesOf(shots) {
   return [...names];
 }
 
+/* effect prefab → 所需图片。工程 JSON 保存的是逻辑路径 effects/<file>；
+   repoPath 是 JSON/目录形态的仓库路径，bundlePath 是 ZIP 内的路径。 */
+function effectRefsOf(shots) {
+  const refs = new Set();
+  for (const shot of Object.values(shots)) {
+    for (const [key, cfg] of Object.entries(shot.effect ?? {})) {
+      if (key === 'stopList' || !cfg?.prefabName) continue;
+      refs.add(String(cfg.prefabName));
+    }
+  }
+  return [...refs];
+}
+
+function effectFileNameOf(url) {
+  const clean = String(url).split(/[\\/]/).at(-1);
+  return `effects/${clean}`;
+}
+
+function cloneJson(value) {
+  return JSON.parse(JSON.stringify(value));
+}
+
+function prepareEffectBundle(index, shots) {
+  const selected = {};
+  const assets = [];
+  const seen = new Set();
+  for (const prefab of effectRefsOf(shots)) {
+    const source = index?.[prefab];
+    if (!source) continue;
+    const entry = cloneJson(source);
+    const targets = [entry, ...(entry.parts ?? [])];
+    for (const target of targets) {
+      if (!target?.url) continue;
+      const sourceUrl = target.url;
+      const name = target.asset?.startsWith('effects/')
+          ? target.asset : effectFileNameOf(sourceUrl);
+      target.asset = name;
+      target.url = name;
+      if (seen.has(name.toLowerCase())) continue;
+      seen.add(name.toLowerCase());
+      assets.push({
+        name, kind: 'image', repoPath: sourceUrl,
+        bundlePath: `assets/${name}`,
+      });
+    }
+    selected[prefab] = entry;
+  }
+  return {index: selected, assets};
+}
+
 /* 镜头引用的音频（bgm/sfx），按键去重；stop 的 bgm 无 cue 自然跳过。
    键 = audio:<sheet>/<cue>，与 AssetRegistry 上传件/resolveAudio 同约定。 */
 function audioRefsOf(shots) {
@@ -63,7 +113,9 @@ function audioFileOf(name) {
 
 /* —— A：工程 JSON —— */
 
-export async function exportProject({doc, title, registry, characters, glossary}) {
+export async function exportProject({
+  doc, title, registry, characters, glossary, effects = null,
+}) {
   const shots = serializeScript(doc.story);
   const assets = [];
   const seen = new Set();
@@ -96,6 +148,12 @@ export async function exportProject({doc, title, registry, characters, glossary}
       seen.add(key.toLowerCase());
     }
   }
+  const effectBundle = prepareEffectBundle(effects, shots);
+  for (const asset of effectBundle.assets) {
+    if (seen.has(asset.name.toLowerCase())) continue;
+    assets.push(asset);
+    seen.add(asset.name.toLowerCase());
+  }
   /* layouts：标定件 + 仓库已知（bundle 必须自带，离线页不再请求 data/layouts）。 */
   const layouts = {};
   for (const [id, layout] of registry.layouts) layouts[id] = layout;
@@ -116,6 +174,7 @@ export async function exportProject({doc, title, registry, characters, glossary}
     layouts,
     characters: characters ?? null,
     glossary: glossary ?? null,
+    effects: effectBundle.index,
     assets,
   };
 }
@@ -134,6 +193,7 @@ export async function importProject(project, {registry, applyTo = false} = {}) {
     assets: project.assets ?? [],
     characters: project.characters ?? {},
     glossary: project.glossary ?? {},
+    effects: project.effects ?? {},
   };
   if (applyTo && registry) {
     const urls = new Map();
@@ -153,10 +213,16 @@ export async function importProject(project, {registry, applyTo = false} = {}) {
 
 /* 从导入数据直接造解析三件套（play.html 与往返测试共用——
    「导出→新页导入」与预览走的是同一份代码，不是测试特供近似）。 */
-export function projectResolvers(project, {base = ''} = {}) {
+export function projectResolvers(project, {base = '', bundle = false} = {}) {
   const byName = new Map();
   for (const a of project.assets ?? []) byName.set(a.name.toLowerCase(), a);
   const urls = new Map();
+  const assetPath = (asset, fallback) => {
+    const path = bundle
+        ? (asset.bundlePath ?? fallback)
+        : (asset.repoPath ?? fallback);
+    return `${base}${path}`;
+  };
   const filePathOf = (name) => {
     const key = name.toLowerCase();
     if (urls.has(key)) return urls.get(key);
@@ -168,7 +234,7 @@ export function projectResolvers(project, {base = ''} = {}) {
         urls.set(key, url);
         return url;
       }
-      return `${base}${a.repoPath ?? `assets/${name}`}`;
+      return assetPath(a, `assets/${name}`);
     }
     return `${base}assets/${name}`;
   };
@@ -184,8 +250,20 @@ export function projectResolvers(project, {base = ''} = {}) {
       }
       return urls.get(key);
     }
-    if (a) return `${base}${a.repoPath ?? audioFileOf(a.name)}`;
+    if (a) return assetPath(a, audioFileOf(a.name));
     return `${base}assets/audio/${sheet}/${cue}.ogg`;
+  };
+  const effectAssetOf = (prefab) => {
+    const source = project.effects?.[prefab];
+    if (!source) return null;
+    const entry = cloneJson(source);
+    for (const target of [entry, ...(entry.parts ?? [])]) {
+      if (!target?.url) continue;
+      const name = target.asset?.startsWith('effects/')
+          ? target.asset : effectFileNameOf(target.url);
+      target.url = filePathOf(name);
+    }
+    return entry;
   };
   const layouts = project.layouts ?? {};
   const layoutOf = async (img) => {
@@ -193,7 +271,7 @@ export function projectResolvers(project, {base = ''} = {}) {
     if (hit) return hit;
     throw new Error(`layout 缺失: ${img.imgPath}`);
   };
-  return {filePathOf, layoutOf, audioUrlOf};
+  return {filePathOf, layoutOf, audioUrlOf, effectAssetOf};
 }
 
 /* —— B：独立 ZIP bundle —— */
@@ -221,7 +299,7 @@ const PLAY_HTML = `<!DOCTYPE html>
 <script type="module">
 import {bootProject} from './js/play.js';
 const project = await (await fetch('project.json')).json();
-const player = await bootProject(project, document.getElementById('stage'));
+const player = await bootProject(project, document.getElementById('stage'), {bundle: true});
 if (new URLSearchParams(location.search).get('probe')) {
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   for (let i = 0; i < 2; i++) {
@@ -262,7 +340,8 @@ export async function exportZip({project, fetchImpl = fetch, assetBytes}) {
     const bytes = assetBytes ? await assetBytes(a)
         : await (await fetchImpl(`/${a.repoPath}`)).arrayBuffer();
     entries.push({
-      name: a.kind === 'audio' ? audioFileOf(a.name) : `assets/${a.name}`,
+      name: a.bundlePath
+          ?? (a.kind === 'audio' ? audioFileOf(a.name) : `assets/${a.name}`),
       data: new Uint8Array(bytes),
     });
   }

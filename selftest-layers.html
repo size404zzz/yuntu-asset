@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>AVG 五层舞台自检</title>
+<link rel="stylesheet" href="/css/avg.css">
+<link rel="stylesheet" href="/css/pandect.css">
+<link rel="stylesheet" href="/css/ux.css">
+<style>html,body{margin:0;background:#111}#mount{width:1200px;height:540px}</style>
+</head>
+<body>
+<div id="mount"></div>
+<script type="module">
+import {Player} from '/js/engine/player.js';
+
+/* 不依赖仓库图片：用同源 SVG data URL 验证 DOM 挂载与时序，
+   type5/vedioPath 则故意走缺失占位，确认视频缺件不会阻塞剧情。 */
+const svg = (color) => 'data:image/svg+xml,' + encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="540">`
+    + `<rect width="1200" height="540" fill="${color}"/></svg>`);
+const filePathOf = (name) => svg(name.includes('ef001') ? '#843d4f'
+    : name.includes('bg') ? '#20354c' : '#283c27');
+const effectIndex = await (await fetch('/data/index/avg-effects.json')).json();
+const player = new Player({
+  mount: document.getElementById('mount'),
+  filePathOf,
+  effectAssetOf: (prefab) => {
+    const asset = effectIndex[prefab];
+    /* 缩短粒子序列的资源时长，仅验证节点生命周期不再由 duration 自动删。 */
+    return prefab === 'avg/FXP_AVG_Hit-knife' && asset
+      ? {...asset, duration: 20} : asset ?? null;
+  },
+  videoPathOf: () => null,
+});
+const scene = [
+  {images: [
+    {imgId: 1, imgType: 1, alpha: 1, imgPath: 'sg/sg_e_bg003'},
+    {imgId: 2, imgType: 2, alpha: 0, imgPath: 'cpt00/cpt00_e_bg005'},
+    {imgId: 5, imgType: 4, alpha: 1, imgPath: 'cpt09/ef001', order: 10},
+    {imgId: 3, imgType: 5, alpha: 0, imgPath: 'avg/cpt00_broken'},
+  ],
+  imgTween: [{imgId: 2, delay: 0, duration: 0, alpha: 1}], bgColor: 3},
+  {imgTween: [
+    {imgId: 6, delay: 0, duration: 0, alpha: 0.35},
+    {imgId: 5, delay: 0, duration: 0, alpha: 0.8, rot: [0, 0, 12]},
+    {imgId: 3, delay: 0, duration: 0, alpha: 1},
+  ], images: [{imgId: 6, imgType: 2, alpha: 0, imgPath: 'cpt00/cpt00_e_bg006'}],
+  ppv: {
+    cg: {saturation: -50},
+    rRgbSTween: {isShow: true, blurRadius: 1, duration: 0.6},
+    dofTween: {startValue: 1, duration: 1},
+  },
+  effect: {
+    effect1: {prefabName: 'avg/FXP_smook', layer: 2, pos: [0, -150]},
+    effect2: {prefabName: 'avg/FXP_AVG_Hit-knife', layer: 3, pos: [-250, 0, 7]},
+    effect3: {prefabName: 'avg/FXP_AVG_snow_high', layer: 1, pos: [0, 0, -3]},
+  },
+  content: '五层演出自检', contentType: 1},
+];
+const report = {ok: false, failures: []};
+try {
+  player.setScene(scene, 'layers', '1', '', '');
+  player.playShot();
+  await new Promise((r) => setTimeout(r, 80));
+  player.playShot();
+  await new Promise((r) => setTimeout(r, 80));
+  const q = (s) => player.refs.avgStage.querySelector(s);
+  const checks = [
+    ['distant', !!q('.avg-layer-distant .avg-layer-item')],
+    ['foreground', !!q('.avg-layer-foreground .avg-layer-item')],
+    ['movie placeholder', !!q('.avg-layer-movie .avg-layer-item.img-missing')],
+    ['multi background', q('#avg-bg .avg-layer-item')?.dataset.imgId === '2'],
+    ['migrated background keeps alpha',
+      q('#avg-bg .avg-layer-item[data-img-id="2"]')?.style.opacity === '1'],
+    ['new background tween',
+      q('#avg-bg .avg-layer-item[data-img-id="6"]')?.style.opacity === '0.35'],
+    ['effect', !!q('.avg-effect-smoke')],
+    ['effect sprite', !!q('.avg-layer-effects-2 .avg-effect-sprite')],
+    ['effect persists until stopList', !!q('[data-effect-id="effect2"]')],
+    ['effect keeps z', q('[data-effect-id="effect2"]')?.dataset.posZ === '7'],
+    ['effect is on stage',
+      q('[data-effect-id="effect2"]')?.getBoundingClientRect().top >= -0.1],
+    ['hit knife parts', q('.avg-layer-effects-3 .avg-effect-hit-knife')
+      ?.querySelectorAll('.avg-effect-part').length === 2],
+    ['hit knife texture', q('.avg-layer-effects-3 .avg-effect-part.blade')
+      ?.style.backgroundImage.includes('FXT_HIT4.png')],
+    ['postprocess', player.refs.avgStage.dataset.ppv.includes('sat:-50')],
+    ['postprocess saturation target',
+      player.refs.avgStage.style.getPropertyValue('--avg-ppv-saturation') === '0.5'],
+    ['postprocess cg duration',
+      player.refs.avgStage.style.transition.includes('--avg-ppv-saturation 5000ms')],
+    ['postprocess dof formula',
+      player.refs.avgStage.style.getPropertyValue('--avg-ppv-dof-focus') === '0.5'
+      && player.refs.avgStage.dataset.ppv.includes('focus:0.5')],
+    ['postprocess rgb duration',
+      player.refs.avgStage.style.transition.includes('--avg-rgb-radius 600ms')],
+    ['rgb split', player.refs.avgStage.classList.contains('avg-rgb-split')],
+    ['snow texture', [...(q('.avg-effect-snow')?.children ?? [])]
+      .some((p) => p.style.backgroundImage.includes('FXT_Mask_003_05_1.png'))],
+    ['bg color', player.refs.avgBg.style.backgroundColor === 'white'],
+    ['dialog', player.refs.avgDialog.className === 'type1'],
+  ];
+  for (const [name, ok] of checks) if (!ok) report.failures.push(name);
+  player._applyPostProcess({rRgbSTween: {isShow: false, duration: 0.05}});
+  await new Promise((resolve) => setTimeout(resolve, 80));
+  if (player.refs.avgStage.classList.contains('avg-rgb-split')) {
+    report.failures.push('rgb split closes after duration');
+  }
+  player._applyEffects({stopList: ['effect2']});
+  if (q('[data-effect-id="effect2"]')) report.failures.push('stopList removes effect');
+  report.ok = report.failures.length === 0;
+} catch (e) { report.failures.push(String(e)); }
+report.done = true;
+await fetch('/freeze?scene=layers_report', {
+  method: 'POST', headers: {'Content-Type': 'application/json'},
+  body: JSON.stringify(report),
+});
+document.title = 'layers-report-done';
+</script>
+</body>
+</html>

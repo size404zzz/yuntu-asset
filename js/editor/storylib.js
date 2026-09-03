@@ -33,11 +33,12 @@ export function storyGroups(manifest) {
 }
 
 /* 解码 + 映射一条龙；meta = avg-scripts.json 的条目 {id, cfg, lang}。
-   三张构建期估出的表（build-asset-index 生成，随 manifest 一起取）：
-   imgIds 槽位 → 立绘候选路径（票数降序）、heroSprites 角色 → 她的立绘集、
-   pathOwner 立绘 → 精确归属角色。映射层用它们给悬空 tween 落名、给说话者
-   补揭示；缺席时该两步跳过（纯夹具/旧索引模式）。 */
-export async function loadStory(fetchImpl, meta, {imgIds, heroSprites, pathOwner} = {}) {
+   两张构建期估出的表（build-asset-index 生成，随 manifest 一起取）：
+   heroSprites 角色 → 她的立绘集、pathOwner 立绘 → 精确归属角色。映射层用
+   它们给说话者补揭示；缺席时该步跳过（纯夹具/旧索引模式）。
+   （旧第三张 imgIds 槽位表只留给编辑器查归属——落名层已于 2026-09-03 退役，
+   见 avgwire 头注与 tools/audit-decode-completeness.mjs。） */
+export async function loadStory(fetchImpl, meta, {heroSprites, pathOwner} = {}) {
   const decode = async (path) => {
     const res = await fetchImpl('/' + path);
     if (!res.ok) throw new Error(`${path} → ${res.status}`);
@@ -46,7 +47,7 @@ export async function loadStory(fetchImpl, meta, {imgIds, heroSprites, pathOwner
   };
   const cfg = await decode(meta.cfg);
   const lang = await decode(meta.lang);
-  return storyToWire(cfg, lang, {imgIds, heroSprites, pathOwner});
+  return storyToWire(cfg, lang, {heroSprites, pathOwner});
 }
 
 export function openStoryPicker(manifest, {title = '剧本库', catalog = null, onPick} = {}) {

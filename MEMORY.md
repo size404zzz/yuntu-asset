@@ -18,12 +18,27 @@
 - **回归**：test-avgcfg.mjs 新增 1 个测试块（6 条手工 Proto 断言），18/18 绿
 - **影响范围**：17 条纯 Node 回归链全绿（test-script 15 / test-markup M2 / test-doc 7 / test-zip 4 / test-audio 10 / test-repo-index 9 / test-storylib 7 / test-fadeadvice 7 / test-avgcfg 18）
 
-### D1b：根级镜像 —— 待决
-- 10 个角色根 localScale.x < 0（arrow / betty / croque / simo 系等）
-- SetPosType 拿槽位 scale 作用到根 scale 时是赋值还是相乘，在 il2cpp 里读不出
-- 若相乘：croque 在左/中槽是 -1.9 × -1 = 未翻转、只在右两槽翻
-- 我们和 wiki 参考件完全一致（AvgPlayer.js:235 与 sprite.js:20 都是 `Math.abs(m_LocalScale)`）
-- 更像"参考件一起漏了根级镜像"，而非我们的偏离
+### D1b：根级镜像 —— 已结（实机定案，2026-09-02）
+- **取法**：Frida hook `libxlua.so` 的 `lua_pcall` 抓活的 `lua_State*`，注入 bootstrap 包 `Game.Avg.*`，在引擎执行完槽位后读回 `lpic_*(Clone)` 根节点与 `HeroItem` 槽位节点的 `localScale`/`eulerAngles`。产物 `nc-capture\geom3.jsonl` + `d1b_verify.py`。
+- **825/825 行零反例**：`rootEuler.y == 180 ⟺ rootScale.x < 0`。两个负 scale 角色 `croque`(-1.9) 与 `simo`(-1.3) 都被补了 180°，11 个正 scale 角色 eulerY 全 0。
+- **静态对照**：扫 `res/character/*/lpic_*.ab` 根 RectTransform **1084 个角色，非零 eulerY = 0 个**，负 `m_LocalScale.x` 恰好 10 个 ⇒ 那 180° 是**引擎运行时补的**（最可能 il2cpp 侧 `SetPosType`），不是素材里写的。
+- **结论**：负 scale 与 180° 在 X 轴互相抵消 ⇒ **净镜像完全等于 `sign(HeroItem.localScale.x)`**（712 行 lane 正→不镜像 / 113 行 lane 负→镜像，无例外）。⇒ `Math.abs(m_LocalScale)` 是对的，原来怀疑的"参考件一起漏了根级镜像"**不成立**。
+- **两条附带事实**：① 负号**按皮肤不按角色**——`croque_spring_avg`/`fool_croque_avg` 是 +1.8，只有本体 `croque_avg` 是 -1.9，判镜像必须逐皮肤读；② `HeroItem.localScale.x` **不是恒 ±1 的纯开关**（`croque_spring_avg` 有 10 行取到 1.4），折叠层要当带符号连续值存。
+- **陷阱**：`lossyScale` 在"负 scale + 180° 旋转"组合下**不可信**（Unity 不折叠旋转），实测 croque `lossy.x=-0.093` 但净效果不镜像。
+- **G3 已落地（同日）**：真实缺陷不是"没实现镜像"——`sprite.js:58-66` 早就把 `AvgHeroN.scale` 发成 `.posN` 规则里的 `scale(-1,1)`。缺陷是 **`player.js` 对带 `scale` 的条目写行内 `transform`，整条覆盖了 `.posN` 的 transform ⇒ 镜像槽一遇缩放条目就翻正**。修法：新增 `slotMirrorSign(config, posId)` 作唯一判据，行内 transform 把该符号乘回 X 分量。回归：`test-gamefold` A7（钉住 simo 中槽镜像 / croque_spring 与 chelsea 不镜像 / 全语料槽位 `scale[0]` 只取 ±1 / 镜像槽×缩放条目仍镜像）。
+- **G1 已落地（同日）**：抖动两套通道。① 条目级 `shake`/`shakeIntensity`（语料 4155 条 / 827 段）在 `_blockChara` 里对 `.avg-chara` 播 `shakeKeyframes`；② 镜级 `contentShake` 在 `_lineFinished`（= 游戏 `OnChapterTextTweenComplete`）对 `avgLine` 播，参数从 `UINAvgChapter` f3 L60 读出：`DOShakePosition(0.4, Vector3(10,10,0), 20)`。`shakeKeyframes(seed, si)` 照抄振幅 `10·si` 与振荡 `20·si`，LCG 定种保证同镜重放逐字节一致。回归：A8。机制已在真 Chrome 探针验证 `composite:'add'` 能叠加在含镜像的 CSS transform 上、播完 `restored:true` 不留落定态残影。
+
+### G4：立绘层 z 序 —— 已结（2026-09-02）
+- **`order` 只出现在注册条目**：全语料 images 带 order **680 条**、imgTween 带 order **0 条** ⇒ 纯注册期 z 序，不是逐镜动画属性。
+- **语义**（SYS f25 L587 + f28 L654-688）：`NewImgItem` 里 `ChangeAvgImgOrder(imgCfg.order)` 并置 `imgNeedSort[imgType]`；f28 把该层字典摊数组、按 `GetAvgImgOrder()`（= `imgCfg.order or 0`）**升序** `table.sort`、逐个 `SetAsLastSibling` ⇒ order 大的后面上面。
+- **落地**：`state.js` 新增 `laneZOrder(state)`，`player.js` 的 `_applyZOrder()` 写行内 `z-index`（**不重排 DOM 兄弟序** —— 快照与冻结对拍都按 DOM 序取样）。回归 A9：`1year_prologue` 真实形状（104 order=6 压在 154/160 之上）+ 缺省 0 + 同值稳定 + 回收重排 + 负 order 垫底。
+- **影响面**：立绘层有 **7507 个镜**（全语料 7.2%）台上同时存在 order 不同的立绘。
+
+### ⚠ 顺带量出的缺口：多图层根本没渲染（做 G5/G6 前必须先定口径）
+- **背景需要多实例**，但量级比第一眼看到的小得多。按 `alpha>0` 逐镜折叠实测（104850 镜）：可见背景 0 个 36.2% / 1 个 44.9% / **2 个 14.9%** / 3 个 3.5% / 4 个 0.4% / 5 个 0.1% ⇒ **≥2 个同时可见只占 19.9%，上限 5 层**。（注意：按"注册后未回收"算是 74.2%，那个口径会把淡出中的旧背景也算进去，别拿它做决策依据。）
+- 各层**最大同时可见**：DistantView 2 / Background 5 / Character 5 / Foreground 1 / Movie 1。
+- 三层完全没有容器：`DistantView` 存活于 **1806** 镜、`Foreground` **862**、`Movie` **404**；`state.js` 的 `applyShotTweens` 只处理 imgType 2 和 3。
+- 之前记的"imgType 1/4/5 只有 43/16/5 条"是**注册次数**口径，按存活镜数算大一个量级。
 
 ### test-io 超时 —— 既有的脆弱点（非回归）
 - 默认 `--timeout=120`，但这条链要走 serve.py 的 wiki 图片代理拉 UI 素材

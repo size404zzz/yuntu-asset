@@ -22,6 +22,7 @@ res/Assets/Res/LuaScripts/_logic/
 vgmstream-win64/
 tools/media/.tmp/
 __pycache__/
+tools/frida/captures/
 
 # M12 音源原料（acb/awb，1.1GB）不入库：运行时只读 data/audio 的转码件；
 # 本目录仅本地保留，供 unpack-acb.mjs 增量重建。

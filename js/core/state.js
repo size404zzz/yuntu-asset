@@ -22,11 +22,19 @@ export const isValidPosVec = (p) =>
     Array.isArray(p) && p.length === 2
     && Number.isFinite(p[0]) && Number.isFinite(p[1]);
 
+export const isValidRotVec = (p) =>
+    Array.isArray(p) && p.length >= 3
+    && Number.isFinite(p[0]) && Number.isFinite(p[1]) && Number.isFinite(p[2]);
+
 export function emptyState() {
   return {
     imgMap: new Map(),
     lanes: new Map(),
     laneOrder: [],
+    /* 非立绘图层（DistantView / Background / Foreground / Movie）。
+       `lanes` 保持只装角色，避免改变已有 fold/autoLightCast 的身份语义。 */
+    layers: new Map(),
+    layerOrder: [],
     bg: null,
     bgOverlayDark: false,
     faces: new Map(),
@@ -46,13 +54,32 @@ export function applyImages(state, images) {
   for (const imgId of deletions) {
     state.imgMap.delete(imgId);
     state.lanes.delete(imgId);
+    state.layers.delete(imgId);
     const slot = state.laneOrder.indexOf(imgId);
     if (slot >= 0) state.laneOrder.splice(slot, 1);
+    const layerSlot = state.layerOrder.indexOf(imgId);
+    if (layerSlot >= 0) state.layerOrder.splice(layerSlot, 1);
+    if (state.bg?.imgId === imgId) state.bg = null;
   }
   const touched = [];
   for (const img of images) {
     if (!img || img.delete) continue;
     state.imgMap.set(img.imgId, img);
+    if (img.imgType !== 3) {
+      /* 游戏的 UINAvgImgItem.InitAvgImgParam 会在每次注册时把
+         position/rotation/scale/color 写回节点；非角色层在这里保留一份
+         可重放的落定态。alpha 缺省仍交给实际 tween/DOM 语义处理。 */
+      state.layers.set(img.imgId, {
+        imgId: img.imgId,
+        imgType: img.imgType,
+        alpha: img.alpha ?? 0,
+        isDark: false,
+        pos: isValidPosVec(img.pos) ? img.pos : null,
+        scale: isValidPosVec(img.scale) ? img.scale : null,
+        rot: isValidRotVec(img.rot) ? img.rot : null,
+      });
+      if (!state.layerOrder.includes(img.imgId)) state.layerOrder.push(img.imgId);
+    }
     touched.push({img, reenter: gone.has(img.imgId)});
   }
   /* 「注册即定可见度/重置明暗」（InitAvgHeroPicParam 当场写 color）**暂未实现**：
@@ -88,6 +115,14 @@ export function applyShotTweens(state, shot) {
         state.bg = {imgId, alpha: entry.alpha ?? state.bg?.alpha ?? 0,
           duration: entry.duration};
         if (entry.isDark !== undefined) state.bgOverlayDark = entry.isDark === true;
+        const layer = state.layers.get(imgId);
+        if (layer) {
+          if (entry.alpha !== undefined) layer.alpha = entry.alpha;
+          if (isValidPosVec(entry.pos)) layer.pos = entry.pos;
+          if (isValidPosVec(entry.scale)) layer.scale = entry.scale;
+          if (isValidRotVec(entry.rot)) layer.rot = entry.rot;
+          if (entry.isDark !== undefined) layer.isDark = entry.isDark === true;
+        }
       }
       events.push({imgId, imgType: 2, entries});
     } else if (img.imgType === 3) {
@@ -113,6 +148,8 @@ export function applyShotTweens(state, shot) {
         else if (isValidPos(entry.posId)) lane.pos = null;
         if (isValidPosVec(entry.scale)) lane.scale = entry.scale;
         else if (isValidPos(entry.posId)) lane.scale = null;
+        if (isValidRotVec(entry.rot)) lane.rot = entry.rot;
+        else if (isValidPos(entry.posId)) lane.rot = null;
         if (first) {
           lane.posId = entry.posId !== undefined ? entry.posId : img.posId;
           if (!isValidPos(lane.posId)) lane.posId = 3;
@@ -125,9 +162,33 @@ export function applyShotTweens(state, shot) {
         if (entry.isDark !== undefined) lane.isDark = entry.isDark === true;
       }
       events.push({imgId, imgType: 3, entering, entries});
+    } else if (img.imgType === 1 || img.imgType === 4 || img.imgType === 5) {
+      const layer = state.layers.get(imgId);
+      if (!layer) continue;
+      for (const entry of entries) {
+        if (entry.alpha !== undefined) layer.alpha = entry.alpha;
+        if (isValidPosVec(entry.pos)) layer.pos = entry.pos;
+        if (isValidPosVec(entry.scale)) layer.scale = entry.scale;
+        if (isValidRotVec(entry.rot)) layer.rot = entry.rot;
+        if (entry.isDark !== undefined) layer.isDark = entry.isDark === true;
+      }
+      events.push({imgId, imgType: img.imgType, entries});
     }
   }
   return {events, lastEnding};
+}
+
+/* 立绘层 z 序。游戏侧：NewImgItem 里 ChangeAvgImgOrder(imgCfg.order) 并置
+   imgNeedSort[imgType]，UIAVGSystem f28 再把该层字典摊成数组、按
+   `GetAvgImgOrder()`（= imgCfg.order or 0）**升序** table.sort，逐个
+   SetAsLastSibling ⇒ order 大的后面上面。
+   同 order 时游戏是 pairs 序 + 不稳定 sort，结果本身不保证；这里钉成
+   lane 建立序，保证回放可复现。 */
+export function laneZOrder(state) {
+  return state.laneOrder
+      .map((imgId, seq) => ({imgId, seq, order: state.imgMap.get(imgId)?.order ?? 0}))
+      .sort((a, b) => (a.order - b.order) || (a.seq - b.seq))
+      .map((e) => e.imgId);
 }
 
 /* heroFace 折叠。faceId 为 0/缺省 = 还原默认脸（参考 drawFace 的 if(faceId)）。 */

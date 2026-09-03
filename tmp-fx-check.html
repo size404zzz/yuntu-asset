@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>AVG 特效逐件核对</title>
+<link rel="stylesheet" href="/css/avg.css">
+<link rel="stylesheet" href="/css/pandect.css">
+<link rel="stylesheet" href="/css/ux.css">
+<style>
+  html, body { margin: 0; background: #0c0c0f; color: #ddd;
+    font: 12px/1.5 system-ui, "Microsoft YaHei", sans-serif; }
+  #grid { display: grid; grid-template-columns: repeat(3, 400px); gap: 10px; padding: 10px; }
+  .cell { background: #1a2530; position: relative; }
+  .cell .stage { width: 400px; height: 200px; position: relative; overflow: hidden;
+    background: #14202a; }
+  .cell .cap { padding: 2px 6px; }
+  table { border-collapse: collapse; margin: 10px; }
+  td, th { border: 1px solid #333; padding: 2px 6px; text-align: left; }
+</style>
+</head>
+<body>
+<div id="grid"></div>
+<table id="metrics"><tr><th>prefab</th><th>形态</th><th>url</th><th>格子</th>
+<th>opacity</th><th>blend</th><th>tint</th><th>mask</th><th>尺寸px</th><th>动画</th></tr></table>
+<script type="module">
+import {Player} from '/js/engine/player.js';
+
+addEventListener('error', (e) => {
+  const box = document.createElement('div');
+  box.style.cssText = 'position:fixed;left:0;top:0;z-index:9;background:#900;color:#fff;padding:6px';
+  box.textContent = `ERR ${e.message} @ ${e.lineno}`;
+  document.body.append(box);
+});
+
+const KEYS = ['avg/FXP_smook', 'avg/FXP_Scene', 'avg/FXP_AVG_Hit-knife',
+    'avg/FXP_AVG_Hit-knife-blue', 'avg/FXP_AVG_Hit_yellow', 'avg/FXP_AVG_snow_high'];
+const index = await (await fetch('/data/index/avg-effects.json')).json();
+const svg = (c) => 'data:image/svg+xml,' + encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200">`
+    + `<rect width="400" height="200" fill="${c}"/></svg>`);
+const filePathOf = () => svg('#1b2b3a');
+const grid = document.getElementById('grid');
+const rows = [];
+
+for (const key of KEYS) {
+  const cell = document.createElement('div');
+  cell.className = 'cell';
+  const stage = document.createElement('div');
+  stage.className = 'stage';
+  const cap = document.createElement('div');
+  cap.className = 'cap';
+  cap.textContent = key;
+  cell.append(stage, cap);
+  grid.append(cell);
+  try {
+  const player = new Player({
+    mount: stage,
+    filePathOf,
+    effectAssetOf: (prefab) => index[prefab] ?? null,
+    videoPathOf: () => null,
+  });
+  player._applyEffects({effect1: {prefabName: key, pos: [0, 0, 0], layer: 2}});
+  const el = stage.querySelector('.avg-effect');
+  const sprite = el?.querySelector('.avg-effect-sprite') || el?.querySelector('.avg-effect-part');
+  const parts = el ? el.querySelectorAll('.avg-effect-part').length : 0;
+  const asset = index[key];
+  const cs = sprite ? getComputedStyle(sprite) : null;
+  const rect = sprite ? sprite.getBoundingClientRect() : null;
+  rows.push([key, parts ? `parts×${parts}` : (asset?.url ? 'sheet' : '占位'),
+      sprite ? (sprite.style.backgroundImage !== 'none' ? 'bg' : '—') : '—',
+      sprite ? `${asset?.columns ?? 1}×${asset?.rows ?? 1}` : '—',
+      cs ? cs.opacity : '—', cs ? cs.mixBlendMode : '—',
+      cs ? cs.backgroundColor : '—',
+      cs ? (cs.maskImage && cs.maskImage !== 'none' ? 'yes' : 'no') : '—',
+      rect ? `${Math.round(rect.width)}×${Math.round(rect.height)}` : '—',
+      sprite && sprite.getAnimations().length ? 'running' : 'none']);
+  if (!el) cap.textContent += '  ✗ 未挂载';
+  } catch (e) {
+    cap.textContent = `${key}  ✗ ${e.message}`;
+    rows.push([key, 'EXCEPTION', String(e.message), '', '', '', '', '', '', '']);
+  }
+}
+
+const table = document.getElementById('metrics');
+for (const r of rows) {
+  const tr = document.createElement('tr');
+  for (const c of r) {
+    const td = document.createElement('td');
+    td.textContent = String(c);
+    tr.append(td);
+  }
+  table.append(tr);
+}
+const pre = document.createElement('pre');
+pre.id = 'report';
+pre.textContent = JSON.stringify(rows);
+document.body.append(pre);
+</script>
+</body>
+</html>

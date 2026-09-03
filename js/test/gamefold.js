@@ -17,10 +17,22 @@
  *            `alpha = imgCfg.alpha; if alpha == nil then alpha = rawImg.color.a end`
  *            `color = isDark and Color.gray or Color.white`
  *       HP f1 L45-79 资源未到达时 `loadResComplete=false`，tween 先排队
+ *       HP f4 L116-121 rot 是**无条件写**：`transform.localEulerAngles =
+ *              imgCfg.rot and Vector3(rot[1..3]) or Vector3.zero`
+ *              ⇒ 注册不带 rot 会把立绘转回正面，不是"保持现状"。
+ *              ⚠ 未决：`commonPicCtrl:SetPosType(posType)`（HP L52，C# 侧读不出方法体）
+ *                在本函数之后跑，是否覆盖 localEulerAngles 未知 —— 实机 chelsea 的注册
+ *                条目带 `rot=(0,180,0)`，而它的 `HeroItem` 实测 euler=(0,0,0)，
+ *                「注册写了又被 SetPosType 抹掉」与「采到的不是同一镜」两种解释都成立。
+ *                ⇒ 本模型按 Lua 侧字面语义折 rot，不预判 C# 侧的覆盖。
  *   · TU  = Game.Avg.AvgImgTweenUntil `Tween(imgItem, tweenCfg)`
  *       L32-45 pos：`if posId then (立绘→picPosData.pos｜否则 eAvgImgPosType[posId])
  *                    elseif pos then ... end`（then 尾有 JMP ⇒ 真 elseif）
  *       L60-70 scale：同构 elseif
+ *       L53-56 rot：`if tweenCfg.rot ~= nil then sequence:Insert(delay,
+ *                    transform:DOLocalRotate(Vector3(rot[1..3]), duration,
+ *                    RotateMode.FastBeyond360)) end`
+ *                    —— **独立 if，不受 posId 门控**，与 pos/scale 的 elseif 不同
  *       L79-86 color.a = picPosData.alpha（posId 且立绘）
  *       L90-94 color.a = tweenCfg.alpha   —— 与上一段之间**没有 JMP** ⇒ 独立 if
  *                     ⇒ 显式 alpha 覆盖槽位 α
@@ -30,7 +42,9 @@
  *
  * 与 state.js 的已知分歧（正是要拿去对拍的那几条）：
  *   isDark 缺省：游戏不碰，state.js 累积翻转；images[] 注册：游戏直接定可见度，
- *   state.js 只摆槽位；posId 回槽：游戏连带复位 α/scale。
+ *   state.js 只摆槽位；posId 回槽：游戏连带复位 α/scale；
+ *   rot：游戏是独立 if、不受 posId 门控（TU L53-56），state.js:152 却在 posId 回槽时
+ *        把 lane.rot 清成 null —— 游戏侧没有这条清除分支。
  */
 
 const list = (x) => (Array.isArray(x) ? x : Object.values(x ?? {}));
@@ -64,6 +78,8 @@ export function applyGameImages(f, images, slotOf) {
       posId: e.posId ?? prev.posId ?? null,
       pos: e.pos ?? (slot ? slot.pos : null),
       scale: e.scale ?? (slot ? slot.scale : null),
+      /* HP L116-121：注册无条件写 localEulerAngles ⇒ 不带 rot 就是归零，不继承。 */
+      rot: e.rot ?? null,
     });
   }
   return f;
@@ -86,6 +102,9 @@ export function applyGameTween(f, entries, slotOf) {
       if (slot.alpha !== undefined) lane.alpha = slot.alpha;   /* L79-86 */
     } else if (e.pos !== undefined) lane.pos = e.pos;
     if (e.posId == null && e.scale !== undefined) lane.scale = e.scale;
+    /* rot：TU L53-56 是独立 if 且**不受 posId 门控** ⇒ 带就写、不带就不碰。
+       不要照 pos/scale 加 posId 清除分支，游戏侧没有那条。 */
+    if (e.rot !== undefined) lane.rot = e.rot;
     if (e.alpha !== undefined) lane.alpha = e.alpha;            /* L90-94 独立 if */
     if (e.isDark !== undefined) lane.isDark = e.isDark === true;/* L96-103 赋值 */
     if (e.posId != null) lane.posId = e.posId;
