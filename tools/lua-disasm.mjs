@@ -134,7 +134,8 @@ function disasmFunction(proto, key, lines) {
           + '  ;通用 for 一次迭代'; break;
       case 42: t = `if r${A + 1} ~= nil then r${A} = r${A + 1}; pc += sBx`
           + '  ;通用 for 回边'; break;
-      case 43: t = `r${A}[...] = {r${A + 1}..${B === 0 ? 'top' : `r${A + B - 1}`}} ;SETLIST 块${C}`; break;
+      case 43: t = `r${A}[...] = {r${A + 1}..${B === 0 ? 'top' : `r${A + B}`}}`
+          + ` ;SETLIST 个=${B} 块${C}`; break;
       case 44: t = `r${A} = function <f${key}.${Bx}>`; break;
       case 45: t = `r${A}.. = vararg${B ? ` (${B - 1})` : ''}`; break;
       default: t = `?op${op} A=${A} B=${B} C=${C} Bx=${Bx} sBx=${sBx}`;

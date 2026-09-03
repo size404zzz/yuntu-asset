@@ -27,3 +27,227 @@
   font-size: 1.25em;
   transform: rotate(-8deg);
 }
+
+/* —— 游戏本体的五类图层 ——
+   UIAVGSystem 的 image item 都是全屏 RectTransform；只有角色走专用 canvas。
+   这些规则放在体验层，不污染 css/avg.css 的参考逐声明冻结表。 */
+.avg-layer-host {
+  height: 100%;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
+.avg-layer-distant { z-index: 0; }
+.avg-layer-foreground { z-index: 1; }
+.avg-layer-movie { z-index: 1; }
+.avg-layer-effects-1 { z-index: 0; }
+.avg-layer-effects-2 { z-index: 1; }
+.avg-layer-effects-3 { z-index: 2; }
+.avg-layer-item,
+.avg-video {
+  display: block;
+  height: 100%;
+  object-position: center;
+  position: absolute;
+  width: 100%;
+}
+.avg-layer-item {
+  left: 0;
+  top: 0;
+}
+.avg-video {
+  left: 0;
+  object-fit: cover;
+  top: 0;
+}
+.avg-layer-item.dark { filter: brightness(0.5); }
+.avg-chara.dissolving,
+.avg-layer-item.dissolving {
+  /* 游戏侧 AvgHeroDissolveTween 显式 SetEase(Ease.OutQuart)；按端点斜率
+     f'(0)=4、f'(1)=0 拟合，CSS 口径逐点最大偏差 1.5e-3。 */
+  animation: avg-dissolve-chara 0.6s cubic-bezier(.27, 1.06, .56, 1) both;
+  filter: brightness(1.25) contrast(1.18);
+}
+.avg-chara-ripple {
+  animation: avg-chara-ripple 0.9s ease-out infinite;
+  border: 0.125em solid #bdefff99;
+  border-radius: 50%;
+  height: 6em;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  top: 42%;
+  transform: translate(-50%, -50%) scale(.25);
+  width: 6em;
+}
+.avg-layer-item.img-missing,
+.avg-video.img-missing {
+  background: repeating-linear-gradient(135deg, #f5a62322 0 8px, #0000 8px 16px), #171717;
+  border: 1px dashed #f5a623;
+  color: #f5a623;
+  object-fit: contain;
+}
+.avg-layer-item.img-missing::after,
+.avg-video.img-missing::after {
+  content: '⚠ 素材缺失';
+}
+
+/* effect prefab 尚未从 AB 单独导出时，仍保留演出位置、层级和动作特征；
+   已导出的 prefab 由同一节点挂载真实纹理，未导出的继续走可识别占位。 */
+.avg-effect {
+  height: 100%;
+  transform-origin: center;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
+}
+.avg-effect-sprite {
+  --avg-effect-z: 0px;
+}
+.avg-effect-smoke {
+  background: radial-gradient(ellipse, #d9e7ef44 0 16%, #8394a133 38%, #0000 72%);
+  mix-blend-mode: screen;
+}
+.avg-effect-smoke .avg-effect-sprite {
+  animation: avg-smoke 1.8s ease-in-out infinite alternate;
+}
+.avg-effect-snow .avg-effect-sprite {
+  animation: avg-snow 8s linear infinite;
+  opacity: .58;
+}
+.avg-effect-ripple {
+  animation: avg-ripple 1.2s ease-out infinite;
+  border: 0.125em solid #bdefff99;
+  border-radius: 50%;
+  height: 8em;
+  left: 0;
+  top: 0;
+  width: 8em;
+}
+.avg-effect-dissolve {
+  animation: avg-dissolve 0.8s ease-out both;
+  background: linear-gradient(135deg, #ffffff30, #8bd8ff00 55%);
+  mix-blend-mode: screen;
+}
+.avg-effect-generic {
+  color: #f5a623;
+  font-size: 1.5em;
+  height: auto;
+  text-shadow: 0 0 0.35em #000;
+  width: auto;
+}
+.avg-effect-sprite {
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  display: block;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+.avg-effect-part {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  display: block;
+  position: absolute;
+}
+.avg-effect-hit-knife {
+  mix-blend-mode: screen;
+}
+.avg-effect-hit-knife .avg-effect-part {
+  animation-duration: 5s;
+  animation-fill-mode: both;
+}
+.avg-effect-hit-knife .avg-effect-part.blade {
+  animation-name: avg-hit-knife-blade;
+  animation-timing-function: cubic-bezier(.2, .8, .2, 1);
+}
+.avg-effect-hit-knife .avg-effect-part.spark {
+  animation-name: avg-hit-knife-spark;
+  animation-timing-function: ease-out;
+}
+.avg-effect-hit-knife .avg-effect-part.blade {
+  animation-delay: 0s;
+}
+.avg-effect-hit-knife .avg-effect-part.spark {
+  animation-delay: 0s;
+}
+#avg-stage.avg-rgb-split::after {
+  background: linear-gradient(90deg, #f004, #0000 35% 65%, #0ff4);
+  content: '';
+  inset: 0;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  position: absolute;
+  z-index: 4;
+  filter: blur(calc(var(--avg-rgb-radius, 0) * 6px));
+  opacity: clamp(0, calc(var(--avg-rgb-radius, 0) * 1.2), .82);
+  transform: translateX(calc(var(--avg-rgb-radius, 0) * 12px));
+}
+@property --avg-ppv-saturation {
+  inherits: false;
+  initial-value: 1;
+  syntax: '<number>';
+}
+@property --avg-ppv-dof-focus {
+  inherits: false;
+  initial-value: .5;
+  syntax: '<number>';
+}
+@property --avg-ppv-dof-blur {
+  inherits: false;
+  initial-value: 0px;
+  syntax: '<length>';
+}
+@property --avg-rgb-radius {
+  inherits: false;
+  initial-value: 0;
+  syntax: '<number>';
+}
+#avg-stage.avg-ppv {
+  filter: saturate(var(--avg-ppv-saturation, 1))
+      blur(var(--avg-ppv-dof-blur, 0px));
+}
+@keyframes avg-smoke {
+  from { opacity: .25; transform: scale(.94); }
+  to { opacity: .7; transform: scale(1.06); }
+}
+@keyframes avg-ripple {
+  from { opacity: .8; transform: scale(.2); }
+  to { opacity: 0; transform: scale(1.4); }
+}
+@keyframes avg-dissolve {
+  from { opacity: .8; transform: scale(.9); }
+  to { opacity: 0; transform: scale(1.1); }
+}
+@keyframes avg-snow {
+  from { transform: translate3d(-2%, -10%, 0) scale(1.02); }
+  to { transform: translate3d(2%, 10%, 0) scale(1.08); }
+}
+@keyframes avg-hit-knife {
+  0% { opacity: 0; }
+  4% { opacity: 1; }
+  72% { opacity: .92; }
+  100% { opacity: 0; }
+}
+@keyframes avg-hit-knife-blade {
+  from { opacity: 0; transform: translate(-50%, -50%) rotate(-32deg) scale(.35); }
+  30% { opacity: 1; }
+  to { opacity: 0; transform: translate(-50%, -50%) rotate(18deg) scale(1.1); }
+}
+@keyframes avg-hit-knife-spark {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(.1); }
+  35% { opacity: 1; }
+  to { opacity: 0; transform: translate(-50%, -50%) scale(1.25); }
+}
+@keyframes avg-dissolve-chara {
+  from { filter: brightness(1.3) contrast(1.2); opacity: 1; }
+  to { filter: brightness(1.1) contrast(1.05); opacity: .15; }
+}
+@keyframes avg-chara-ripple {
+  0% { opacity: .85; transform: translate(-50%, -50%) scale(.25); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.25); }
+}

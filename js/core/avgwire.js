@@ -16,25 +16,19 @@
  * 3. 首张 bg 的隐现物化（materializeFirstBg）：游戏引擎里 images 声明的
  *    第一张 imgType-2 直接可见；wiki 玩家只认 imgTween，语料里四成剧本
  *    从不 tween 它——不物化就是几十镜黑屏。
- * 4. 悬空立绘 tween 的落名（materializeDanglingCast）：tween 的 imgId 是**槽位
- *    序号**而不是身份，images[] 只在换装/换人时覆盖——94% 的剧本都有 tween
- *    引用从未声明的 id，wiki 玩家对未注册 tween 一律跳过，角色整段隐身。
- *    imgIds 表由 build-asset-index 从全语料声明直方图估出，每个槽位给的是
- *    **按票数降序的候选路径集**（[0] 即全局众数），本段就地按「谁在说话」
- *    仲裁：取第一个归属人在本段开过口的候选（22child_02 的槽 105 全局众数
- *    是克罗琦成人件，同剧情段声明的是小克罗琦，而本段只认 114 说话）。
- *    槽位类型门：低号 id 常是背景槽（如 10：138 段声明成背景、仅 2 段
- *    声明成立绘），把它们的悬空交叉淡入注入成立绘会凭空冒出幻影、
- *    真背景反而黑掉——表在构建期就滤掉「背景票 ≥ 立绘票」的 id，
- *    这类悬空 tween 回到参考的未注册跳过语义。
- * 5. 说话者节拍补齐（autoLightCast，游戏契约下立绘可见度的唯一合成点）：
+ *    （旧 4.「悬空立绘 tween 落名」已于 2026-09-03 退役：修 lvm.js 的 SETLIST
+ *     off-by-one 后全语料「tween 引用从未声明的 id」归零——原来说的「94% 剧本
+ *     都有悬空 tween」正是那个 bug 把 images[] 末条吞掉后的画像。imgIds 表保留
+ *     在索引里供编辑器查槽位，但映射层不再消费。）
+ * 4. 说话者节拍补齐（autoLightCast，游戏契约下立绘可见度的唯一合成点）：
  *    原版行为是「说话镜 ⇒ 说话人现身」（实机逐镜核对 + 全语料量化坐实，
  *    见 plan「契约切换」D6），数据里的 α 条目只覆盖作者自己那部分调度。
  *    依 heroSprites 桥表——heroId → 她的立绘路径集（众数件 + 揭示跳变票
  *    归属件），在说话镜补揭示/复亮；桥表路径在这段从未注册时先按同角色
  *    换装件改宗（retargetHeroSprites），否则换装/周年剧本整条门哑火。
- *    判据是「隐身来路」：`α0 + duration>0` 是作者显式画外（全语料仅 198 条
- *    落在本人说话镜），一概不碰；`α0 / duration:0` 预站位不阻止现身。
+ *    判据是「隐身来路」：`α0 + duration>0` 是作者显式画外（修 lvm 后重算：
+ *    全语料这类淡出 34820 条，按桥表口径落在本人说话镜 1017 条——桥表含同族
+ *    变体，这是上界而非精确数），一概不碰；`α0 / duration:0` 预站位不阻止现身。
  *    不变量：**同族同镜最多一件 α>0**，除非作者本镜显式点亮多件——点亮
  *    一件的同时收掉只由本层点亮的兄弟件（换装退场），这是双件同屏
  *    （tools/audit-dual-lit.mjs）的防线。
@@ -52,9 +46,9 @@ import {emptyState, applyImages, applyShotTweens} from './state.js';
  * 「开局之前」，永远渲染不到（语料 1555 段 0 起始：21 段纯视频 + 1534 段
  * 首镜在 0）。凡键 '0' 存在的剧本，全部键与 nextId/jumpAct 统一 +1；
  * 1 起始的 323 段原样不动。 */
-export function storyToWire(cfg, lang, {imgIds, heroSprites, pathOwner} = {}) {
+export function storyToWire(cfg, lang, {heroSprites, pathOwner} = {}) {
   const stats = {resolved: 0, unresolved: [], shifted: false, bgReveal: null,
-    danglingCast: [], autoLit: 0, entranceLit: 0, entranceExit: 0};
+    autoLit: 0, entranceLit: 0, entranceExit: 0};
   const shift = '0' in cfg ? 1 : 0;
   stats.shifted = shift === 1;
   const wire = {};
@@ -62,7 +56,6 @@ export function storyToWire(cfg, lang, {imgIds, heroSprites, pathOwner} = {}) {
     wire[String(Number(id) + shift)] =
         resolveStep(step ?? {}, lang, id, stats, shift);
   }
-  materializeDanglingCast(wire, imgIds, pathOwner, stats);
   materializeFirstBg(wire, stats);
   const speakers = retargetHeroSprites(wire, heroSprites, pathOwner);
   autoLightCast(wire, speakers, stats);
@@ -209,7 +202,7 @@ function autoLightCast(wire, speakers, stats) {
     if (!want) continue;
     /* —— 唯一的合成点亮点（三层已合一，见 plan「契约切换」D6）——
        原版行为（实机 + 全语料坐实）：说话镜 ⇒ 说话人的立绘现身；
-       `α0 + duration>0` 才是作者显式画外（全语料仅 198 条）；
+       `α0 + duration>0` 才是作者显式画外（重算口径见文件头第 4 条）；
        `α0 / duration:0` 预站位不阻止现身（22child_03 键6 就是预站位同镜现身）。
        不变量：**同族（说话者的变体集）同镜最多一件 α>0**，除非作者本镜显式点亮多件。 */
     const entries = shot.imgTween ?? [];
@@ -269,58 +262,6 @@ function autoLightCast(wire, speakers, stats) {
   stats.entranceExit = exit;
 }
 
-/* 悬空立绘 tween 落名：收集 wire 里所有 tween 引用过的 imgId，凡 images[]
- * 从未声明、而全局表里有名字的，在首个可渲染镜补一条 imgType-3 声明
- * （注册先行，之后该角色的 tween 才会被引擎看见；alpha 0 起步，登场
- * 时机仍完全由原 tween 驱动）。键 0 是永不渲染的「开局之前」，跳过。
- * 揭示不在这里补：可见度统一归 autoLightCast（三层各自点亮是双件同屏的
- * 根因，见 plan「契约切换」D6 与 tools/audit-dual-lit.mjs）。 */
-function materializeDanglingCast(wire, imgIds, pathOwner, stats) {
-  if (!imgIds) return;
-  const keys = Object.keys(wire);
-  const declared = new Set();
-  const tweened = [];
-  for (const k of keys) {
-    for (const im of (wire[k].images ?? [])) {
-      if (im && im.imgPath && !im.delete) declared.add(im.imgId);
-    }
-    for (const t of (wire[k].imgTween ?? [])) {
-      if (t && t.imgId !== undefined && !tweened.includes(t.imgId)) {
-        tweened.push(t.imgId);
-      }
-    }
-  }
-  /* 槽位是序号不是身份：同一槽在全语料被不同剧本声明成不同立绘，本段只
-     tween 不声明时，全局众数就可能挑错人（22child_02 的槽 105：全局众数
-     croque_avg 84 段，同剧情的 03..06 声明的却是 croque_kid_avg，而本段
-     唯一开口的立绘角色是 114）。就地仲裁：候选按声明票数降序进来，取第一个
-     「精确归属人在本段说过话」的，否则退回票数最高者（= 旧的全局众数）。
-     这里刻意用 pathOwner（严）而不是 heroSprites（宽）：认错人会把别人的脸
-     摆到她的台词上，比这一镜没立绘更难看。 */
-  const speakers = new Set();
-  for (const k of keys) {
-    const h = wire[k]?.speakerHeroId;
-    if (h !== undefined && h !== null) speakers.add(String(h));
-  }
-  const pathOf = (id) => {
-    const alts = asPaths(imgIds[String(id)]);
-    if (!alts.length) return null;
-    return alts.find((p) => pathOwner?.[p] !== undefined
-        && speakers.has(pathOwner[p])) ?? alts[0];
-  };
-  const cast = [];
-  for (const id of tweened) {
-    if (declared.has(id)) continue;
-    const imgPath = pathOf(id);
-    if (imgPath) cast.push({imgId: id, imgType: 3, imgPath, alpha: 0});
-  }
-  if (!cast.length) return;
-  const firstKey = keys.find((k) => k !== '0');
-  if (firstKey === undefined) return;
-  const first = wire[firstKey];
-  first.images = [...(first.images ?? []), ...cast];
-  stats.danglingCast = cast;
-}
 
 /* 首张 bg 的隐现物化。游戏语义：images 声明的第一张 imgType-2 注册即
  * 可见（语料普查：九成剧本初见 bg 的 alpha 都是 0，且四成从不 tween 它

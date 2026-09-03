@@ -422,7 +422,7 @@ for (const story of avgScripts.stories) {
   try {
     const cfg = toJS(execChunk(parseChunk(readFileSync(join(ROOT, story.cfg))))[0]);
     const lang = toJS(execChunk(parseChunk(readFileSync(join(ROOT, story.lang))))[0]);
-    const {wire} = storyToWire(cfg, lang, {imgIds, heroSprites, pathOwner});
+    const {wire} = storyToWire(cfg, lang, {heroSprites, pathOwner});
     foldVotes(wire, heroVotes2, false);
   } catch { /* 第一遍已记过账 */ }
 }

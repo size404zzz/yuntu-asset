@@ -1,16 +1,22 @@
 import {dashToCamel} from '../ui/dom.js';
-import {Scheduler} from '../core/scheduler.js';
+import {Scheduler, REAL_TIMER} from '../core/scheduler.js';
 import {
   emptyState, applyImages, applyShotTweens, applyFaces, isValidPos,
-  isValidPosVec,
+  isValidPosVec, laneZOrder,
 } from '../core/state.js';
 import {formatPages, DEFAULT_VARS, hops} from '../core/markup.js';
 import {Typewriter} from './typewriter.js';
 import {createPandect} from './nouns.js';
 import {
   CANVAS, buildCharaRules, faceRegion, compositeBody, drawFace, buildChara,
-  baseTranslate,
+  baseTranslate, slotMirrorSign, shakeKeyframes,
 } from './sprite.js';
+
+/* 游戏侧 AvgImgTweenUntil.Tween 全程不调 SetEase，且全 6402 支游戏 Lua 里
+   没有一处 SetDefaultEase/DOTween.Init ⇒ 立绘与背景补间用的是 DOTween 内置
+   默认 Ease.OutQuad。CSS 没有 ease-out-quad 关键字，按端点斜率拟合
+   （f'(0)=2、f'(1)=0，逐点最大偏差 3e-5）。 */
+const EASE_OUT_QUAD = 'cubic-bezier(.3,.6,.64,1)';
 
 /* 舞台骨架：逐字符照抄参考的 Template:剧情播放器。
    样式全部靠 id 选中，所以这里必须是可比对的字符串常量，而不是 h() 组装树
@@ -82,6 +88,34 @@ export function buildSkeleton() {
 export const STAGE_WIDTH = 1200;
 export const STAGE_HEIGHT = 540;
 
+const VISUAL_TYPES = new Set([1, 4, 5]);
+
+/* 游戏 UIAVGSystem 的五层不是五套逻辑：它们都由 UINAvgImgItem 管理，
+   只是在 Unity prefab 里挂到了不同 parent。这里动态补 parent，静态骨架仍
+   保持和参考页逐元素一致（test-skeleton 依旧可以做 DOM 契约检查）。 */
+function createVisualLayers(refs) {
+  const doc = refs.avgStage.ownerDocument;
+  const make = (className) => {
+    const el = doc.createElement('div');
+    el.className = `avg-layer-host ${className}`;
+    return el;
+  };
+  const distant = make('avg-layer-distant');
+  const foreground = make('avg-layer-foreground');
+  const movie = make('avg-layer-movie');
+  const effects = [1, 2, 3].map((layer) => {
+    const host = make(`avg-layer-effects avg-layer-effects-${layer}`);
+    host.dataset.layer = String(layer);
+    return host;
+  });
+  refs.avgStage.insertBefore(distant, refs.avgBg);
+  refs.avgStage.insertBefore(foreground, refs.avgDialog);
+  refs.avgStage.insertBefore(movie, refs.avgDialog);
+  effects.forEach((host) => refs.avgStage.insertBefore(host, refs.avgDialog));
+  /* effects 保留旧别名给宿主/夹具；真实游戏按 1/2/3 三个 parent 分层。 */
+  return {distant, foreground, movie, effects: effects[2], effectHosts: effects};
+}
+
 /* 适配策略。实测参考页面 getComputedStyle(#avg-container) = 893.5×540
    （父容器 .mw-parser-output 宽 894），也就是 width:1200px + max-width:100%
    + height:540px 的"压窄宽度、高度不动"，参考并不做等比缩放。
@@ -102,6 +136,7 @@ export function buildStage(mount, {mode = 'clamp'} = {}) {
     mount.replaceChildren(container);
   }
   const instance = {container, refs, wrapper, mount, mode};
+  instance.visualLayers = createVisualLayers(refs);
 
   instance.setScale = (k) => {
     if (!wrapper) return;
@@ -133,17 +168,28 @@ export function resetStage({container, refs}) {
   refs.avgOverlay.className = '';
   refs.avgPandect.className = '';
   refs.avgCharas.replaceChildren();
+  refs.avgStage.querySelectorAll('.avg-layer-host').forEach((el) => el.replaceChildren());
+  refs.avgBg.querySelectorAll('.avg-layer-item').forEach((el) => el.remove());
   refs.avgSpeaker.replaceChildren();
   refs.avgLine.replaceChildren();
   refs.avgChoices.replaceChildren();
   refs.avgLogBox.replaceChildren();
   refs.avgSceneBrief.replaceChildren();
   Object.assign(refs.avgBg.style, {
-    backgroundImage: null, transition: null, opacity: null,
+    backgroundImage: null, backgroundColor: null, transition: null, opacity: null,
     backgroundSize: null, backgroundPositionX: null, backgroundPositionY: null,
   });
   refs.avgDialog.style.minHeight = null;
   refs.avgLine.style.minHeight = null;
+  refs.avgStage.style.filter = null;
+  refs.avgStage.style.transition = null;
+  refs.avgStage.classList.remove('avg-ppv');
+  refs.avgStage.classList.remove('avg-rgb-split');
+  for (const prop of [
+    '--avg-ppv-saturation', '--avg-ppv-dof-focus', '--avg-ppv-dof-blur',
+    '--avg-rgb-radius',
+  ]) refs.avgStage.style.removeProperty(prop);
+  delete refs.avgStage.dataset.ppv;
   return refs;
 }
 
@@ -166,12 +212,16 @@ export class Player {
     characters = {},
     nouns = null,
     audio = null,
+    videoPathOf = null,            // 可选：游戏 vedioPath / Movie 资源解析器
+    effectAssetOf = null,           // 可选：prefab → 浏览器可消费的贴图元数据
     canvasSize = CANVAS,      // M11：低端设备可降到 512（数学与分辨率无关）
     logClickCloses = false,   // 宿主偏离项：log 面板任意点击收起（编辑器开）
   } = {}) {
     Object.assign(this, buildStage(mount, {mode}));
     this.sched = new Scheduler(timer);
     this.audio = audio;
+    this.videoPathOf = videoPathOf;
+    this.effectAssetOf = effectAssetOf;
     this.logClickCloses = logClickCloses;
     this.canvasSize = canvasSize;
     this.filePathOf = filePathOf;
@@ -197,6 +247,26 @@ export class Player {
        pendingLoads（idle() 会被它吊死）；fastForward 的收敛判据才看它。 */
     this.pendingChains = new Set();
     this.typewriter = null;
+    this.layerEls = new Map();
+    this.bgLayerEls = new Map();
+    this.effectEls = new Map();
+    /* ChangeAvgPP 的三个独立 tween 通道。focusDistance 是本体的归一化
+       景深焦距，不是 CSS blur 像素；视觉降级只从它派生 blur。 */
+    this.ppvState = {
+      saturation: 1,
+      dofFocus: 0.5,
+      rgbRadius: 0,
+      rgbVisible: false,
+    };
+    this._ppvTweenSeq = 0;
+    this.currentBgId = null;
+    this._shakeSeq = 0;
+    this._videoStarted = false;
+    this._cancelVideoWait = null;
+    this._runtimeSeq = 0;
+    this._runtimeShot = null;
+    this._runtimeObjects = new Map();
+    this._runtimeBindings = [];
 
     this.scene = undefined;
     this.scriptType = undefined;
@@ -269,9 +339,22 @@ export class Player {
     const {touched, deletions} = applyImages(this.state, images);
     for (const imgId of deletions) {
       this._charaEl(imgId)?.remove();
+      this._removeLayerEl(imgId);
       this.defaultFaces.delete(imgId);
+      if (this.currentBgId === imgId) {
+        this.currentBgId = null;
+        this.refs.avgBg.style.backgroundImage = null;
+        this.refs.avgBg.style.opacity = null;
+      }
     }
     for (const {img, reenter} of touched) {
+      if (VISUAL_TYPES.has(img.imgType)) {
+        /* Movie 与普通图片共用同一注册流程；视频没有本地解析器时由
+           _loadVisualLayer 降级成明确占位，不阻塞剧情。 */
+        await this._loadVisualLayer(img);
+        if (epoch !== this.sched.epoch || !this.scene) return;
+        continue;
+      }
       if (img.imgType !== 3) continue;
       /* 缺素材不致命（M11）补上 layout 侧：单张立绘取不到布局（lpic 404 /
          标定件缺席，语料里成批剧本踩中）只降级为无规则占位（_degradeChara），
@@ -298,6 +381,101 @@ export class Player {
         if (epoch !== this.sched.epoch) return;
       }
     }
+    this._applyZOrder();
+    this._applyVisualZOrder();
+  }
+
+  _assetPath(img) {
+    if (!img?.imgPath) return null;
+    if (img.imgType === 5) return this.videoPathOf?.(img.imgPath) ?? null;
+    const name = img.imgPath.split('/').pop();
+    return this.filePathOf(name + (/[.][a-z0-9]+$/i.test(name) ? '' : '.png'));
+  }
+
+  _layerParent(imgType) {
+    if (imgType === 1) return this.visualLayers.distant;
+    if (imgType === 4) return this.visualLayers.foreground;
+    if (imgType === 5) return this.visualLayers.movie;
+    return null;
+  }
+
+  _loadVisualLayer(img) {
+    const old = this.layerEls.get(img.imgId);
+    old?.remove();
+    const parent = this._layerParent(img.imgType);
+    if (!parent) return Promise.resolve();
+    const doc = parent.ownerDocument;
+    const isMovie = img.imgType === 5;
+    const el = doc.createElement(isMovie ? 'video' : 'img');
+    el.className = 'avg-layer-item';
+    el.dataset.imgId = String(img.imgId);
+    el.dataset.imgType = String(img.imgType);
+    el.dataset.path = img.imgPath || '';
+    el.draggable = false;
+    el.style.opacity = Number.isFinite(img.alpha) ? String(img.alpha) : '0';
+    el.style.zIndex = String(img.order ?? 0);
+    if (isMovie) {
+      el.muted = true;
+      el.loop = !!img.loop;
+      el.playsInline = true;
+      el.preload = 'auto';
+    } else {
+      el.alt = '';
+      el.decoding = 'async';
+      el.style.objectFit = img.fullScreen === false ? 'contain' : 'cover';
+    }
+    parent.append(el);
+    this.layerEls.set(img.imgId, el);
+
+    const src = this._assetPath(img);
+    if (!src) {
+      this._degradeLayer(el, isMovie ? img.imgPath : null);
+      return Promise.resolve();
+    }
+    const ready = new Promise((resolve) => {
+      const done = () => { el.classList.remove('img-loading'); resolve(); };
+      const fail = () => { this._degradeLayer(el, img.imgPath); done(); };
+      el.classList.add('img-loading');
+      el.addEventListener(isMovie ? 'loadeddata' : 'load', done, {once: true});
+      el.addEventListener('error', fail, {once: true});
+      el.src = src;
+      /* jsdom/旧浏览器没有 decode，真实浏览器仍以 load 事件为准。 */
+      if (!isMovie && typeof el.decode === 'function') el.decode().then(done, fail);
+    });
+    return this._track(ready);
+  }
+
+  _degradeLayer(el, label) {
+    el.classList.add('img-missing');
+    if (label) el.dataset.missing = label;
+  }
+
+  _removeLayerEl(imgId) {
+    this.layerEls.get(imgId)?.remove();
+    this.layerEls.delete(imgId);
+    this.bgLayerEls.get(imgId)?.remove();
+    this.bgLayerEls.delete(imgId);
+  }
+
+  _applyVisualZOrder() {
+    const entries = this.state.layerOrder
+        .map((imgId, seq) => ({imgId, seq, order: this.state.imgMap.get(imgId)?.order ?? 0}))
+        .sort((a, b) => (a.order - b.order) || (a.seq - b.seq));
+    entries.forEach(({imgId}, rank) => {
+      const el = this.layerEls.get(imgId) ?? this.bgLayerEls.get(imgId);
+      if (el) el.style.zIndex = String(rank + 1);
+    });
+  }
+
+  /* 立绘 z 序：游戏按 order 升序逐个 SetAsLastSibling ⇒ 后面上面。这里写行内
+     z-index 而不重排 DOM 兄弟序 —— 快照与冻结对拍都按 DOM 序取样，重排会误伤。
+     #avg-charas 自身是层叠上下文（css/avg.css:86），故只在立绘之间比高低。 */
+  _applyZOrder() {
+    laneZOrder(this.state).forEach(
+        (imgId, rank) => {
+          const el = this._charaEl(imgId);
+          if (el) el.style.zIndex = String(rank + 1);
+        });
   }
 
   _refreshRules() {
@@ -324,11 +502,9 @@ export class Player {
           this._degradeChara(chara, config);
           return resolve();
         }
-        if (img.comm && chara.children.length === 1) {
-          chara.append(document.createElement('div'));
-        }
         compositeBody(context, charaImg, config,
                       {comm: !!img.comm, canvasSize: this.canvasSize});
+        this._setCommunication(chara, !!img.comm);
         if (!this.defaultFaces.has(img.imgId) && region) {
           const arg = region.slice(0, 2).map(Math.floor)
               .concat(region.slice(2).map(Math.ceil));
@@ -378,7 +554,10 @@ export class Player {
     const shot = this.scene[this.shotId];
     const imgTween = shot.imgTween;
     const heroFace = shot.heroFace;
-    if (!(imgTween || heroFace)) return;
+    if (!(imgTween || heroFace)) {
+      this._scheduleRuntimeFrames(shot);
+      return;
+    }
     applyFaces(this.state, shot);
     if (!imgTween) {
       for (const face of heroFace) {
@@ -390,6 +569,7 @@ export class Player {
               chara, this.state.imgMap.get(face.imgId), face.faceId, region));
         }
       }
+      this._scheduleRuntimeFrames(shot);
       return;
     }
     const {events, lastEnding} = applyShotTweens(this.state, shot);
@@ -397,28 +577,239 @@ export class Player {
       const faceId = heroFace?.find((f) => f.imgId == event.imgId)?.faceId;
       if (event.imgType === 2) {
         for (const entry of event.entries) this._tweakBg(event.imgId, entry);
-      } else {
+      } else if (event.imgType === 3) {
         this._tweenChara(event.imgId, event.entries, faceId, event.entering);
+      } else {
+        this._tweenLayer(event.imgId, event.entries);
       }
     }
+    /* Native capture is scheduled after the static tween callbacks so its
+       first frame wins the same tick and subsequent frames become the source
+       of truth for breathing/shake/material-driven motion. */
+    this._scheduleRuntimeFrames(shot);
     /* 串行门（R8）：打字要等最晚的 delay+duration 跑完才开始。 */
     await this.sched.promise(lastEnding * 1000);
+  }
+
+  _scheduleRuntimeFrames(shot) {
+    const runtime = shot?.runtime;
+    const frames = Array.isArray(runtime?.frames) ? runtime.frames : [];
+    if (!frames.length || this._runtimeShot === shot) return;
+    this._runtimeShot = shot;
+    this._runtimeObjects = new Map();
+    this._runtimeBindings = Array.isArray(runtime.bindings)
+      ? runtime.bindings : [];
+    const born = this.sched.epoch;
+    const seq = ++this._runtimeSeq;
+    let index = 0;
+    let previous = 0;
+    const next = () => {
+      if (born !== this.sched.epoch || seq !== this._runtimeSeq
+          || index >= frames.length) return;
+      const frame = frames[index++];
+      const t = Math.max(previous, Number(frame.t) || 0);
+      const delay = (t - previous) * 1000;
+      previous = t;
+      this.sched.after(delay, () => {
+        if (born !== this.sched.epoch || seq !== this._runtimeSeq) return;
+        this._applyRuntimeFrame(frame);
+        next();
+      });
+    };
+    next();
+  }
+
+  _runtimeImgId(object) {
+    if (object?.imgId != null) return object.imgId;
+    const key = String(object?.key ?? '');
+    const path = String(object?.path ?? '');
+    for (const binding of this._runtimeBindings) {
+      if (binding?.root && String(binding.root) === key) return binding.imgId;
+      if (binding?.path && (path === binding.path
+          || path.startsWith(binding.path + '/'))) return binding.imgId;
+    }
+    return null;
+  }
+
+  _applyRuntimeFrame(frame) {
+    for (const object of frame?.objects ?? []) {
+      const key = String(object?.key ?? object?.path ?? '');
+      if (!key) continue;
+      const old = this._runtimeObjects.get(key) ?? {};
+      const next = {...old};
+      for (const field of ['name', 'path', 'pos', 'rotation', 'scale',
+        'color', 'material', 'active', 'siblingIndex']) {
+        if (object[field] !== undefined && object[field] !== null) {
+          next[field] = object[field];
+        }
+      }
+      if (next.imgId == null) next.imgId = this._runtimeImgId(object);
+      this._runtimeObjects.set(key, next);
+    }
+    const grouped = new Map();
+    for (const object of this._runtimeObjects.values()) {
+      if (object.imgId == null) continue;
+      const id = String(object.imgId);
+      if (!grouped.has(id)) grouped.set(id, []);
+      grouped.get(id).push(object);
+    }
+    for (const [id, objects] of grouped) {
+      const chara = this._charaEl(id);
+      if (!chara) continue;
+      /* The binding root owns position/scale/rotation; RawImage descendants
+         own color/material.  Keep the shortest bound path as the root while
+         still accepting a sparse frame where only a descendant changed. */
+      const root = [...objects].sort((a, b) =>
+        String(a.path ?? '').length - String(b.path ?? '').length)[0];
+      const colorObject = [...objects].reverse().find((object) => object.color);
+      this._applyRuntimeTransform(chara, id, root);
+      if (colorObject?.color) this._applyRuntimeColor(chara, colorObject.color);
+      const active = root.active;
+      if (active !== undefined) chara.style.display = active ? '' : 'none';
+      if (root.siblingIndex !== undefined && root.siblingIndex !== null) {
+        chara.style.zIndex = String(Number(root.siblingIndex) + 1);
+      }
+    }
+  }
+
+  _applyRuntimeTransform(chara, imgId, object) {
+    const pos = object?.pos;
+    const valid = (value) => value && Number.isFinite(Number(value.x))
+        && Number.isFinite(Number(value.y));
+    if (valid(pos)) {
+      chara.style.left = `${Number(pos.x) / 32}em`;
+      chara.style.bottom = `${Number(pos.y) / 32}em`;
+    }
+    const scale = object?.scale;
+    const rotation = object?.rotation;
+    if (!valid(scale) && !valid(rotation)) return;
+    const config = this.layouts.get(Number(imgId)) ?? this.layouts.get(imgId);
+    if (!config) return;
+    const fontSize = parseFloat(getComputedStyle(this.container).fontSize);
+    const t = baseTranslate(config, {width: this.container.clientWidth,
+      height: this.container.clientHeight, fontSize});
+    const transform = [`translate(${t.x}em, ${t.y}em)`];
+    if (valid(scale)) transform.push(`scale(${Number(scale.x)}, ${Number(scale.y)})`);
+    if (valid(rotation)) transform.push(`rotateZ(${Number(rotation.z || 0)}deg)`);
+    chara.style.transform = transform.join(' ');
+    chara.style.transition = 'none';
+  }
+
+  _applyRuntimeColor(chara, color) {
+    const rgba = ['r', 'g', 'b', 'a'].map((key) => Number(color[key]));
+    if (!rgba.every(Number.isFinite)) return;
+    chara.style.opacity = String(rgba[3]);
+    if (Math.abs(rgba[0] - rgba[1]) < 0.001
+        && Math.abs(rgba[1] - rgba[2]) < 0.001) {
+      chara.style.filter = `brightness(${rgba[0]})`;
+    }
+    chara.style.transition = 'none';
   }
 
   _tweakBg(imgId, entry) {
     this.sched.after((entry.delay || 0) * 1000, () => {
       const img = this.state.imgMap.get(imgId);
-      const bg = this.refs.avgBg;
-      bg.style.backgroundImage =
-          'url(' + this.filePathOf(img.imgPath.split('/')[1] + '.png') + ')';
-      bg.style.transition = `opacity ${entry.duration}s`;
-      if (entry.alpha !== undefined) bg.style.opacity = entry.alpha;
+      if (!img) return;
+      const backgrounds = [...this.state.layers.values()]
+          .filter((layer) => layer.imgType === 2);
+      /* 一个 #avg-bg 足够覆盖绝大多数镜头；出现并行背景时才切到多实例
+         容器，避免把现有单背景的 CSSOM 形状改掉。 */
+      if (backgrounds.length > 1 || this.bgLayerEls.size) {
+        this._ensureBackgroundStack(backgrounds);
+        const layer = this.bgLayerEls.get(imgId);
+        if (!layer) return;
+        layer.style.transition = `opacity ${entry.duration}s ${EASE_OUT_QUAD}`;
+        if (entry.alpha !== undefined) layer.style.opacity = entry.alpha;
+      } else {
+        const bg = this.refs.avgBg;
+        bg.style.backgroundImage = 'url(' + this._assetPath(img) + ')';
+        bg.style.transition = `opacity ${entry.duration}s ${EASE_OUT_QUAD}`;
+        if (entry.alpha !== undefined) bg.style.opacity = entry.alpha;
+        this.currentBgId = imgId;
+      }
       const overlay = this.refs.avgBgOverlay;
-      if (overlay.classList.contains('dark') != entry.isDark) {
-        overlay.style.transition = `background ${entry.duration}s`;
-        overlay.classList.toggle('dark');
+      /* 赋值不是翻转（与 state.js 折叠层同口径）：条目不带 isDark 就不碰遮罩。
+         旧写法 contains('dark') != entry.isDark 在 isDark 为 undefined 时恒真，
+         每来一条无 isDark 的背景条目就白翻一次。 */
+      if (entry.isDark !== undefined
+          && overlay.classList.contains('dark') !== (entry.isDark === true)) {
+        overlay.style.transition = `background ${entry.duration}s ${EASE_OUT_QUAD}`;
+        overlay.classList.toggle('dark', entry.isDark === true);
       }
     });
+  }
+
+  /* UINAvgHeroPic does not bake comm/ripple into the script image itself.
+     InitAvgHeroPicParam and every AvgImgTween call the two visibility helpers,
+     so their state is an immediate property of the current tween batch. */
+  _setCommunication(chara, show) {
+    const old = chara.querySelector('.avg-communication');
+    if (!show) {
+      if (old?.classList.contains('avg-communication')) old.remove();
+      return;
+    }
+    if (old?.classList.contains('avg-communication')) return;
+    const comm = document.createElement('div');
+    comm.className = 'avg-communication';
+    comm.setAttribute('aria-hidden', 'true');
+    chara.append(comm);
+  }
+
+  _setRipple(chara, show) {
+    const old = chara.querySelector('.avg-chara-ripple');
+    if (!show) {
+      old?.remove();
+      return;
+    }
+    if (old) return;
+    const ripple = document.createElement('span');
+    ripple.className = 'avg-chara-ripple';
+    ripple.setAttribute('aria-hidden', 'true');
+    chara.append(ripple);
+  }
+
+  _ensureBackgroundStack(backgrounds) {
+    const bg = this.refs.avgBg;
+    const parent = bg;
+    const migrating = !this.bgLayerEls.size;
+    if (migrating) {
+      /* #avg-bg 上的 opacity 会连带遮罩；迁移到 item 后父层恢复为透明。
+         迁移中的旧背景必须读取 DOM 当前值，不能读 state.layers：
+         applyShotTweens 已经把本镜所有终值折叠进 state，直接读取会把
+         尚未到 delay 的动画提前显示/隐藏。 */
+      const oldId = this.currentBgId;
+      const oldOpacity = parseFloat(getComputedStyle(bg).opacity);
+      const oldImage = bg.style.backgroundImage;
+      bg.style.backgroundImage = null;
+      bg.style.opacity = null;
+      this._backgroundMigration = {oldId, oldOpacity, oldImage};
+    }
+    /* 不只处理首次迁移：新的背景可能在已经启用堆栈的后续镜头注册。 */
+    for (const layer of backgrounds) {
+      if (this.bgLayerEls.has(layer.imgId)) continue;
+      const img = this.state.imgMap.get(layer.imgId);
+      const el = bg.ownerDocument.createElement('img');
+      el.className = 'avg-layer-item';
+      el.dataset.imgId = String(layer.imgId);
+      el.dataset.imgType = '2';
+      el.alt = '';
+      el.decoding = 'async';
+      el.draggable = false;
+      el.src = this._assetPath(img);
+      el.style.objectFit = img?.fullScreen === false ? 'contain' : 'cover';
+      const migrated = this._backgroundMigration?.oldId === layer.imgId;
+      const initial = migrated
+          ? (Number.isFinite(this._backgroundMigration.oldOpacity)
+              ? this._backgroundMigration.oldOpacity : 1)
+          : (img?.alpha ?? 0);
+      el.style.opacity = String(initial);
+      el.addEventListener('error', () => this._degradeLayer(el,
+          this.state.imgMap.get(layer.imgId)?.imgPath), {once: true});
+      parent.insertBefore(el, this.refs.avgBgOverlay);
+      this.bgLayerEls.set(layer.imgId, el);
+    }
+    if (migrating) this._backgroundMigration = null;
+    this._applyVisualZOrder();
   }
 
   _tweenChara(imgId, entries, faceId, entering) {
@@ -430,15 +821,406 @@ export class Player {
       if (faceId !== undefined && region) {
         this._track(this._drawFace(chara, img, faceId, region));
       }
-      if (!img.comm) chara.children[1]?.remove();
+      this._setCommunication(chara, !!img.comm);
     } else {
       chara = buildChara(imgId, this.canvasSize);
       this._paintLpic(chara, img, config, {faceId});
+    }
+    /* These helpers are called while AvgImgTweenUntil builds the sequence,
+       before delay/duration enter the scheduler.  Apply the final state of
+       this batch now, preserving the official immediate helper semantics. */
+    for (const entry of entries) {
+      this._setCommunication(chara, entry.comm === true);
+      this._setRipple(chara, entry.ripple === true && entry.comm !== true);
     }
     let enter = entering;
     for (const entry of entries) {
       this._blockChara(entry, imgId, chara, enter);
       if (enter) enter = false;
+    }
+  }
+
+  _tweenLayer(imgId, entries) {
+    const el = this.layerEls.get(imgId) ?? this.bgLayerEls.get(imgId);
+    if (!el) return;
+    for (const entry of entries) this._blockLayer(entry, el, imgId);
+  }
+
+  _blockLayer(entry, el, imgId) {
+    this.sched.after((entry.delay || 0) * 1000, () => {
+      const duration = Number(entry.duration) || 0;
+      const hasPos = Array.isArray(entry.pos) && entry.pos.length >= 2
+          && entry.pos.slice(0, 2).every(Number.isFinite);
+      const hasScale = Array.isArray(entry.scale) && entry.scale.length >= 2
+          && entry.scale.slice(0, 2).every(Number.isFinite);
+      const hasRot = Array.isArray(entry.rot) && entry.rot.length >= 3
+          && entry.rot.slice(0, 3).every(Number.isFinite);
+      const transforms = [];
+      if (hasScale) transforms.push(`scale(${entry.scale[0]}, ${entry.scale[1]})`);
+      if (hasRot) transforms.push(`rotateZ(${entry.rot[2]}deg)`);
+      Object.assign(el.style, {
+        transition: `opacity ${duration}s ${EASE_OUT_QUAD}, left ${duration}s ${EASE_OUT_QUAD},`
+            + ` bottom ${duration}s ${EASE_OUT_QUAD},`
+            + ` transform ${duration}s ${EASE_OUT_QUAD}, filter ${duration}s ${EASE_OUT_QUAD}`,
+      });
+      if (entry.alpha !== undefined) el.style.opacity = entry.alpha;
+      if (hasPos) {
+        el.style.left = `calc(50% + ${entry.pos[0] / 32}em)`;
+        el.style.bottom = `calc(50% + ${entry.pos[1] / 32}em)`;
+        el.style.right = null;
+        el.style.top = null;
+      }
+      if (transforms.length) el.style.transform = transforms.join(' ');
+      if (entry.isDark !== undefined) {
+        el.classList.toggle('dark', entry.isDark === true);
+        if (entry.isDark === true) el.style.filter = 'brightness(0.5)';
+        else el.style.filter = null;
+      }
+      if (entry.shake && duration > 0 && typeof el.animate === 'function') {
+        this._shakeSeq = (this._shakeSeq || 0) + 1;
+        el.animate(
+            shakeKeyframes((Number(imgId) || 0) * 131 + this._shakeSeq,
+                entry.shakeIntensity),
+            {duration: duration * 1000, easing: 'linear', composite: 'add'});
+      }
+      if (entry.dissolve && duration > 0) {
+        el.classList.add('dissolving');
+        this.sched.after(duration * 1000, () => el.classList.remove('dissolving'));
+      }
+      if (el.tagName === 'VIDEO' && entry.alpha > 0) {
+        el.play?.().catch?.(() => {});
+      }
+    });
+  }
+
+  /* —— 游戏镜头的非对白演出 —— */
+
+  _applyBgColor(value) {
+    /* eBgColor = clear(1) / black(2) / white(3)。背景图片仍在其上，
+       与 Unity 的 img_bg.color 只改底色而不改遮罩的顺序一致。 */
+    const color = {1: 'transparent', 2: 'black', 3: 'white'}[value];
+    if (color) this.refs.avgBg.style.backgroundColor = color;
+  }
+
+  _applyPostProcess(ppv) {
+    if (!ppv || typeof ppv !== 'object') return;
+    const stage = this.refs.avgStage;
+    const state = this.ppvState;
+    const computed = getComputedStyle(stage);
+    const read = (prop, fallback) => {
+      const value = Number.parseFloat(computed.getPropertyValue(prop));
+      return Number.isFinite(value) ? value : fallback;
+    };
+    /* 取当前过渡中的值，避免在上一镜的 PPV 还没结束时突然跳回旧终值。 */
+    state.saturation = read('--avg-ppv-saturation', state.saturation);
+    state.dofFocus = read('--avg-ppv-dof-focus', state.dofFocus);
+    state.rgbRadius = stage.classList.contains('avg-rgb-split')
+        ? read('--avg-rgb-radius', state.rgbRadius) : 0;
+
+    const changes = [];
+    const number = (value, fallback) => {
+      const n = Number(value);
+      return Number.isFinite(n) ? n : fallback;
+    };
+    const add = (prop, from, to, duration) => {
+      changes.push({prop, from, to, duration: Math.max(0, duration)});
+    };
+    const saturationInput = ppv.cg?.saturation;
+    if (saturationInput !== undefined) {
+      const target = Math.max(0, 1 + number(saturationInput, 0) / 100);
+      /* AvgPostProcess.lua 对 cg.saturation 固定使用 5 秒 DOTween。 */
+      add('--avg-ppv-saturation', state.saturation, target, 5000);
+      state.saturation = target;
+    }
+
+    const dofTween = ppv.dofTween;
+    let dofInput;
+    if (dofTween && typeof dofTween === 'object') {
+      dofInput = number(dofTween.startValue, NaN);
+      if (Number.isFinite(dofInput)) {
+        /* 本体：startValue → (1 - startValue) * 0.5，目标恒为 0.5。 */
+        const startFocus = (1 - dofInput) * 0.5;
+        const duration = number(dofTween.duration, 0) * 1000;
+        add('--avg-ppv-dof-focus', state.dofFocus, 0.5, duration);
+        add('--avg-ppv-dof-blur', this._dofBlur(state.dofFocus),
+            this._dofBlur(0.5), duration);
+        /* 起值需要在 transition 开始前写入，不能把 startValue 当 blur。 */
+        changes.at(-2).from = startFocus;
+        changes.at(-1).from = this._dofBlur(startFocus);
+        state.dofFocus = 0.5;
+      }
+    }
+
+    const rgbTween = ppv.rRgbSTween;
+    let rgbInput;
+    if (rgbTween && typeof rgbTween === 'object') {
+      const show = rgbTween.isShow === true;
+      rgbInput = number(rgbTween.blurRadius, 0);
+      const duration = number(rgbTween.duration, 0) * 1000;
+      const from = state.rgbRadius;
+      add('--avg-rgb-radius', from, show ? rgbInput : 0, duration);
+      state.rgbRadius = show ? rgbInput : 0;
+      state.rgbVisible = show;
+      /* 关闭通道时先保持节点到 tween 结束，和 Lua 的 OnComplete 一致。 */
+      stage.classList.toggle('avg-rgb-split', show || from > 0);
+    }
+
+    if (changes.length) {
+      stage.classList.add('avg-ppv');
+      stage.style.transition = 'none';
+      for (const change of changes) {
+        stage.style.setProperty(change.prop, String(change.from));
+      }
+      /* 让起值先提交；随后写目标值才会触发浏览器的可见过渡。 */
+      void stage.offsetWidth;
+      stage.style.transition = changes
+          .filter((change) => change.duration > 0)
+          .map((change) => `${change.prop} ${change.duration}ms ${EASE_OUT_QUAD}`)
+          .join(', ') || 'none';
+      for (const change of changes) {
+        stage.style.setProperty(change.prop, String(change.to));
+      }
+
+      const born = this.sched.epoch;
+      const tweenSeq = ++this._ppvTweenSeq;
+      const timed = changes.filter((change) => change.duration > 0);
+      let pending = timed.length;
+      const done = () => {
+        if (born !== this.sched.epoch || tweenSeq !== this._ppvTweenSeq) return;
+        pending--;
+        if (pending > 0) return;
+        stage.style.transition = null;
+        if (!state.rgbVisible) stage.classList.remove('avg-rgb-split');
+      };
+      if (!pending) done();
+      else for (const change of timed) this.sched.after(change.duration, done);
+    }
+
+    stage.dataset.ppv = [
+      saturationInput !== undefined ? `sat:${saturationInput}` : '',
+      rgbInput !== undefined && (state.rgbVisible || rgbInput > 0)
+        ? `rgb:${rgbInput}` : '',
+      dofInput !== undefined ? `dof:${dofInput} focus:${state.dofFocus}` : '',
+    ].filter(Boolean).join(' ');
+  }
+
+  _dofBlur(focusDistance) {
+    /* 没有深度缓冲时的浏览器降级：焦距只用来推导可见的全局模糊量。
+       0.5 是本体目标焦距，达到目标即回到清晰，不把 startValue 当像素。 */
+    return Math.max(0, (0.5 - Number(focusDistance || 0)) * 8);
+  }
+
+  _effectEntries(effect) {
+    if (!effect || typeof effect !== 'object') return [];
+    return Object.entries(effect).filter(([key]) => key !== 'stopList');
+  }
+
+  _applyEffects(effect) {
+    if (!effect || typeof effect !== 'object') return;
+    const stop = Array.isArray(effect.stopList) ? effect.stopList : [];
+    for (const id of stop) {
+      this.effectEls.get(String(id))?.remove();
+      this.effectEls.delete(String(id));
+    }
+    for (const [id, cfg] of this._effectEntries(effect)) {
+      if (!cfg || typeof cfg !== 'object') continue;
+      this.effectEls.get(id)?.remove();
+      const el = this.refs.avgStage.ownerDocument.createElement('div');
+      const prefab = String(cfg.prefabName || id);
+      const key = prefab.toLowerCase();
+      const asset = this.effectAssetOf?.(prefab);
+      const kind = key.includes('hit-knife') ? 'hit-knife'
+        : key.includes('smook') || key.includes('smoke') ? 'smoke'
+        : key.includes('snow') ? 'snow'
+        : key.includes('ripple') || key.includes('wave') ? 'ripple'
+        : key.includes('dis') ? 'dissolve'
+        /* 名字判不出但有素材：走满幅 sheet。.avg-effect-generic 是给缺素材的
+           ✳ 占位写的 auto 尺寸，套在有贴图的件上会塌成 0×0。 */
+        : asset?.url || asset?.parts?.length ? 'sheet' : 'generic';
+      el.className = `avg-effect avg-effect-${kind}`;
+      el.dataset.effectId = id;
+      el.dataset.prefab = prefab;
+      el.setAttribute('aria-label', prefab);
+      /* 语料里的 Lua 数组常把末尾的 z=0 省略；本体仍按
+         Vector3.New(x, y, z) 取值，所以二维位置应保留 x/y、z 补 0。 */
+      const pos = Array.isArray(cfg.pos) && cfg.pos.length >= 2
+          && cfg.pos.slice(0, 2).every(Number.isFinite)
+        ? [cfg.pos[0], cfg.pos[1], Number.isFinite(cfg.pos[2]) ? cfg.pos[2] : 0]
+        : [0, 0, 0];
+      /* effect 是铺满舞台的全屏盒，位置是对整张粒子图的平移，不能再
+         translate(-50%,-50%)；否则 x/y 偏移会叠加半个舞台尺寸而跑出屏幕。
+         Unity 的 y 轴向上，因此屏幕 top 偏移为 -y。 */
+      el.style.left = `${(Number(pos[0]) || 0) / 32}em`;
+      el.style.top = `${-(Number(pos[1]) || 0) / 32}em`;
+      const layer = Math.min(3, Math.max(1, Number(cfg.layer) || 2));
+      const z = Number(pos[2]) || 0;
+      el.dataset.posZ = String(z);
+      el.style.setProperty('--avg-effect-z', `${z}px`);
+      /* layer 仍是 Unity parent 的第一排序键，z 只在 parent 内细分。 */
+      el.style.zIndex = String(layer * 100000 + Math.round(z));
+      const parent = this.visualLayers.effectHosts?.[layer - 1]
+          ?? this.visualLayers.effects;
+      if (asset?.parts?.length) {
+        el.dataset.parts = String(asset.parts.length);
+        for (const [partIndex, part] of asset.parts.entries()) {
+          if (!part?.url) continue;
+          const sprite = el.ownerDocument.createElement('span');
+          sprite.className = 'avg-effect-part';
+          if (part.className) sprite.classList.add(part.className);
+          sprite.dataset.part = String(partIndex);
+          sprite.style.opacity = String(part.opacity ?? asset.opacity ?? 1);
+          sprite.style.mixBlendMode = part.blendMode || asset.blendMode || 'screen';
+          this._paintEffectSprite(sprite, part.url,
+              Number(part.columns) || 1, Number(part.rows) || 1, part.tint,
+              part.maskMode);
+          sprite.style.width = `${Number(part.width) || 100}%`;
+          sprite.style.height = `${Number(part.height) || 100}%`;
+          sprite.style.left = `${Number(part.left) || 50}%`;
+          sprite.style.top = `${Number(part.top) || 50}%`;
+          const rotate = Number(part.rotate) || 0;
+          const scale = Number(part.scale) || 1;
+          sprite.style.transform =
+              `translate(-50%, -50%) rotate(${rotate}deg) scale(${scale})`;
+          el.append(sprite);
+        }
+        if (asset.duration > 0) {
+          for (const part of el.children) {
+            part.style.animationDuration = `${Number(asset.duration)}ms`;
+          }
+        }
+      } else if (asset?.url) {
+        const sprite = el.ownerDocument.createElement('span');
+        sprite.className = 'avg-effect-sprite';
+        const columns = Math.max(1, Number(asset.columns) || 1);
+        const rows = Math.max(1, Number(asset.rows) || 1);
+        this._paintEffectSprite(sprite, asset.url, columns, rows, asset.tint,
+            asset.maskMode);
+        sprite.style.opacity = String(asset.opacity ?? 1);
+        sprite.style.mixBlendMode = asset.blendMode || 'screen';
+        el.dataset.asset = asset.url;
+        el.dataset.frames = String(Math.max(1,
+            Number(asset.frames) || columns * rows));
+        el.append(sprite);
+        this._animateEffectSprite(sprite, asset, columns, rows,
+            asset.loop !== false);
+      } else if (kind === 'generic') {
+        el.textContent = '✳';
+      }
+      parent.append(el);
+      this.effectEls.set(id, el);
+      /* 本体不按粒子 duration 自动销毁 GameObject；生命周期由 stopList
+         的 StopAvgEffect 明确控制。粒子/序列帧播完后节点保留到 stopList。 */
+    }
+  }
+
+  /* 粒子色在 Unity 里是 texture × startColor。染色件因此不能画贴图本身，
+     而要拿颜色层被贴图当 mask 剪形——filter 的色相近似会连高光一起偏。 */
+  _paintEffectSprite(sprite, url, columns, rows, tint, maskMode) {
+    const size = `${columns * 100}% ${rows * 100}%`;
+    if (!tint) {
+      sprite.style.backgroundImage = `url("${url}")`;
+      sprite.style.backgroundSize = size;
+      sprite.style.backgroundRepeat = 'no-repeat';
+      return;
+    }
+    sprite.style.backgroundColor = String(tint);
+    const mask = `url("${url}")`;
+    sprite.style.maskImage = mask;
+    sprite.style.maskSize = size;
+    sprite.style.maskRepeat = 'no-repeat';
+    sprite.style.webkitMaskImage = mask;
+    sprite.style.webkitMaskSize = size;
+    sprite.style.webkitMaskRepeat = 'no-repeat';
+    /* 黑底发光图的 alpha 全平，按 alpha 剪形会剪出满矩形（整块纯色）；
+       Unity 那种图是按亮度相乘的。 */
+    if (maskMode) {
+      sprite.style.maskMode = String(maskMode);
+      sprite.style.webkitMaskMode = String(maskMode);
+    }
+  }
+
+  _animateEffectSprite(sprite, asset, columns, rows, loop) {
+    const frames = Math.min(columns * rows,
+        Math.max(1, Number(asset.frames) || columns * rows));
+    const duration = Math.max(1, Number(asset.duration) || 1000);
+    if (typeof sprite.animate !== 'function' || frames < 2) return;
+    const frame = (i) => {
+      const x = columns === 1 ? 0 : (i % columns) * 100 / (columns - 1);
+      const y = rows === 1 ? 0 : Math.floor(i / columns) * 100 / (rows - 1);
+      const at = `${x}% ${y}%`;
+      /* 染色件走 mask，逐帧要挪 mask-position；两条都给，未用的那条被忽略。 */
+      return {backgroundPosition: at, maskPosition: at};
+    };
+    sprite.animate(Array.from({length: frames}, (_, i) => frame(i)), {
+      duration: duration * (frames > 1 && asset.durationIsPerFrame ? frames : 1),
+      iterations: loop ? Infinity : 1,
+      easing: 'steps(1, end)',
+    });
+  }
+
+  _videoPath(path) {
+    if (!path) return null;
+    return this.videoPathOf?.(path) ?? null;
+  }
+
+  _playVideo(path, {loop = false, loopFrame = null} = {}) {
+    const src = this._videoPath(path);
+    const host = this.visualLayers.movie;
+    this._cancelVideoWait?.();
+    this._cancelVideoWait = null;
+    host.replaceChildren();
+    const video = host.ownerDocument.createElement('video');
+    video.className = 'avg-video';
+    video.muted = true;
+    video.playsInline = true;
+    video.preload = 'auto';
+    video.loop = loop;
+    host.append(video);
+    if (!src) {
+      this._degradeLayer(video, path);
+      return Promise.resolve();
+    }
+    video.src = src;
+    if (Array.isArray(loopFrame) && loopFrame.length >= 2) {
+      video.addEventListener('timeupdate', () => {
+        if (video.currentTime >= loopFrame[1]) video.currentTime = loopFrame[0];
+      });
+    }
+    const done = new Promise((resolve) => {
+      const finish = () => {
+        if (this._cancelVideoWait === cancel) this._cancelVideoWait = null;
+        resolve();
+      };
+      const cancel = () => finish();
+      this._cancelVideoWait = cancel;
+      video.addEventListener('ended', finish, {once: true});
+      video.addEventListener('error', () => {
+        this._degradeLayer(video, path);
+        finish();
+      }, {once: true});
+    });
+    video.play?.().catch?.(() => {});
+    return loop ? Promise.resolve() : this._track(done);
+  }
+
+  async _manageAux(shot) {
+    if (shot.bgColor !== undefined) this._applyBgColor(shot.bgColor);
+    if (shot.ppv) this._applyPostProcess(shot.ppv);
+    if (shot.effect) this._applyEffects(shot.effect);
+    /* 游戏的 hasVideo 分支只在本镜没有 content/branch 时独占推进门；有
+       对白的镜头仍先展示对白，下一次推进再处理视频。 */
+    if (shot.vedioPath && !shot.content && !shot.branch) {
+      const video = this._playVideo(shot.vedioPath, {
+        loop: false,
+        loopFrame: shot.vedioLoopFrame,
+      });
+      if (this.sched.timer === REAL_TIMER) await video;
+      else this._cancelVideoWait?.(); /* seek 虚拟钟不真等媒体时长 */
+    } else if (shot.vedioLoopPath) {
+      this._playVideo(shot.vedioLoopPath, {
+        loop: !shot.vedioLoopStop,
+        loopFrame: shot.vedioLoopFrame,
+      });
     }
   }
 
@@ -450,17 +1232,30 @@ export class Player {
          缩放入行内样式。普通条目完全不碰这些属性，夹具字节不变。 */
       const hasPos = isValidPosVec(entry.pos);
       const hasScale = isValidPosVec(entry.scale);
+      const hasRot = Array.isArray(entry.rot) && entry.rot.length >= 3
+          && entry.rot.slice(0, 3).every(Number.isFinite);
       const backToSlot = isValidPos(entry.posId)
           && !chara.classList.contains('img-missing');  /* 占位盒的行内居中不清 */
+      /* 槽位镜像（AvgHeroN.scale[0] < 0）写在 .posN 类规则的 transform 里，
+         而行内 transform 会整条覆盖该类规则 ⇒ 带 scale 的条目必须自己把符号
+         乘回去，否则镜像槽一遇缩放条目就翻正。游戏侧只有一个 HeroItem 节点
+         同时承载槽位符号与补间量级（实机 lane.x 既见过 -1 也见过 1.4），
+         故按相乘建模。 */
+      const config = (hasScale || hasRot) ? this.layouts.get(imgId) : null;
+      const slotId = isValidPos(entry.posId) ? entry.posId
+          : (isValidPos(Number(chara.dataset.posId)) ? Number(chara.dataset.posId) : null);
+      const slotSign = slotId === null ? 1 : slotMirrorSign(config, slotId);
       /* alpha 缺省 = 保持：不写 opacity（CSSOM 忽略 undefined 会碰巧继承，
          这里改成显式不写，语义与 reducer 的继承口径一致）。入场没有
          现值可继承，按新 lane 的初始 0 显式钉住。 */
       const style = {
         /* 带 pos/scale 的条目多出 bottom/transform 过渡轴，移动/缩放才动画。 */
-        transition: (hasPos || hasScale)
-            ? `opacity ${duration}s, left ${duration}s, bottom ${duration}s,`
-                + ` transform ${duration}s, filter ${duration}s`
-            : `opacity ${duration}s, left ${duration}s, filter ${duration}s`,
+        transition: (hasPos || hasScale || hasRot)
+            ? `opacity ${duration}s ${EASE_OUT_QUAD}, left ${duration}s ${EASE_OUT_QUAD},`
+                + ` bottom ${duration}s ${EASE_OUT_QUAD},`
+                + ` transform ${duration}s ${EASE_OUT_QUAD}, filter ${duration}s ${EASE_OUT_QUAD}`
+            : `opacity ${duration}s ${EASE_OUT_QUAD}, left ${duration}s ${EASE_OUT_QUAD},`
+                + ` filter ${duration}s ${EASE_OUT_QUAD}`,
       };
       if (entry.alpha !== undefined) style.opacity = entry.alpha;
       else if (entering) style.opacity = 0;
@@ -472,14 +1267,17 @@ export class Player {
         style.left = null;      /* 回槽：定位交还 posN 规则 */
         style.bottom = null;
       }
-      if (hasScale) {
-        const config = this.layouts.get(imgId);
+      if (hasScale || hasRot) {
         if (config) {   /* 缺标定件走占位，缩放数学无依据，跳过 */
           const fontSize = parseFloat(getComputedStyle(this.container).fontSize);
           const t = baseTranslate(config, {width: this.container.clientWidth,
             height: this.container.clientHeight, fontSize});
-          style.transform = `translate(${t.x}em, ${t.y}em)`
-              + ` scale(${entry.scale[0]}, ${entry.scale[1]})`;
+          const transform = [`translate(${t.x}em, ${t.y}em)`];
+          if (hasScale) transform.push(
+              `scale(${entry.scale[0] * slotSign}, ${entry.scale[1]})`);
+          else if (slotSign !== 1) transform.push(`scale(${slotSign}, 1)`);
+          if (hasRot) transform.push(`rotateZ(${entry.rot[2]}deg)`);
+          style.transform = transform.join(' ');
         }
       } else if (backToSlot && chara.style.transform) {
         style.transform = null;   /* 恢复类规则的基础位移 */
@@ -501,7 +1299,22 @@ export class Player {
       if (entry.isDark !== undefined) {
         chara.classList.toggle('dark', entry.isDark === true);
       }
-      if (entering) this.refs.avgCharas.append(chara);
+      if (entering) {
+        this.refs.avgCharas.append(chara);
+        this._applyZOrder();    /* 元素此刻才存在，z 序要补一次 */
+      }
+      /* 抖动是瞬时效应，不改进入行的任何落定态：composite:'add' 叠在基础
+         transform 上，fill 默认 none ⇒ 播完自动消失，夹具对拍不受扰。 */
+      if (entry.shake && duration > 0 && typeof chara.animate === 'function') {
+        this._shakeSeq = (this._shakeSeq || 0) + 1;
+        chara.animate(
+            shakeKeyframes((Number(imgId) || 0) * 131 + this._shakeSeq, entry.shakeIntensity),
+            {duration: duration * 1000, easing: 'linear', composite: 'add'});
+      }
+      if (entry.dissolve && duration > 0) {
+        chara.classList.add('dissolving');
+        this.sched.after(duration * 1000, () => chara.classList.remove('dissolving'));
+      }
     });
   }
 
@@ -572,8 +1385,35 @@ export class Player {
   }
 
   _lineFinished() {
+    const shot = this.scene[this.shotId];
+    /* 游戏在对白完成回调之后才切入 vedioPath。等待门与 _manageAux 的
+       无对白视频一致；seek/clearStage 用 epoch 杀掉陈旧回调。 */
+    if (shot?.vedioPath && !this._videoStarted) {
+      this._videoStarted = true;
+      const epoch = this.sched.epoch;
+      const video = this._playVideo(shot.vedioPath, {loop: false,
+        loopFrame: shot.vedioLoopFrame}).then(() => {
+        if (epoch === this.sched.epoch && this.scene?.[this.shotId] === shot) {
+          this._lineFinished();
+        }
+      });
+      if (this.sched.timer !== REAL_TIMER) this._cancelVideoWait?.();
+      void video;
+      return;
+    }
     if (this.refs.avgDialog.classList.contains('type5')) {
-      this.sched.after(500, () => this.refs.avgDialog.classList.add('fade-out'));
+      const hold = Number(shot?.tipsShowDuration);
+      this.sched.after((Number.isFinite(hold) && hold > 0 ? hold * 1000 : 500),
+          () => this.refs.avgDialog.classList.add('fade-out'));
+    }
+    /* 镜级文字震：游戏在 OnChapterTextTweenComplete 里对文本节点做
+       DOShakePosition(0.4, Vector3(10,10,0), 20)，与条目级 shake 是两套通道，
+       所以挂在行尾回调而不是 _blockChara。 */
+    if (shot?.contentShake && typeof this.refs.avgLine.animate === 'function') {
+      this._shakeSeq = (this._shakeSeq || 0) + 1;
+      this.refs.avgLine.animate(
+          shakeKeyframes(Number(this.shotId) * 17 + this._shakeSeq),
+          {duration: 400, easing: 'linear', composite: 'add'});
     }
     this.shotEnd = true;
     this.readingLine = false;
@@ -605,6 +1445,7 @@ export class Player {
       this.lineNum++;
     }
     shot = this.scene[this.shotId];
+    this._videoStarted = false;
     if (shot.isEnd || !(shot?.nextId || this.scene[this.shotId + 1])) {
       this.playEnd = true;
     }
@@ -663,6 +1504,8 @@ export class Player {
           if (this.sched.epoch !== epoch) return;
         }
         await this._manageImg();
+        if (this.sched.epoch !== epoch) return;
+        await this._manageAux(shot);
         if (this.sched.epoch !== epoch) return;
         this._manageContentType();
         this._speak();
@@ -819,6 +1662,8 @@ export class Player {
 
   clearStage() {
     this.sched.bump();
+    this._cancelVideoWait?.();
+    this._cancelVideoWait = null;
     this.audio?.stopAll();
     resetStage(this);
     this.refs.avgDes.className = '';
@@ -830,6 +1675,22 @@ export class Player {
     this.shotEnd = true;
     this.readingLine = false;
     this.typewriter = null;
+    this.layerEls.clear();
+    this.bgLayerEls.clear();
+    this.effectEls.clear();
+    this._ppvTweenSeq++;
+    this._runtimeSeq++;
+    this._runtimeShot = null;
+    this._runtimeObjects.clear();
+    this._runtimeBindings = [];
+    this.ppvState = {
+      saturation: 1,
+      dofFocus: 0.5,
+      rgbRadius: 0,
+      rgbVisible: false,
+    };
+    this.currentBgId = null;
+    this._videoStarted = false;
     this.autoPlaying = false;
     if (this.toAutoPlay) {
       this.toAutoPlay = false;

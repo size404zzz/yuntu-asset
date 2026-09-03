@@ -552,7 +552,9 @@ function run(proto, upvals, args, opts = {}) {
       case 43: {                                                     /* SETLIST */
         const t = R[A];
         if (!(t instanceof LuaTable)) throw new LuaError('SETLIST 目标不是 table');
-        const n = B === 0 ? top - A - 1 : B - 1;
+        /* B 字段就是要写的元素个数（Lua 5.3 lvm.c 的 n = GETARG_B(i)）；
+           B==0 才是变长情形，数量由栈顶算。 */
+        const n = B === 0 ? top - A - 1 : B;
         let c = C;
         if (c === 0) c = (code[pc++] >>> 6) & 0x3FFFFFF;   /* 块序号在 extra arg */
         const base = (c - 1) * FPF;

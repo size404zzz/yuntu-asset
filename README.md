@@ -33,6 +33,25 @@ python tools/ref/serve.py 8080
 
 打开编辑器后：点顶栏**「剧本库」**选一段官方剧情 → 加载进编辑器 → 左边改文案、右边调立绘和音乐 → 顶栏预览播放。就这么简单。
 
+播放器还会按游戏本体的 `imgType` 维护五层舞台：远景、背景、立绘、前景和 Movie，
+并消费 `bgColor`、`effect`、`ppv`、`vedioPath`、旋转/位移/缩放等镜头字段。游戏的
+特效 prefab 与视频若未导出，页面会保留层级和时序并显示缺失占位；接入时给
+`Player` 注入 `videoPathOf` 即可使用本地视频资源。
+
+剧情语料实际出现的粒子特效共 6 个 prefab（清单由 `node tools/audit-effects.mjs --prefab`
+普查得到，98 条引用），贴图与参数由 `python tools/build-avg-effects.py --write` 从
+bundle 直接导出到 `data/effects/` 并生成 `data/index/avg-effects.json`；单贴图的走
+sprite-sheet 逐帧、多贴图的拆 `parts[]`（如 `avg/FXP_AVG_Hit-knife` 的 `blade` / `spark`
+两层）。已知降级：`avg/FXP_Scene` 实为噪声材质驱动的动画（不是序列帧），此处取其
+主贴图近似；`FXP_smook` 有 4 个次级粒子件的材质贴图为引擎默认白图，无法导出。
+ZIP/目录导出会自动携带索引引用到的贴图。
+
+若要取得游戏运行时才会显现的演出真值（例如 `posId` 解析、Prefab 实例、
+Tween 前后 Transform、溶解/通讯框/水波纹和后处理），可用
+`tools/frida/avg-recorder.py` 录制 MuMu 中官方播放器，再用
+`tools/avg-runtime-import.mjs` 转成附带 `runtime.events` 的镜头。详细步骤见
+[`tools/frida/README.md`](tools/frida/README.md)。
+
 用其他任意静态服务器指向本仓库根目录也可以照常运行（`tools/ref/serve.py` 额外提供 wiki 素材代理与测试用的冻结通道，日常把玩剧情用不到）。
 
 ## 剧情和素材是哪来的？

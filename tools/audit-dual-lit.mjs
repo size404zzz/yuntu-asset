@@ -76,7 +76,7 @@ for (const s of man.stories) {
   } catch { continue; }
   const rawShots = raw?.shots ?? raw;
   if (!rawShots) continue;
-  const {wire} = storyToWire(raw, lang, {imgIds: man.imgIds, heroSprites: man.heroSprites, pathOwner: man.pathOwner});
+  const {wire} = storyToWire(raw, lang, {heroSprites: man.heroSprites, pathOwner: man.pathOwner});
   const before = new Map(audit(rawShots).map((h) => [`${h.key}|${h.fam}`, h]));
   const after = new Map(audit(wire).map((h) => [`${h.key}|${h.fam}`, h]));
   for (const [k, h] of after) {

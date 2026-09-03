@@ -34,7 +34,7 @@ for (const s of man.stories) {
   } catch { continue; }
   tot.segs++;
   const {wire} = storyToWire(cfg, lang, {
-    imgIds: man.imgIds, heroSprites: man.heroSprites, pathOwner: man.pathOwner});
+    heroSprites: man.heroSprites, pathOwner: man.pathOwner});
   const st = emptyState();
   const pathOf = new Map();
   const famSeen = new Map();

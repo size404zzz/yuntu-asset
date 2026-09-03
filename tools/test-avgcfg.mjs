@@ -168,73 +168,71 @@ const decodeLua2 = (kind, id) => {
   ok(`avgwire：0 起始平移 + branch 展平（23concert）`);
 }
 {
-  /* 悬空立绘 tween 落名（M16）：147 全语料声明众数 = willow_avg，
-     1year_prologue 里它只被 tween 从未声明——注入后首镜 images 带
-     willow_avg 声明，stats 留痕；不给 imgIds 时保持透传不注。 */
-  const imgIds = {147: 'willow_avg', 103: 'sol_avg'};
-  const heroSprites = {1001: 'persicaria_avg', 1047: 'willow_avg'};
-  const {wire, stats} = storyToWire(decodeLua2('cfg', '1year_prologue'),
-      decodeLua2('lang', '1year_prologue'), {imgIds, heroSprites});
-  const first = wire[Object.keys(wire).find((k) => k !== '0')];
-  const injected = (first.images ?? []).find((im) => im.imgId === 147);
-  assert.ok(injected, '悬空 147 已注入首镜 images');
-  assert.equal(injected.imgPath, 'willow_avg', '注入名取全局表众数');
-  assert.equal(injected.imgType, 3, '注入的是立绘声明');
-  assert.ok((first.images ?? []).some((im) => im.imgId === 103 && im.imgPath === 'sol_avg'),
-      '多张悬空一并注入');
-  assert.ok(stats.danglingCast.some((c) => c.imgId === 147), 'stats 留痕');
-  /* 揭示时机（契约切换 D6 后）：原版是「说话镜 ⇒ 说话人现身」，所以预站位镜
-     （键2）**不就地补揭示**，而是在她首个说话镜（键4，speakerHeroId=1047）点亮；
-     键6 的原揭示条目与键17 的退场条目都保持原样。
-     （旧断言钉的是 materializeDanglingCast 的补半拍行为——该行为与
-     revealNeverVisibleCast 一起退役，点亮权收归 autoLightCast 一层。） */
-  const w2 = wire['2'].imgTween.filter((t) => t.imgId === 147);
-  assert.deepEqual(w2.map((t) => t.alpha), [0], '预站位镜不被就地补揭示');
-  const w4 = wire['4'].imgTween.filter((t) => t.imgId === 147);
-  assert.deepEqual(w4.map((t) => t.alpha), [1], '她的首个说话镜补出揭示');
-  assert.equal(w4[0].isDark, false, '入场按亮重建');
-  assert.equal(wire['4'].speakerHeroId, 1047, '键4 确实是薇洛儿说话');
-  const w6 = wire['6'].imgTween.find((t) => t.imgId === 147);
-  assert.equal(w6.alpha, 1, '原揭示条目不动');
-  assert.equal(w6.isDark, true, '原条目灯光语义不动');
-  const w17 = wire['17'].imgTween.find((t) => t.imgId === 147);
-  assert.equal(w17.alpha, 0, '退场条目不被改写');
-  /* 说话者复亮（M16）：帕斯卡(1001→persicaria_avg) 在键 3 听教授切暗，
-     键 6/8 自己说话却无复亮条目——autoLight 补亮；教授说话的键 3/7 与
-     聆听压暗一概不动。 */
-  const p6 = wire['6'].imgTween.filter((t) => t.imgId === 101);
-  assert.ok(p6.some((t) => t.alpha === 1 && t.isDark === false),
-      '帕斯卡说话镜补复亮');
-  assert.ok(!wire['3'].imgTween.some((t) => t.imgId === 101 && t.isDark === false),
-      '教授说话镜不补亮（聆听压暗保留）');
-  /* 两类归类都真实存在，且必须分对：键6 的 101 是「已在台上但被听教授时压暗」
-     ⇒ 复亮（autoLit），只有 α0 的那才叫入场（entranceLit）。分错的代价不只是
-     计数难看——入场分支会把该件记进 `ours`（只由本层点亮的集合），换景收场据此
-     才允许淡出它；把作者点亮的件误记成 ours，下一场就会被我们偷偷收掉。 */
-  assert.ok(stats.autoLit >= 1, `已在场者归为复亮（autoLit=${stats.autoLit}）`);
-  assert.equal(wire['6'].imgTween.filter((t) => t.imgId === 101 && t.isDark === false).length, 1,
-      '复亮只补一条点亮条目');
-  /* 钉折叠态而不是钉条目：键8 她已经亮着，修复不该再补一条（补了会把
-     作者点亮的件记进 ours，下一场被我们偷偷收掉）。 */
-  assert.equal(foldAlpha(wire, 'persicaria_avg').get('8'), 1,
-      '键8 她说话时同样是亮的（沿用键6 的点亮）');
-  const plain = storyToWire(decodeLua2('cfg', '1year_prologue'),
-      decodeLua2('lang', '1year_prologue')).wire;
-  assert.ok(!Object.values(plain).some((s) => (s.images ?? []).some((im) => im.imgId === 147)),
-      '无 imgIds 时保持原样不注');
-  ok(`avgwire：悬空立绘 tween 落名（1year_prologue 147→willow_avg）`);
+  /* 悬空立绘 tween 落名层（旧 materializeDanglingCast）已退役（2026-09-03）。
+     修 lvm.js 的 SETLIST off-by-one（每个数组字面量丢最后一条）之后，全语料
+     「被 tween 却从未声明」的立绘从 1471 处降到 0——那层补的从来就是被我们自己
+     吞掉的声明。这里反向钉死它不复活：未声明的 tween 目标保持透传（= 参考的
+     未注册跳过语义），stats 里不再有 danglingCast 字段。
+     复核口径见 tools/audit-decode-completeness.mjs。 */
+  const cfg = {
+    '1': {contentType: 2, content: '开场', images: [
+      {imgId: 2, imgType: 2, alpha: 0, imgPath: 'cpt00/cpt00_e_bg010', fullScreen: true}]},
+    '2': {contentType: 3, content: '她说话', speakerHeroId: 147,
+      imgTween: [{imgId: 147, alpha: 1, isDark: false, duration: 0.2}]},
+  };
+  const lang = {'1': '开场', '2': '她说话'};
+  const {wire, stats} = storyToWire(structuredClone(cfg), structuredClone(lang),
+      {heroSprites: {147: 'willow_avg'}, pathOwner: {willow_avg: '147'}});
+  assert.ok(!Object.values(wire).some(
+      (s) => (s.images ?? []).some((im) => im.imgId === 147)),
+      '未声明的 tween 目标不被补进 images（透传）');
+  assert.ok(!('danglingCast' in stats), '退役层的 stats 字段不再出现');
+  assert.equal(wire['2'].imgTween.length, 1, '该镜条目数完全由作者数据决定');
+  ok('avgwire：悬空 tween 落名层已退役（未注册即跳过）');
 }
 {
-  /* 永不可见立绘的揭示重建已合并进 autoLightCast（D6）：22child_01_03 的安吉拉
-     （117）只有 alpha 0 条目（step 38 预站位 / step 41 灯光），揭示半拍丢失——
-     旧版 revealNeverVisibleCast 会在预站位后补揭示、后续 alpha 0 升 1；合并后
-     不再单独修：α0+duration>0 视为作者显式画外（键 42 的灯光淡出），不越权覆盖；
-     完好轨迹（kuro 155）不动。 */
+  /* 修复层不得改写作者自己写好的演出（1year_prologue，2026-09-03 重标）。
+     旧断言把「键4 补出揭示 / 键6 补复亮」当成我们的成果——其实那些条目本来就在
+     数据里，是 SETLIST 丢了数组末条才显得「只 tween 没声明」「该亮却没亮」。
+     现在按新事实钉两面：本层在该段一条不补，且条目逐字透传。 */
+  const raw = decodeLua2('cfg', '1year_prologue');
+  const {wire, stats} = storyToWire(decodeLua2('cfg', '1year_prologue'),
+      decodeLua2('lang', '1year_prologue'),
+      {heroSprites: manifest.heroSprites,
+        pathOwner: manifest.pathOwner});
+  assert.equal(stats.entranceLit, 2, '本层在该段只补 2 处入场点亮，其余全是作者数据');
+  assert.equal(stats.autoLit, 0, '作者已写复亮，本层一条不补');
+  const trio = (list) => list.filter((t) => t.imgId !== undefined)
+      .map((t) => `${t.alpha}/${t.isDark}/${t.duration}`).join(' ');
+  for (const [key, id] of [['2', 147], ['4', 147], ['6', 147], ['17', 147],
+    ['2', 101], ['6', 101], ['7', 101], ['17', 101]]) {
+    assert.equal(trio(wire[key].imgTween ?? []), trio(raw[key].imgTween ?? []),
+        `镜${key} 的条目原样透传（imgId ${id} 未被改写）`);
+  }
+  /* 作者写的正是完整节拍：键2 预站位+揭示、键4 说话镜揭示、键6 复亮、键17 退场。 */
+  assert.equal(trio(raw['2'].imgTween).includes('0/false/0'), true, '键2 有预站位条目');
+  assert.equal(raw['4'].speakerHeroId, 1047, '键4 确实是薇洛儿说话');
+  assert.ok(trio(raw['4'].imgTween).includes('1/false/0.2'), '键4 揭示由作者写');
+  assert.ok(trio(raw['6'].imgTween).includes('1/false/0.2'), '键6 帕斯卡复亮由作者写');
+  assert.ok(trio(raw['17'].imgTween).includes('0/false/0.2'), '键17 退场由作者写');
+  ok('avgwire：作者演出原样透传，修复层零改写（1year_prologue）');
+}
+{
+  /* 永不可见立绘的揭示重建已合并进 autoLightCast（D6）。2026-09-03 复核：
+     当年判「安吉拉（117）只有 α0 条目、揭示半拍丢失」是 SETLIST 丢数组末条
+     造成的假象——作者其实写了完整两条（step 38 的 α0/d0 预站位 + α1/d0.2 揭示，
+     揭示带 isDark:true 的压暗）。该段修复层四个计数器全 0，条目逐字透传。
+     注意 0 起始平移：本段 shifted=true，wire 键 = 作者 step + 1。 */
+  const raw = decodeLua2('cfg', '22child_01_03');
   const {wire, stats} = storyToWire(decodeLua2('cfg', '22child_01_03'),
       decodeLua2('lang', '22child_01_03'));
-  const angela39 = wire['39'].imgTween.filter((t) => t.imgId === 117);
-  assert.equal(angela39.length, 1, '预站位镜不再就地补揭示');
-  assert.equal(angela39[0].alpha, 0, '预站位 alpha 0 保留');
+  const pick = (src, k) => (src[k]?.imgTween ?? []).filter((t) => t.imgId === 117)
+      .map((t) => `${t.alpha}/${t.duration}/${t.isDark}`);
+  assert.equal(stats.entranceLit + stats.autoLit + stats.entranceExit, 0,
+      '本段修复层一条都不补（作者数据已完整）');
+  assert.deepEqual(pick(wire, '39'), pick(raw, '38'), '预站位镜原样透传');
+  assert.deepEqual(pick(wire, '39'), ['0/0/false', '1/0.2/true'],
+      '作者写的就是预站位 + 揭示两条');
   const angela42 = wire['42'].imgTween.find((t) => t.imgId === 117);
   assert.equal(angela42.alpha, 0, '作者显式淡出条目不被升为 alpha 1');
   assert.equal(angela42.duration, 0.2, '淡出 duration 保留');
@@ -246,114 +244,95 @@ const decodeLua2 = (kind, id) => {
   assert.ok(Math.max(...kuro) === 1 && kuro.filter((a) => a === 0).length > 0,
       '完好轨迹不被改写');
   assert.equal(stats.revealedCast, undefined, '合并后不再产生 revealedCast 统计');
-  ok(`avgwire：永不可见立绘揭示重建已合并（22child_01_03 安吉拉）`);
+  ok(`avgwire：安吉拉揭示本就由作者写全（22child_01_03）`);
 }
 {
-  /* 说话镜的入场揭示补齐（M23）：判据是「隐身来路」而不是「下一镜有没有揭示」——
-     alpha 0 且 duration 0 的条目（以及按 alpha 0 的 images[] 注册）是预站位，
-     它只把立绘摆到槽位上等揭示半拍；duration>0 的 alpha 0 是真淡出退场。
-     只召回前者：22child_01_03 卡萝（1055→kuro_avg=155）键 2/32、炽
-     （1007→chelsea_avg=107）键 10 都属丢了揭示；键 34 把 kuro 淡出后她
-     键 42/43/46 的台词是画外音，不越权召回。 */
+  /* 说话镜的入场揭示（M23 立的判据）。2026-09-03 复核：22child_01_03 的卡萝
+     （155）键 2/32 与炽（107）键 10，`α0/d0` 预站位后面紧跟着作者自己写的
+     `α1/d0.2` 揭示——当年判「丢了揭示半拍」是 SETLIST 把数组末条吞了。
+     本段修复层三个计数器全 0；可观察结果仍按折叠态钉。 */
   const {wire, stats} = storyToWire(decode('cfg', '22child_01_03'),
       decode('lang', '22child_01_03'),
-      {imgIds: manifest.imgIds, heroSprites: manifest.heroSprites, pathOwner: manifest.pathOwner});
-  const kuro2 = wire['2'].imgTween.filter((t) => t.imgId === 155);
-  assert.deepEqual(kuro2.map((t) => t.alpha), [0, 1], '卡萝开口镜补出揭示半拍');
-  assert.equal(kuro2[1].duration, 0.2, '揭示 duration 0.2');
-  assert.equal(kuro2[1].isDark, false, '揭示按亮重建（说话=亮）');
-  const chelsea10 = wire['10'].imgTween.filter((t) => t.imgId === 107);
-  assert.deepEqual(chelsea10.map((t) => t.alpha), [0, 1], '炽开口镜补出揭示半拍');
-  const kuro32 = wire['32'].imgTween.filter((t) => t.imgId === 155);
-  assert.deepEqual(kuro32.map((t) => t.alpha), [0, 1], '预站位后无揭示的说话镜也补');
-  /* 入场计数从 20 降到 7：不是少补了揭示，而是「已在台上、只是被压暗」的那
-     十几处本来就该记复亮而不是入场（旧口径把两者混在一起，见上面的 ours 说明）。
-     可观察结果由上面三条 + 下面三条折叠态断言钉。 */
-  assert.ok(stats.entranceLit >= 7 && stats.autoLit >= 1,
-      `入场/复亮分开计数（entrance=${stats.entranceLit} relight=${stats.autoLit}）`);
-  /* 折叠态复核：预站位说话镜可见；合并后说话镜一律揭示（除非本镜有显式淡出）。 */
+      {heroSprites: manifest.heroSprites, pathOwner: manifest.pathOwner});
+  const pair = (k, id) => (wire[k]?.imgTween ?? []).filter((t) => t.imgId === id)
+      .map((t) => `${t.alpha}/${t.duration}`);
+  assert.deepEqual(pair('2', 155), ['0/0', '1/0.2'], '卡萝开口镜：预站位 + 作者写的揭示');
+  assert.deepEqual(pair('10', 107), ['0/0', '1/0.2'], '炽开口镜：同样齐全');
+  assert.deepEqual(pair('32', 155), ['0/0', '1/0.2'], '键 32 也不需要补');
+  assert.equal(stats.entranceLit + stats.autoLit + stats.entranceExit, 0,
+      '本段修复层一条都不补');
   const kuro = foldAlpha(wire, 'kuro_avg');
   assert.equal(kuro.get('2'), 1, '键 2 卡萝开口时在场');
   assert.equal(kuro.get('32'), 1, '键 32 卡萝开口时在场');
-  assert.equal(kuro.get('42'), 1, '键 42 卡萝说话镜被揭示（合并后说话=亮）');
-  ok(`avgwire：说话镜入场揭示补齐（22child_01_03 三处，淡出退场保留）`);
+  assert.equal(kuro.get('42'), 1, '键 42 卡萝说话镜在场');
+  ok('avgwire：说话镜揭示本就由作者写全（22child_01_03 三处）');
 }
 {
-  /* 用户报的实例（M23）：1year_prologue 键 21 薇洛儿（1047→willow_avg=147）
-     开口「从哪里开始好呢」，本镜只有 `147 α0/dur0/posId3` 的预站位，数据里
-     下一次揭示拖到键 51——上一轮「揭示必须在紧邻下一镜」的判据漏掉这类。
-     同镜的 bg α1 与她的三连台词（键 21/22/24）都该看见人。
-     合并后行为：说话镜一律揭示，键 99 薇洛儿开口即亮（除非本镜有显式淡出）。 */
+  /* 1year_prologue 的薇洛儿（1047→willow_avg=147）三连台词（M23 的用户报实例）。
+     复核：键 21 的揭示同样是作者数据；键 27 她的 α 归 0 来自折叠继承，本段
+     entranceExit=0 ⇒ 不存在「我们补的收场淡出」。该段修复层只剩 2 处入场点亮。 */
   const {wire, stats} = storyToWire(decode('cfg', '1year_prologue'),
       decode('lang', '1year_prologue'),
-      {imgIds: manifest.imgIds, heroSprites: manifest.heroSprites, pathOwner: manifest.pathOwner});
+      {heroSprites: manifest.heroSprites, pathOwner: manifest.pathOwner});
   const willow21 = wire['21'].imgTween.filter((t) => t.imgId === 147);
   assert.deepEqual(willow21.map((t) => [t.alpha, t.duration]), [[0, 0], [1, 0.2]],
-      '键 21 预站位后补出揭示（原数据揭示远在键 51）');
-  assert.equal(willow21[1].isDark, false, '补的揭示按亮');
+      '键 21 预站位 + 作者揭示成对出现');
+  assert.equal((wire['27'].imgTween ?? []).filter((t) => t.imgId === 147).length, 0,
+      '键 27 没有补出来的收场条目');
   const seen = foldAlpha(wire, 'willow_avg');
   assert.equal(seen.get('21'), 1, '键 21 薇洛儿在场');
-  assert.equal(seen.get('24'), 1, '补的揭示延续到她的后续台词镜');
-  assert.equal(seen.get('99'), 1, '键 99 薇洛儿说话镜被揭示（合并后说话=亮）');
-  assert.ok(stats.entranceLit >= 15, `全段入场揭示补齐计数（${stats.entranceLit}）`);
-  /* 换景收场：补出来的余晖不许淌进下一场。键 27 重排（帕斯卡+苏尔摆预站位）
-     → 收掉只由修复点亮的薇洛儿。作者自己点亮的苏尔**不收**（她键 34 还赖在
-     台上）：这是原稿缺退场条目，三种候选判据误清率都在 23% 上下，留给编辑器
-     人工补，不猜。 */
-  assert.equal(seen.get('27'), 0, '键 27 换景收掉薇洛儿');
-  const willow27 = wire['27'].imgTween.filter((t) => t.imgId === 147);
-  assert.deepEqual(willow27.map((t) => [t.alpha, t.duration]), [[0, 0.2]],
-      '收场补的是 duration 0.2 淡出');
-  assert.equal(seen.get('40'), 1, '收场不丢注册：键 40 薇洛儿还能被重新揭示');
-  const sol = foldAlpha(wire, 'sol_avg');
-  assert.equal(sol.get('30'), 1, '键 30 苏尔在场（作者自己揭示的）');
-  assert.equal(sol.get('34'), 0, '合并后苏尔在键 34 已淡出（家族不变量或换景收场）');
-  assert.ok(stats.entranceExit >= 1, `全段收场淡出计数（${stats.entranceExit}）`);
-  ok(`avgwire：说话镜入场揭示补齐 + 修复自点亮者收场（1year_prologue 键 21/27）`);
+  assert.equal(seen.get('24'), 1, '她的后续台词镜仍在场');
+  assert.equal(seen.get('27'), 0, '键 27 不在场（折叠继承，非本层改写）');
+  assert.equal(seen.get('40'), 1, '键 40 重新现身');
+  assert.equal(seen.get('99'), 1, '键 99 说话镜在场');
+  assert.equal(foldAlpha(wire, 'sol_avg').get('30'), 1, '键 30 苏尔由作者揭示');
+  assert.equal(stats.entranceLit, 2, `该段只剩 2 处入场点亮（${stats.entranceLit}）`);
+  assert.equal(stats.entranceExit, 0, '该段没有收场改写');
+  ok('avgwire：1year_prologue 演出由作者数据驱动，本层仅 2 处补点亮');
 }
 {
   /* 桥表的剧本内改宗（M24，用户报）：heroSprites 给的是该角色全语料的众数
      立绘（1001 帕斯卡 = persicaria_avg），周年剧本里她穿 persicaria_dress_avg
-     —— 精确路径匹配不上，键 16 的 α0/dur0 预站位永远等不到补揭示，气泡框
-     开口连说六句人却隐身。改宗后同角色的换装件顶上，揭示落回开口镜。 */
+     ——精确路径匹配不上就进不了 want 集，改宗后同角色的换装件顶上。
+     复核：键 16 的揭示同样是作者写的（duration 0.6，不是本层补的 0.2 规格），
+     本段三个计数器全 0；改宗本身仍然必要，去掉它这类的说话镜无人可召回。 */
   const {wire, stats} = storyToWire(decode('cfg', '1year_anniversary_persicaria'),
       decode('lang', '1year_anniversary_persicaria'),
-      {imgIds: manifest.imgIds, heroSprites: manifest.heroSprites, pathOwner: manifest.pathOwner});
+      {heroSprites: manifest.heroSprites, pathOwner: manifest.pathOwner});
   const dress16 = wire['16'].imgTween.filter((t) => t.imgId === 101);
-  assert.deepEqual(dress16.map((t) => [t.alpha, t.duration]), [[0, 0], [1, 0.2]],
-      '换装开口镜补出揭示半拍');
+  assert.deepEqual(dress16.map((t) => [t.alpha, t.duration]), [[0, 0], [1, 0.6]],
+      '换装开口镜的预站位与揭示都由作者写');
+  assert.equal(stats.entranceLit + stats.autoLit + stats.entranceExit, 0,
+      '本段修复层一条都不补');
   const dress = foldAlpha(wire, 'persicaria_dress_avg');
   assert.equal(dress.get('16'), 1, '键 16 帕斯卡开口时在场');
-  assert.equal(dress.get('21'), 1, '揭示延续到她的后续台词镜');
+  assert.equal(dress.get('21'), 1, '在场延续到她的后续台词镜');
   /* 同剧本另备一件 dress2（1011），到键 95 才换装登场：从未点亮过的立绘不算
-     替身。游戏契约下「注册即建 lane」（InitAvgHeroPicParam 当场写 color.a），
-     所以这里判的是**不可见**而不是「没有 lane」——两种写法都能挡住替身，但只有
-     前者与 state.js 的真实折叠一致。 */
+     替身。游戏契约下「注册即建 lane」，所以判**不可见**而不是「没有 lane」。 */
   const dress2 = foldAlpha(wire, 'persicaria_dress2_avg');
-  assert.ok(!dress2.get('16'), '未登场的 dress2 不被提前立上台（注册也只到 α=0）');
+  assert.ok(!dress2.get('16'), '未登场的 dress2 不被提前立上台');
   assert.equal(dress2.get('96'), 1, 'dress2 的登场仍完全由原数据驱动');
-  /* 70 → 个位数：旧口径把「她已在台上、只是听别人时压暗」的每一镜都重记成
-     一次入场（并把她写进 ours），现在这类归复亮、且不重复注入。可观察结果由
-     上面四条折叠态断言钉。 */
-  assert.ok(stats.entranceLit >= 5, `全段入场揭示计数（${stats.entranceLit}）`);
-  /* 已知边界：词列第二格不同即判不同角色，mara_weapon 不认 mara_wrecked——
-     这里确实漏召回（说话的是玛拉、台上是残骸装）。但反过来按首词归类会把
-     burbank_npc1 / fool_mie / odile_b3 / helios_robotyellow 全当成同一个人，
-     幻影比隐身更难发现，这种缺口留给编辑器人工补。 */
+  /* 旧的「已知漏召回」不再复现：cpt02_e_07_01 键 90 说话的是玛拉，台上残骸装，
+     当年只看到 α0 条目；修 lvm 之后作者那条揭示（α1）回到原位。 */
   const mara = storyToWire(decode('cfg', 'cpt02_e_07_01'),
       decode('lang', 'cpt02_e_07_01'),
-      {imgIds: manifest.imgIds, heroSprites: manifest.heroSprites, pathOwner: manifest.pathOwner}).wire;
-  assert.deepEqual(mara['90'].imgTween.map((t) => t.alpha), [0],
-      'mara_weapon 不跨词根改宗到 mara_wrecked（已知漏召回）');
-  ok(`avgwire：说话者桥表的剧本内改宗（周年帕斯卡换装件，跨词根不认）`);
+      {heroSprites: manifest.heroSprites, pathOwner: manifest.pathOwner}).wire;
+  assert.deepEqual(mara['90'].imgTween.map((t) => t.alpha), [0, 1],
+      '跨词根改宗的漏召回已不复现（键 90 有揭示）');
+  ok('avgwire：说话者桥表的剧本内改宗（周年帕斯卡换装件）');
 }
 {
   /* 槽位类型门（M21）：低号 imgId 常是背景槽（10：138 段背景声明 /
-     仅 2 段立绘声明），把它们注入成立绘会凭空冒出幻影、真背景黑掉。
-     构建期按「背景票 ≥ 立绘票」滤除；纯立绘槽位（147/13）保留。 */
-  for (const id of ['1', '2', '3', '10', '20']) {
+     仅 2 段立绘声明），构建期按「背景票 ≥ 立绘票」滤除。
+     2026-09-03 重标：修 SETLIST 丢末条之后槽 20（arrow_avg）与 100
+     （oasis_01b_avg）的立绘票超过背景票、回到表内，旧十号清单不再成立。
+     另注：materializeDanglingCast 退役后这张表只供编辑器查槽位归属，
+     不再驱动运行时。 */
+  for (const id of ['1', '2', '3', '10']) {
     assert.ok(!(id in manifest.imgIds), `背景槽 ${id} 不入全局立绘表`);
   }
+  assert.equal(manifest.imgIds['20']?.[0], 'arrow_avg', '槽 20 按立绘票归表（重标）');
+  assert.equal(manifest.imgIds['100']?.[0], 'oasis_01b_avg', '槽 100 按立绘票归表（重标）');
   assert.equal(manifest.imgIds['147'][0], 'willow_avg', '纯立绘槽位保留（147 首选）');
   assert.equal(manifest.imgIds['13'][0], 'riko_avg', '立绘票占优的争议槽位保留（13 首选）');
   /* 槽位是序号不是身份：同一槽在全语料被不同剧本声明成不同立绘，表给的是
@@ -363,14 +342,16 @@ const decodeLua2 = (kind, id) => {
   assert.ok(manifest.imgIds['105'].includes('croque_kid_avg'), '候选集含同槽的另一身份（105）');
   const {wire, stats} = storyToWire(decode('cfg', '22white_choco'),
       decode('lang', '22white_choco'),
-      {imgIds: manifest.imgIds, heroSprites: manifest.heroSprites, pathOwner: manifest.pathOwner});
-  assert.ok(!Object.values(wire).some((s) =>
-      (s.images ?? []).some((im) => im.imgId === 10)),
-      '背景槽 10 不被注入为立绘（22white_choco）');
-  assert.ok(!stats.danglingCast.some((c) => c.imgId === 10), 'stats 无 10 的注入留痕');
+      {heroSprites: manifest.heroSprites, pathOwner: manifest.pathOwner});
+  /* 修 SETLIST 之前这段的 images 少一条，槽 10 看起来「只 tween 没声明」；
+     现在作者声明回到原位：imgId 10 = pola/p_choco、imgType 2（背景件）。
+     判据因此从「不被注入成立绘」升级成「只按作者声明的形态存在」。 */
+  const ten = Object.values(wire).flatMap((x) => (x.images ?? [])
+      .filter((im) => im?.imgId === 10).map((im) => `${im.imgType}:${im.imgPath}`));
+  assert.deepEqual([...new Set(ten)], ['2:pola/p_choco'], '槽 10 只有作者声明的背景件');
   assert.ok(wire['9'].imgTween.some((t) => t.imgId === 10 && t.alpha === 1),
-      '原 tween 原样保留（未注册跳过，参考语义）');
-  ok(`avgwire：槽位类型门（22white_choco 背景槽 10 不注入）`);
+      '原 tween 原样保留');
+  ok('avgwire：背景槽 10 只按作者声明存在（22white_choco）');
 }
 {
   /* 用户报（2026-09-01）：22child_02 许多键没有立绘。本段 images[] 只声明了
@@ -382,10 +363,10 @@ const decodeLua2 = (kind, id) => {
   assert.equal(manifest.pathOwner['croque_kid_avg'], '114', '揭示跳变票把小克罗琦判给 114');
   assert.notEqual(manifest.pathOwner['croque_avg'], '114', '成人克罗琦不是 114（认错人比隐身更糟）');
   const {wire} = storyToWire(decode('cfg', '22child_02'), decode('lang', '22child_02'),
-      {imgIds: manifest.imgIds, heroSprites: manifest.heroSprites, pathOwner: manifest.pathOwner});
+      {heroSprites: manifest.heroSprites, pathOwner: manifest.pathOwner});
   const reg = Object.values(wire).flatMap((s) => (s.images ?? [])
       .filter((im) => im?.imgId === 105).map((im) => im.imgPath));
-  assert.deepEqual([...new Set(reg)], ['croque_kid_avg'], '悬空槽 105 就地认成小克罗琦');
+  assert.deepEqual([...new Set(reg)], ['croque_kid_avg'], '作者声明的就是小克罗琦（不需要仲裁）');
   const seen = foldAlpha(wire, 'croque_kid_avg');   // foldAlpha 只走重放链可达镜
   const speaking = replayChain(wire)
       .filter((k) => wire[k]?.speakerHeroId === 114);
@@ -460,7 +441,9 @@ const decodeLua2 = (kind, id) => {
       throw new Error(`${story.id} 顶层空表`);
     }
   }
-  assert.equal(resolved, 121016, '解引用命中总数');
+  /* 121016 → 121722：修 SETLIST 丢数组末条之后多出的 706 处解引用。
+     unresolved/byField/shifted 三项一字未变——补回来的都是原本就在的数据。 */
+  assert.equal(resolved, 121722, '解引用命中总数');
   assert.equal(unresolved, 128, '未命中（跨剧本引用/缺词条，保数字可见）');
   assert.equal(byField.content, 125);
   assert.equal(byField.speakerName, 2);

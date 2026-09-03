@@ -12,7 +12,8 @@ import {join, resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
 import {emptyFold, foldShot, applyGameTween, applyGameImages, CHAR, visible}
     from '../js/test/gamefold.js';
-import {emptyState, applyImages, applyShotTweens} from '../js/core/state.js';
+import {emptyState, applyImages, applyShotTweens, laneZOrder} from '../js/core/state.js';
+import {slotMirrorSign, shakeKeyframes} from '../js/engine/sprite.js';
 import {parseChunk} from '../js/core/lundump.js';
 import {execChunk, makeStdEnv, LuaTable} from '../js/core/lvm.js';
 
@@ -87,6 +88,86 @@ const L = (x) => ({lanes: new Map([[7, {alpha: 1, isDark: false, posId: null, po
   const g = applyGameImages(L(), [{imgId: 7, delete: true}], () => null);
   assert.equal(g.lanes.size, 0, 'delete 是零补间硬回收');
   ok('images[]：delete 先执行、注册后执行');
+}
+
+/* —— A7：槽位镜像（实机定案 2026-09-02：净镜像 = sign(HeroItem.localScale.x)） —— */
+{
+  const LAY = join(ROOT, 'data', 'layouts');
+  const read = (n) => JSON.parse(readFileSync(join(LAY, n + '.json'), 'utf8'));
+  assert.equal(slotMirrorSign(read('simo_avg'), 3), -1, 'simo 中槽镜像（槽位模式与全员相反）');
+  assert.equal(slotMirrorSign(read('simo_avg'), 4), 1, 'simo 外侧槽不镜像');
+  assert.equal(slotMirrorSign(read('anna_avg'), 4), -1, 'anna 右外槽镜像');
+  assert.equal(slotMirrorSign(read('croque_spring_avg'), 3), 1,
+      '负 m_LocalScale 按皮肤不按角色：croque 春天皮肤不镜像');
+  assert.equal(slotMirrorSign(read('chelsea_avg'), 3), 1,
+      'chelsea 不镜像（实机 rootEuler=0，语料 rot 字段未被 transform 消费）');
+  const kinds = new Set();
+  for (const f of readdirSync(LAY)) {
+    const c = JSON.parse(readFileSync(join(LAY, f), 'utf8'));
+    for (let i = 1; i <= 5; i++) if (c['AvgHero' + i]?.scale) kinds.add(c['AvgHero' + i].scale[0]);
+  }
+  assert.deepEqual([...kinds].sort(), [-1, 1], '槽位 scale[0] 只取 ±1 ⇒ 它是镜像开关不是缩放');
+  /* 行内 transform 会整条覆盖 .posN 的 transform ⇒ scale 条目必须把符号乘回 X，
+     否则镜像槽一遇缩放条目就翻正。 */
+  assert.ok(slotMirrorSign(read('simo_avg'), 3) * 1.4 < 0, '镜像槽 × 正缩放条目 ⇒ 仍镜像');
+  ok('槽位镜像：符号只来自 AvgHeroN.scale[0]，scale 条目相乘不翻正');
+}
+
+/* —— A8：抖动（条目级 shake 与镜级 contentShake 两套通道） —— */
+{
+  const ampOf = (frames) => Math.max(...frames.map((f) => Math.abs(
+      parseFloat(f.transform.match(/translate\((-?[\d.]+)em/)[1]))));
+  const one = shakeKeyframes(1);
+  assert.equal(one.length, 22, 'si 缺省 ⇒ 20 次振荡 + 衰减末帧 + 回零');
+  assert.ok(ampOf(one) <= 10 / 32 + 1e-9, `振幅不超 Vector3(10,10,0)/32 em（${ampOf(one)}）`);
+  assert.equal(one.at(-1).transform, 'translate(0em, 0em)', '末帧回零 ⇒ 不留落定态残影');
+  assert.equal(shakeKeyframes(1, 3).length, 62, '实测最大 si=3 ⇒ 20·3=60 次振荡');
+  assert.equal(JSON.stringify(shakeKeyframes(42, 3)), JSON.stringify(shakeKeyframes(42, 3)),
+      '同种子重放逐字节一致（夹具对拍要求）');
+  assert.notEqual(JSON.stringify(shakeKeyframes(42, 3)), JSON.stringify(shakeKeyframes(43, 3)),
+      '不同种子曲线不同');
+  ok('抖动：振幅/振荡次数照抄 DOShakePosition，末帧回零且可复现');
+}
+
+/* —— A9：立绘层 z 序（SYS f25 L587 ChangeAvgImgOrder + f28 升序 SetAsLastSibling） —— */
+{
+  const st = emptyState();
+  /* 1year_prologue 的真实形状：104 带 order=6，其余缺省 0。 */
+  applyImages(st, [{imgId: 154, imgType: CHAR, alpha: 1}, {imgId: 104, imgType: CHAR, order: 6},
+      {imgId: 160, imgType: CHAR, alpha: 1}]);
+  for (const id of [154, 104, 160]) {
+    applyShotTweens(st, {imgTween: [{imgId: id, alpha: 1, duration: 0}]});
+  }
+  assert.deepEqual(laneZOrder(st), [154, 160, 104],
+      'order 升序 ⇒ 104(order=6) 最后、面上面；同 order 保持建立序');
+  applyImages(st, [{imgId: 160, delete: true}]);
+  assert.deepEqual(laneZOrder(st), [154, 104], '回收后 z 序重排');
+  applyImages(st, [{imgId: 164, imgType: CHAR, order: -2}]);
+  applyShotTweens(st, {imgTween: [{imgId: 164, alpha: 1, duration: 0}]});
+  assert.equal(laneZOrder(st)[0], 164, '负 order 压在整层最下');
+  ok('z 序：order 升序 + 缺省 0 + 同值稳定 + 回收重排');
+}
+
+/* —— A10：rot 的两个门（HP L116-121 无条件写 / TU L53-56 独立 if） —— */
+{
+  const slot = (id, posId) => ({pos: [-345, -450], scale: [1, 1], alpha: 1});
+  const a = applyGameImages(emptyFold(),
+      [{imgId: 7, imgType: CHAR, rot: [0, 180, 0]}], slot);
+  assert.deepEqual(a.lanes.get(7).rot, [0, 180, 0], '注册带 rot ⇒ 写 localEulerAngles');
+  const b = applyGameImages(a, [{imgId: 7, imgType: CHAR}], slot);
+  assert.equal(b.lanes.get(7).rot, null, '注册不带 rot ⇒ 归零，不继承上一镜');
+
+  const c = emptyFold();
+  c.lanes.set(7, {alpha: 1, isDark: false, posId: null, pos: null, scale: null, rot: null});
+  c.imgType.set(7, CHAR);
+  applyGameTween(c, [{imgId: 7, posId: 3, rot: [0, 90, 0]}], slot);
+  assert.deepEqual(c.lanes.get(7).rot, [0, 90, 0], 'TU L53-56 是独立 if ⇒ posId 挡不住 rot');
+  assert.deepEqual(c.lanes.get(7).pos, [-345, -450],
+      '同一条件下 pos 被槽位吞掉 ⇒ rot 与 pos 的门确实不同');
+  applyGameTween(c, [{imgId: 7, posId: 3}], slot);
+  assert.deepEqual(c.lanes.get(7).rot, [0, 90, 0],
+      '不带 rot 的 posId 回槽不清 rot ⇒ 与 state.js:152 的已知分歧，勿照抄');
+  ok('rot：注册侧无条件写 + 补间侧独立 if 不受 posId 门控');
 }
 
 /* —— B：字节码锚点（_logic 不入库，缺件跳过） —— */
