@@ -1,17 +1,15 @@
 /* storylib.js —— M14 剧本库：1878 段 AvgCfg 的浏览/搜索/装载。
  *
  * 数据面（Node 可测）：
- * - storyLabels/filterStories/storyGroups：分组名优先取档案归属（活动名、有名的
- *   主线扇区名），档案挂不上名的（无扇区主线、未归档）退回 ID 首段（groupOf）；
- *   子串搜索按 ID；
- * - archiveRows：把 data/index/story-archive.json（游戏「行动记录」的现成分类
- *   还原件，生成见 tools/build-story-archive.mjs）摊平成浏览行；
+ * - groupOf/filterStories/storyGroups：无档案时分组名退回 ID 首段，子串搜索按 ID；
+ * - archiveTree：把 data/index/story-archive.json（游戏「行动记录」的现成分类
+ *   还原件，生成见 tools/build-story-archive.mjs）立成三层剧情树——
+ *   分类（大型/常规/专属 + 主线 + 未归档）→ 年份/扇区/ID 首段 → 活动 → 剧情段；
  * - loadStory：fetch 字节码 → lundump/lvm 解码 → avgwire 映射，返回
  *   {wire, stats}——与 selftest-avg.html / tools/test-avg-e2e.mjs 同一条链。
- * UI 面：openStoryPicker 复用素材选择器的模态骨架（列表式，无缩略图），
- * 行 = ID + 镜数 + 简介（stripMarkup 截断），点行回 {id} 由宿主装载。
- * 两种视图：全部 = 按 ID 平铺（分组下拉＝档案归属名，档案无名者退回 ID 首段）；
- * 行动记录 = 档案分类分段。
+ * UI 面：openStoryPicker 复用素材选择器的模态骨架。有档案时默认剧情树视图
+ * （左轨 = 分类 + 年份，右栏 = 活动 → 剧情，照游戏「行动记录」的层级），
+ * 搜索框一有输入就切回按 ID 的平铺结果；无档案时保持旧的平铺 + 分组下拉。
  */
 
 import {h, clear} from '../ui/dom.js';
@@ -25,66 +23,73 @@ export const PAGE = 120;
 /* 剧情组兜底名 = ID 首段：cpt00_e_01_01 → cpt00，23spring_hb_x → 23spring。 */
 export const groupOf = (id) => String(id).split('_')[0];
 
-/* 档案 → 段 ID 的分组名：活动名优先，其次有名的主线扇区名，其余（无扇区主线、
-   未归档那一大坨）退回 ID 首段——挂不上档的段并成一组没有筛选价值。
-   与 archiveRows 同一条归属规则：同一段只认第一次出现的分区。 */
-export function storyLabels(archive) {
-  if (!archive) return null;
-  const labels = new Map();
-  const claim = (id, label) => { if (!labels.has(id)) labels.set(id, label); };
-  for (const c of archive.classes) {
-    for (const a of c.activities) {
-      for (const s of a.stories) claim(s.id, a.name ?? `活动${a.id}`);
-    }
-  }
-  for (const m of archive.mainline) {
-    if (m.name) for (const s of m.stories) claim(s.id, m.name);
-  }
-  return labels;
-}
-
-const labelOf = (labels, id) => (labels && labels.get(id)) || groupOf(id);
-
-export function filterStories(stories, {query = '', group = null, labels = null} = {}) {
+export function filterStories(stories, {query = '', group = null} = {}) {
   const q = query.toLowerCase();
   return stories.filter((s) =>
-      (!group || labelOf(labels, s.id) === group)
+      (!group || groupOf(s.id) === group)
       && (!q || s.id.toLowerCase().includes(q)));
 }
 
-export function storyGroups(manifest, labels = null) {
+export function storyGroups(manifest) {
   const counts = new Map();
   for (const s of manifest.stories) {
-    const g = labelOf(labels, s.id);
+    const g = groupOf(s.id);
     counts.set(g, (counts.get(g) ?? 0) + 1);
   }
   return [...counts].map(([label, count]) => ({label, count}))
       .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
 }
 
-/* 档案 → 浏览行。归属由档案定，镜数只有 manifest 有（生成侧已保证档案只指向语料
-   里有的段）。同一段只归第一次出现的分区：复刻活动与原作共用段时归原作。 */
-export function archiveRows(archive, manifest) {
+/* 档案 → 三层剧情树。顶层 = 三大分类（档案 classes 顺序）+ 主线 + 未归档；
+ * 中层组 = 年份（分类）/ 扇区（主线）/ ID 首段（未归档）；叶子 = 剧情段
+ * （镜数从 manifest 补，档案只管归属）。主线扇区与未归档首段没有真「活动」层，
+ * 各包一个同名虚拟活动，UI 对单活动组直通到剧情。
+ * 年份降序、年份未定的活动垫底；未归档按组大小排（dorm 一大坨排最前）。 */
+export function archiveTree(archive, manifest) {
   const steps = new Map(manifest.stories.map((s) => [s.id, s.steps]));
-  const listed = new Set();
-  const rows = [];
-  const emit = (section, stories) => {
-    let headered = false;
-    for (const s of stories) {
-      if (listed.has(s.id)) continue;
-      listed.add(s.id);
-      if (!headered) { rows.push({section}); headered = true; }
-      rows.push({id: s.id, steps: steps.get(s.id), brief: s.brief ?? s.name});
-    }
+  const storyOf = (s) => ({id: s.id, steps: steps.get(s.id), brief: s.brief ?? s.name});
+  const push = (map, key, val) => {
+    const list = map.get(key) ?? [];
+    list.push(val);
+    map.set(key, list);
   };
-  for (const c of archive.classes) {
+
+  const nodes = archive.classes.map((c) => {
+    const byYear = new Map();
     for (const a of c.activities) {
-      emit(`${c.name}｜${a.name ?? a.id}${a.year ? ` · ${a.year}` : ''}`, a.stories);
+      push(byYear, a.year != null ? String(a.year) : '年份未定',
+          {id: a.id, name: a.name ?? `活动${a.id}`,
+           rewards: a.rewards ?? [], storyTotal: a.storyTotal ?? null,
+           stories: a.stories.map(storyOf)});
     }
-  }
-  for (const m of archive.mainline) emit(`主线｜${m.name ?? m.sectorId}`, m.stories);
-  emit('未归档', archive.unarchived.map((id) => ({id})));
-  return rows;
+    const labels = [...byYear.keys()].sort((x, y) =>
+        x === '年份未定' ? 1 : y === '年份未定' ? -1 : Number(y) - Number(x));
+    return {
+      name: c.name,
+      kind: 'class',
+      groups: labels.map((label) => ({label, activities: byYear.get(label)})),
+    };
+  });
+
+  nodes.push({
+    name: '主线',
+    kind: 'bin',
+    groups: archive.mainline.map((m) => {
+      const label = m.name ?? (m.sectorId != null ? `扇区 ${m.sectorId}` : '未分扇区');
+      return {label, activities: [{name: label, stories: m.stories.map(storyOf)}]};
+    }),
+  });
+
+  const byPrefix = new Map();
+  for (const id of archive.unarchived) push(byPrefix, groupOf(id), {id, steps: steps.get(id)});
+  nodes.push({
+    name: '未归档',
+    kind: 'bin',
+    groups: [...byPrefix.entries()]
+        .sort((x, y) => y[1].length - x[1].length || x[0].localeCompare(y[0]))
+        .map(([label, stories]) => ({label, activities: [{name: label, stories}]})),
+  });
+  return nodes;
 }
 
 /* 解码 + 映射一条龙；meta = avg-scripts.json 的条目 {id, cfg, lang}。
@@ -106,46 +111,92 @@ export async function loadStory(fetchImpl, meta, {heroSprites, pathOwner} = {}) 
 }
 
 export function openStoryPicker(manifest, {title = '剧本库', archive = null, onPick} = {}) {
-  const labels = storyLabels(archive);
   const overlay = h('div.picker-overlay');
   const box = h('div.picker-box.picker-story-box');
   const search = h('input', {
     className: 'picker-search', placeholder: '搜索剧情 ID…',
   });
+  const rail = h('div.picker-tree-rail');
+  const main = h('div.picker-tree-main');
+  const tree = archive ? archiveTree(archive, manifest) : null;
+  const treeEl = tree ? h('div.picker-tree', rail, main) : null;
   const groupSel = h('select');
   const list = h('div.picker-grid.picker-story-list');
   const bar = h('div.picker-bar');
   let query = '';
-  let group = null;
-  let mode = 'all';                 /* all=按 ID 平铺 | archive=行动记录分类 */
+  let pickGroup = null;              /* 平铺视图的 ID 首段筛选（仅无档案下拉） */
   let offset = 0;
   let items = [];
+  let cat = 0;                       /* 树游标：顶层分类 */
+  let group = 0;                     /* 中层组（年份/扇区/首段） */
+  let act = null;                    /* 活动下钻序号；null = 活动列表层 */
 
   const row = (it) => h('button.picker-cell.picker-story', {onclick: () => onPick({id: it.id})},
       h('span.picker-id', {text: it.id}),
       h('span.picker-steps', {text: it.steps != null ? `${it.steps} 镜` : ''}),
       h('span.picker-brief', {text: it.brief ? stripMarkup(it.brief) : ''}));
 
-  /* 分区标题只在它下面还有行时留（分区内行连续，看下一格即可）。 */
-  const dropEmptySections = (rows) => {
-    const q = query.toLowerCase();
-    const kept = rows.filter((r) => r.section || !q || r.id.toLowerCase().includes(q));
-    return kept.filter((r, i) => !r.section || (kept[i + 1] && !kept[i + 1].section));
-  };
+  /* —— 剧情树视图：左轨 = 分类 + 选中分类的年份组，右栏 = 活动 → 剧情 —— */
+  const groupCount = (g) => g.activities.reduce((n, a) => n + a.stories.length, 0);
 
+  function renderMain() {
+    clear(main);
+    const node = tree[cat];
+    const g = node.groups[group];
+    /* 主线/未归档的组只有一个同名虚拟活动壳：直通剧情，不渲染多余的卡片层。 */
+    const direct = node.kind === 'bin' && g.activities.length === 1;
+    if (act == null && !direct) {
+      main.append(h('div.picker-crumb', {text: `${node.name} · ${g.label} · ${groupCount(g)} 段`}));
+      g.activities.forEach((a, i) => main.append(h('button.picker-act',
+          {onclick: () => { act = i; renderMain(); }},
+          h('b', {text: a.name}),
+          /* 剧情 x/y：y（storyTotal）只在档案数出的配置段多于语料可装载段时出现 */
+          h('span.picker-act-n', {text: a.storyTotal != null
+              ? `剧情 ${a.stories.length}/${a.storyTotal}`
+              : `${a.stories.length} 段`}),
+          a.rewards ? h('span.picker-act-reward',
+              {text: `活动奖励 ${a.rewards.length}`, title: a.rewards.join(', ')}) : null,
+          h('span.picker-act-view', {text: '查看 ▶'}))));
+    } else {
+      const a = g.activities[direct ? 0 : act];
+      if (!direct) {
+        main.append(h('button.picker-back',
+            {text: '‹ 返回活动列表', onclick: () => { act = null; renderMain(); }}));
+      }
+      main.append(h('div.picker-crumb',
+          {text: direct ? `${node.name} · ${g.label}` : `${node.name} · ${g.label} · ${a.name}`}));
+      if (a.stories.length) for (const s of a.stories) main.append(row(s));
+      else main.append(h('div.muted.picker-empty', {text: '该活动在语料里没有可装载的剧情段'}));
+    }
+    main.scrollTop = 0;
+  }
+
+  function renderRail() {
+    clear(rail);
+    tree.forEach((node, i) => rail.append(h(
+        `button.picker-tree-cat${i === cat ? '.selected' : ''}`,
+        {onclick: () => { cat = i; group = 0; act = null; renderRail(); renderMain(); }},
+        h('span', {text: node.name}),
+        h('span.picker-tree-n',
+            {text: String(node.groups.reduce((n, g) => n + groupCount(g), 0))}))));
+    const cur = tree[cat];
+    rail.append(h('div.picker-tree-sub'));
+    cur.groups.forEach((g, i) => rail.append(h(
+        `button.picker-tree-year${i === group ? '.selected' : ''}`,
+        {onclick: () => { group = i; act = null; renderRail(); renderMain(); }},
+        h('span', {text: g.label}),
+        h('span.picker-tree-n', {text: String(groupCount(g))}))));
+  }
+
+  /* —— 平铺视图：搜索结果（或有档案前的旧路径），分页 —— */
   function refill(reset = true) {
     if (reset) { offset = 0; clear(list); }
-    items = mode === 'archive' && archive
-        ? dropEmptySections(archiveRows(archive, manifest))
-        : filterStories(manifest.stories, {query, group, labels});
+    items = filterStories(manifest.stories, {query, group: pickGroup});
     if (!items.length) {
       list.append(h('div.muted', {text: '没有匹配的剧本'}));
       return;
     }
-    for (const it of items.slice(offset, offset + PAGE)) {
-      if (it.section) list.append(h('div.picker-group', {text: it.section}));
-      else list.append(row(it));
-    }
+    for (const it of items.slice(offset, offset + PAGE)) list.append(row(it));
     offset += PAGE;
     if (offset < items.length) {
       list.append(h('button.picker-more',
@@ -153,31 +204,30 @@ export function openStoryPicker(manifest, {title = '剧本库', archive = null, 
     }
   }
 
-  search.addEventListener('input', () => { query = search.value.trim(); refill(); });
-  groupSel.append(h('option', {value: '', text: '全部分组'}),
-      ...storyGroups(manifest, labels).map(({label, count}) =>
-          h('option', {value: label, text: `${label}（${count}）`})));
-  groupSel.addEventListener('change', () => { group = groupSel.value || null; refill(); });
+  const syncView = () => {
+    const browsing = tree !== null && !query;
+    treeEl.style.display = browsing ? '' : 'none';
+    list.style.display = browsing ? 'none' : '';
+    if (browsing) { renderRail(); renderMain(); } else refill();
+  };
 
-  const modeBtn = archive
-      ? h('button.tiny', {text: '行动记录', onclick: () => {
-          mode = mode === 'all' ? 'archive' : 'all';
-          modeBtn.textContent = mode === 'all' ? '行动记录' : '全部';
-          groupSel.style.display = mode === 'all' ? '' : 'none';
-          refill();
-        }})
-      : null;
+  search.addEventListener('input', () => { query = search.value.trim(); syncView(); });
+  groupSel.append(h('option', {value: '', text: '全部分组'}),
+      ...storyGroups(manifest).map(({label, count}) =>
+          h('option', {value: label, text: `${label}（${count}）`})));
+  groupSel.addEventListener('change', () => { pickGroup = groupSel.value || null; refill(); });
 
   bar.append(
-      h('b', {text: title}), modeBtn, groupSel,
+      h('b', {text: title}),
+      ...(tree ? [] : [groupSel]),
       h('span.spacer'),
       h('span.muted', {text: `${manifest.stories.length} 段 · 数据源 res/Assets/Res/LuaScripts`}),
       h('button.tiny', {text: '关闭', onclick: () => overlay.remove()}));
-  box.append(bar, search, list);
+  box.append(bar, search, ...(tree ? [treeEl] : []), list);
   overlay.append(box);
   overlay.addEventListener('click', (e) => { if (e.target === overlay) overlay.remove(); });
   document.body.append(overlay);
   search.focus();
-  refill();
+  syncView();
   return overlay;
 }

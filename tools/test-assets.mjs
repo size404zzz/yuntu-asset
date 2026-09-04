@@ -57,12 +57,18 @@ const {code} = await browserTest({
     /* M23 退场建议：按钮接线 + 面板可开（行数随映射结果浮动，不硬断）。 */
     if (smoke.fadeAdvice?.error) bad.push(`退场建议：${smoke.fadeAdvice.error}`);
     if (!smoke.fadeAdvice?.opened) bad.push('退场建议面板没开');
+    /* 录制面板：模态能开 + 设置行在（无头环境不真采集）。 */
+    if (smoke.recorder?.error) bad.push(`录制面板：${smoke.recorder.error}`);
+    if (!smoke.recorder?.opened) bad.push('录制面板没开');
+    if ((smoke.recorder?.rows ?? 0) < 6) bad.push(`录制设置行=${smoke.recorder?.rows}`);
+    if (!smoke.recorder?.cap) bad.push('录制能力探测行缺席');
     if (bad.length) {
       report.ok = false;
       (report.failures ??= []).push('编辑器冒烟：' + bad.join(' | '));
     } else {
       console.log(`  编辑器冒烟：${smoke.storage} · 剧本库 ${smoke.storylib.id}`
-          + ` ${smoke.storylib.shots} 镜 · log 收起 · 退场建议面板 ✓`);
+          + ` ${smoke.storylib.shots} 镜 · log 收起 · 退场建议面板 ✓`
+          + ` · 录制面板 ✓`);
     }
   },
 });

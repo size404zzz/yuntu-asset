@@ -46,9 +46,11 @@ body {
   overflow: hidden;
 }
 
-.col-a { background: var(--panel); border-right: 1px solid var(--line); width: 280px; }
-.col-b { background: var(--panel-2); border-right: 1px solid var(--line); width: 420px; }
-.col-c { flex: 1; }
+/* 三栏等比固定：以 1920px 设计稿为基准（280 / 420 / 1220），
+   按百分比等比缩放，任意窗口宽度下保持 1920px 时的比例。 */
+.col-a { background: var(--panel); border-right: 1px solid var(--line); flex: 0 0 calc(280 / 1920 * 100%); }
+.col-b { background: var(--panel-2); border-right: 1px solid var(--line); flex: 0 0 calc(420 / 1920 * 100%); }
+.col-c { flex: 1 1 0; }
 
 .col > header {
   border-bottom: 1px solid var(--line);
@@ -137,7 +139,9 @@ textarea { width: 100%; min-height: 64px; resize: vertical; }
   font-family: Consolas, monospace; }
 
 /* —— M14 剧本库：列表式选择器 —— */
-.picker-story-box { width: min(760px, 92vw); }
+.picker-story-box { width: min(980px, 94vw); }
+/* 搜索框是 .picker-box（纵向 flex）的直接子元素：放宽 basis，别让 260px 变成高度。 */
+.picker-story-box .picker-search { flex: 0 0 auto; width: 100%; }
 /* 分组下拉里会出现整句活动名：给宽度上限并让窄窗口下工具条换行，避免横向溢出。 */
 .picker-story-box .picker-bar { flex-wrap: wrap; }
 .picker-story-box select { flex: 0 1 auto; max-width: 260px; }
@@ -153,6 +157,33 @@ textarea { width: 100%; min-height: 64px; resize: vertical; }
   word-break: normal !important; }
 .picker-group { font-size: 11px; font-weight: 600; color: var(--fg-dim);
   padding: 6px 8px 2px; border-bottom: 1px solid #ffffff14; }
+
+/* —— 剧情树：分类 → 年份 → 活动 → 剧情（照游戏「行动记录」的层级） —— */
+.picker-tree { display: flex; gap: 10px; height: min(62vh, 620px); min-height: 320px; }
+.picker-tree-rail { display: flex; flex: 0 0 168px; flex-direction: column; gap: 2px;
+  overflow-y: auto; }
+.picker-tree-cat, .picker-tree-year { align-items: baseline; border-left: 3px solid transparent;
+  display: flex; gap: 6px; justify-content: space-between; padding: 5px 8px;
+  text-align: left; }
+.picker-tree-cat.selected, .picker-tree-year.selected {
+  background: #2b4257; border-left-color: var(--accent); }
+.picker-tree-n { color: var(--fg-dim); font: 10px Consolas, monospace; }
+.picker-tree-sub { border-top: 1px solid #ffffff22; margin: 6px 0; }
+.picker-tree-main { display: flex; flex: 1; flex-direction: column; gap: 2px;
+  min-width: 0; overflow-y: auto; }
+.picker-crumb { color: var(--fg-dim); font-size: 11px; padding: 2px 4px 6px; }
+.picker-act { align-items: baseline; background: #ffffff08; border: 1px solid #ffffff1a;
+  display: flex; gap: 10px; padding: 8px 10px; text-align: left; }
+.picker-act:hover { background: #ffffff18; }
+.picker-act b { font-size: 13px; }
+.picker-act-n { color: var(--fg-dim); font-size: 11px; }
+/* 活动奖励条：照游戏「行动记录」卡片的那行箱子计数（分母 = 手册 reward_list） */
+.picker-act-reward { background: #ffffff10; border: 1px solid #ffffff1a;
+  color: var(--fg-dim); font-size: 10px; padding: 0 6px; white-space: nowrap; }
+.picker-act-view { color: var(--accent); font-size: 11px; margin-left: auto;
+  white-space: nowrap; }
+.picker-back { align-self: flex-start; font-size: 11px; }
+.picker-empty { padding: 20px; }
 
 /* —— M8 立绘标定 —— */
 .cal-page { margin: 0; background: #14181d; color: #ddd; font: 14px/1.5 system-ui, sans-serif; }
@@ -218,3 +249,56 @@ textarea.bad { outline: 2px solid var(--err, #e55); }
 .advice-row.distant .advice-tier { color: var(--accent); }
 .advice-row.far .advice-tier { color: var(--warn); }
 .advice-row.silent .advice-tier { color: var(--err); }
+
+/* —— 录制剧情视频（js/editor/recorder.js）—— */
+.recorder-box { width: min(620px, 92vw); }
+.recorder-body { display: flex; flex-direction: column; gap: 8px; overflow: auto; }
+.recorder-row { display: flex; align-items: center; gap: 8px; }
+.recorder-row > label:first-child { width: 80px; flex: none; color: var(--fg-dim); }
+.recorder-row .spacer { flex: 1; }
+.recorder-row input[type=range] { flex: 1; }
+.recorder-select { flex: 0 1 240px; }
+.recorder-inline { font: 11px Consolas, monospace; color: var(--fg-dim); min-width: 64px; }
+.recorder-tip { color: var(--fg-dim); font-size: 12px; line-height: 1.6; }
+.recorder-tip.bad { color: var(--err); }
+.recorder-cap { font-size: 12px; color: var(--accent); }
+.recorder-cap.bad { color: var(--err); }
+.recorder-progress { height: 10px; background: #ffffff10;
+  border: 1px solid #ffffff22; border-radius: 5px; overflow: hidden; }
+.recorder-progress-fill { height: 100%; background: var(--accent);
+  transition: width 0.3s; }
+.recorder-report { display: grid; grid-template-columns: 56px 1fr;
+  gap: 4px 10px; font-size: 12px; align-items: baseline; }
+.recorder-report b { color: var(--fg-dim); font-weight: 600; text-align: right; }
+/* 全屏录制宿主：采集的是整个视口，编辑器外壳不能入镜；z-index 压过弹层。 */
+.recorder-stage-host { position: fixed; inset: 0; background: #000;
+  display: flex; align-items: center; justify-content: center; z-index: 2000; }
+.recorder-card { position: fixed; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 14px; background: #000e;
+  color: #ddd; text-align: center; z-index: 2001; }
+.recorder-count { font-size: 72px; font-weight: 700; color: var(--accent);
+  font-variant-numeric: tabular-nums; }
+.recorder-card-info { font: 13px Consolas, monospace; color: var(--fg-dim); }
+.recorder-card .recorder-tip { max-width: 480px; }
+/* 采集帧率探针：opacity:0 而不是 display:none（后者会停掉渲染管线）。 */
+.recorder-probe { position: fixed; left: 0; bottom: 0; width: 2px; height: 2px;
+  opacity: 0; pointer-events: none; z-index: -1; }
+
+/* —— 全屏播放页（record.html / js/record.js）—— */
+.record-body { overflow: hidden; background: #000; }
+#stage-host { position: fixed; inset: 0; display: flex;
+  align-items: center; justify-content: center; }
+.record-toolbar { position: fixed; top: 12px; left: 50%;
+  transform: translateX(-50%); display: flex; align-items: center; gap: 8px;
+  padding: 6px 12px; background: #14151ae8; border: 1px solid #ffffff26;
+  border-radius: 999px; z-index: 1500; transition: opacity 0.25s; }
+.record-toolbar .spacer { flex: 0 0 10px; }
+.record-toolbar .rt-record { color: #ff8a80; border-color: #ff8a8066; }
+.record-toolbar b { font-size: 12px; max-width: 320px; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+body.record-idle .record-toolbar { opacity: 0; pointer-events: none; }
+/* 录制期间工具栏整体退场——页内任何常驻 UI 都会被录进视频 */
+body.record-active .record-toolbar { display: none; }
+.record-error { color: var(--err); font: 14px/1.8 system-ui, "Microsoft YaHei";
+  max-width: 640px; padding: 24px; white-space: pre-wrap;
+  background: #000c; border: 1px solid #ffffff22; border-radius: 8px; }

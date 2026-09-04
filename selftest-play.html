@@ -304,6 +304,21 @@ check('charaRules',
   skipped.push('无 wiki 基准件：已跳过逐镜对拍（P1 换 gamefold oracle）');
 }
 
+/* comm 持久性回归（scene4 专用，不依赖基准件）：101 注册时带 comm:true，
+   shot2 起是纯 tween 镜（isDark/走位/换脸）——通讯框是注册态属性，tween
+   链路不得摘除（游戏侧只有 InitAvgHeroPicParam/Delete 动它；语料 229 个
+   带 comm 剧本的 imgTween 条目 0 例携带 comm/ripple）。 */
+if (SCENE === 'scene4') {
+  const commTrack = [];
+  for (const snap of shots) {
+    const persicaria = snap.charas?.find((c) => c.imgId === '101');
+    if (persicaria) commTrack.push([snap.shot, !!persicaria.comm]);
+  }
+  check('scene4.commPersistence',
+      commTrack.length >= 2 && commTrack.every(([, has]) => has),
+      JSON.stringify(commTrack));
+}
+
 const report = {
   ok: failures.length === 0 && problems.length === 0 && pageErrors.length === 0,
   asserts,

@@ -1,7 +1,6 @@
 import {h} from './ui/dom.js';
 import {normalizeScript, isTerminal, branchTargets, serializeScript}
     from './core/script.js';
-import {AssetRegistry} from './core/assets.js';
 import {openDB} from './core/idb.js';
 import {
   exportProject, exportZip, importProject, saveProject, touchProjectIndex,
@@ -9,10 +8,9 @@ import {
 import {openPicker} from './editor/picker.js';
 import {openStoryPicker, loadStory} from './editor/storylib.js';
 import {openFadeAdvice} from './editor/advice.js';
+import {openRecorder, stageHostView} from './editor/recorder.js';
 import {Editor} from './editor/editor.js';
-import {Player} from './engine/player.js';
-import {AudioEngine, defaultAudioResolve} from './engine/audio.js';
-import {deriveLayout} from './engine/sprite.js';
+import {bootCorpusPlayer} from './host.js';
 
 const FIXTURES = [
   {id: 'scene2', title: '背水一战 · 对象 map 格式'},
@@ -22,101 +20,10 @@ const FIXTURES = [
 /* 默认剧本 = 序章：契约已换成游戏本体，直接吃语料（走剧本库同一条解码链）。 */
 const DEFAULT_STORY = 'cpt00_e_01_01';
 
-/* M8 素材库：仓库索引 + IndexedDB 上传的统一注册表（R13：无 res/ 退化）。 */
-const registry = await new AssetRegistry().boot();
-
-/* AVG 专用 prefab 的浏览器侧贴图索引。Unity ParticleSystem 本身不能由
-   浏览器直接实例化，索引把已确认的 sprite-sheet/时长交给 Player；没有
-   导出件的 prefab 仍走可识别的降级占位。 */
-let avgEffects = {};
-try {
-  avgEffects = await (await fetch('data/index/avg-effects.json')).json();
-} catch { /* 纯上传/精简部署包可没有特效索引 */ }
-
-const loadBitmap = (url) => new Promise((resolve, reject) => {
-  const img = new Image();
-  img.onload = () => resolve(img);
-  img.onerror = () => reject(new Error(`lpic 加载失败: ${url}`));
-  img.src = url;
-});
-
-const filePathOf = (name) => {
-  const hit = registry.resolve(name);
-  if (hit) return hit.url;
-  const lower = name.toLowerCase();
-  const lpic = /^lpic_(.+)\.png$/.exec(lower);
-  if (lpic) return `res/Assets/Res/Character/${lpic[1]}/lpic_${lpic[1]}.png`;
-  const face = /^icon_face_(.+)_(\d+)\.png$/.exec(lower);
-  if (face) {
-    return 'res/Assets/Res/Character/'
-        + `${face[1]}_avg/Face/${face[1]}_avg_face_${face[2]}.png`;
-  }
-  return '/images/' + name[0].toUpperCase() + name.slice(1);
-};
-
-/* 游戏的 MovieManager 用无扩展名的 vedioPath；本地资源库/用户上传件则
-   通常带扩展名。先按原名，再试常见容器，给 Player 一个可选的视频解析器。 */
-const videoPathOf = (path) => {
-  for (const name of [path, `${path}.mp4`, `${path}.webm`, `${path}.mov`]) {
-    const hit = registry.resolve(name);
-    if (hit) return hit.url;
-  }
-  return null;
-};
-
-const effectAssetOf = (prefab) => {
-  const entry = avgEffects[prefab];
-  return entry ? {...entry} : null;
-};
-
-const layoutOf = async (img) => {
-  const entry = registry.layoutEntry(img.imgPath);
-  if (entry?.source === 'calibrated') return entry.layout;
-  if (entry) return (await fetch(registry.layoutUrl(img.imgPath))).json();
-  const bmp = await loadBitmap(filePathOf(`Lpic_${img.imgPath}.png`));
-  return deriveLayout(bmp);
-};
-
-/* 预览 = 真引擎；M7 音频手势前静音、首次 pointerdown 解锁续播。
-   解析三级：上传件 > 仓库音频索引（sheet/cue）> 全局 cue 表（接住
-   bgm 的 sheet=cue 与省略 sheet 的脚本），最后退 data/audio 约定。
-   M15 CV：data/index/voices.json 把 {heroId, voiceId} 解到
-   VO_<代号>/<代号>_<语音名>（skin.lua 的 src_id_pic + audio_voice 表）。 */
-let voiceIndex = null;
-try {
-  voiceIndex = await (await fetch('data/index/voices.json')).json();
-} catch { /* 无语音映射：CV 静默跳过 */ }
-const audio = new AudioEngine({
-  resolve: (sheet, cue) =>
-      registry.resolveAudio(sheet, cue)?.url
-      ?? defaultAudioResolve(sheet, cue),
-  resolveVoice: voiceIndex ? ({heroId, voiceId}) => {
-    const hero = voiceIndex.byHero[String(heroId)];
-    const line = voiceIndex.byVoiceId[String(voiceId)];
-    if (!hero || !line) return null;
-    const sheet = `VO_${hero.codename}`;
-    const cue = `${hero.codename}_${line}`;
-    return registry.resolveAudio(sheet, cue)?.url
-        ?? `data/audio/${sheet}/${cue}.ogg`;
-  } : null,
-  log: (m) => console.warn('[audio]', m),
-});
-addEventListener('pointerdown', () => audio.unlock(), {once: true});
-
-const player = new Player({
-  mount: document.getElementById('preview'),
-  mode: 'clamp',
-  logClickCloses: true,     // M15：log 面板任意点击收起（参考默认常驻）
-  filePathOf,
-  videoPathOf,
-  effectAssetOf,
-  layoutOf,
-  getName: () => '教授',
-  getGender: () => 'TA',
-  characters: await (await fetch('data/Avg_character.json')).json(),
-  nouns: await (await fetch('data/Noun_des.json')).json(),
-  audio,
-});
+/* 注册表/音频/解析三件套 = 编辑器与全屏播放页同一条 boot 链（js/host.js）。 */
+const {registry, player, audio, avgEffects, characters, glossary} =
+    await bootCorpusPlayer(document.getElementById('preview'),
+        {logClickCloses: true});   // M15：log 面板任意点击收起（参考默认常驻）
 
 const fmtMB = (b) => `${(b / 1048576).toFixed(1)}MB`;
 (async () => {
@@ -152,12 +59,11 @@ document.getElementById('btn-assets').addEventListener('click', () => {
 });
 
 /* —— M9 编辑器 —— */
-const glossary = await (await fetch('data/Noun_des.json')).json();
 let currentId = DEFAULT_STORY;
 
 const editor = new Editor({
   player, registry,
-  characters: await (await fetch('data/Avg_character.json')).json(),
+  characters,
   dom: {
     shotList: document.getElementById('shot-list'),
     inspector: document.getElementById('inspector'),
@@ -241,6 +147,25 @@ document.body.append(importFile);
    落笔走 doc.patch('imgTween') → L2 timed seek，撤销栈可回退。 */
 document.getElementById('btn-fade').addEventListener('click',
     () => openFadeAdvice({editor}));
+
+/* —— 录制剧情视频：本页录制编辑稿（舞台出画到全屏宿主）；全屏播放页
+   （record.html）负责语料整段回看/录制的正规场景。getStory 在开录瞬间
+   取 doc 现值，录到的就是屏幕上这份稿子。 —— */
+document.getElementById('btn-record').addEventListener('click', () => {
+  openRecorder({
+    player,
+    storyId: () => currentId,
+    getStory: () => ({
+      story: editor.doc.story,
+      title: editor.meta?.title ?? editor.doc.story.title ?? '未命名',
+      sector: editor.meta?.sector ?? '',
+    }),
+    stopPreviewPlay: stopPlay,
+    ...stageHostView(player),
+    afterRestore: () => editor.select(editor.index),
+    fullscreenHref: () => `record.html?id=${encodeURIComponent(currentId)}`,
+  });
+});
 
 const state = {stories: new Map(), playing: false, playTimer: null};
 const tpPlay = document.getElementById('tp-play');
@@ -443,6 +368,21 @@ loadFixtures().then(async () => {
     fadeAdvice = {opened: false, error: e.message};
   }
   smoke.fadeAdvice = fadeAdvice;
+  /* 录制冒烟：模态能开、能力探测与设置行在（不真采集）。 */
+  let recorderSmoke = {opened: false};
+  try {
+    document.getElementById('btn-record').click();
+    const overlay = document.querySelector('.picker-overlay');
+    recorderSmoke = {
+      opened: !!overlay,
+      rows: overlay?.querySelectorAll('.recorder-row').length ?? 0,
+      cap: overlay?.querySelector('.recorder-cap')?.textContent ?? '',
+    };
+    overlay?.remove();
+  } catch (e) {
+    recorderSmoke = {opened: false, error: e.message};
+  }
+  smoke.recorder = recorderSmoke;
   await fetch('/freeze?scene=editor_smoke', {
     method: 'POST', headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(smoke, null, 1),

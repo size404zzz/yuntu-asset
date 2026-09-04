@@ -161,7 +161,10 @@ export function makeSnapshotter({player, timeline}) {
       },
       charas: [...refs.avgCharas.children].map((el) => {
         const style = getComputedStyle(el);
-        const comm = el.children[1] ? getComputedStyle(el.children[1]) : null;
+        /* 显式按类名取通讯框：注册还会挂 ripple span（.avg-chara-ripple），
+           按 children[1] 取会把它误报成 comm。 */
+        const commEl = el.querySelector('.avg-communication');
+        const comm = commEl ? getComputedStyle(commEl) : null;
         return {
           imgId: el.dataset.imgId,
           posId: el.dataset.posId ?? null,
