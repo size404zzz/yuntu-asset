@@ -90,6 +90,11 @@ export const STAGE_HEIGHT = 540;
 
 const VISUAL_TYPES = new Set([1, 4, 5]);
 
+/* 参考自动播放的两拍节拍（typeWriteScrambled/readLine 的 2s、起跳的 1s）。
+   抽成常量是为了 setRate 能按新速率重排已挂起的那一拍。 */
+const AUTO_START_DELAY = 1000;
+const AUTO_LINE_DELAY = 2000;
+
 /* 游戏 UIAVGSystem 的五层不是五套逻辑：它们都由 UINAvgImgItem 管理，
    只是在 Unity prefab 里挂到了不同 parent。这里动态补 parent，静态骨架仍
    保持和参考页逐元素一致（test-skeleton 依旧可以做 DOM 契约检查）。 */
@@ -1306,6 +1311,9 @@ export class Player {
     video.playsInline = true;
     video.preload = 'auto';
     video.loop = loop;
+    /* 媒体元素有自己的时钟，Scheduler 压不到它：不提 playbackRate 的话
+       倍速通读会在一整段 PV 上原地堵住（Chrome 实现上限 16×）。 */
+    video.playbackRate = Math.min(this.rate, 16);
     host.append(video);
     if (!src) {
       /* 缺件的视频面时长按 0 计，随镜结束即撤：否则 #20 这类 PV 缺件镜的
@@ -1560,7 +1568,8 @@ export class Player {
     /* 参考 readLine/typeWriteScrambled 的行尾：自动播放每 2s 续一帧。 */
     if (this.autoPlaying && !this.playEnd) {
       this.toAutoPlay = true;
-      this.autoPlayHandle = this.sched.after(2000, () => this._prepareAutoPlay());
+      this.autoPlayHandle = this.sched.after(AUTO_LINE_DELAY,
+          () => this._prepareAutoPlay());
     }
   }
 
@@ -1590,7 +1599,9 @@ export class Player {
       this.playEnd = true;
     }
     this.shotEnd = false;
-    this.audio?.shot(shot);
+    /* 倍速下每镜只剩几百毫秒，逐句起 CV/sfx 只会糊成杂音：只留 bgm。 */
+    if (this.rate > 1) this.audio?.bgmOnly(shot);
+    else this.audio?.shot(shot);
     if (!shot.contentType) {
       this.refs.avgDialog.className = '';
       this.refs.avgSpeaker.innerHTML = '';
@@ -1793,8 +1804,27 @@ export class Player {
       this.refs.avgControlAuto.className = 'on';
       if (this.shotEnd) {
         this.toAutoPlay = true;
-        this.autoPlayHandle = this.sched.after(1000, () => this._prepareAutoPlay());
+        this.autoPlayHandle = this.sched.after(AUTO_START_DELAY,
+            () => this._prepareAutoPlay());
       }
+    }
+  }
+
+  /* 预览倍速（净新增，参考无此行为）：唯一收口点是 Scheduler.rate，
+     打字 tick、串行门、自动节拍、type5 停留、runtime 帧一并压缩。
+     不吃这份钟的是 CSS 过渡与 WAAPI（真实文档时间线），所以 10× 下
+     演出会跑在画面前面——快速通读要的就是这个取舍。 */
+  get rate() {
+    return this.sched.rate;
+  }
+
+  setRate(rate) {
+    this.sched.rate = rate > 1 ? rate : 1;
+    /* 已挂起的那一拍按新速率重排，否则切换要等满旧时长才见效。 */
+    if (this.toAutoPlay) {
+      this.sched.clear(this.autoPlayHandle);
+      this.autoPlayHandle = this.sched.after(AUTO_LINE_DELAY,
+          () => this._prepareAutoPlay());
     }
   }
 
