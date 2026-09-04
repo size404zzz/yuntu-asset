@@ -4,9 +4,12 @@
    index.html / cal.html / 导出 bundle 的 play.html 都要引这个文件。 */
 
 /* 系统要求减少动效：播放器内所有过渡与动画直接归零。
-   剧情语义不依赖动画（打字机走 innerHTML 更新，不受影响）。 */
+   剧情语义不依赖动画（打字机走 innerHTML 更新，不受影响）。
+   特效子树是例外：它的可见性整条都挂在淡入淡出上（部件行内 opacity 恒为 1），
+   归零后既不播也不消失，会变成永久糊在画面上的不透明贴片。 */
 @media (prefers-reduced-motion: reduce) {
-  #avg-container, #avg-container * {
+  #avg-container,
+  #avg-container *:not(.avg-effect):not(.avg-effect-part):not(.avg-effect-sprite) {
     transition: none !important;
     animation: none !important;
   }
@@ -117,6 +120,11 @@
   animation: avg-snow 8s linear infinite;
   opacity: .58;
 }
+/* 雪是 parts 结构（两个粒子系统），只挂 .avg-effect-sprite 的选择器永不命中 ⇒ 雪完全静止。
+   部件的 translate(-50%,-50%) 是居中用的，关键帧必须带上，否则一播动画就跳开半个自身尺寸。 */
+.avg-effect-snow .avg-effect-part {
+  animation: avg-snow-part 8s linear infinite;
+}
 .avg-effect-ripple {
   animation: avg-ripple 1.2s ease-out infinite;
   border: 0.125em solid #bdefff99;
@@ -130,6 +138,12 @@
   animation: avg-dissolve 0.8s ease-out both;
   background: linear-gradient(135deg, #ffffff30, #8bd8ff00 55%);
   mix-blend-mode: screen;
+}
+/* 一次性特效（索引 loop:false）：Unity 里粒子寿命一到就全死、画面干净，
+   但我们一件只画一个 quad，没有这条包络就会一直糊在画面上（黄色冲击能赖到剧终）。
+   时长由播放器按该件的粒子寿命写成行内 animation-duration。 */
+.avg-effect-burst {
+  animation: avg-fx-burst 0.2s ease-out both;
 }
 .avg-effect-generic {
   color: #f5a623;
@@ -226,6 +240,15 @@
 @keyframes avg-snow {
   from { transform: translate3d(-2%, -10%, 0) scale(1.02); }
   to { transform: translate3d(2%, 10%, 0) scale(1.08); }
+}
+@keyframes avg-snow-part {
+  from { transform: translate(-50%, -50%) translate3d(-2%, -10%, 0) scale(1.02); }
+  to { transform: translate(-50%, -50%) translate3d(2%, 10%, 0) scale(1.08); }
+}
+@keyframes avg-fx-burst {
+  0% { opacity: 0; }
+  15% { opacity: 1; }
+  100% { opacity: 0; }
 }
 @keyframes avg-hit-knife {
   0% { opacity: 0; }

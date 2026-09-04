@@ -119,31 +119,3 @@ console.log(`voices.json：${Object.keys(byHero).length} 英雄 · ${Object.keys
 for (const m of misses.slice(0, 10)) {
   console.log(`  MISS ${m.heroId}:${m.voiceId} → ${m.sheet ?? '?'} ${m.cue ?? '?'}（${m.reason}）`);
 }
-
-/* —— 顺带产出剧情目录（story_avg.lua）：group_id 聚簇 + script_id 直连
-   语料，接上 avg-scripts 的 brief/steps 供剧本库「剧情线」视图。
-   story_avg 的条目并非全部有 script_id（无的是章节点位），只收有正文的；
-   同一 script_id 重复出现的取首个。 */
-const storyAvg = decode('story_avg.lua', 500_000_000);
-const byScript = new Map(manifest.stories.map((s) => [s.id, s]));
-const groups = new Map();
-let catalogSkipped = 0;
-for (const e of Object.values(storyAvg)) {
-  if (!e || typeof e !== 'object' || !e.script_id || groups.has(e.script_id)) continue;
-  const meta = byScript.get(e.script_id);
-  if (!meta) { catalogSkipped++; continue; }   // 指向缺失剧本的死行不收
-  const g = groups.get(e.group_id) ?? [];
-  g.push({id: e.script_id, type: e.type ?? null,
-      steps: meta?.steps ?? null, brief: meta?.brief ?? null});
-  groups.set(e.group_id, g);
-}
-const catalog = {
-  groups: [...groups.entries()]
-      .sort((a, b) => a[0] - b[0])
-      .map(([groupId, stories]) => ({groupId, stories})),
-};
-writeFileSync(join(ROOT, 'data', 'index', 'story-catalog.json'),
-    JSON.stringify(catalog, null, 1) + '\n');
-const cataloged = catalog.groups.reduce((n, g) => n + g.stories.length, 0);
-console.log(`story-catalog.json：${catalog.groups.length} 组 · ${cataloged} 条目录`
-    + `（语料 ${manifest.stories.length} 段中在册 ${new Set(catalog.groups.flatMap((g) => g.stories.map((s) => s.id))).size}）`);

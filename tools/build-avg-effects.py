@@ -328,6 +328,22 @@ def collect_prefabs(bundles_root):
 def ps_parts(path, prefab_name, bundles_root, write):
     """一个 .ab → 该特效的 parts / 单件字段列表。"""
     env = load_env(path)
+    transforms = {}
+    for o in env.objects:
+        if o.type.name in ('Transform', 'RectTransform'):
+            transforms[o.path_id] = o.read()
+
+    def lossy_scale_x(tr):
+        """祖先链 localScale.x 累乘；根节点在 bundle 里写 0（运行时才填）按 1 处理。"""
+        total, cur, seen = 1.0, tr, set()
+        while cur is not None and id(cur) not in seen:
+            seen.add(id(cur))
+            s = float(getattr(cur.m_LocalScale, 'x', 1.0) or 0.0)
+            total *= s if s else 1.0
+            f = getattr(cur, 'm_Father', None)
+            cur = transforms.get(f.m_PathID) if f and f.m_PathID else None
+        return total
+
     results = []
     for o in env.objects:
         if o.type.name != 'ParticleSystemRenderer':
@@ -353,6 +369,13 @@ def ps_parts(path, prefab_name, bundles_root, write):
             tex = resolve_pptr(mfacts['texture_pptr'], bundles_root)
         uv = getattr(ps, 'UVModule', None)
         init = getattr(ps, 'InitialModule', None)
+        size_mod = getattr(ps, 'SizeModule', None)
+        sbs_mod = getattr(ps, 'SizeBySpeedModule', None)
+        vel_mod = getattr(ps, 'VelocityModule', None)
+        shape = getattr(ps, 'ShapeModule', None)
+        shape_on = bool(getattr(shape, 'enabled', False)) if shape is not None else False
+        shape_radius = float(getattr(getattr(shape, 'radius', None), 'value', 0.0) or 0.0) \
+            if shape_on else 0.0
         main = {'loop': bool(getattr(ps, 'looping', False)),
                 'length': float(getattr(ps, 'lengthInSec', 1.0) or 1.0),
                 'lifetime': curve_scalar(getattr(init, 'startLifetime', None), 1.0)
@@ -396,9 +419,21 @@ def ps_parts(path, prefab_name, bundles_root, write):
             'loop': main['loop'], 'length': main['length'],
             'lifetime': main['lifetime'], 'maxParticles': main['maxParticles'],
             'startColor': main['startColor'],
+            'startSize': curve_scalar(getattr(init, 'startSize', None), 1.0) if init else 1.0,
+            'startSpeed': curve_scalar(getattr(init, 'startSpeed', None), 0.0) if init else 0.0,
+            'gravity': curve_scalar(getattr(init, 'gravityModifier', None), 0.0) if init else 0.0,
+            'velocityX': curve_scalar(getattr(vel_mod, 'x', None), 0.0)
+                         if vel_mod is not None and getattr(vel_mod, 'enabled', False) else 0.0,
+            'sizeOver': curve_scalar(getattr(size_mod, 'curve', None), 1.0)
+                        if size_mod is not None and getattr(size_mod, 'enabled', False) else 1.0,
+            'sizeBySpeed': curve_scalar(getattr(sbs_mod, 'x', None), 1.0)
+                           if sbs_mod is not None and getattr(sbs_mod, 'enabled', False) else 1.0,
+            'shapeRadius': shape_radius,
             'gradientAlpha': alpha,
             'pos': [round(float(x), 3) for x in pos],
             'scale': [round(float(x), 3) for x in scl],
+            'lossyScale': round(lossy_scale_x(tr), 4) if tr else 1.0,
+            'scalingMode': int(getattr(ps, 'scalingMode', 0) or 0),
             'rotQ': [round(float(x), 4) for x in rot],
             'renderMode': int(getattr(psr, 'm_RenderMode', 0) or 0),
             'bundle': path,
@@ -415,6 +450,26 @@ def z_rotation_from_q(q):
 
 def slug(name):
     return re.sub(r'[^A-Za-z0-9_.-]', '_', name or '')
+
+
+def quad_size(p):
+    """一个粒子 quad 的边长（预制件自身单位，正方形：全语料 startSize3D 都是 false）。
+
+    缩放按 Unity 的 ParticleSystemScalingMode 取：Local(1) 只认系统自己的
+    localScale（父级缩放无效），Hierarchy(0)/Shape(2) 要乘整条 lossyScale——
+    FXP_AVG_snow_high 的 20.153 就挂在根上，只按节点自身 scale 算会把一场雪缩成 2px。
+    边长本身是「单粒 + 发射口径 2×radius + 寿命内行程」相加——浏览器里一件只画一个
+    quad，这个盒子要盖住粒子能到达的范围，只按单粒画会缩成一个点、只按粒子尺寸算
+    会把一场雪糊成一团。
+    """
+    scl = float(p['scale'][0]) if p['scalingMode'] == 1 else float(p['lossyScale'])
+    life = p['lifetime']
+    # 粒子活着这段时间能飘多远：初速 + VelocityModule 附加 + ½·g·t²（本地单位）。
+    travel = (abs(p['startSpeed']) + abs(p['velocityX'])) * life \
+        + 0.5 * abs(p['gravity']) * life * life
+    local = (p['startSize'] * p['sizeOver'] * p['sizeBySpeed']
+             + 2.0 * p['shapeRadius'] + travel)
+    return round(local * scl, 3)
 
 
 # css/ux.css 用 .blade / .spark 挂刀光与火花的 keyframes（动画名与延时都按件区分），
@@ -500,6 +555,7 @@ def emit_entry(key, parts, bundles_root, write):
         return {'url': url_of(p), 'columns': cols, 'rows': rows,
                 'frames': max(1, p['frames']),
                 'fps': p['uvFps'] or None, 'duration': duration, 'loop': loop,
+                'size': quad_size(p), 'life': int(round(p['lifetime'] * 1000)),
                 'opacity': opacity_of(p), 'blendMode': blend,
                 'tint': tint_of(p), 'maskMode': mask_mode_of(p),
                 'textureSlot': p['texSlot'] or None, 'sourceBundle': src,
@@ -509,6 +565,9 @@ def emit_entry(key, parts, bundles_root, write):
                        'maskMode': mask_mode_of(p),
                        'columns': grid(p)[0], 'rows': grid(p)[1],
                        'frames': max(1, p['frames']),
+                       'size': quad_size(p),
+                       'duration': int(round(p['length'] * 1000)),
+                       'life': int(round(p['lifetime'] * 1000)),
                        'rotate': z_rotation_from_q(p['rotQ'])}
                       for p in uniq],
             'duration': duration, 'loop': loop, 'blendMode': blend,
@@ -570,9 +629,9 @@ def main():
                   % (p['loop'], p['length'], p['lifetime'], p['uvFps'], p['uvCycles'],
                      p['uvRowMode'], p['blend'], p['srcBlend'], p['dstBlend'],
                      p['gradientAlpha'], p['startColor'], p['maxParticles']))
-            print('      pos=%s scale=%s rotZ=%.1f° renderMode=%d 贴图包=%s'
+            print('      pos=%s scale=%s rotZ=%.1f° renderMode=%d quad=%s 贴图包=%s'
                   % (p['pos'], p['scale'], z_rotation_from_q(p['rotQ']),
-                     p['renderMode'], p['texBundle'] or '(未解析)'))
+                     p['renderMode'], quad_size(p), p['texBundle'] or '(未解析)'))
             if p['texSlot']:
                 print('      槽=%s 材质槽解析: %s' % (p['texSlot'], p['texture']))
     if args.write:

@@ -95,6 +95,14 @@ const VISUAL_TYPES = new Set([1, 4, 5]);
 const AUTO_START_DELAY = 1000;
 const AUTO_LINE_DELAY = 2000;
 
+/* 特效索引里的 size 是预制件单位的正方形 quad 边长（tools/build-avg-effects.py
+   按 Unity 的 scalingMode 从 bundle 算出来）。换算口径与立绘 pos 同一条：
+   ÷32 得 em（16px em ⇒ 1 单位 = 0.5px），所以刀光 174.8 单位 = 87px。 */
+function fxQuadEm(size) {
+  const units = Number(size);
+  return Number.isFinite(units) && units > 0 ? units / 32 : null;
+}
+
 /* 游戏 UIAVGSystem 的五层不是五套逻辑：它们都由 UINAvgImgItem 管理，
    只是在 Unity prefab 里挂到了不同 parent。这里动态补 parent，静态骨架仍
    保持和参考页逐元素一致（test-skeleton 依旧可以做 DOM 契约检查）。 */
@@ -1154,10 +1162,6 @@ export class Player {
   _applyEffects(effect) {
     if (!effect || typeof effect !== 'object') return;
     const stop = Array.isArray(effect.stopList) ? effect.stopList : [];
-    for (const id of stop) {
-      this.effectEls.get(String(id))?.remove();
-      this.effectEls.delete(String(id));
-    }
     for (const [id, cfg] of this._effectEntries(effect)) {
       if (!cfg || typeof cfg !== 'object') continue;
       this.effectEls.get(id)?.remove();
@@ -1170,10 +1174,17 @@ export class Player {
         : key.includes('snow') ? 'snow'
         : key.includes('ripple') || key.includes('wave') ? 'ripple'
         : key.includes('dis') ? 'dissolve'
+        /* 一次性件（Unity 里粒子寿命一到全死）：没有这条包络，贴图会一直糊在
+           画面上直到 stopList——而语料里多数一次性冲击根本没有 stopList。 */
+        : asset?.url && asset.loop === false ? 'burst'
         /* 名字判不出但有素材：走满幅 sheet。.avg-effect-generic 是给缺素材的
            ✳ 占位写的 auto 尺寸，套在有贴图的件上会塌成 0×0。 */
         : asset?.url || asset?.parts?.length ? 'sheet' : 'generic';
       el.className = `avg-effect avg-effect-${kind}`;
+      if (kind === 'burst') {
+        el.style.animationDuration =
+            `${Number(asset.life) || Number(asset.duration) || 200}ms`;
+      }
       el.dataset.effectId = id;
       el.dataset.prefab = prefab;
       el.setAttribute('aria-label', prefab);
@@ -1185,7 +1196,9 @@ export class Player {
         : [0, 0, 0];
       /* effect 是铺满舞台的全屏盒，位置是对整张粒子图的平移，不能再
          translate(-50%,-50%)；否则 x/y 偏移会叠加半个舞台尺寸而跑出屏幕。
-         Unity 的 y 轴向上，因此屏幕 top 偏移为 -y。 */
+         Unity 的 y 轴向上，因此屏幕 top 偏移为 -y。
+         索引带 quad 尺寸的 sheet 件例外：盒子会收成以落点为中心的正方形，
+         所以下面 sheet 分支改写成了 calc(50% + …)。 */
       el.style.left = `${(Number(pos[0]) || 0) / 32}em`;
       el.style.top = `${-(Number(pos[1]) || 0) / 32}em`;
       const layer = Math.min(3, Math.max(1, Number(cfg.layer) || 2));
@@ -1209,22 +1222,30 @@ export class Player {
           this._paintEffectSprite(sprite, part.url,
               Number(part.columns) || 1, Number(part.rows) || 1, part.tint,
               part.maskMode);
-          sprite.style.width = `${Number(part.width) || 100}%`;
-          sprite.style.height = `${Number(part.height) || 100}%`;
+          /* billboard 粒子是正方形 quad，尺寸来自预制件；没有尺寸的旧索引才退回
+             按舞台百分比摆（那种情况下贴图会被拉成舞台比例）。 */
+          const side = fxQuadEm(part.size);
+          sprite.style.width = side === null ? `${Number(part.width) || 100}%` : `${side}em`;
+          sprite.style.height = side === null ? `${Number(part.height) || 100}%` : `${side}em`;
           sprite.style.left = `${Number(part.left) || 50}%`;
           sprite.style.top = `${Number(part.top) || 50}%`;
           const rotate = Number(part.rotate) || 0;
           const scale = Number(part.scale) || 1;
           sprite.style.transform =
               `translate(-50%, -50%) rotate(${rotate}deg) scale(${scale})`;
+          const dur = Number(part.duration) || Number(asset.duration) || 0;
+          if (dur > 0) sprite.style.animationDuration = `${dur}ms`;
           el.append(sprite);
         }
-        if (asset.duration > 0) {
-          for (const part of el.children) {
-            part.style.animationDuration = `${Number(asset.duration)}ms`;
-          }
-        }
       } else if (asset?.url) {
+        const side = fxQuadEm(asset.size);
+        if (side !== null) {
+          /* 尺寸给外层：子件与 .avg-effect-smoke 那层渐变底都跟着收，
+             left/top 50% 是相对整舞台盒的，所以要减掉半个盒。 */
+          el.style.width = el.style.height = `${side}em`;
+          el.style.left = `calc(50% + ${(pos[0] / 32 - side / 2)}em)`;
+          el.style.top = `calc(50% + ${(-pos[1] / 32 - side / 2)}em)`;
+        }
         const sprite = el.ownerDocument.createElement('span');
         sprite.className = 'avg-effect-sprite';
         const columns = Math.max(1, Number(asset.columns) || 1);
@@ -1246,6 +1267,12 @@ export class Player {
       this.effectEls.set(id, el);
       /* 本体不按粒子 duration 自动销毁 GameObject；生命周期由 stopList
          的 StopAvgEffect 明确控制。粒子/序列帧播完后节点保留到 stopList。 */
+    }
+    /* 顺序照 UINAvgEffectNode：先 pairs(effectCfg) 建/播，再 pairs(stopList) 停。
+       同槽同镜「又开又停」因此结果是停（Test 段镜 14 就是这个形状）。 */
+    for (const id of stop) {
+      this.effectEls.get(String(id))?.remove();
+      this.effectEls.delete(String(id));
     }
   }
 

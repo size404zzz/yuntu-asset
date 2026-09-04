@@ -1,0 +1,37 @@
+{
+  "version": "1.0",
+  "analyzedAt": "2026-09-04T21:11:22Z",
+  "workspace": "c:\\Users\\Administrator\\Documents\\GitHub\\yuntu-asset",
+  "target": "yuntu-asset",
+  "provider": "Qoder",
+  "mode": "normal",
+  "projectInfo": {
+    "name": "云图计划 AVG 剧情播放器与编辑器",
+    "description": "将《云图计划》1878 段 AVG 剧情以纯静态网页形式在浏览器中像素级复刻播放，并提供可视化编辑、标定、导出与回归测试的一体化工程。",
+    "architecture": [
+      "AVG 剧本引擎",
+      "可视化编辑器", 
+      "素材构建工具链",
+      "回归测试中心"
+    ],
+    "keyModules": [
+      "js/core - 核心逻辑",
+      "js/engine - 引擎实现",
+      "js/editor - 编辑器 UI",
+      "tools/ - 构建与测试工具集",
+      "data/ - 静态资源索引",
+      "selftest-* - 回归测试页面"
+    ]
+  },
+  "evidenceBundle": {
+    "sessionsAvailable": false,
+    "projectLaneAvailable": true,
+    "agentCustomizeAvailable": false,
+    "note": "Project-based analysis using existing codebase and memory knowledge"
+  },
+  "scope": {
+    "depth": "normal",
+    "included": ["Project Harness Evidence"],
+    "excluded": ["Session Facts", "Agent Customize Configuration"]
+  }
+}

@@ -1,12 +1,12 @@
 /**
  * M14 剧本库单测（纯 Node）：分组/搜索纯函数、loadStory 装载链、
- * 索引增强件（steps/brief）口径。
+ * 索引增强件（steps/brief）口径、行动记录档案（archiveRows）归属。
  * 用法：node tools/test-storylib.mjs
  */
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {join, resolve} from 'node:path';
-import {groupOf, filterStories, storyGroups, loadStory} from '../js/editor/storylib.js';
+import {groupOf, filterStories, storyGroups, storyLabels, archiveRows, loadStory} from '../js/editor/storylib.js';
 
 let passed = 0;
 const ok = (m) => { passed++; console.log('  ok   ' + m); };
@@ -36,8 +36,10 @@ assert.equal(groupOf('cpt00_e_01_01'), 'cpt00');
 assert.equal(groupOf('23spring_hb_sakuya_gift'), '23spring');
 assert.equal(groupOf('dorm_hannah_02'), 'dorm');
 const groups = storyGroups(manifest);
-assert.ok(groups.includes('cpt00') && groups.includes('dorm') && groups.includes('23spring'),
-    '分组覆盖主线章节/宿舍/活动季');
+const groupNames = groups.map((g) => g.label);
+assert.ok(groupNames.includes('cpt00') && groupNames.includes('dorm')
+    && groupNames.includes('23spring'), '无档案时分组退回 ID 首段');
+assert.equal(groups.reduce((n, g) => n + g.count, 0), 1878, '各组段数并起来就是全量');
 assert.equal(filterStories(manifest.stories).length, 1878);
 assert.equal(filterStories(manifest.stories, {query: 'cpt00_e_01_01'}).length, 1);
 assert.ok(filterStories(manifest.stories, {query: 'CPT00_E_01_01'}).length === 1,
@@ -105,16 +107,62 @@ assert.equal(voices.coverage.hit, 468, '语料 468 对 voice 引用全覆盖');
 }
 ok(`语音映射：93 英雄 · 语料 ${voices.coverage.hit}/${voices.coverage.pairs} 全命中`);
 
-/* —— M15 剧情目录（story-catalog.json）—— */
+/* —— M16 行动记录档案（story-archive.json）—— */
 
-const catalog = JSON.parse(readFileSync(join(ROOT, 'data', 'index', 'story-catalog.json'), 'utf8'));
-assert.ok(catalog.groups.length > 1000, '目录分组规模');
-const catalogIds = new Set(catalog.groups.flatMap((g) => g.stories.map((s) => s.id)));
-assert.ok(catalogIds.has('cpt00_e_01_02'), '目录收录 cpt00 章节');
+const archive = JSON.parse(readFileSync(join(ROOT, 'data', 'index', 'story-archive.json'), 'utf8'));
+assert.deepEqual(archive.classes.map((c) => c.name), ['大型活动', '常规活动', '专属剧情']);
+assert.equal(archive.classes[0].activities.length, 13, '大型活动 13 个');
+assert.equal(archive.classes[2].activities.length, 27, '专属剧情 27 个');
+const fe = archive.classes[0].activities.find((a) => a.id === 59001);
+assert.equal(fe.name, '昔影归终');
+assert.equal(fe.year, 2024);
+assert.equal(fe.stories.length, 32, '昔影归终 32 段真剧情（关卡不计）');
+assert.equal(fe.stories[0].id, '24fe_s00');
 const manifestIds = new Set(manifest.stories.map((s) => s.id));
-for (const id of catalogIds) {
-  assert.ok(manifestIds.has(id), `目录 script_id ${id} 必须在语料索引里`);
-}
-ok(`剧情目录：${catalog.groups.length} 组 · ${catalogIds.size} 段在册（script_id 全部可装载）`);
+const archivedIds = new Set(archive.classes.flatMap((c) => c.activities.flatMap((a) => a.stories.map((s) => s.id))));
+for (const id of archivedIds) assert.ok(manifestIds.has(id), `档案段 ${id} 必须在语料索引里`);
+/* 处理器路由的背书：39003 与游戏卡片「剧情进度 2/2」同口径；专属剧情 27 期全收 */
+const myth = archive.classes[1].activities.find((a) => a.id === 39003);
+assert.deepEqual(myth.stories.map((s) => s.id), ['24myth_00', '24myth_01']);
+assert.ok(archive.classes[2].activities.every((a) => a.stories.length),
+    `专属剧情有空活动：${archive.classes[2].activities.filter((a) => !a.stories.length).map((a) => a.id)}`);
+ok(`行动记录：${archivedIds.size} 段归入 ${archive.classes.reduce((n, c) => n + c.activities.length, 0)} 个活动`);
+
+/* —— 分组下拉：档案归属名优先，无档可归的退 ID 首段 —— */
+
+const labels = storyLabels(archive);
+assert.equal(labels.get('24fe_s00'), '昔影归终', '活动段挂活动名');
+const sector = archive.mainline.find((m) => m.name);
+assert.equal(labels.get(sector.stories[0].id), sector.name, '主线段挂扇区名');
+assert.ok(!labels.has('cpt00_e_01_01'), '无扇区主线段不挂名，交给 groupOf 兜底');
+const named = storyGroups(manifest, labels);
+assert.equal(named.reduce((n, g) => n + g.count, 0), 1878, '分组名不吞段');
+assert.ok(!named.some((g) => g.label.startsWith('无扇区')),
+    '883 段无扇区主线已拆回 ID 首段，不再是巨型组');
+assert.ok(named.every((g) => g.label), '组名非空');
+const feRows = filterStories(manifest.stories, {group: '昔影归终', labels});
+assert.equal(feRows.length, 32, '按活动名筛回整个活动的段');
+assert.ok(feRows.every((s) => labels.get(s.id) === '昔影归终'));
+assert.ok(filterStories(manifest.stories, {group: 'dorm', labels})
+    .every((s) => groupOf(s.id) === 'dorm'), '未挂档段仍按 ID 首段筛');
+ok(`分组下拉：${named.length} 组 · 前 3 = ${named.slice(0, 3).map((g) => `${g.label}(${g.count})`).join(' ')}`);
+
+/* —— archiveRows：档案 → 浏览行 —— */
+
+const rows = archiveRows(archive, manifest);
+const sections = rows.filter((r) => r.section);
+const dataRows = rows.filter((r) => !r.section);
+assert.ok(sections.length > 30 && dataRows.length > 1000, '分区与行都有量');
+assert.ok(!dataRows.some((r) => r.steps == null), '每行都带镜数');
+assert.equal(new Set(dataRows.map((r) => r.id)).size, dataRows.length, '同一段不重复列');
+assert.equal(sections[0].section, '大型活动｜神导异论 · 2021');
+assert.ok(sections.some((s) => s.section.startsWith('主线｜')), '主线扇区成段');
+const bucketIds = new Set([...archivedIds,
+    ...archive.mainline.flatMap((m) => m.stories.map((s) => s.id)), ...archive.unarchived]);
+assert.equal(bucketIds.size, archivedIds.size
+    + new Set(archive.mainline.flatMap((m) => m.stories.map((s) => s.id))).size
+    + new Set(archive.unarchived).size, '三段互不重叠');
+assert.equal(dataRows.length, bucketIds.size, '三段并起来就是全部行');
+ok(`档案浏览行：${sections.length} 个分区 · ${dataRows.length} 行（含未归档 ${archive.unarchived.length}）`);
 
 console.log(`\n${passed} 项通过`);

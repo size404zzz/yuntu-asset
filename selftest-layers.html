@@ -54,6 +54,7 @@ const scene = [
     effect1: {prefabName: 'avg/FXP_smook', layer: 2, pos: [0, -150]},
     effect2: {prefabName: 'avg/FXP_AVG_Hit-knife', layer: 3, pos: [-250, 0, 7]},
     effect3: {prefabName: 'avg/FXP_AVG_snow_high', layer: 1, pos: [0, 0, -3]},
+    effect4: {prefabName: 'avg/FXP_AVG_Hit_yellow', layer: 1, pos: [-500, -50]},
   },
   content: '五层演出自检', contentType: 1},
 ];
@@ -65,6 +66,10 @@ try {
   player.playShot();
   await new Promise((r) => setTimeout(r, 80));
   const q = (s) => player.refs.avgStage.querySelector(s);
+  /* Chrome 把行内长度序列化到 6 位小数，所以 em 断言一律按数值比。 */
+  const emOf = (v) => (/^(-?\d*\.?\d+)em$/.test(v ?? '') ? parseFloat(v) : NaN);
+  const reduceRule = [...document.styleSheets].flatMap((s) => [...(s.cssRules ?? [])])
+      .find((r) => (r.conditionText ?? '').includes('prefers-reduced-motion'));
   const checks = [
     ['distant', !!q('.avg-layer-distant .avg-layer-item')],
     ['foreground', !!q('.avg-layer-foreground .avg-layer-item')],
@@ -84,6 +89,34 @@ try {
       ?.querySelectorAll('.avg-effect-part').length === 2],
     ['hit knife texture', q('.avg-layer-effects-3 .avg-effect-part.blade')
       ?.style.backgroundImage.includes('FXT_HIT4.png')],
+    /* quad 尺寸：bundle 真值 174.836 / 1015.344 单位，÷32 得 em。
+       没有这一步时索引无尺寸 ⇒ 部件默认 100%×100%，128×256 的刀光贴图
+       会被拉成 1200×540 的一整片糊光。Chrome 把行内长度截到 6 位小数，
+       所以按数值比，不比字符串。 */
+    ['hit knife blade quad',
+      Math.abs(emOf(q('.avg-effect-part.blade')?.style.width) - 174.836 / 32) < 1e-4
+      && Math.abs(emOf(q('.avg-effect-part.blade')?.style.height) - 174.836 / 32) < 1e-4],
+    ['hit knife spark quad',
+      Math.abs(emOf(q('.avg-effect-part.spark')?.style.width) - 1015.344 / 32) < 1e-4],
+    /* 各部件用自己的系统时长：刀光 1s、火花 5s。整件 duration 这里被
+       上面 effectAssetOf 改成了 20，用它就说明还在走整件口径。 */
+    ['hit knife per-part duration',
+      q('.avg-effect-part.blade')?.style.animationDuration === '1000ms'
+      && q('.avg-effect-part.spark')?.style.animationDuration === '5000ms'],
+    ['smoke quad sizes the box',
+      Math.abs(emOf(q('.avg-effect-smoke')?.style.width) - 13.338 / 32) < 1e-4
+      && (q('.avg-effect-smoke')?.getBoundingClientRect().width ?? 999) < 10],
+    /* 雪是 parts 结构：动画选择器只挂 .avg-effect-sprite 的话永远不命中，雪完全静止。 */
+    ['snow parts animate', [...(q('.avg-effect-snow')?.children ?? [])].length === 2
+      && [...q('.avg-effect-snow').children]
+          .every((p) => getComputedStyle(p).animationName === 'avg-snow-part')],
+    /* 一次性件（loop:false）必须有淡出包络，否则寿命一到该没的东西会糊到剧终。 */
+    ['one-shot burst envelope', !!q('[data-effect-id="effect4"].avg-effect-burst')
+      && q('[data-effect-id="effect4"]')?.style.animationDuration === '180ms'],
+    /* 特效的可见性整条挂在淡入淡出上（部件行内 opacity 恒为 1）：
+       reduced-motion 若把它也归零，特效会变成永久糊在画面上的不透明贴片。 */
+    ['reduced motion spares effects', [...(reduceRule?.cssRules ?? [])]
+      .some((r) => (r.selectorText ?? '').includes(':not(.avg-effect)'))],
     ['postprocess', player.refs.avgStage.dataset.ppv.includes('sat:-50')],
     ['postprocess saturation target',
       player.refs.avgStage.style.getPropertyValue('--avg-ppv-saturation') === '0.5'],
@@ -109,6 +142,9 @@ try {
   }
   player._applyEffects({stopList: ['effect2']});
   if (q('[data-effect-id="effect2"]')) report.failures.push('stopList removes effect');
+  /* 同槽同镜又开又停：游戏里 pairs(effectCfg) 在前、pairs(stopList) 在后 ⇒ 停赢。 */
+  player._applyEffects({effect5: {prefabName: 'avg/FXP_Scene'}, stopList: ['effect5']});
+  if (q('[data-effect-id="effect5"]')) report.failures.push('stopList wins same-shot add');
   report.ok = report.failures.length === 0;
 } catch (e) { report.failures.push(String(e)); }
 report.done = true;

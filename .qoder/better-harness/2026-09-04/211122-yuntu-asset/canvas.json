@@ -1,0 +1,30 @@
+{
+  "summaryFacts": [
+    {
+      "key": "project_name",
+      "value": "云图计划 AVG 剧情播放器与编辑器"
+    },
+    {
+      "key": "avg_scenes_count",
+      "value": 1878
+    },
+    {
+      "key": "architecture_type",
+      "value": "static-web-based-playback-engine"
+    },
+    {
+      "key": "key_capabilities",
+      "value": "播放引擎、可视化编辑、素材构建、回归测试"
+    },
+    {
+      "key": "evidence_sources",
+      "value": "代码库分析、知识模块、项目记忆"
+    }
+  ],
+  "analysisFramework": {
+    "provider": "Qoder",
+    "mode": "normal",
+    "depth": "complete",
+    "methodology": "Project Harness Evidence Only"
+  }
+}
