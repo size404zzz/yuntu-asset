@@ -99,6 +99,9 @@ tools/ref/ 参考件（.gitignore 排除）+ driver/uidriver/serve/setup（我�
 2. `setScene` 写副本不改原始 wire（编辑器不能接受原地格式化）。
 3. 立绘规则表按 imgId 确定性重建（参考是网络竞态序 + 重复装载翻倍）。
 4. 自动播放/打字等时序在浏览器里与参考同参（50ms/2s/1s），虚拟钟下坍缩。
+   预览窗口的 `1×/10×` 按钮（`tp-rate` → `Player.setRate`）是净新增便利件：
+   只压缩走 `Scheduler` 的 JS 定时（CSS 过渡与 WAAPI 不吃这份钟，倍速下演出会
+   跑在画面前面），音频只留 bgm、视频镜提 `playbackRate`；1× 时逐位不变。
 5. 音频是净新增（参考对 `audio` 字段零实现）：bgm 交叉淡化、sfx 叠响、
    手势前静音 + 解锁按流逝续播。
 6. 忠实照抄的参考怪癖：skip 弹层取消/确认无 handler（点击=推进）、dict 面板

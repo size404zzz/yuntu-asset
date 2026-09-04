@@ -20,6 +20,9 @@ export class Scheduler {
     this.epoch = 0;
     this.jobs = new Map();
     this.seq = 0;
+    /* 倍速：>1 时所有挂起时长按比例压缩（10 = 只等十分之一）。只管 JS 定时，
+       CSS 过渡与 WAAPI 走真实文档时间线、不吃这份钟。默认 1 = 与参考逐位一致。 */
+    this.rate = 1;
   }
 
   bump() {
@@ -27,17 +30,20 @@ export class Scheduler {
     return ++this.epoch;
   }
 
-  /* 回调只在注册时的 epoch 仍然有效时执行。返回句柄供 clear。 */
+  /* 回调只在注册时的 epoch 仍然有效时执行。返回句柄供 clear。
+     时长按注册当下的 rate 压缩（at 用压缩后的值，flush 的次序判据
+     才和真实定时一致；rate 中途改了也不影响已挂起的任务）。 */
   after(ms, fn) {
     const born = this.epoch;
     const seq = this.seq++;
+    const delay = Math.max(0, ms) / (this.rate || 1);
     let handle;
     const wrapped = () => {
       this.jobs.delete(handle);
       if (born === this.epoch) fn();
     };
-    handle = this.timer.set(wrapped, ms);
-    this.jobs.set(handle, {at: this.now() + Math.max(0, ms), seq, fn: wrapped});
+    handle = this.timer.set(wrapped, delay);
+    this.jobs.set(handle, {at: this.now() + delay, seq, fn: wrapped});
     return handle;
   }
 

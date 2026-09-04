@@ -244,6 +244,7 @@ document.getElementById('btn-fade').addEventListener('click',
 
 const state = {stories: new Map(), playing: false, playTimer: null};
 const tpPlay = document.getElementById('tp-play');
+const tpRate = document.getElementById('tp-rate');
 
 async function useStory(id) {
   stopPlay();
@@ -262,19 +263,28 @@ function stopPlay() {
   tpPlay.textContent = '▶ 连播';
 }
 
+/* 引擎只在 shotEnd 处可推进，轮询间隔就是额外的节拍门：跟着倍速一起收，
+   否则 10× 下 250ms 的干等会盖掉大半收益。 */
+const PLAY_POLL = 250;
+function tick() {
+  if (!state.playing) return;
+  if (player.playEnd) { stopPlay(); return; }
+  if (player.refs.avgChoices.className) { stopPlay(); return; }
+  if (player.shotEnd) {
+    player.playShot();
+    syncIndex();
+  }
+}
+
+function schedulePoll() {
+  clearInterval(state.playTimer);
+  state.playTimer = setInterval(tick, PLAY_POLL / player.rate);
+}
+
 function startPlay() {
   state.playing = true;
   tpPlay.textContent = '⏸ 暂停';
-  const tick = () => {
-    if (!state.playing) return;
-    if (player.playEnd) { stopPlay(); return; }
-    if (player.refs.avgChoices.className) { stopPlay(); return; }
-    if (player.shotEnd) {
-      player.playShot();
-      syncIndex();
-    }
-  };
-  state.playTimer = setInterval(tick, 250);
+  schedulePoll();
   tick();
 }
 
@@ -290,6 +300,15 @@ function syncIndex() {
 }
 
 tpPlay.addEventListener('click', () => (state.playing ? stopPlay() : startPlay()));
+
+/* 预览倍速：10× 通读整段剧情（引擎侧 JS 定时全压，见 Player.setRate）。 */
+const FAST_RATE = 10;
+tpRate.addEventListener('click', () => {
+  const fast = player.rate === 1;
+  player.setRate(fast ? FAST_RATE : 1);
+  tpRate.textContent = fast ? `${FAST_RATE}×` : '1×';
+  if (state.playing) schedulePoll();
+});
 
 /* 预览状态开关（M9 计划项）：定格 / 播放本镜 / 连续播放。 */
 document.getElementById('tp-mode').addEventListener('change', (e) => {
