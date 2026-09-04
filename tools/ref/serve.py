@@ -138,5 +138,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 if __name__ == '__main__':
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8081
     os.makedirs(CACHE, exist_ok=True)
-    print(f'reference oracle on http://127.0.0.1:{port}/  root={ROOT}', flush=True)
-    http.server.ThreadingHTTPServer(('127.0.0.1', port), Handler).serve_forever()
+    httpd = http.server.ThreadingHTTPServer(('127.0.0.1', port), Handler)
+    # port=0 时回传实际绑定端口：跑者据此并发多套宿主互不抢端口。
+    print(f'reference oracle on http://127.0.0.1:{httpd.server_address[1]}/  root={ROOT}',
+          flush=True)
+    httpd.serve_forever()

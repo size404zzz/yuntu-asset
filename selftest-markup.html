@@ -32,6 +32,10 @@ import {reformat, hops, hasBareTag, isTextPrefix, textOf, DEFAULT_VARS}
     from './js/core/markup.js';
 import {Typewriter} from './js/engine/typewriter.js';
 import {splitPages, stripMarkup} from './js/core/schema.js';
+import {reporter} from '/js/test/report.js';
+
+const markupReport = reporter('markup_report');
+markupReport.step('reformat');
 
 const immediate = () => Promise.resolve();
 /* 固定随机源，让乱码帧可复现（断言不依赖具体字母）。 */
@@ -131,10 +135,7 @@ const report = {
   skipped: ['wiki 基准件与夹具 scene1 已删（契约换游戏本体）：逐镜 lineHTML 对拍退役'],
 };
 document.getElementById('report').textContent = JSON.stringify(report);
-await fetch('/freeze?scene=markup_report', {
-  method: 'POST', headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify(report),
-});
+await markupReport.final(report);
 const summary = document.getElementById('summary');
 summary.innerHTML = ok
     ? `<b class="ok">✓ M2 markup 通过</b> —— ${pageCount} 页 / ${asserts} 断言`

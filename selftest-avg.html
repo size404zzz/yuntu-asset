@@ -30,6 +30,10 @@ import {parseChunk} from '/js/core/lundump.js';
 import {execChunk, toJS} from '/js/core/lvm.js';
 import {storyToWire, replayChain} from '/js/core/avgwire.js';
 import {loadRepoIndex, flatLookup} from '/js/core/repo-index.js';
+import {reporter} from '/js/test/report.js';
+
+const avgReport = reporter('avg_e2e_report');
+const setStep = (s) => { lastStep = s; avgReport.step(s); };
 import {deriveLayout} from '/js/engine/sprite.js';
 import {VirtualTimer} from '/js/test/harness.js';
 
@@ -88,19 +92,19 @@ let brief = '';
 try {
   if (wire) {
     /* 遍历引擎重放链上的可停留镜：空内容 + autoContinue 的直通镜停不住。 */
-    lastStep = 'filter';
+    setStep('filter');
     const seekable = replayChain(wire)
         .filter((id) => {
           const s = wire[id];
           return s.content || s.branch || !s.autoContinue;
         });
-    lastStep = 'setScene';
+    setStep('setScene');
     const brief0 = wire['1']?.SkipScenario;
     player.setScene(wire, '序章', '1', typeof brief0 === 'string' ? brief0 : '', '');
     brief = player.refs.avgSceneBrief.textContent;
-    lastStep = 'walk';
+    setStep('walk');
     for (const id of seekable) {
-      lastStep = `seek#${id}`;
+      setStep(`seek#${id}`);
       try {
         /* seekShot 的落点比较是 ===：键必须传数字（shotId 沿链是数字）。 */
         await player.seekShot(Number(id));
@@ -122,7 +126,7 @@ try {
         problems.push(`seekShot ${id}: ${e.message}`);
       }
     }
-    lastStep = 'post';
+    setStep('post');
   }
 } catch (e) {
   problems.push(`${lastStep}: ${e.message} @ ${e.stack?.split('\n')[1]?.trim()}`);
@@ -131,8 +135,8 @@ try {
 const report = {done: true, id: ID, lastStep, seekableCount: wire
     ? Object.entries(wire).filter(([, s]) => s.content || s.branch || !s.autoContinue).length
     : -1, stats, brief, shots, problems, pageErrors};
-await fetch('/freeze?scene=avg_e2e_report', {
-  method: 'POST', body: JSON.stringify(report, null, 1)});
+/* 终报走心跳同一条串行链：排队中的心跳不得晚于终报落盘。 */
+await avgReport.final(report);
 document.title = 'avg-report-done';
 </script>
 </body>

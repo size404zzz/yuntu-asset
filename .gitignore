@@ -32,3 +32,15 @@ res/Assets/media/
 # 仍可由 res/Assets/media 的 acb/awb 经 `node tools/media/unpack-acb.mjs` 重建。
 # test-io 的 zip b64 交接件：selftest-io 每次运行重新生成，不入库。
 data/fixtures/expected-bundle_zip_b64.json
+
+# e2e/五层冒烟的运行期报告件由跑者每次重新生成并自清理，不入库
+# （对照基线是跑者现场从 Node 侧同源解码算出的，不走冻结表）。
+data/fixtures/expected-avg_e2e_report.json
+data/fixtures/expected-layers_report.json
+
+# 一次性调试/探针产物（tmp-*.mjs/.cjs/.html/.png、22child_02 的
+# bundles/_probe 探针与实验件、误存成 idx.html 的下载残骸）：
+# 本地把玩不入库，历史版本仍可在 M60/M80 提交里查到。
+/tmp-*
+/bundles/
+/idx.html

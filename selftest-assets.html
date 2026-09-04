@@ -15,9 +15,12 @@
  */
 import {openDB, put, get, del, entries, BLOBS, KV} from '/js/core/idb.js';
 import {AssetRegistry} from '/js/core/assets.js';
+import {reporter} from '/js/test/report.js';
 
 const failures = [];
 const problems = [];
+const assetsReport = reporter('assets_report');
+const setStep = (s) => assetsReport.step(s);
 let asserts = 0;
 const check = (label, cond, detail = '') => {
   asserts++;
@@ -47,6 +50,7 @@ await del(db3, KV, 'probe');
 db3.close();
 
 /* ---------- AssetRegistry ---------- */
+setStep('registry');
 const reg = await new AssetRegistry().boot();
 check('repo 可用（同源宿主有 data/index）', reg.repoAvailable);
 check('仓库解析 Lpic', reg.resolve('Lpic_persicaria_avg.png')?.source === 'repo');
@@ -63,6 +67,7 @@ check('ObjectURL 字节一致', new Uint8Array(fetched).join() === bytes.join())
 check('上传清单', reg.listUploads({kind: 'image'}).some((m) => m.key === 'lpic_persicaria_avg.png'));
 
 /* 重开注册表 = 刷新后素材仍在 */
+setStep('persist');
 const reg2 = await new AssetRegistry().boot();
 check('注册表持久化：重开仍在', reg2.resolve('lpic_persicaria_avg.png')?.source === 'upload');
 
@@ -120,10 +125,7 @@ const report = {
   ok: failures.length === 0 && problems.length === 0,
   asserts, failureCount: failures.length, failures, problems, done: true,
 };
-await fetch('/freeze?scene=assets_report', {
-  method: 'POST', headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify(report, null, 1),
-});
+await assetsReport.final(report);
 document.title = 'assets-report-done';
 </script>
 </body>

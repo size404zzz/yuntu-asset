@@ -1,38 +1,27 @@
 /**
  * M13 语料端到端跑者：起同源宿主 → 无头 Chrome 打开 selftest-avg.html
  * （现场解码 res/ 的 AvgCfg/AvgLang → avgwire 映射 → Player 逐镜 seek）→
- * 读回报告，与 Node 侧同源解码的期望对拍。默认两段剧本覆盖
- * 纯文本主线（cpt00_e_01_01）与立绘+分支（23concert_undline_03）。
+ * 读回报告，与 Node 侧同源解码的期望对拍。默认三段剧本覆盖
+ * 纯文本主线（cpt00_e_01_01）与立绘+分支（23concert_undline_03、cpt_kimie）。
  *
- * 用法：node tools/test-avg-e2e.mjs [--id=ID1,ID2] [--port=8094]
+ * 用法：node tools/test-avg-e2e.mjs [--id=ID1,ID2] [--timeout=240]
  */
-import {spawn} from 'node:child_process';
-import {existsSync, readFileSync, rmSync} from 'node:fs';
+import {existsSync, readFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {join, resolve} from 'node:path';
-import {createConnection} from 'node:net';
+import {mkdirSync, writeFileSync} from 'node:fs';
 import {parseChunk} from '../js/core/lundump.js';
 import {execChunk, toJS} from '../js/core/lvm.js';
 import {storyToWire, replayChain} from '../js/core/avgwire.js';
-import {stripMarkup, splitPages} from '../js/core/schema.js';
+import {stripMarkup} from '../js/core/schema.js';
 import {emptyState, applyImages, applyShotTweens} from '../js/core/state.js';
+import {flag, findChrome, freshProfile, launchPage, startHost, waitForReport,
+  FIXTURES} from './lib/run.mjs';
 
-const flag = (name, dflt) => {
-  const hit = process.argv.find((a) => a.startsWith(`--${name}=`));
-  return hit ? hit.slice(name.length + 3) : dflt;
-};
-const PORT = Number(flag('port', '8094'));
 const IDS = flag('id',
     'cpt00_e_01_01,23concert_undline_03,cpt_kimie_03_04').split(',');
+const OUT = join(FIXTURES, 'expected-avg_e2e_report.json');
 const ROOT = resolve(process.cwd());
-const OUT = join(ROOT, 'data', 'fixtures', 'expected-avg_e2e_report.json');
-const CHROME = [
-  process.env.CHROME_PATH,
-  'C:/Program Files/Google/Chrome/Application/chrome.exe',
-  'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-  'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
-].filter(Boolean).find(existsSync);
-if (!CHROME) { console.error('找不到 Chrome/Edge，设置 CHROME_PATH'); process.exit(2); }
 
 /* —— Node 侧同源期望：与页面同一套解码/映射/遍历规则 —— */
 
@@ -82,33 +71,10 @@ function expectOf(id) {
 
 /* —— 宿主（一次）与每段剧本一轮浏览器 —— */
 
-const PROFILE = join(tmpdir(), 'avg-e2e-profile');
-const server = spawn('python', [join(ROOT, 'tools', 'ref', 'serve.py'), String(PORT)],
-    {cwd: ROOT, stdio: ['ignore', 'inherit', 'inherit']});
-const waitPort = async () => {
-  for (let left = 100; left--; ) {
-    await new Promise((d) => {
-      const s = createConnection(PORT, '127.0.0.1');
-      s.on('connect', () => s.destroy(d));
-      s.on('error', () => setTimeout(d, 60));
-    });
-    if (await fetch(`http://127.0.0.1:${PORT}/data/index/avg-scripts.json`)
-        .then((r) => r.ok).catch(() => false)) return;
-  }
-  throw new Error(`宿主 ${PORT} 起不来`);
-};
-const waitReport = async (timeoutS) => {
-  const deadline = Date.now() + timeoutS * 1000;
-  while (Date.now() < deadline) {
-    await new Promise((d) => setTimeout(d, 200));
-    if (existsSync(OUT) && readFileSync(OUT, 'utf8').includes('"done": true')) {
-      const report = JSON.parse(readFileSync(OUT, 'utf8'));
-      rmSync(OUT);
-      return report;
-    }
-  }
-  return null;
-};
+const TIMEOUT = Number(flag('timeout', '240'));
+const host = await startHost({probe: 'data/index/avg-scripts.json',
+  port: Number(flag('port', '0'))});
+const chromeBin = findChrome();
 
 /* 渲染态 → 纯文本：reformat 产出的 DOM 里字面 > 被转义成 &gt;、换行成
    <br>，先还原实体再按 stripMarkup 拆标记，与期望侧（源文案 stripMarkup）
@@ -120,25 +86,23 @@ let code = 0;
 const failures = [];
 const summaries = [];
 let lastReport = null;
-let chrome = null;
 try {
-  await waitPort();
-  rmSync(OUT, {force: true});
   for (const id of IDS) {
-    rmSync(OUT, {force: true});
-    rmSync(join(tmpdir(), `avg-e2e-${id}`), {recursive: true, force: true});
-    chrome = spawn(CHROME, [
-      '--headless=new', '--disable-gpu', '--no-sandbox', '--no-first-run',
-      '--hide-scrollbars', '--force-device-scale-factor=1', '--mute-audio',
-      `--user-data-dir=${join(tmpdir(), `avg-e2e-${id}`)}`, '--window-size=1600,1200',
-      `http://127.0.0.1:${PORT}/selftest-avg.html?id=${id}`,
-    ], {cwd: ROOT, stdio: ['ignore', 'ignore', 'inherit']});
-    const report = await waitReport(Number(flag('timeout', '240')));
-    const kill = chrome;
-    chrome = null;
-    kill.kill();
-    if (report) lastReport = report;
-    if (!report) { failures.push(`${id}: 没拿到报告（页面可能抛错）`); code = 1; continue; }
+    const chrome = launchPage({chrome: chromeBin, port: host.port,
+      page: `selftest-avg.html?id=${id}`,
+      profile: freshProfile(`e2e-${id}`)});
+    let report = null;
+    try {
+      report = await waitForReport({out: OUT, timeoutS: TIMEOUT, chrome,
+        step: id});
+    } catch (e) {
+      failures.push(`${id}: ${e.message}`);
+      code = 1;
+      chrome.kill();
+      continue;
+    }
+    chrome.kill();
+    lastReport = report;
     const want = expectOf(id);
     if (report.brief !== want.brief) {
       failures.push(`${id}: 简介不符 ${JSON.stringify(report.brief)}`);
@@ -193,13 +157,13 @@ try {
         + ` · 绝对定位 ${absChecked}`
         + ` · 解引用 ${want.stats.resolved}+${want.stats.unresolved.length}`);
   }
-} catch (e) { console.error(String(e)); code = 1; }
-finally { chrome?.kill(); server.kill(); }
+} finally {
+  host.kill();
+}
 
 for (const s of summaries) console.log('  ' + s);
 for (const m of failures) console.log('  - ' + m);
 if (failures.length && lastReport) {
-  const {writeFileSync, mkdirSync} = await import('node:fs');
   mkdirSync(join(ROOT, 'tools', 'media', '.tmp'), {recursive: true});
   writeFileSync(join(ROOT, 'tools', 'media', '.tmp', 'avg-e2e-report.json'),
       JSON.stringify(lastReport, null, 1));

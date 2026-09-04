@@ -251,3 +251,144 @@
   0% { opacity: .85; transform: translate(-50%, -50%) scale(.25); }
   100% { opacity: 0; transform: translate(-50%, -50%) scale(1.25); }
 }
+
+/* —— 23sg 专属演出（命运石之门联动）——
+   游戏侧真值：Game.Avg.SteinsGate.*（_logic 本地件）。
+   素材真值：sg_theme_001..010 = a01 开场世界线独白的预烤终端帧；
+   sg_chat_001..011 = @channel 全屏板（走普通 images 通道，不经此层）。
+   缺件：SteinsGateAvgDialog 对话框 prefab 与手机窗贴图未提取，
+   对话框皮肤维持标准件、手机窗为结构近似（下注）。 */
+
+/* 终端镜（wire 显式 sgMonitorFrame 才出现，语料零标注 ⇒ 永不自动触发）：
+   预烤帧全屏铺满、自带打字文本，标准对话框被它盖住。2:1 原比在 16:9
+   舞台上 cover 裁边，与游戏全屏铺满一致。 */
+.avg-sg-monitor {
+  display: none;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+}
+.avg-sg-monitor.show {
+  display: block;
+}
+/* 终端帧自带烤死的台词（008 帧那三行就是语料那三行），再挂一层对话框等于
+   同句重印 —— 监视器在屏时对白收掉（帧缺失时 player 会撤这个标记）。 */
+#avg-stage.sg-monitor #avg-dialog {
+  display: none;
+}
+
+/* 手机聊天窗：结构按 UISteinsGateAvg（标题栏/消息列表/收信横幅），
+   外观为近似——窗体贴图与 UINSteinsMobileAnim 动画帧未提取。
+   出入场时长对应 Show/HideSGAvgMobileAnim（DOTween，时长在 prefab 内，
+   取 0.45s 近似值，游戏侧还有 SetWaitAvgSGAnim 等待门）。 */
+.avg-sg-mobile {
+  background: linear-gradient(180deg, #10151d 0%, #1b2430 100%);
+  border: 1px solid #3d4a5c;
+  border-radius: 1.2em;
+  bottom: 3em;
+  box-shadow: 0 0 1.5em #0009;
+  display: flex;
+  flex-direction: column;
+  height: 26em;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  right: 2em;
+  transform: translateX(120%);
+  transition: opacity .45s ease-out, transform .45s ease-out;
+  width: 22em;
+  visibility: hidden;
+}
+.avg-sg-mobile.show {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity .45s ease-out, transform .45s ease-out;
+  visibility: visible;
+}
+.avg-sg-mobile.immediate {
+  transition: none;
+}
+.avg-sg-mobile-title {
+  border-bottom: 1px solid #3d4a5c;
+  color: #9fe3ff;
+  font-size: 1.1em;
+  min-height: 1.4em;
+  padding: .5em .9em;
+  text-shadow: 0 0 .4em #9fe3ff66;
+}
+.avg-sg-mobile-msgs {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: .6em;
+  overflow: hidden;
+  padding: .7em .9em;
+}
+.avg-sg-mobile-item {
+  animation: avg-sg-msg-in .3s ease-out both;
+  background: #24303f;
+  border-radius: .6em;
+  color: #d7e6f2;
+  font-size: .92em;
+  line-height: 1.45;
+  max-width: 92%;
+  padding: .5em .7em;
+}
+.avg-sg-mobile-contact {
+  color: #8fa8bd;
+  font-size: .82em;
+  margin-bottom: .25em;
+}
+.avg-sg-mobile-receive {
+  background: #0e1319ee;
+  border-left: .25em solid #57c7ff;
+  color: #cfe9ff;
+  display: none;
+  left: 2em;
+  padding: .5em 1em;
+  position: absolute;
+  right: 2em;
+  top: 3.2em;
+}
+.avg-sg-mobile-receive.show {
+  display: block;
+}
+.avg-sg-mobile.confirm .avg-sg-mobile-title::after {
+  animation: avg-sg-confirm .9s ease-out both;
+  color: #ffd257;
+  content: '✓';
+  float: right;
+}
+@keyframes avg-sg-msg-in {
+  from { opacity: 0; transform: translateY(.6em); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes avg-sg-confirm {
+  0% { opacity: 0; transform: scale(1.6); }
+  30% { opacity: 1; transform: scale(1); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* 世界线变动：CameraEffectFunction.SteinLineChange 的网页近似
+   （闪白 + 横向撕裂位移；实机时长待校准，暂 1.2s）。 */
+.avg-sg-worldline::after {
+  animation: avg-sg-worldline 1.2s ease-out both;
+  background:
+    repeating-linear-gradient(0deg, #fff0 0 7px, #ffffff26 7px 8px),
+    radial-gradient(ellipse at 50% 45%, #ffffffcc 0%, #ffffff22 45%, #fff0 70%);
+  content: '';
+  inset: 0;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  position: absolute;
+  z-index: 6;
+}
+@keyframes avg-sg-worldline {
+  0% { opacity: 0; transform: translateX(0); }
+  18% { opacity: 1; }
+  30% { transform: translateX(-.6%) skewX(2deg); }
+  46% { transform: translateX(.5%) skewX(-1.4deg); }
+  62% { transform: translateX(-.25%); }
+  100% { opacity: 0; transform: none; }
+}

@@ -29,6 +29,7 @@
  * 5) importProject(applyTo) 把 base64 上传件与标定 layout 灌回注册表。
  */
 import {Player} from '/js/engine/player.js';
+import {reporter} from '/js/test/report.js';
 import {Doc} from '/js/core/doc.js';
 import {normalizeScript} from '/js/core/script.js';
 import {AssetRegistry} from '/js/core/assets.js';
@@ -44,6 +45,8 @@ import {bootProject} from '/js/play.js';
 import {readZip} from '/js/ui/zip.js';
 
 const problems = [];
+const ioReport = reporter('io_report');
+const setStep = (s) => ioReport.step(s);
 const pageErrors = [];
 addEventListener('error', (e) => pageErrors.push(`${e.message} @${e.lineno}`));
 addEventListener('unhandledrejection', (e) => pageErrors.push(`rejection: ${e.reason?.message}`));
@@ -87,6 +90,7 @@ const rigA = makeRig('mount-a', {
       (await (await fetch('/data/layouts/' + img.imgPath + '.json')).json()),
 });
 
+setStep('playA');
 /* A 路连播：到达点 = 回廊增长，分支恒点第一项（与 seek 回归同驱动）。 */
 async function drive(rig, sc, title) {
   const {player, settle, snap} = rig;
@@ -119,6 +123,7 @@ const strip = (s) => {
 const snapsA = await drive(rigA, scene, 'A');
 check('A 路有到达点', snapsA.length >= 20, String(snapsA.length));
 
+setStep('exportImport');
 /* —— 导出 → 导入 —— */
 const doc = new Doc(normalizeScript(scene));
 const project = await exportProject({
@@ -144,6 +149,7 @@ function diffHead(a, b) {
   return `@${n} A=…${a.slice(Math.max(0, n - 20), n + 40)} B=…${b.slice(Math.max(0, n - 20), n + 40)}`;
 }
 
+setStep('zip');
 /* —— ZIP bundle —— */
 const zipBytes = await exportZip({project});
 const entries = await readZip(zipBytes);
@@ -248,10 +254,7 @@ const report = {
   asserts, failureCount: failures.length, failures, problems, pageErrors,
   arrivals: snapsA.length, bundleFiles: entries.length, done: true,
 };
-await fetch('/freeze?scene=io_report', {
-  method: 'POST', headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify(report, null, 1),
-});
+await ioReport.final(report);
 document.title = 'io-report-done';
 </script>
 </body>

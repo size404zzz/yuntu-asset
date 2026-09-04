@@ -44,6 +44,7 @@ import {loadRepoIndex, flatLookup} from '/js/core/repo-index.js';
 import {
   makeSettler, makeSnapshotter, createTimeline, VirtualTimer,
 } from '/js/test/harness.js';
+import {reporter} from '/js/test/report.js';
 
 /* 像素比对截停模式：?max=N&slug=X 播到第 N 个到达点就停（舞台留在
    settled 态供截图），报告写 expected-X.json 不踩常驻回归件。 */
@@ -52,6 +53,7 @@ const MAX_SHOTS = Number(URLP.get('max') || 0);
 const REPORT_SLUG = URLP.get('slug') || 'play_report';
 const SCENE = URLP.get('scene') || 'scene2';
 const TITLES = {scene2: '背水一战', scene3: '绝处逢生', scene4: 'M11 形态'};
+const playReport = reporter(REPORT_SLUG);
 
 const problems = [];
 const skipped = [];   /* 契约切换后缺基准时，跳过了什么要写进报告 */
@@ -174,6 +176,7 @@ for (let click = 0; click < 120; click++) {
         + ` line=${JSON.stringify(refs.avgLine.innerHTML.slice(-24))}`);
     break;
   }
+  playReport.step(`shot#${landed}`);
   shots.push(snapshot(scene[landed], landed, waited));
   lastLanded = landed;
   if (MAX_SHOTS && shots.length >= MAX_SHOTS) break;
@@ -312,11 +315,7 @@ const report = {
   shotsObserved: shots.length,
   done: true,
 };
-await fetch(`/freeze?scene=${REPORT_SLUG}`, {
-  method: 'POST',
-  headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify(report, null, 1),
-});
+await playReport.final(report);
 document.title = 'play-report-done';
 </script>
 </body>

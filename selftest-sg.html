@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<title>23sg 专属演出自检</title>
+<link rel="stylesheet" href="/tools/ref/avg.css">
+<link rel="stylesheet" href="/css/ux.css">
+<style>
+  html, body { margin: 0; background: #1b1b1b; overflow: hidden; }
+  body { color: black; font-family: "Segoe UI", Lato, "Noto Sans", sans-serif; }
+  #mount { width: 1200px; height: 540px; }
+</style>
+</head>
+<body>
+<div id="mount"></div>
+<script type="module">
+/**
+ * 23sg 专属演出自检（contentStyle/sgMobile/sgLineChange/sgMonitorFrame）：
+ * 合成场走手机窗开合/发信/收信横幅、世界线特效与即时隐藏；终端镜按 wire
+ * 显式字段 sgMonitorFrame 直驱（语料无此字段，引擎不自动推导），帧走真实
+ * res/ 文件（naturalWidth 判定），sg_theme_099 故意 404 验证「帧缺失退回
+ * 标准卡」的降级。断言在跑者 tools/test-sg.mjs。
+ */
+import {Player} from '/js/engine/player.js';
+import {VirtualTimer} from '/js/test/harness.js';
+import {reporter} from '/js/test/report.js';
+
+const sgReport = reporter('sg_report');
+const pageErrors = [];
+addEventListener('error', (e) => pageErrors.push(`${e.message} @ ${e.filename}:${e.lineno}`));
+addEventListener('unhandledrejection', (e) => pageErrors.push(`rej: ${e.reason?.message || e.reason}`));
+
+/* 帧解析：真实 res/ 文件（naturalWidth 判定），其余名字 404。 */
+const filePathOf = (name) => /^sg_theme_\d+\.png$/.test(name)
+    ? `/res/Assets/Res/Images/Avg/sg/${name}` : '/nonexistent/' + name;
+
+const clock = new VirtualTimer();
+const player = new Player({
+  mount: document.getElementById('mount'),
+  mode: 'none',
+  timer: clock,
+  filePathOf,
+  layoutOf: async () => ({}),
+  getName: () => '教授',
+  characters: {11: '冈部伦太郎'},
+});
+
+/* 合成场：键 1-13 覆盖全部 SG 语义，sgMobile 的每种形状都取自语料真值
+   （showSgMobile true/false、sendMsg、sendMsgConfirm、showReceiveNewMsg、
+   hideImmediate 单用 = 23sg_b2s03_5#5）。 */
+const scene = {
+  1: {contentStyle: 1, contentType: 2, content: 'SG 模式开场'},
+  2: {contentType: 1, content: '物质运动的持续性与顺序性', sgMonitorFrame: 1},
+  3: {contentType: 1, content: '在四维坐标之中，历史与其组成事件的序列',
+      sgMonitorFrame: 2},
+  4: {contentType: 4, speakerName: '冈部伦太郎', content: '对话框回来了'},
+  5: {sgMobile: {showSgMobile: true}, contentType: 2, content: '手机出现'},
+  6: {sgMobile: {sendMsg: {receiver: '电话微波炉（暂定）',
+      contentMsg: '老式电脑的硬件使用790C'}}, contentType: 2, content: '发信'},
+  7: {sgMobile: {sendMsgConfirm: true}, contentType: 2, content: '确认闪动'},
+  8: {sgMobile: {showReceiveNewMsg: true}, contentType: 2, content: '收信横幅'},
+  9: {sgLineChange: {worldChangeId: 10}, contentType: 2, content: '世界线变动'},
+  10: {sgMobile: {showSgMobile: false}, contentType: 2, content: '手机收起'},
+  11: {sgMobile: {showSgMobile: true}, contentType: 2, content: '手机再来'},
+  12: {sgMobile: {hideImmediate: true}, contentType: 2, content: '立即销毁'},
+  13: {contentType: 1, content: '未标注的普通章节卡', sgMonitorFrame: 99},
+};
+
+player.setScene(scene, '23sg', '1', '', '');
+
+const checks = [];
+const check = (label, cond, detail = '') => {
+  checks.push([label, !!cond, detail]);
+};
+
+/* 排干 compose 的 promise 链：真实解码/fetch 走真实钟，虚拟钟一格都不动，
+   瞬态标记（确认闪动/横幅/世界线）因此还在身上。 */
+const settle = async () => {
+  await player.idle();
+  for (let i = 0; i < 4; i++) await new Promise((r) => setTimeout(r, 15));
+  const img = player.sgMonitorEl;
+  const deadline = Date.now() + 4000;   // 终端帧是 2MB 级 PNG，等它盖 complete 章
+  while (img && !img.complete && Date.now() < deadline) {
+    await new Promise((r) => setTimeout(r, 25));
+  }
+  await clock.advance(0);
+};
+
+const goto = async (n) => {
+  await sgReport.step(`seek ${n}`);
+  await player.seekShot(n);
+  await settle();
+};
+
+/* 瞬态标记只能走实进路：seekShot 会把整条前缀重演一遍，加/撤都发生在那一趟里。 */
+const stepInto = async (n) => {
+  await sgReport.step(`play ${n}`);
+  player.playShot();
+  await settle();
+};
+
+const phoneEl = () => player._sgMobileEl;
+const monitor = () => player.sgMonitorEl;
+
+await goto(1);
+check('sg 类挂舞台', player.refs.avgStage.classList.contains('avg-sg'));
+check('未标注则无终端镜', !monitor()?.classList.contains('show'));
+
+await goto(2);
+check('终端镜帧 001', monitor()?.dataset.frame === 'sg_theme_001.png'
+    && monitor()?.classList.contains('show')
+    && monitor()?.naturalWidth > 0,
+    `frame=${monitor()?.dataset.frame} w=${monitor()?.naturalWidth}`);
+/* 帧里烤死的就是这句台词，对话框必须让位（否则同句重印）。 */
+check('终端镜收对话框', getComputedStyle(player.refs.avgDialog).display === 'none',
+    `stage=${player.refs.avgStage.className}`);
+
+await goto(3);
+check('终端镜帧 002', monitor()?.dataset.frame === 'sg_theme_002.png'
+    && monitor()?.naturalWidth > 0);
+
+await goto(4);
+check('非终端镜收监视器', !monitor()?.classList.contains('show'));
+check('标准对话框回归', player.refs.avgDialog.className === 'type4'
+    && getComputedStyle(player.refs.avgDialog).display !== 'none');
+
+await goto(5);
+check('手机窗展开', phoneEl()?.classList.contains('show') === true);
+check('手机无残留消息', phoneEl()?.children[1].children.length === 0);
+
+await goto(6);
+const item = phoneEl()?.children[1].firstElementChild;
+check('消息泡追加', phoneEl()?.children[1].children.length === 1);
+check('标题=收信人', phoneEl()?.firstElementChild.textContent
+    === '电话微波炉（暂定）');
+check('收信人=电话微波炉（暂定）',
+    item?.children[0].textContent === '电话微波炉（暂定）');
+check('消息体解引用', item?.children[1].textContent === '老式电脑的硬件使用790C');
+
+await stepInto(7);
+check('确认闪动挂上', phoneEl()?.classList.contains('confirm') === true,
+    `cls=${phoneEl()?.className}`);
+await clock.advance(1000);
+check('确认闪动自退', !phoneEl().classList.contains('confirm'));
+
+await stepInto(8);
+check('收信横幅弹出', phoneEl()?.lastElementChild.classList.contains('show') === true,
+    `cls=${phoneEl()?.lastElementChild.className}`);
+await clock.advance(2100);
+check('收信横幅自动退场', !phoneEl().lastElementChild.classList.contains('show'));
+
+await stepInto(9);
+check('世界线特效挂上', player.refs.avgStage.classList.contains('avg-sg-worldline'),
+    `cls=${player.refs.avgStage.className}`);
+await clock.advance(1300);
+check('世界线特效自动退场', !player.refs.avgStage.classList.contains('avg-sg-worldline'));
+
+await stepInto(10);
+check('showSgMobile:false 收起', !phoneEl()?.classList.contains('show')
+    && !phoneEl()?.classList.contains('immediate'));
+await clock.advance(500);
+check('收起即清空消息（DeleteWindow）', phoneEl()?.children[1].children.length === 0);
+
+await goto(11);
+check('再次展开且消息表已空', phoneEl()?.classList.contains('show') === true
+    && phoneEl()?.children[1].children.length === 0);
+
+await goto(12);
+check('hideImmediate 单用即关闭', !phoneEl()?.classList.contains('show')
+    && phoneEl()?.classList.contains('immediate'));
+
+await goto(13);
+check('缺帧退回标准卡', monitor()?.dataset.frame === 'sg_theme_099.png'
+    && !monitor()?.classList.contains('show')
+    && !monitor()?.hasAttribute('src'));
+check('缺帧时仍是标准章节卡', player.refs.avgDialog.className === 'type1'
+    && getComputedStyle(player.refs.avgDialog).display !== 'none',
+    `stage=${player.refs.avgStage.className}`);
+
+const failures = checks.filter(([, ok]) => !ok).map(([label, , detail]) =>
+    label + (detail ? ` —— ${detail}` : ''));
+const report = {
+  ok: failures.length === 0 && pageErrors.length === 0,
+  asserts: checks.length,
+  failureCount: failures.length,
+  failures,
+  pageErrors,
+  done: true,
+};
+await sgReport.final(report);
+document.title = 'sg-report-done';
+</script>
+</body>
+</html>

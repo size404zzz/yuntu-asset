@@ -442,8 +442,10 @@ const decodeLua2 = (kind, id) => {
     }
   }
   /* 121016 → 121722：修 SETLIST 丢数组末条之后多出的 706 处解引用。
+     121722 → 121751：23sg 手机聊天 sendMsg 的 receiver/contentMsg 也是
+     AvgLang 数字键（15 镜 × 至多 2 字段 = 29 处，此前原样是数字）。
      unresolved/byField/shifted 三项一字未变——补回来的都是原本就在的数据。 */
-  assert.equal(resolved, 121722, '解引用命中总数');
+  assert.equal(resolved, 121751, '解引用命中总数');
   assert.equal(unresolved, 128, '未命中（跨剧本引用/缺词条，保数字可见）');
   assert.equal(byField.content, 125);
   assert.equal(byField.speakerName, 2);

@@ -30,6 +30,7 @@
  * 5) M23 退场建议面板：无说话人镜列出滞留立绘 → 收 α0/0.2 → 不再重复建议。
  */
 import {Player} from '/js/engine/player.js';
+import {reporter} from '/js/test/report.js';
 import {Editor} from '/js/editor/editor.js';
 import {AssetRegistry} from '/js/core/assets.js';
 import {normalizeScript} from '/js/core/script.js';
@@ -46,6 +47,8 @@ const check = (label, cond, detail = '') => {
 addEventListener('error', (e) => problems.push(`page: ${e.message} @${e.lineno}`));
 addEventListener('unhandledrejection', (e) => problems.push(`rejection: ${e.reason?.message}`));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const editorReport = reporter('editor_report');
+const setStep = (s) => editorReport.step(s);
 
 const registry = await new AssetRegistry().boot();
 const filePathOf = (name) => registry.resolve(name)?.url
@@ -84,6 +87,7 @@ const editor = new Editor({
 const chara = () => player.refs.avgCharas.querySelector('.avg-chara');
 const opa = () => parseFloat(getComputedStyle(chara()).opacity);
 
+setStep('timedSeek');
 /* —— 关键回归：中段 lane 的 timed seek 起值来自 prev —— */
 player.setScene(scene, 'M9', '1', '回归', '');
 await player.idle();
@@ -105,6 +109,7 @@ check('过渡起值来自 prev 而非 DOM 残留', mid > 0.3 && mid < 0.65,
 await sleep(1500);
 check('编辑后落点 α=0.2', Math.abs(opa() - 0.2) < 0.03, String(opa()));
 
+setStep('patchL3');
 /* —— 编辑器：L3 定点补丁 —— */
 editor.useStory(normalizeScript(scene));
 await sleep(1500);
@@ -130,6 +135,7 @@ await sleep(300);
 check('undo 撤掉 speakerName 批',
     !/甲/.test(player.refs.avgSpeaker.innerHTML + player.refs.avgSpeaker.textContent));
 
+setStep('structure');
 /* —— 结构操作：插入镜 → 列表 +1 —— */
 const rowsBefore = document.querySelectorAll('.shot-row').length;
 editor.doc.structure((s) => s.shots.splice(2, 0, {content: '插', contentType: 4}));
@@ -137,6 +143,7 @@ await sleep(400);
 check('structure 后列表 +1',
     document.querySelectorAll('.shot-row').length === rowsBefore + 1);
 
+setStep('concurrentSeek');
 /* —— 并发 seek（连点分镜）：陈旧轮必须当场撒手 ——
    旧版 seekShot 的重放循环不看 epoch，被新一轮接管后仍一路 playShot 推到
    场景末尾，镜号与屏上镜全不相干（立绘/对白都是别镜的）。 */
@@ -154,6 +161,7 @@ check('屏上镜 = 读数镜（不串台）',
     && !player.refs.avgLine.textContent.includes('第二镜'),
     `shot=${player.shotId} line=${player.refs.avgLine.textContent}`);
 
+setStep('fadeAdvice');
 /* —— M23 退场建议面板（UI 冒烟）：列表 → 收 α0/0.2 → 列表刷新 —— */
 {
   const adviceStory = normalizeScript([
@@ -188,10 +196,7 @@ const report = {
   ok: failures.length === 0 && problems.length === 0,
   asserts, failureCount: failures.length, failures, problems, done: true,
 };
-await fetch('/freeze?scene=editor_report', {
-  method: 'POST', headers: {'Content-Type': 'application/json'},
-  body: JSON.stringify(report, null, 1),
-});
+await editorReport.final(report);
 document.title = 'editor-report-done';
 </script>
 </body>
