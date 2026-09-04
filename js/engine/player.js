@@ -112,8 +112,13 @@ function createVisualLayers(refs) {
   refs.avgStage.insertBefore(foreground, refs.avgDialog);
   refs.avgStage.insertBefore(movie, refs.avgDialog);
   effects.forEach((host) => refs.avgStage.insertBefore(host, refs.avgDialog));
+  /* SG 专属演出层（23sg 联动：CRT 终端镜 / 手机聊天窗 / 世界线变动），
+     盖在对话框之上——手机窗在游戏里是独立 UI 窗（UIWindowTypeID.SteinsGateAvg），
+     浮在 AVG 窗之上。 */
+  const sg = make('avg-layer-sg');
+  refs.avgStage.append(sg);
   /* effects 保留旧别名给宿主/夹具；真实游戏按 1/2/3 三个 parent 分层。 */
-  return {distant, foreground, movie, effects: effects[2], effectHosts: effects};
+  return {distant, foreground, movie, effects: effects[2], effectHosts: effects, sg};
 }
 
 /* 适配策略。实测参考页面 getComputedStyle(#avg-container) = 893.5×540
@@ -176,11 +181,12 @@ export function resetStage({container, refs}) {
   refs.avgLogBox.replaceChildren();
   refs.avgSceneBrief.replaceChildren();
   Object.assign(refs.avgBg.style, {
-    backgroundImage: null, backgroundColor: null, transition: null, opacity: null,
+    backgroundImage: null, transition: null, opacity: null,
     backgroundSize: null, backgroundPositionX: null, backgroundPositionY: null,
   });
   refs.avgDialog.style.minHeight = null;
   refs.avgLine.style.minHeight = null;
+  refs.avgStage.style.backgroundColor = null;
   refs.avgStage.style.filter = null;
   refs.avgStage.style.transition = null;
   refs.avgStage.classList.remove('avg-ppv');
@@ -267,6 +273,12 @@ export class Player {
     this._runtimeShot = null;
     this._runtimeObjects = new Map();
     this._runtimeBindings = [];
+    /* 23sg 专属演出（contentStyle/sgMobile/sgLineChange/sgMonitorFrame）
+       的回合态：sgStyle 全段粘滞（游戏按首镜 cfg 选
+       SteinsGateAvgDialog prefab），其余逐镜生效。 */
+    this.sgStyle = null;
+    this.sgMonitorEl = null;
+    this._sgMobileEl = null;
 
     this.scene = undefined;
     this.scriptType = undefined;
@@ -896,10 +908,129 @@ export class Player {
   /* —— 游戏镜头的非对白演出 —— */
 
   _applyBgColor(value) {
-    /* eBgColor = clear(1) / black(2) / white(3)。背景图片仍在其上，
-       与 Unity 的 img_bg.color 只改底色而不改遮罩的顺序一致。 */
-    const color = {1: 'transparent', 2: 'black', 3: 'white'}[value];
-    if (color) this.refs.avgBg.style.backgroundColor = color;
+    /* eBgColor = clear(1) / black(2) / white(3)。写的是游戏五层最底那张 img_bg，
+       远景层（DistantView=1）在它之上，所以底色必须落在所有图层的下面：写在
+       #avg-bg（= background 容器）上会把整个远景糊掉，背景全走远景层的剧本
+       （23sg 15 段 / cpt04_e_01_01）就整段黑屏。clear 退成无行内值，
+       由 css/avg.css 的 #avg-stage 底色接手。 */
+    const color = {1: '', 2: 'black', 3: 'white'}[value];
+    if (color === undefined) return;
+    this.refs.avgStage.style.backgroundColor = color;
+  }
+
+  /* —— 23sg 专属演出（命运石之门联动）——
+     游戏侧真值：res/Assets/Res/LuaScripts/_logic/Game.Avg.SteinsGate.*。
+     contentStyle:1 → AvgResUtil.GetAvgDialogRes 落
+     「Res/UIPrefabs/Avg/SteinsGateAvgDialog.prefab」整窗替换（74 段）；
+     prefab 贴图不在本地素材树（UIPrefab 未提取），对话框皮肤维持标准件，
+     这里标记舞台供 css/宿主降级，CRT 终端镜与手机窗按语料还原。 */
+
+  _applyContentStyle(style) {
+    this.sgStyle = style === 1 ? 1 : this.sgStyle;
+    this.refs.avgStage.classList.toggle('avg-sg', this.sgStyle === 1);
+  }
+
+  /* 「OASIS 老电脑终端」全屏镜：sg_theme_001..010 是 23sg_a01 开场世界线
+     独白的逐行预烤帧（帧文本与语料 cid10..110 逐行对上；009/010 是删节拍
+     与标题变体的备帧）。触发条件在 prefab 侧、语料欠定（a01 本身无
+     contentStyle；「开场 Chapter 连排」签名全语料命中 31 段，自动推导必
+     误触发），因此按 wire 显式字段 sgMonitorFrame 直驱：运行时真值
+     （tools/frida 录制）接入后在映射层标注即可，引擎不猜。 */
+  _applySgMonitor(shot) {
+    const stage = this.refs.avgStage;
+    if (shot.sgMonitorFrame === undefined) {
+      stage.classList.remove('sg-monitor');
+      this.sgMonitorEl?.classList.remove('show');
+      return;
+    }
+    const frame = `sg_theme_${String(shot.sgMonitorFrame).padStart(3, '0')}.png`;
+    const src = this.filePathOf(frame);
+    const doc = stage.ownerDocument;
+    const el = this.sgMonitorEl ??= (() => {
+      const img = doc.createElement('img');
+      img.className = 'avg-sg-monitor';
+      img.alt = '';
+      img.addEventListener('error', () => {
+        /* 帧不存在：不是本段的终端镜，退回标准 type1 卡。 */
+        img.classList.remove('show');
+        img.removeAttribute('src');
+        this.refs.avgStage.classList.remove('sg-monitor');
+      });
+      this.visualLayers.sg.append(img);
+      return img;
+    })();
+    el.dataset.frame = frame;
+    el.src = src;
+    el.classList.add('show');
+    stage.classList.add('sg-monitor');
+  }
+
+  /* 手机聊天窗（UISteinsGateAvg）。showSgMobile 开关整窗，hideImmediate 是
+     独立的不带动画关闭（语料 23sg_b2s03_5#5 单用）；sendMsg 追加消息泡
+     （收信人 = Lang 解引用后的联系人名）；showReceiveNewMsg 弹「新消息」
+     横幅（语料无载荷，横幅是通用件 obj_Info）；sendMsgConfirm 是发送键确认
+     闪动。窗口隐藏即销毁（DeleteWindow）→ 消息列表清空。 */
+  _applySgMobile(m) {
+    const doc = this.refs.avgStage.ownerDocument;
+    const el = this._sgMobileEl ??= (() => {
+      const win = doc.createElement('div');
+      win.className = 'avg-sg-mobile';
+      win.innerHTML = '<div class="avg-sg-mobile-title"></div>'
+          + '<div class="avg-sg-mobile-msgs"></div>'
+          + '<div class="avg-sg-mobile-receive">新消息</div>';
+      this.visualLayers.sg.append(win);
+      return win;
+    })();
+    const titleEl = el.firstElementChild;
+    const msgs = el.children[1];
+    const receive = el.lastElementChild;
+    const show = () => el.classList.add('show');
+    if (m.showSgMobile === false || m.hideImmediate) {
+      el.classList.toggle('immediate', !!m.hideImmediate);
+      el.classList.remove('show');
+      this.sched.after(450, () => {
+        if (!el.classList.contains('show')) msgs.replaceChildren();
+      });
+      return;
+    }
+    if (m.showSgMobile) {
+      titleEl.textContent = '';
+      show();
+    }
+    if (m.showReceiveNewMsg) {
+      receive.classList.add('show');
+      this.sched.after(2000, () => receive.classList.remove('show'));
+    }
+    if (m.sendMsgConfirm) {
+      el.classList.add('confirm');
+      this.sched.after(900, () => el.classList.remove('confirm'));
+    }
+    if (m.sendMsg && typeof m.sendMsg === 'object') {
+      el.classList.remove('immediate');
+      show();
+      titleEl.textContent = String(m.sendMsg.receiver ?? '');
+      const item = doc.createElement('div');
+      item.className = 'avg-sg-mobile-item';
+      item.innerHTML = '<div class="avg-sg-mobile-contact"></div>'
+          + '<div class="avg-sg-mobile-text"></div>';
+      item.children[0].textContent = String(m.sendMsg.receiver ?? '');
+      item.children[1].textContent = String(m.sendMsg.contentMsg ?? '');
+      msgs.append(item);
+      /* scrollIntoView 会连页面级滚动一起拽，这里只滚消息列表自己。 */
+      msgs.scrollTop = msgs.scrollHeight;
+      item.classList.add('sent');
+    }
+  }
+
+  /* 世界线变动（sgLineChange.worldChangeId）：游戏走
+     CameraEffectFunction.SteinLineChange 相机特效并 SetWaitAvgSGAnim 等待。
+     网页近似：1.2s 的闪白 + 横向撕裂抖动（时长待实机校准）。 */
+  _applySgLineChange() {
+    const stage = this.refs.avgStage;
+    stage.classList.remove('avg-sg-worldline');
+    void stage.offsetWidth;
+    stage.classList.add('avg-sg-worldline');
+    this.sched.after(1200, () => stage.classList.remove('avg-sg-worldline'));
   }
 
   _applyPostProcess(ppv) {
@@ -1177,7 +1308,10 @@ export class Player {
     video.loop = loop;
     host.append(video);
     if (!src) {
-      this._degradeLayer(video, path);
+      /* 缺件的视频面时长按 0 计，随镜结束即撤：否则 #20 这类 PV 缺件镜的
+         占位纹会一直糊在 Movie 层上，把后面没有视频的镜（e_01_01 #21 起
+         本该显现的 bg）整个盖住。 */
+      video.remove();
       return Promise.resolve();
     }
     video.src = src;
@@ -1188,16 +1322,16 @@ export class Player {
     }
     const done = new Promise((resolve) => {
       const finish = () => {
+        /* 播完/失败即撤面，对应游戏 MovieManager 完成回调里的销毁；
+           跨镜存续的是 images 里注册的 imgType-5 条目（走 _loadVisualLayer）。 */
+        video.remove();
         if (this._cancelVideoWait === cancel) this._cancelVideoWait = null;
         resolve();
       };
       const cancel = () => finish();
       this._cancelVideoWait = cancel;
       video.addEventListener('ended', finish, {once: true});
-      video.addEventListener('error', () => {
-        this._degradeLayer(video, path);
-        finish();
-      }, {once: true});
+      video.addEventListener('error', finish, {once: true});
     });
     video.play?.().catch?.(() => {});
     return loop ? Promise.resolve() : this._track(done);
@@ -1207,6 +1341,12 @@ export class Player {
     if (shot.bgColor !== undefined) this._applyBgColor(shot.bgColor);
     if (shot.ppv) this._applyPostProcess(shot.ppv);
     if (shot.effect) this._applyEffects(shot.effect);
+    /* 23sg 专属演出（contentStyle 74 段 / sgMobile 16 段 / sgLineChange 4 段；
+       游戏侧 AvgSteinsGate.PlayAvgActSG）。contentStyle 粘滞，其余逐镜生效。 */
+    if (shot.contentStyle !== undefined) this._applyContentStyle(shot.contentStyle);
+    if (shot.sgMobile !== undefined) this._applySgMobile(shot.sgMobile);
+    if (shot.sgLineChange !== undefined) this._applySgLineChange(shot.sgLineChange);
+    this._applySgMonitor(shot);
     /* 游戏的 hasVideo 分支只在本镜没有 content/branch 时独占推进门；有
        对白的镜头仍先展示对白，下一次推进再处理视频。 */
     if (shot.vedioPath && !shot.content && !shot.branch) {
@@ -1691,6 +1831,9 @@ export class Player {
     };
     this.currentBgId = null;
     this._videoStarted = false;
+    this.sgStyle = null;
+    this.sgMonitorEl = null;
+    this._sgMobileEl = null;
     this.autoPlaying = false;
     if (this.toAutoPlay) {
       this.toAutoPlay = false;

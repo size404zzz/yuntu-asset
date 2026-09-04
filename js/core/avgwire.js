@@ -307,6 +307,15 @@ function resolveStep(step, lang, id, stats, shift) {
       out[field] = resolveRef(out[field], lang, field, id, stats);
     }
   }
+  /* 23sg 手机聊天的收信人/消息体也是 Lang 数字键（游戏侧
+     UISteinsGateAvg 走 GetAvgLanguage(receiver/contentMsg)，46 处引用）。 */
+  if (out.sgMobile?.sendMsg && typeof out.sgMobile.sendMsg === 'object') {
+    const msg = out.sgMobile.sendMsg;
+    out.sgMobile = {...out.sgMobile, sendMsg: {
+      receiver: resolveRef(msg.receiver, lang, 'sgMobile.receiver', id, stats),
+      contentMsg: resolveRef(msg.contentMsg, lang, 'sgMobile.contentMsg', id, stats),
+    }};
+  }
   if (out.branch !== undefined && out.branch !== null) {
     out.branch = resolveBranch(out, lang, id, stats, shift);
   }

@@ -29,6 +29,7 @@
 import {CANVAS, buildChara, buildCharaRules, compositeBody, faceRegion, drawFace,
         deriveLayout, imgSizeOf} from './js/engine/sprite.js';
 import {loadRepoIndex, flatLookup} from './js/core/repo-index.js';
+import {reporter} from '/js/test/report.js';
 
 const repo = await loadRepoIndex();
 /* 素材名 → 同源 url（索引缺席时原样回落，与宿主 /images 兜底同口径）。 */
@@ -213,8 +214,10 @@ async function buildGallery(assets) {
 }
 
 /* —— 断言主流程 —— */
+const spriteReport = reporter('sprite_report');
 async function run(assets) {
   for (const asset of assets) {
+    spriteReport.step(`chara#${asset.name}`);
     const {name, config, lpicImg} = asset;
     const chara = buildChara(asset.imgId);
     const context = chara.firstElementChild.getContext('2d', {willReadFrequently: true});
@@ -291,15 +294,11 @@ logEl.innerHTML = lines.map((l) =>
   + `\n\n${ok ? '全部通过' : '存在 ' + failures.length + ' 条失败'}`
   + `（断言 ${asserts} 条）`;
 
-await fetch('/freeze?scene=sprite_report', {
-  method: 'POST',
-  body: JSON.stringify({
+await spriteReport.final({
     ok, asserts, failureCount: failures.length, failures,
     feet: assets.map((a) => ({name: a.name, y: a.footY})),
     derived: assets.map((a) => ({name: a.name, err: a.derivedErr})),
-    done: true,
-  }, null, 1),
-});
+  });
 </script>
 </body>
 </html>

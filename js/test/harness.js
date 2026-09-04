@@ -202,9 +202,18 @@ export function makeSnapshotter({player, timeline}) {
 
 /* settle：打全 + 静止 + 尾巴（虚拟钟版）。label 只进问题文案。
    「打全」必须是硬条件：compose 链等 tween 的空档里 DOM 本来就静止，
-   光看静止会在 tween 镜提前返回（M4 冻结期踩过）。 */
-export function makeSettler({player, clock, problems}) {
+   光看静止会在 tween 镜提前返回（M4 冻结期踩过）。
+   speed > 1 时（?speed=N 提速通道）：把文档里所有 CSS 过渡的 playbackRate
+   拉到 N 倍、真实等待等比缩短——过渡终值不变，A/B 两路同倍率，对拍等价性
+   不受影响（等价性由 tools/test-seek.mjs --speed=1 与加速轮的报告对字节背书）。 */
+export function makeSettler({player, clock, problems, speed = 1}) {
   const refs = player.refs;
+  const pump = () => {
+    if (speed === 1) return;
+    for (const anim of document.getAnimations()) {
+      if (anim.playbackRate === 1) anim.playbackRate = speed;
+    }
+  };
   return async function settle(shot, label = '?', lineBefore = null) {
     const pages = Array.isArray(shot?.content) && shot.content.length
         ? shot.content.map(plain) : null;
@@ -243,8 +252,11 @@ export function makeSettler({player, clock, problems}) {
     await clock.advance(TRAIL_MS);
     await player.idle();
     /* CSS transition 走真实文档时间线、不吃虚拟钟：立绘的 left/filter 过渡
-       最长 1s，不真实等一手，快照会抓到过渡中间值。 */
-    await new Promise((r) => setTimeout(r, 1150));
+       最长 1s，不真实等一手，快照会抓到过渡中间值。提速时先泵一遍
+       playbackRate（引擎此刻已静止，之后不会再有新过渡起点）。 */
+    pump();
+    await new Promise((r) => setTimeout(r, Math.max(80, Math.ceil(1150 / speed))));
+    await player.idle();
     return Math.round(clock.now() - start);
   };
 }

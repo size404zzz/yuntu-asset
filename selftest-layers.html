@@ -97,7 +97,8 @@ try {
     ['rgb split', player.refs.avgStage.classList.contains('avg-rgb-split')],
     ['snow texture', [...(q('.avg-effect-snow')?.children ?? [])]
       .some((p) => p.style.backgroundImage.includes('FXT_Mask_003_05_1.png'))],
-    ['bg color', player.refs.avgBg.style.backgroundColor === 'white'],
+    ['bg color', player.refs.avgStage.style.backgroundColor === 'white'
+      && !player.refs.avgBg.style.backgroundColor],
     ['dialog', player.refs.avgDialog.className === 'type1'],
   ];
   for (const [name, ok] of checks) if (!ok) report.failures.push(name);

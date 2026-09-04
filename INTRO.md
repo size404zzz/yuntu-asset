@@ -25,31 +25,40 @@ python tools/ref/serve.py 8080     # 或任意静态服务器，根 = 本仓库
 
 ## 回归矩阵
 
+单入口全量回归：`node tools/test-all.mjs`（注册表驱动，纯 Node 链 4 并发、
+浏览器链 2 并发分池跑，`--only/--skip/--list` 可选子集；浏览器链失败时带
+页内心跳诊断，能打出卡在哪一步）。逐条跑也可以：
+
 | 命令 | 内容 | 判据 |
 |---|---|---|
-| `node tools/test-script.mjs` | 剧本双格式归一化 | 15 项 |
-| `node tools/test-markup.mjs` | 分词/分页/打字机三态 | 对拍参考 |
+| `node tools/test-script.mjs` | 剧本双格式归一化 | 逐项通过 |
+| `node tools/test-markup.mjs` | 分词/分页/打字机三态（真 DOM reformat） | 数千断言 |
 | `node tools/test-skeleton.mjs` | 舞台骨架逐 id | 结构保真 |
 | `node tools/test-style.mjs` | avg/pandect.css 移植 | 逐声明+白名单 |
-| `node tools/test-sprite-rules.mjs` | 立绘规则表 | 与冻结逐条等 |
 | `node tools/test-sprite.mjs` | 画布合成/换脸/推导 | 像素判据 |
-| `node tools/test-freeze.mjs` | 冻结表自可信性 | 参考公式重算 |
-| `node tools/test-play.mjs [--scene=sceneN]` | 播放器逐镜（scene1/scene4） | 2164 断言级 |
-| `node tools/test-seek.mjs` | seek ≡ 连播暂停 | 120 到达点全等 |
-| `node tools/test-ui.mjs` | 交互路径（面板/词典/自动/skip/分支） | 908 断言 |
-| `node tools/test-editor.mjs` | 编辑器失效 + prev 起值回归 + 并发 seek 交接 + 退场建议面板 | 真实钟采样 |
-| `node tools/test-io.mjs` | 导出→导入→连播快照全等 + 解包离线探针（含音频资产） | 59 断言 |
-| `node tools/test-assets.mjs` | IDB/注册表/标定挂载 + 编辑器冒烟 | 27+冒烟 |
+| `node tools/test-play.mjs` | 播放器逐镜（虚拟钟回放，冻结表对拍） | 快照逐字节 |
+| `node tools/test-seek.mjs` | seek ≡ 连播暂停（A/B 两路对拍；`--speed=8` 过渡提速约 6×，报告与 `--speed=1` 逐字节一致） | 到达点全等 |
+| `node tools/test-gamefold.mjs` | 镜像/抖动/z 序等折叠语义锚点 | 12 项 |
+| `node tools/test-gameplay.mjs` | state.js 与游戏折叠对账 | 分歧全在已知语义差内 |
+| `node tools/test-avgcfg.mjs` | AvgCfg/AvgLang 字节码解释器 + wire 映射层（格式+VM 锚点+悬空立绘落名+揭示重建+槽位类型门+折叠 alpha 继承+pos/scale 折叠+说话镜入场揭示+全语料口径） | 全部通过 |
+| `node tools/test-avg-e2e.mjs` | 语料端到端：现场解码→映射→播放器逐镜 seek（cpt00 主线 + 23concert 立绘/分支 + cpt_kimie 绝对定位），台词/站位/绝对定位对拍 | 3 段全对 |
+| `node tools/test-editor.mjs` | 编辑器失效三级 + prev 起值回归 + 并发 seek 交接 + 退场建议面板 | 真实钟采样 |
+| `node tools/test-assets.mjs` | IDB/注册表/标定挂载 + 编辑器冒烟 | 冒烟全过 |
+| `node tools/test-io.mjs` | 导出→导入→连播快照全等 + bundle 完整性（含音频资产） | 全部通过 |
 | `node tools/test-audio.mjs` | 音频编排（FakeCtx 纯 Node，含 M15 CV 语音通道） | 10 项 |
 | `node tools/test-doc.mjs` | 撤销栈/失效分级 | 7 项 |
 | `node tools/test-zip.mjs` | STORE 打包可复现 | 4 项 |
 | `node tools/test-repo-index.mjs` | 素材索引/搜索/R13 退化（含音频索引与三级解析） | 9 项 |
-| `node tools/test-avgcfg.mjs` | AvgCfg/AvgLang 字节码解释器 + wire 映射层（格式+VM 锚点+悬空立绘落名+揭示重建+槽位类型门+折叠 alpha 继承+pos/scale 折叠+说话镜入场揭示+全语料口径） | 16 项 |
-| `node tools/test-avg-e2e.mjs` | 语料端到端：现场解码→映射→播放器逐镜 seek（cpt00 主线 + 23concert 立绘/分支 + cpt_kimie 绝对定位），台词/站位/绝对定位对拍 | 3 段全对 |
-| `node tools/test-storylib.mjs` | 剧本库：分组/搜索/loadStory 装载链/索引增强件/语音映射/剧情目录 | 7 项 |
+| `node tools/test-storylib.mjs` | 剧本库：分组/搜索/loadStory 装载链/索引增强件/语音映射/剧情目录 | 全部通过 |
 | `node tools/test-avg-runtime.mjs` | Frida 运行时 JSONL → 可重放 Act/场景导入链 | 1 项 |
-| `node tools/test-fadeadvice.mjs` | 退场建议：触发器/排除项/分档/落笔幂等 + wiki 淡出真值下的梯度锚点 | 7 项 |
+| `node tools/test-fadeadvice.mjs` | 退场建议：触发器/排除项/分档/落笔幂等 + wiki 淡出真值下的梯度锚点 | 全部通过 |
+| `node tools/test-layers.mjs` | 五层舞台折叠模型断言 | 全部通过 |
+| `node tools/test-layers-browser.mjs` | 五层舞台浏览器冒烟（effect/ppv/bgColor/缺件占位） | 冒烟通过 |
+| `node tools/test-sg.mjs` | 23sg 专属演出：SG 窗标记、手机聊天窗（发信/确认/收信横幅/两种关闭）、世界线特效、终端镜只能显式标注 + 缺帧降级 | 语料口径 5 项 + 页内 25 断言 |
 | `node tools/build-asset-index.mjs` | 重建索引（自带 731 背景 / ≥514 _avg 验收 + 剧本清单 + 槽位类型过滤） | — |
+
+浏览器链的公共样板（Chrome 探测、宿主、报告轮询、心跳诊断、结论打印）
+收口在 `tools/lib/run.mjs`，页面侧报告/心跳通道在 `js/test/report.js`。
 
 scene4 是 M11 补的形态夹具：type1、多页 `<|>`、通讯框、delete、type5、nextId
 跳转——M4 时代「本轮没跑到的形态」现已全部纳入逐字节对拍。
@@ -255,3 +264,9 @@ L2 timed seek 预览、撤销栈可回退，参数与 autoLightCast 收场条目
   确要重建时从游戏镜像再提取源件、另行获取 vgmstream 后按上文命令操作。同名 cue 碰撞的 sheet（如 Ambience）按索引内序取
   唯一名，wire 按名引用本就不可区分。
 - BGM 的 CRI 循环段（前奏→循环）暂按整曲循环（M7 引擎语义）。
+- 23sg 专属对话 UI：`contentStyle:1` 在游戏里换成 `SteinsGateAvgDialog.prefab`，
+  而 UIPrefab 从未提取进 `res/` → 对话框皮肤维持标准件（只挂 `#avg-stage.avg-sg` 标记）；
+  手机聊天窗按 `UISteinsGateAvg` 的结构还原、外观近似（窗体贴图同样缺件）。
+  OASIS 终端镜（`sg_theme_001..010`，帧内文本即 a01 开场独白）**只在 wire 显式
+  `sgMonitorFrame` 时出现**：a01 自身无 `contentStyle`，内容侧签名（开场 Chapter 连排）
+  全语料命中 31 段，自动推导必误触发 → 引擎不猜，等 frida 实机真值在映射层标注。

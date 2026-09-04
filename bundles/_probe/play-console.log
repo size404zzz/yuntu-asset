@@ -1,2 +1,0 @@
-[19540:7996:0902/101352.251:INFO:components\enterprise\browser\controller\chrome_browser_cloud_management_controller.cc:241] No machine level policy manager exists.
-[19540:7996:0902/101352.741:INFO:CONSOLE:98] "Uncaught TypeError: scene.map is not a function", source: http://127.0.0.1:8941/selftest-play.html?scene=scene2 (98)
