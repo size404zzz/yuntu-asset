@@ -49,7 +49,7 @@ python tools/ref/serve.py 8080     # 或任意静态服务器，根 = 本仓库
 | `node tools/test-doc.mjs` | 撤销栈/失效分级 | 7 项 |
 | `node tools/test-zip.mjs` | STORE 打包可复现 | 4 项 |
 | `node tools/test-repo-index.mjs` | 素材索引/搜索/R13 退化（含音频索引与三级解析） | 9 项 |
-| `node tools/test-storylib.mjs` | 剧本库：分组/搜索/loadStory 装载链/索引增强件/语音映射/剧情目录 | 全部通过 |
+| `node tools/test-storylib.mjs` | 剧本库：分组/搜索/loadStory 装载链/索引增强件/语音映射/行动记录档案 | 全部通过 |
 | `node tools/test-avg-runtime.mjs` | Frida 运行时 JSONL → 可重放 Act/场景导入链 | 1 项 |
 | `node tools/test-fadeadvice.mjs` | 退场建议：触发器/排除项/分档/落笔幂等 + wiki 淡出真值下的梯度锚点 | 全部通过 |
 | `node tools/test-layers.mjs` | 五层舞台折叠模型断言 | 全部通过 |
@@ -74,7 +74,7 @@ js/ui/     dom zip
 js/test/   harness.js（观测件：虚拟钟/settle/snapshot，两套回归共用）
 js/play.js 离线 bundle 播放入口
 data/      fixtures（夹具+冻结表+外源淡出真值）· index（可浏览素材索引）· layouts · fonts · ui
-tools/     test-*.mjs 回归跑者 · build-asset-index.mjs · build-fade-fixture.mjs · avg-dump.mjs · media/unpack-{acb,avgconfig}.mjs · media/build-voice-index.mjs · shot.mjs
+tools/     test-*.mjs 回归跑者 · build-asset-index.mjs · build-fade-fixture.mjs · build-story-archive.mjs · avg-dump.mjs · media/unpack-{acb,avgconfig}.mjs · media/build-voice-index.mjs · shot.mjs
 tools/ref/ 参考件（.gitignore 排除）+ driver/uidriver/serve/setup（我们写的观测工具）
 ```
 
@@ -177,7 +177,7 @@ imgTween, audio{bgm,sfx}, effect, ppv, nextId…}`，Lang = content-id → 台�
 与立绘+分支（23concert_undline_03，无标定立绘走 deriveLayout 兜底）。
 
 **剧本库（M14，`js/editor/storylib.js`）**：顶栏「剧本库」按钮 → 模态列表
-（搜索 ID + 按首段分组 + 镜数/简介），点选即经 `loadStory` 装载进编辑器，
+（搜索 ID + 按分组筛选（组名口径见 M24）+ 镜数/简介），点选即经 `loadStory` 装载进编辑器，
 走与夹具完全相同的 useStory/保存/导出管线；编辑器冒烟（test-assets）把
 装载链纳入回归。索引增强：build-asset-index 现场解码全语料给每段补
 `steps`/`brief`，并把「解码+映射 0 失败」升格为构建门槛。
@@ -198,9 +198,10 @@ AssetStudio.CLI.exe <镜像>/res/character/persicaria_avg res/ --types Texture2D
 # 剧本：解出 TextAsset 后归位（剥容器前缀/.bytes 尾缀）
 AssetStudio.CLI.exe <镜像>/res/luascripts/avgconfig.ab /tmp/avgcfg --game FakeHeader
 node tools/media/unpack-avgconfig.mjs /tmp/avgcfg && node tools/build-asset-index.mjs
-# 语音/剧情目录映射：解出 configs.ab 后生成 voices.json + story-catalog.json
+# 语音映射 + 行动记录档案：解出 configs.ab 后生成 voices.json / story-archive.json
 AssetStudio.CLI.exe <镜像>/res/luascripts/configs.ab /tmp/cfgs --game FakeHeader
 node tools/media/build-voice-index.mjs /tmp/cfgs/TextAsset
+node tools/build-story-archive.mjs /tmp/cfgs/TextAsset
 node tools/media/unpack-acb.mjs --voice      # Voice/JA_JP 转码（约 690MB ogg）
 ```
 
@@ -221,8 +222,7 @@ node tools/media/unpack-acb.mjs --voice      # Voice/JA_JP 转码（约 690MB og
 引擎 voice 通道：单声道新句掐旧句、seek 不补放、手势前丢弃、缺素材静默。
 检查器新增 CV 行（heroId/voiceId 可改 + ▶ 试听）。
 `build-voice-index.mjs` 消费 configs.ab 解出件产出 voices.json（语料
-468 对引用 **100% 命中**真实 cue）与 `story-catalog.json`（story_avg.lua
-剧情目录：1137 组 / 1067 段在册），剧本库随之新增「剧情线」分组视图。
+468 对引用 **100% 命中**真实 cue）。剧本库的分类视图见下一节 M24。
 
 ## 退场建议（M23）
 
@@ -251,6 +251,60 @@ L2 timed seek 预览、撤销栈可回退，参数与 autoLightCast 收场条目
 22%）> silent（之后再不提，±1 7%，**默认不列**）。另一处直觉修正：落点规律
 不能反着用——P(无说话人|淡出)=68% 不等于 P(淡出|无说话人+滞留)=8%（基率倒
 置），所以无说话人镜只是候选收集器，不做任何判定。
+
+## 剧本库分类改用游戏「行动记录」（M24）
+
+此前剧本库的分组只有「按 ID 首段」一条路，而 `story_avg.group_id` 有 1455 组
+≈一组一条，等于没分。游戏侧其实有一套现成分类——**「行动记录」（HandBook
+ActBook）**：大型活动 / 常规活动 / 专属剧情 三类，每类按年份挂活动，每个活动
+挂剧情段。`tools/build-story-archive.mjs` 把它还原成
+`data/index/story-archive.json`，剧本库顶栏「行动记录」按钮即按它分段浏览
+（`archiveRows` 纯函数，`tools/test-storylib.mjs` 背书）。
+
+「全部」视图的分组下拉也换成了这套归属（`storyLabels`）：段的活动名优先，其次有名
+的主线扇区名，两处都没有才退回 ID 首段，选项按段数降序并标出段数（实测 100 组）。
+兜底不是偷懒而是必需——`story_avg.sectorId` 为空的 883 段（cpt 主线、23sg、
+24carnival…）在档案里根本没归类，扇区 140011 那 17 段连名字都没解出来，硬并成
+「无扇区」一组等于没筛；拆回 ID 首段后 dorm(465)、cpt(403) 这类才仍可点选。
+
+链路全部实证自 configs.ab 的 642 张表（解出件见上节命令）：
+- `handbook_activity.lua` 顶层 3 条 = 三页签，`content` 给成员、`yearDic`
+  直接给 2021–2024 年份归属；
+- 活动名三级跳：`activity[actId].name_id` → `activity_name[...].name` →
+  `locale_text[key]`（34269 条，story_avg 的段名/简介也靠它解）；
+- 专属剧情（class 3）表里 `content` 为空、只给 `content_count=27`，成员实为
+  `activity` 里 type=10/54（HeroGrow/HeroGrowV3）的 27 个活动；
+- 活动 → 剧情段：游戏侧是 `HandBookActReviewFunc.lua` 按 `eActivityType`
+  分发的 21 个处理器，这里照它落三条路由，并按证据强度分档取用：
+  ① **处理器路由**（档 4）——类型 → 该类型的回顾表 → 按「同系列序号」定位行，
+  序号 = `activity[actId].activity_id`（缺省即首期），行内 `*_sector` /
+  `*_stage` / `*_avg` 按语义解到 story_avg（`activity_herolite_avg` 是
+  「avg_id → 行」的嵌套图、`sign_theater_task_condition` 按序号归组，各多钻一层）；
+  ② **号段**（档 3）——`story_avg.sectorId` 以 actId 打头（59001 → 590011）；
+  ③ **表键/外键**（档 1-2）——activity 系表里挂上来的行。
+  只收有 `script_id` 的真剧情段，关卡不计；号段天然把普通/困难两难度的同一段
+  并成一个。
+
+实测口径：昔影归终(59001) 32 段、无律背反(33001) 28 段、同行礼遇-魔境异闻录
+(39003) 2 段（与游戏卡片「剧情进度 2/2」同口径），专属剧情 27 期全收，主线六章
+（罗萨姆/基洛普斯/赫里奥斯/恩格玛/庇厄里亚/柯普利）从「未归入活动的扇区」里自动
+浮出。**全语料 1878 段 = 行动记录 276 + 主线/其他扇区 993 + 未归档 609。**
+
+两处会咬人的口径：
+- story_avg 有 202 段写成 `<容器>.<段名>`（`23sg.23sg_a01`、
+  `24winter.24winter_s00`），而语料索引按 AvgCfg 文件名收、不含容器前缀。照原样
+  比对这 202 段会全被判成缺件——归一化后未归档从 811 降到 609。
+- 号段前缀只是兜底，它会串到邻居活动：致光态(33005) 的真扇区其实是 330061/330062
+  （`sector` 表里就叫「致光态-困难模式」），前缀 `33005` 捞回来的是致密静点的段。
+  所以有档 4 证据时一律让号段靠边。
+
+未结：**只剩 6 个活动一段没挂上，且都不是绑定缺失**——17001 逆波共振、20001 临界
+爆震、19001 拟域作战、22001 诡海迷航 四者的回顾表**首期行里就没有剧情字段**（只有
+2/3 期才挂扇区）；18001 雪境奇缘、58001 热海飙运 更彻底，`activity_tiny_game_main`
+/ `delivery_activity_main` 整张表在 configs.ab 里是空占位 `{ { } }`，真数据走
+`LoadDynCfg` 的动态件、不在配置包里（要收得走 Frida 运行时取真值那条老路）。
+12001/12002（type 12 WhiteDay）不算缺口——分发表里就没有 WhiteDay 处理器，这两
+活动在「行动记录」里也不显示剧情进度。
 
 ## 已知边界
 

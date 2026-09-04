@@ -329,10 +329,10 @@ document.getElementById('tp-prev').addEventListener('click', () => {
    索引缺席（R13）时按钮禁用并提示构建命令；装载 = loadStory（字节码解码
    + avgwire 映射）→ normalizeScript → 走与夹具完全相同的 useStory 管线。 */
 let avgManifest = null;
-let storyCatalog = null;
+let storyArchive = null;
 try {
   avgManifest = await (await fetch('data/index/avg-scripts.json')).json();
-  storyCatalog = await (await fetch('data/index/story-catalog.json')).json();
+  storyArchive = await (await fetch('data/index/story-archive.json')).json();
 } catch { /* 无索引：纯夹具模式 */ }
 const btnStories = document.getElementById('btn-storylib');
 if (!avgManifest) {
@@ -340,7 +340,7 @@ if (!avgManifest) {
   btnStories.title = '缺 data/index/avg-scripts.json（node tools/build-asset-index.mjs）';
 } else {
   btnStories.addEventListener('click', () => {
-    openStoryPicker(avgManifest, {catalog: storyCatalog, onPick: async ({id}) => {
+    openStoryPicker(avgManifest, {archive: storyArchive, onPick: async ({id}) => {
       document.querySelector('.picker-overlay')?.remove();
       try {
         flashStatus(`装载 ${id}…`);

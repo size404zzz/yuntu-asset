@@ -7,6 +7,8 @@
     "fps": 30.0,
     "duration": 1000,
     "loop": true,
+    "size": 13.338,
+    "life": 2000,
     "opacity": 1.0,
     "blendMode": "screen",
     "tint": null,
@@ -26,6 +28,9 @@
         "columns": 1,
         "rows": 1,
         "frames": 1,
+        "size": 174.836,
+        "duration": 1000,
+        "life": 250,
         "rotate": 0.0
       },
       {
@@ -37,6 +42,9 @@
         "columns": 1,
         "rows": 1,
         "frames": 1,
+        "size": 1015.344,
+        "duration": 5000,
+        "life": 200,
         "rotate": 0.0
       }
     ],
@@ -58,6 +66,9 @@
         "columns": 1,
         "rows": 1,
         "frames": 1,
+        "size": 1815.835,
+        "duration": 5000,
+        "life": 3000,
         "rotate": 1.26
       },
       {
@@ -69,6 +80,9 @@
         "columns": 1,
         "rows": 1,
         "frames": 1,
+        "size": 735.023,
+        "duration": 5000,
+        "life": 2500,
         "rotate": 0.0
       }
     ],
@@ -87,6 +101,8 @@
     "fps": 30.0,
     "duration": 500,
     "loop": true,
+    "size": 300.28,
+    "life": 1400,
     "opacity": 0.361,
     "blendMode": "screen",
     "tint": null,
@@ -106,6 +122,9 @@
         "columns": 1,
         "rows": 1,
         "frames": 1,
+        "size": 174.836,
+        "duration": 1000,
+        "life": 250,
         "rotate": 0.0
       },
       {
@@ -117,6 +136,9 @@
         "columns": 1,
         "rows": 1,
         "frames": 1,
+        "size": 1015.344,
+        "duration": 5000,
+        "life": 200,
         "rotate": 0.0
       }
     ],
@@ -135,6 +157,8 @@
     "fps": 30.0,
     "duration": 5000,
     "loop": false,
+    "size": 929.982,
+    "life": 180,
     "opacity": 1.0,
     "blendMode": "screen",
     "tint": "rgb(255, 159, 59)",

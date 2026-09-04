@@ -138,6 +138,9 @@ textarea { width: 100%; min-height: 64px; resize: vertical; }
 
 /* —— M14 剧本库：列表式选择器 —— */
 .picker-story-box { width: min(760px, 92vw); }
+/* 分组下拉里会出现整句活动名：给宽度上限并让窄窗口下工具条换行，避免横向溢出。 */
+.picker-story-box .picker-bar { flex-wrap: wrap; }
+.picker-story-box select { flex: 0 1 auto; max-width: 260px; }
 .picker-story-list { display: flex; flex-direction: column; }
 .picker-story { flex-direction: row; align-items: baseline; gap: 10px;
   text-align: left; padding: 6px 8px; }
