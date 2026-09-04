@@ -49,9 +49,10 @@ python tools/ref/serve.py 8080     # 或任意静态服务器，根 = 本仓库
 | `node tools/test-doc.mjs` | 撤销栈/失效分级 | 7 项 |
 | `node tools/test-zip.mjs` | STORE 打包可复现 | 4 项 |
 | `node tools/test-repo-index.mjs` | 素材索引/搜索/R13 退化（含音频索引与三级解析） | 9 项 |
-| `node tools/test-storylib.mjs` | 剧本库：分组/搜索/loadStory 装载链/索引增强件/语音映射/行动记录档案 | 全部通过 |
+| `node tools/test-storylib.mjs` | 剧本库：分组/搜索/loadStory 装载链/索引增强件/语音映射/行动记录剧情树 | 全部通过 |
 | `node tools/test-avg-runtime.mjs` | Frida 运行时 JSONL → 可重放 Act/场景导入链 | 1 项 |
 | `node tools/test-fadeadvice.mjs` | 退场建议：触发器/排除项/分档/落笔幂等 + wiki 淡出真值下的梯度锚点 | 全部通过 |
+| `node tools/test-recorder.mjs` | 录制剧情视频：mime 优先级/参数清洗/假钟自动驱动/假件采集监测/FakeRecorder 协商/fake 内核转码取消路径 | 12 组断言 |
 | `node tools/test-layers.mjs` | 五层舞台折叠模型断言 | 全部通过 |
 | `node tools/test-layers-browser.mjs` | 五层舞台浏览器冒烟（effect/ppv/bgColor/缺件占位） | 冒烟通过 |
 | `node tools/test-sg.mjs` | 23sg 专属演出：SG 窗标记、手机聊天窗（发信/确认/收信横幅/两种关闭）、世界线特效、终端镜只能显式标注 + 缺帧降级 | 语料口径 5 项 + 页内 25 断言 |
@@ -69,7 +70,7 @@ scene4 是 M11 补的形态夹具：type1、多页 `<|>`、通讯框、delete、
 css/       avg.css pandect.css（参考逐声明移植）· app.css（编辑器）· ux.css（动效降级/缺素材占位）
 js/core/   schema markup scheduler state script doc idb repo-index assets lundump lvm avgwire fadeadvice
 js/engine/ player sprite typewriter nouns audio
-js/editor/ editor inspector fld picker storylib timeline layout-cal io advice
+js/editor/ editor inspector fld picker storylib timeline layout-cal io advice recorder
 js/ui/     dom zip
 js/test/   harness.js（观测件：虚拟钟/settle/snapshot，两套回归共用）
 js/play.js 离线 bundle 播放入口
@@ -252,20 +253,49 @@ L2 timed seek 预览、撤销栈可回退，参数与 autoLightCast 收场条目
 不能反着用——P(无说话人|淡出)=68% 不等于 P(淡出|无说话人+滞留)=8%（基率倒
 置），所以无说话人镜只是候选收集器，不做任何判定。
 
-## 剧本库分类改用游戏「行动记录」（M24）
+## 剧本库分类改用游戏「行动记录」（M24，M26 改三层剧情树）
 
 此前剧本库的分组只有「按 ID 首段」一条路，而 `story_avg.group_id` 有 1455 组
 ≈一组一条，等于没分。游戏侧其实有一套现成分类——**「行动记录」（HandBook
 ActBook）**：大型活动 / 常规活动 / 专属剧情 三类，每类按年份挂活动，每个活动
 挂剧情段。`tools/build-story-archive.mjs` 把它还原成
-`data/index/story-archive.json`，剧本库顶栏「行动记录」按钮即按它分段浏览
-（`archiveRows` 纯函数，`tools/test-storylib.mjs` 背书）。
+`data/index/story-archive.json`，剧本库即按它出**三层剧情树**：左轨 = 分类
+（三大类 + 主线 + 未归档）与选中分类的年份组，右栏 = 该年的活动卡 → 点开看
+剧情段（`archiveTree` 纯函数，`tools/test-storylib.mjs` 背书）。主线扇区与
+未归档首段没有真活动层，同名虚拟活动由 UI 直通剧情。搜索框一有输入就切回按
+ID 的平铺结果，清空恢复树。
 
-「全部」视图的分组下拉也换成了这套归属（`storyLabels`）：段的活动名优先，其次有名
-的主线扇区名，两处都没有才退回 ID 首段，选项按段数降序并标出段数（实测 100 组）。
-兜底不是偷懒而是必需——`story_avg.sectorId` 为空的 883 段（cpt 主线、23sg、
-24carnival…）在档案里根本没归类，扇区 140011 那 17 段连名字都没解出来，硬并成
-「无扇区」一组等于没筛；拆回 ID 首段后 dorm(465)、cpt(403) 这类才仍可点选。
+年份口径：三大类的 `year` 来自 `handbook_activity.yearDic`（游戏权威数据）；
+专属剧情整类没有 yearDic，按活动 `rewardEnd_time` 的档期年份补（跨年活动归
+结束侧——冥刃沐辉 2023-12 开启归 2024，与游戏时间轴一致）。
+
+## 截图卡片两件还原件：活动奖励 / 剧情进度（M27）
+
+游戏「行动记录」卡片上还有两组数字，反汇编 `UINHandBookActBookFesItem` +
+`CommonPoltReviewData` 定到口径后各还原了一件半：
+
+- **活动奖励 x/y**：分母 = `handbook_activity.content[actId].reward_list` 的
+  长度（FesItem f1 L42 `_totalRewardCount = #reward_list`），分子 = 玩家持有
+  数（存档数据，不还原）。档案在每个活动上输出 `rewards`（条目 id 数组），
+  树卡片显示「活动奖励 N」。截图对账：昔影归终 12、致光态 8、热海飙运 3 全中；
+  同行礼遇 reward_list 为空 ⇒ 游戏也不渲染奖励条。**已知缺口**：专属剧情整类
+  的 content 行在动态配置里（静态表 `content_count=27` 而 content 空，运行时
+  LoadDynCfg 拉），静态还原不了。
+- **剧情进度 x/y**：显示 = `CommonPoltReviewData.totalUnlockedNum4Show /
+  totalNum4Show`（解锁数/配置数；复刻活动取解锁数大的一份），分子是存档，
+  分母 = 处理器路由出的配置条目数。生成器据此新增两条路由与一个计数字段：
+  ① `story_avg.activity_id` 直挂列（type 10 专属剧情的游戏分组列，证据最强）
+  ——修正了薄暮葬曲被号段前缀撞车错归的主线序章，其 2 真剧情 + 1 关卡章节与
+  游戏 Create4CharAct 的 `stageAvgDic[main_stage]` 分支同构，深红葬场主线组
+  随之解散；② 全量索引（含语料外死行）计数的 `storyTotal`，仅当配置段多于
+  语料可装载段时输出，差值即本地缺件（当前语料下 0 条，字段保留给未来增量）。
+  **已知缺口**：2024 三活动的游戏分母（昔影归终 42 / 致光态 18 / 热海飙运 4）
+  含动态回顾表（anniversary24/carnival23/delivery 走 LoadDynCfg）独有条目，
+  静态证不到；静态可证分母与语料段数一致（32/13/0）。
+
+旧版随本改退役：`archiveRows` 平铺分区视图与 `storyLabels` 活动名分组下拉
+（归属规则由 `archiveTree` 的未归档首段分组继承：dorm(465)、cpt(42) 这类
+才仍可点选；`story_avg.sectorId` 为空的 883 段在主线「未分扇区」组下）。
 
 链路全部实证自 configs.ab 的 642 张表（解出件见上节命令）：
 - `handbook_activity.lua` 顶层 3 条 = 三页签，`content` 给成员、`yearDic`
@@ -305,6 +335,57 @@ ActBook）**：大型活动 / 常规活动 / 专属剧情 三类，每类按年�
 `LoadDynCfg` 的动态件、不在配置包里（要收得走 Frida 运行时取真值那条老路）。
 12001/12002（type 12 WhiteDay）不算缺口——分发表里就没有 WhiteDay 处理器，这两
 活动在「行动记录」里也不显示剧情进度。
+
+## 录制剧情视频
+
+两个入口（`js/editor/recorder.js`，与 gfStory 播放器同构的管线）：
+
+- **全屏播放页 `record.html?id=<段ID>`**（`js/record.js`）：整段语料的回看 +
+  录制一体化。页面本身就是全屏舞台（1200×540 设计稿等比缩放充满视口），
+  工具栏 2.5s 无操作自动隐没、录制期间整体退场（`onPhase` →
+  `body.record-active`）。装载走剧本库同一条解码链，落点与编辑器同一语义
+  ——**首个可停留镜**（开场常是 autoContinue 直通镜，`seekShot` 停不住首镜，
+  fastForward 会顺着链自动推进；用 `sceneTimeline()` 的 pausable 判据接住）。
+  顶栏「剧本库」可换段，`?id` 随选择写回地址栏。
+- **编辑器「录制视频」**：录的是**编辑稿**（getStory 在开录瞬间取 doc 现值），
+  开录时舞台经 `stageHostView` 搬进全屏黑底宿主（采集的是整个视口，编辑器
+  外壳不能入镜）；模态栏另有「全屏播放页」按钮直达 record.html。
+
+管线：`getDisplayMedia`（ideal 约束 + Chromium 的 `preferCurrentTab` 预选本
+标签页；它与 `selfBrowserSurface:'exclude'` 互斥，同给会抛错）→ `MediaRecorder`
+mime 优先级协商（`video/mp4;codecs=avc1.640028,mp4a.40.2` 直出 H.264+AAC，零
+转码；Firefox 兜底 webm vp9+opus）→ webm 导出时用 ffmpeg.wasm（UMD 从 CDN
+拉，约 31MB 仅首次）转 MP4，进度从内核 log 的 `time=` 现算（MediaRecorder 的
+webm 缺时长元数据，内核自报 progress 恒 0）；取消/超时
+（TRANSCODE_IDLE_TIMEOUT_MS）是逃生门：terminate 内核、直接导原始 webm。
+单线程 wasm 求稳，超 15 分钟的录像把转码宽度压到 854。
+
+- **自动播放驱动 `AutoDriver`**（计时器可注入，纯 Node 可测）：轮询目标的最小接口，
+  Player 接线在 `playerTarget()`（全走公开量，与 main.js 连播同口径）。两个时序结论：
+  `ended = playEnd && shotEnd`——进末镜 ≠ 播完，末行打完才算，否则视频切掉最后一句；
+  **choices 判定先于 ended**——末镜是分支镜时 `playEnd` 已置真但选项还等人选。
+  选项停留 `dwellMs` 后自动选第一项，走净新增的公开入口 `Player.chooseBranch`
+  （与点击选项同一落点）。
+- **录制期间页内零指示**：倒计时/授权弹窗都发生在 MediaRecorder 起跑**之前**，
+  不进视频；舞台内的点击被会话 capture 截停（防误触推进毁掉整段录像）；
+  Esc 停机，标题栏 `●` 兜底。停机后舞台归位、倍率还原、预览落回原分镜。
+- **采集质量监测**：2px 隐形 video 吃采集流，`requestVideoFrameCallback` 逐帧计数
+  得真实帧率（1s 窗口取最低）——注意探针用 `opacity:0` 而非 `display:none`，
+  后者会停掉渲染管线、rVFC 不再逐帧来。停机报告对照请求档位，实测帧率低于目标
+  八成提示降档；rVFC 缺席的浏览器降级为只报尺寸。
+- **旋钮**（localStorage 记忆）：分辨率 480–**2160（4K）**（16:9 向上取偶 ⇒
+  854/1280/1920/2560/3840）、帧率 15–**60**、码率 1–**80Mbps**（默认 8）、
+  播放倍速 1–10×（吃引擎 Scheduler 钟，CSS 过渡不压缩——与预览 10× 同一取舍）、
+  选项停留 0.5–10s、开录倒计时 0/3/5/10、采集标签页音频复选框。档位是请求值
+  （ideal 约束），实际采集受视口/编码器能力钳制，报告里报实测。
+- **回归**：`tools/test-recorder.mjs` 12 组纯函数断言（假钟跑满驱动全流程、fake
+  rVFC 监测、FakeRecorder mime 协商、fake 内核的转码/取消路径）；编辑器冒烟
+  （test-assets）把「录制面板可开」纳入；`tmp-recorder-probe.mjs` 是一次性全流程
+  探针——canvas 采集流顶替 getDisplayMedia（无头环境弹不了授权框），其余全真，
+  双场景：编辑器舞台出画 + Esc 中停导出；record.html 整段播完 + 工具栏隐没/回归。
+- **已知边界**：需要 localhost/https（getDisplayMedia 的安全上下文要求）；采集的
+  是视口内容，窗口比例与 20:9 舞台不同时黑边入镜；倍速 >1 时 CV 语音按引擎
+  既有语义只留 bgm。
 
 ## 已知边界
 

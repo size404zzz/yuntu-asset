@@ -41,6 +41,7 @@ const REGISTRY = [
   {name: 'repo-index', kind: 'node', desc: '素材索引/搜索/三级解析'},
   {name: 'storylib', kind: 'node', desc: '剧本库：分组/搜索/loadStory/语音映射'},
   {name: 'fadeadvice', kind: 'node', desc: '退场建议：触发/排除/分档/幂等'},
+  {name: 'recorder', kind: 'node', desc: '录制视频：mime/参数/自动驱动/监测/转码（纯函数）'},
   {name: 'avg-runtime', kind: 'node', desc: 'Frida 运行时 JSONL → 可重放导入链'},
   {name: 'layers', kind: 'node', desc: '五层舞台折叠模型断言'},
   {name: 'layers-browser', kind: 'browser', desc: '五层舞台浏览器冒烟（effect/ppv/占位）'},

@@ -404,6 +404,22 @@ export class Player {
         this.defaultFaces.delete(img.imgId);
         await this._paintLpic(chara, img, config);
         if (epoch !== this.sched.epoch) return;
+      } else {
+        /* 不带 delete 的重复注册：游戏侧 NewImgItem 照样重跑 InitAvgHeroPic
+           → InitAvgHeroPicParam，comm/ripple 按新条目重新赋值（两 helper 都
+           幂等）。comm 模式翻转时合成数学跟着变（comm 视图只画 300×426 子
+           区域），旧脸像素也随模式失效——走 reenter 同款清底重画；
+           模式没变就只同步 ripple（水波纹是材质件，不牵动画布）。 */
+        const chara = this._charaEl(img.imgId);
+        if (chara && !!chara.querySelector('.avg-communication') !== !!img.comm) {
+          chara.firstElementChild.getContext('2d')
+              .clearRect(0, 0, this.canvasSize, this.canvasSize);
+          this.defaultFaces.delete(img.imgId);
+          await this._paintLpic(chara, img, config);
+          if (epoch !== this.sched.epoch) return;
+        } else if (chara) {
+          this._setRipple(chara, !!img.ripple);
+        }
       }
     }
     this._applyZOrder();
@@ -530,6 +546,7 @@ export class Player {
         compositeBody(context, charaImg, config,
                       {comm: !!img.comm, canvasSize: this.canvasSize});
         this._setCommunication(chara, !!img.comm);
+        this._setRipple(chara, !!img.ripple);
         if (!this.defaultFaces.has(img.imgId) && region) {
           const arg = region.slice(0, 2).map(Math.floor)
               .concat(region.slice(2).map(Math.ceil));
@@ -765,8 +782,13 @@ export class Player {
   }
 
   /* UINAvgHeroPic does not bake comm/ripple into the script image itself.
-     InitAvgHeroPicParam and every AvgImgTween call the two visibility helpers,
-     so their state is an immediate property of the current tween batch. */
+     游戏侧这两个可见性只在注册时赋值：InitAvgHeroPicParam L143/L147 把
+     imgCfg.comm/ripple 原值传给 __ShowCommunication/__ShowRipple，两个 helper
+     都幂等（show 假 + 无挂件 = no-op，show 假 + 有挂件 = 摘除）；回收
+     （Delete L363/365）强制 false。tween 全链路（AvgImgTweenUntil）从不触碰
+     它们——语料 229 个带 comm 的剧本里 imgTween 条目 0 例携带 comm/ripple。
+     所以 DOM 侧只由注册事件驱动：_paintLpic（首建/reenter）与本函数调用方
+     loadImages 的重复注册分支；动 tween 会把通讯框从后续镜头整批抹掉。 */
   _setCommunication(chara, show) {
     const old = chara.querySelector('.avg-communication');
     if (!show) {
@@ -846,18 +868,14 @@ export class Player {
       if (faceId !== undefined && region) {
         this._track(this._drawFace(chara, img, faceId, region));
       }
-      this._setCommunication(chara, !!img.comm);
     } else {
       chara = buildChara(imgId, this.canvasSize);
       this._paintLpic(chara, img, config, {faceId});
     }
-    /* These helpers are called while AvgImgTweenUntil builds the sequence,
-       before delay/duration enter the scheduler.  Apply the final state of
-       this batch now, preserving the official immediate helper semantics. */
-    for (const entry of entries) {
-      this._setCommunication(chara, entry.comm === true);
-      this._setRipple(chara, entry.ripple === true && entry.comm !== true);
-    }
+    /* comm/ripple 不在此处赋值：注册事件（loadImages/_paintLpic）已按
+       img.comm/img.ripple 定死，tween 链路在游戏里从不改它（见
+       _setCommunication 注）。此前按「条目缺 comm 即摘框」处理，语料里
+       tween 条目 0 例携带 comm ⇒ 通讯框登场一拍就被整批抹掉。 */
     let enter = entering;
     for (const entry of entries) {
       this._blockChara(entry, imgId, chara, enter);
@@ -1769,6 +1787,12 @@ export class Player {
         this.clearStage();
       }
     }
+  }
+
+  /* 公开选支入口（录制器自动选第一项 / 宿主脚本化推进）：与点击选项
+     同一落点——回廊打 selected + playShot(jumpAct)。非分支镜上静默忽略。 */
+  chooseBranch(index) {
+    if (this.scene?.[this.shotId]?.branch) this._chooseBranch(index);
   }
 
   controlClick(event) {

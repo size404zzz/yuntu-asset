@@ -1,12 +1,12 @@
 /**
  * M14 剧本库单测（纯 Node）：分组/搜索纯函数、loadStory 装载链、
- * 索引增强件（steps/brief）口径、行动记录档案（archiveRows）归属。
+ * 索引增强件（steps/brief）口径、行动记录档案（archiveTree 剧情树）归属。
  * 用法：node tools/test-storylib.mjs
  */
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {join, resolve} from 'node:path';
-import {groupOf, filterStories, storyGroups, storyLabels, archiveRows, loadStory} from '../js/editor/storylib.js';
+import {groupOf, filterStories, storyGroups, archiveTree, loadStory} from '../js/editor/storylib.js';
 
 let passed = 0;
 const ok = (m) => { passed++; console.log('  ok   ' + m); };
@@ -118,6 +118,17 @@ assert.equal(fe.name, '昔影归终');
 assert.equal(fe.year, 2024);
 assert.equal(fe.stories.length, 32, '昔影归终 32 段真剧情（关卡不计）');
 assert.equal(fe.stories[0].id, '24fe_s00');
+/* 「活动奖励」分母 = 手册 content 行 reward_list，与截图卡片对账：
+   昔影归终 0/12 · 致光态 7/8 · 热海飙运 1/3 */
+assert.equal(fe.rewards.length, 12, '昔影归终 活动奖励 12 项');
+assert.equal(archive.classes[0].activities.find((a) => a.id === 33005).rewards.length, 8,
+    '致光态 活动奖励 8 项');
+assert.equal(archive.classes[1].activities.find((a) => a.id === 58001).rewards.length, 3,
+    '热海飙运 活动奖励 3 项');
+assert.ok(!archive.classes[1].activities.find((a) => a.id === 39003).rewards,
+    '同行礼遇 reward_list 为空 ⇒ 无奖励条（与截图一致）');
+assert.ok(archive.classes[2].activities.every((a) => !a.rewards),
+    '专属剧情的 content 行在动态配置里，静态无奖励数据');
 const manifestIds = new Set(manifest.stories.map((s) => s.id));
 const archivedIds = new Set(archive.classes.flatMap((c) => c.activities.flatMap((a) => a.stories.map((s) => s.id))));
 for (const id of archivedIds) assert.ok(manifestIds.has(id), `档案段 ${id} 必须在语料索引里`);
@@ -128,41 +139,43 @@ assert.ok(archive.classes[2].activities.every((a) => a.stories.length),
     `专属剧情有空活动：${archive.classes[2].activities.filter((a) => !a.stories.length).map((a) => a.id)}`);
 ok(`行动记录：${archivedIds.size} 段归入 ${archive.classes.reduce((n, c) => n + c.activities.length, 0)} 个活动`);
 
-/* —— 分组下拉：档案归属名优先，无档可归的退 ID 首段 —— */
+/* —— 剧情树（archiveTree）：分类 → 年份/扇区/首段 → 活动 → 剧情 —— */
 
-const labels = storyLabels(archive);
-assert.equal(labels.get('24fe_s00'), '昔影归终', '活动段挂活动名');
-const sector = archive.mainline.find((m) => m.name);
-assert.equal(labels.get(sector.stories[0].id), sector.name, '主线段挂扇区名');
-assert.ok(!labels.has('cpt00_e_01_01'), '无扇区主线段不挂名，交给 groupOf 兜底');
-const named = storyGroups(manifest, labels);
-assert.equal(named.reduce((n, g) => n + g.count, 0), 1878, '分组名不吞段');
-assert.ok(!named.some((g) => g.label.startsWith('无扇区')),
-    '883 段无扇区主线已拆回 ID 首段，不再是巨型组');
-assert.ok(named.every((g) => g.label), '组名非空');
-const feRows = filterStories(manifest.stories, {group: '昔影归终', labels});
-assert.equal(feRows.length, 32, '按活动名筛回整个活动的段');
-assert.ok(feRows.every((s) => labels.get(s.id) === '昔影归终'));
-assert.ok(filterStories(manifest.stories, {group: 'dorm', labels})
-    .every((s) => groupOf(s.id) === 'dorm'), '未挂档段仍按 ID 首段筛');
-ok(`分组下拉：${named.length} 组 · 前 3 = ${named.slice(0, 3).map((g) => `${g.label}(${g.count})`).join(' ')}`);
-
-/* —— archiveRows：档案 → 浏览行 —— */
-
-const rows = archiveRows(archive, manifest);
-const sections = rows.filter((r) => r.section);
-const dataRows = rows.filter((r) => !r.section);
-assert.ok(sections.length > 30 && dataRows.length > 1000, '分区与行都有量');
-assert.ok(!dataRows.some((r) => r.steps == null), '每行都带镜数');
-assert.equal(new Set(dataRows.map((r) => r.id)).size, dataRows.length, '同一段不重复列');
-assert.equal(sections[0].section, '大型活动｜神导异论 · 2021');
-assert.ok(sections.some((s) => s.section.startsWith('主线｜')), '主线扇区成段');
-const bucketIds = new Set([...archivedIds,
-    ...archive.mainline.flatMap((m) => m.stories.map((s) => s.id)), ...archive.unarchived]);
-assert.equal(bucketIds.size, archivedIds.size
-    + new Set(archive.mainline.flatMap((m) => m.stories.map((s) => s.id))).size
-    + new Set(archive.unarchived).size, '三段互不重叠');
-assert.equal(dataRows.length, bucketIds.size, '三段并起来就是全部行');
-ok(`档案浏览行：${sections.length} 个分区 · ${dataRows.length} 行（含未归档 ${archive.unarchived.length}）`);
+const tree = archiveTree(archive, manifest);
+assert.deepEqual(tree.map((n) => n.name), ['大型活动', '常规活动', '专属剧情', '主线', '未归档'],
+    '顶层 = 三大分类 + 主线 + 未归档');
+const leaves = tree.flatMap((n) => n.groups.flatMap((g) => g.activities.flatMap((a) => a.stories)));
+const treeIds = leaves.map((s) => s.id);
+assert.equal(new Set(treeIds).size, treeIds.length, '同一段在树里只出现一次');
+assert.equal(treeIds.length, 1878, '树叶子并起来就是全部语料段');
+assert.ok(leaves.every((s) => typeof s.steps === 'number'), '每个叶子都带镜数');
+/* 年份组：数字降序，大型 2024 与游戏卡片同员；专属 2024 与游戏时间轴同序同员 */
+assert.deepEqual(tree[0].groups.map((g) => g.label), ['2024', '2023', '2022', '2021']);
+const big24 = tree[0].groups[0];
+assert.deepEqual(big24.activities.map((a) => a.name),
+    ['致光态', '弹痕、飞鸟、雏菊', '境界干涉的延迟选择', '半影迹印', '昔影归终']);
+const feNode = big24.activities.find((a) => a.id === 59001);
+const a59001Raw = archive.classes[0].activities.find((a) => a.id === 59001);
+assert.equal(feNode.stories.length, 32, '昔影归终 32 段');
+assert.equal(feNode.stories[0].id, '24fe_s00');
+assert.deepEqual(feNode.rewards, a59001Raw.rewards, '树活动节点带奖励条目');
+/* story_avg.activity_id 直挂列修正：薄暮葬曲 = 2 真剧情 + 1 关卡章节（游戏卡片
+   Create4CharAct 的 stageAvgDic 分支同构），原先被号段前缀撞车错成主线序章单段 */
+const mu = tree[2].groups.find((g) => g.label === '2022').activities.find((a) => a.id === 10010);
+assert.deepEqual(mu.stories.map((s) => s.id),
+    ['cpt_clotho_00_01', 'cpt00_e_01_02', 'cpt_clotho_05_01'], '薄暮葬曲 2+1 段');
+const hero24 = tree[2].groups[0];
+assert.deepEqual(hero24.activities.map((a) => a.name),
+    ['冥刃沐辉', '浮梦巡驰', '绿境探踪', '荒屿遗株', '救偶总动员', '钢冢与繁枝', '晓光共览', '归档：麦戈拉'],
+    '专属剧情 2024 组（跨年档期归结束侧，与游戏时间轴一致）');
+assert.ok(tree[2].groups.every((g) => /^\d{4}$/.test(g.label)), '专属剧情 27 期全有档期年份');
+/* 主线/未归档：单活动组由 UI 直通剧情 */
+const main0 = tree[3].groups[0];
+assert.equal(main0.label, '未分扇区');
+assert.equal(main0.activities[0].stories.length, 883, '主线未分扇区 883 段');
+const dormGroup = tree[4].groups[0];
+assert.equal(dormGroup.label, 'dorm');
+assert.equal(dormGroup.activities[0].stories.length, 465, '未归档 dorm 组 465 段');
+ok(`剧情树：${tree.length} 个顶层 · ${tree.flatMap((n) => n.groups).length} 个组 · ${treeIds.length} 段叶子`);
 
 console.log(`\n${passed} 项通过`);

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>云图计划 · 全屏播放</title>
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/avg.css">
+<link rel="stylesheet" href="css/pandect.css">
+<link rel="stylesheet" href="css/ux.css">
+</head>
+<body class="record-body">
+<div id="stage-host"></div>
+<div id="record-toolbar" class="record-toolbar">
+  <b id="rt-title">装载中…</b>
+  <span id="rt-pos" class="muted"></span>
+  <span class="spacer"></span>
+  <button id="rt-lib" class="tiny">剧本库</button>
+  <button id="rt-play" class="tiny">▶ 连播</button>
+  <select id="rt-rate" class="tiny" title="倍速通读（CSS 过渡不吃这份钟）">
+    <option value="1">1×</option>
+    <option value="2">2×</option>
+    <option value="4">4×</option>
+    <option value="8">8×</option>
+    <option value="10">10×</option>
+  </select>
+  <button id="rt-record" class="tiny rt-record">● 录制</button>
+</div>
+<script type="module" src="js/record.js"></script>
+</body>
+</html>
