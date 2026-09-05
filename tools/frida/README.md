@@ -9,6 +9,23 @@
 - Tween 前后 `RectTransform`、RawImage、层级状态；
 - 溶解、通讯框、水波纹、特效、后处理、视频和完成回调。
 
+## 运行时配置表抓取（dyn-config-dump）
+
+`dyn-config-dump.py` + `dyn-config-dump.js` 是同一通道的另一种用法：在
+`lua_pcall` 钩子内部（游戏线程被拦截挂起时）同步序列化 `ConfigData` 的
+任意表（静态 + CDN 动态合并后的运行时真值），逐行发回宿主落 JSONL。
+按键直读可绕过 `__index` 惰性表（`pairs` 数不到动态合并的行）。
+
+```powershell
+# 游戏进到主界面后（动态配置登录后才下发）：
+python tools/frida/dyn-config-dump.py --out dyn-capture.jsonl --tables "handbook_activity,story_avg"
+node tools/dyn-config-import.mjs dyn-capture.jsonl --out <落盘目录>
+```
+
+注意：`LoadDynCfg` 是游戏自己的懒加载入口（装载 → 读 `ConfigData[表名]`
+→ 用完 `ReleaseDynCfg`），其返回值没人用；空表/`{"1":[]}` 说明该表当前
+版本无数据或尚未触发下载。抓取件是核对工具，不直接进 `story-archive.json`。
+
 ## 使用
 
 1. 启动 MuMu、云图计划并进入要录制的剧情播放器。

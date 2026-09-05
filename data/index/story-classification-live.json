@@ -1,0 +1,7888 @@
+[
+ {
+  "actId": 9001,
+  "type": 9,
+  "total": 25,
+  "groups": [
+   {
+    "name": "神导异论PV",
+    "en": "神导异论PV",
+    "stories": [
+     {
+      "id": 12,
+      "script": "summer_op"
+     }
+    ]
+   },
+   {
+    "name": "险境",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 90011101,
+      "script": "cpt06_e_01"
+     }
+    ]
+   },
+   {
+    "name": "决断",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 90011102,
+      "script": "cpt06_e_02"
+     }
+    ]
+   },
+   {
+    "name": "壁障",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 90011103,
+      "script": "cpt06_down_03"
+     }
+    ]
+   },
+   {
+    "name": "冷静",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 90011105,
+      "script": "cpt06_down_04"
+     }
+    ]
+   },
+   {
+    "name": "戒心",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 90011104,
+      "script": "cpt06_up_03"
+     }
+    ]
+   },
+   {
+    "name": "长话短说",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 90011106,
+      "script": "cpt06_up_04"
+     }
+    ]
+   },
+   {
+    "name": "搏动",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 90011107,
+      "script": "cpt06_down_05"
+     }
+    ]
+   },
+   {
+    "name": "黑天鹅",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 90011108,
+      "script": "cpt06_up_05"
+     }
+    ]
+   },
+   {
+    "name": "稚子",
+    "en": "PART.9",
+    "stories": [
+     {
+      "id": 90011109,
+      "script": "cpt06_down_06"
+     }
+    ]
+   },
+   {
+    "name": "控场",
+    "en": "PART.10",
+    "stories": [
+     {
+      "id": 90011110,
+      "script": "cpt06_up_06"
+     }
+    ]
+   },
+   {
+    "name": "天光",
+    "en": "PART.11",
+    "stories": [
+     {
+      "id": 90011111,
+      "script": "cpt06_down_07"
+     }
+    ]
+   },
+   {
+    "name": "潮汐",
+    "en": "PART.12",
+    "stories": [
+     {
+      "id": 90011112,
+      "script": "cpt06_up_07"
+     }
+    ]
+   },
+   {
+    "name": "幼童",
+    "en": "PART.13",
+    "stories": [
+     {
+      "id": 90011113,
+      "script": "cpt06_e_08"
+     }
+    ]
+   },
+   {
+    "name": "傀儡",
+    "en": "PART.14",
+    "stories": [
+     {
+      "id": 90011114,
+      "script": "cpt06_e_09"
+     }
+    ]
+   },
+   {
+    "name": "对策",
+    "en": "PART.15",
+    "stories": [
+     {
+      "id": 90011115,
+      "script": "cpt06_e_10"
+     }
+    ]
+   },
+   {
+    "name": "嘱托",
+    "en": "PART.16",
+    "stories": [
+     {
+      "id": 90011116,
+      "script": "cpt06_e_11"
+     }
+    ]
+   },
+   {
+    "name": "博弈",
+    "en": "PART.17",
+    "stories": [
+     {
+      "id": 90011117,
+      "script": "cpt06_e_12"
+     }
+    ]
+   },
+   {
+    "name": "雏鸟",
+    "en": "PART.18",
+    "stories": [
+     {
+      "id": 90011118,
+      "script": "cpt06_e_13"
+     }
+    ]
+   },
+   {
+    "name": "汇合",
+    "en": "PART.19",
+    "stories": [
+     {
+      "id": 90011119,
+      "script": "cpt06_e_14"
+     }
+    ]
+   },
+   {
+    "name": "缠斗",
+    "en": "PART.20",
+    "stories": [
+     {
+      "id": 90011120,
+      "script": "cpt06_e_15"
+     }
+    ]
+   },
+   {
+    "name": "应急预案",
+    "en": "PART.21",
+    "stories": [
+     {
+      "id": 90011121,
+      "script": "cpt06_e_16"
+     }
+    ]
+   },
+   {
+    "name": "无常",
+    "en": "PART.22",
+    "stories": [
+     {
+      "id": 90011122,
+      "script": "cpt06_e_17"
+     }
+    ]
+   },
+   {
+    "name": "散场",
+    "en": "PART.23",
+    "stories": [
+     {
+      "id": 90011123,
+      "script": "cpt06_e_18"
+     }
+    ]
+   },
+   {
+    "name": "通讯",
+    "en": "PART.24",
+    "stories": [
+     {
+      "id": 90011124,
+      "script": "cpt06_e_19"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10001,
+  "type": 10,
+  "total": 6,
+  "groups": [
+   {
+    "name": "回望",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1000001,
+      "script": "cpt_python_00_01"
+     }
+    ]
+   },
+   {
+    "name": "新训",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1000101,
+      "script": "cpt_python_01_01"
+     },
+     {
+      "id": 1000102,
+      "script": "cpt_python_01_02"
+     },
+     {
+      "id": 1000103,
+      "script": "cpt_python_01_03"
+     },
+     {
+      "id": 1000104,
+      "script": "cpt_python_01_04"
+     },
+     {
+      "id": 1000105,
+      "script": "cpt_python_01_05"
+     },
+     {
+      "id": 1000106,
+      "script": "cpt_python_01_06"
+     }
+    ]
+   },
+   {
+    "name": "攻防",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1000201,
+      "script": "cpt_python_02_01"
+     },
+     {
+      "id": 1000202,
+      "script": "cpt_python_02_02"
+     },
+     {
+      "id": 1000203,
+      "script": "cpt_python_02_03"
+     },
+     {
+      "id": 1000204,
+      "script": "cpt_python_02_04"
+     }
+    ]
+   },
+   {
+    "name": "反扑",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1000301,
+      "script": "cpt_python_03_01"
+     },
+     {
+      "id": 1000302,
+      "script": "cpt_python_03_02"
+     },
+     {
+      "id": 1000303,
+      "script": "cpt_python_03_03"
+     },
+     {
+      "id": 1000304,
+      "script": "cpt_python_03_04"
+     }
+    ]
+   },
+   {
+    "name": "恶仗",
+    "en": "STAGE 5",
+    "stories": [
+     {
+      "id": 1000401,
+      "script": "cpt_python_04_01"
+     },
+     {
+      "id": 1000402,
+      "script": "cpt_python_04_02"
+     },
+     {
+      "id": 1000403,
+      "script": "cpt_python_04_03"
+     },
+     {
+      "id": 1000404,
+      "script": "cpt_python_04_04"
+     },
+     {
+      "id": 1000405,
+      "script": "cpt_python_04_05"
+     },
+     {
+      "id": 1000406,
+      "script": "cpt_python_04_06"
+     },
+     {
+      "id": 1000407,
+      "script": "cpt_python_04_07"
+     },
+     {
+      "id": 1000408,
+      "script": "cpt_python_04_08"
+     }
+    ]
+   },
+   {
+    "name": "师生",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1000002,
+      "script": "cpt_python_05_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10002,
+  "type": 10,
+  "total": 6,
+  "groups": [
+   {
+    "name": "调研",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1010001,
+      "script": "cpt_kuro_00_01"
+     }
+    ]
+   },
+   {
+    "name": "直播",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1010201,
+      "script": "cpt_kuro_01_01"
+     },
+     {
+      "id": 1010202,
+      "script": "cpt_kuro_01_02"
+     },
+     {
+      "id": 1010203,
+      "script": "cpt_kuro_01_03"
+     },
+     {
+      "id": 1010204,
+      "script": "cpt_kuro_01_04"
+     },
+     {
+      "id": 1010205,
+      "script": "cpt_kuro_01_05"
+     },
+     {
+      "id": 1010206,
+      "script": "cpt_kuro_01_06"
+     }
+    ]
+   },
+   {
+    "name": "粉丝",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1010301,
+      "script": "cpt_kuro_02_01"
+     },
+     {
+      "id": 1010302,
+      "script": "cpt_kuro_02_02"
+     },
+     {
+      "id": 1010303,
+      "script": "cpt_kuro_02_03"
+     },
+     {
+      "id": 1010304,
+      "script": "cpt_kuro_02_04"
+     }
+    ]
+   },
+   {
+    "name": "逐梦",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1010401,
+      "script": "cpt_kuro_03_01"
+     },
+     {
+      "id": 1010402,
+      "script": "cpt_kuro_03_02"
+     },
+     {
+      "id": 1010403,
+      "script": "cpt_kuro_03_03"
+     },
+     {
+      "id": 1010404,
+      "script": "cpt_kuro_03_04"
+     },
+     {
+      "id": 1010405,
+      "script": "cpt_kuro_03_05"
+     }
+    ]
+   },
+   {
+    "name": "演出",
+    "en": "STAGE 5",
+    "stories": [
+     {
+      "id": 1010501,
+      "script": "cpt_kuro_04_01"
+     },
+     {
+      "id": 1010502,
+      "script": "cpt_kuro_04_02"
+     },
+     {
+      "id": 1010503,
+      "script": "cpt_kuro_04_03"
+     },
+     {
+      "id": 1010504,
+      "script": "cpt_kuro_04_04"
+     },
+     {
+      "id": 1010505,
+      "script": "cpt_kuro_04_05"
+     }
+    ]
+   },
+   {
+    "name": "开幕",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1010002,
+      "script": "cpt_kuro_05_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10003,
+  "type": 10,
+  "total": 7,
+  "groups": [
+   {
+    "name": "定调",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1020001,
+      "script": "cpt_haze_00_01"
+     }
+    ]
+   },
+   {
+    "name": "触弦",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1020201,
+      "script": "cpt_haze_01_01"
+     },
+     {
+      "id": 1020202,
+      "script": "cpt_haze_01_02"
+     },
+     {
+      "id": 1020203,
+      "script": "cpt_haze_01_03"
+     },
+     {
+      "id": 1020204,
+      "script": "cpt_haze_01_04"
+     }
+    ]
+   },
+   {
+    "name": "密颤",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1020301,
+      "script": "cpt_haze_02_01"
+     },
+     {
+      "id": 1020302,
+      "script": "cpt_haze_02_02"
+     },
+     {
+      "id": 1020303,
+      "script": "cpt_haze_02_03"
+     },
+     {
+      "id": 1020304,
+      "script": "cpt_haze_02_04"
+     }
+    ]
+   },
+   {
+    "name": "揉弦",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1020401,
+      "script": "cpt_haze_03_01"
+     },
+     {
+      "id": 1020402,
+      "script": "cpt_haze_03_02"
+     },
+     {
+      "id": 1020403,
+      "script": "cpt_haze_03_03"
+     },
+     {
+      "id": 1020404,
+      "script": "cpt_haze_03_04"
+     }
+    ]
+   },
+   {
+    "name": "花指",
+    "en": "STAGE 5",
+    "stories": [
+     {
+      "id": 1020501,
+      "script": "cpt_haze_04_01"
+     },
+     {
+      "id": 1020502,
+      "script": "cpt_haze_04_02"
+     }
+    ]
+   },
+   {
+    "name": "新音",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1020002,
+      "script": "cpt_haze_05_01"
+     }
+    ]
+   },
+   {
+    "name": "绕梁",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 1020003,
+      "script": "cpt_haze_06_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10004,
+  "type": 10,
+  "total": 6,
+  "groups": [
+   {
+    "name": "开卷",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1030001,
+      "script": "cpt_nora_00_01"
+     }
+    ]
+   },
+   {
+    "name": "缘起",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1030201,
+      "script": "cpt_nora_01_01"
+     },
+     {
+      "id": 1030202,
+      "script": "cpt_nora_01_02"
+     },
+     {
+      "id": 1030203,
+      "script": "cpt_nora_01_03"
+     },
+     {
+      "id": 1030204,
+      "script": "cpt_nora_01_04"
+     }
+    ]
+   },
+   {
+    "name": "承托",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1030301,
+      "script": "cpt_nora_02_01"
+     },
+     {
+      "id": 1030302,
+      "script": "cpt_nora_02_02"
+     },
+     {
+      "id": 1030303,
+      "script": "cpt_nora_02_03"
+     },
+     {
+      "id": 1030304,
+      "script": "cpt_nora_02_04"
+     }
+    ]
+   },
+   {
+    "name": "急转",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1030401,
+      "script": "cpt_nora_03_01"
+     },
+     {
+      "id": 1030402,
+      "script": "cpt_nora_03_02"
+     },
+     {
+      "id": 1030403,
+      "script": "cpt_nora_03_03"
+     },
+     {
+      "id": 1030404,
+      "script": "cpt_nora_03_04"
+     },
+     {
+      "id": 1030405,
+      "script": "cpt_nora_03_05"
+     }
+    ]
+   },
+   {
+    "name": "合力",
+    "en": "STAGE 5",
+    "stories": [
+     {
+      "id": 1030501,
+      "script": "cpt_nora_04_01"
+     },
+     {
+      "id": 1030502,
+      "script": "cpt_nora_04_02"
+     },
+     {
+      "id": 1030503,
+      "script": "cpt_nora_04_03"
+     },
+     {
+      "id": 1030504,
+      "script": "cpt_nora_04_04"
+     },
+     {
+      "id": 1030505,
+      "script": "cpt_nora_04_05"
+     }
+    ]
+   },
+   {
+    "name": "待续",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1030002,
+      "script": "cpt_nora_05_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10005,
+  "type": 10,
+  "total": 6,
+  "groups": [
+   {
+    "name": "擂台",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1050001,
+      "script": "cpt_magnhilda_00_01"
+     }
+    ]
+   },
+   {
+    "name": "复燃",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1050201,
+      "script": "cpt_magnhilda_01_01"
+     },
+     {
+      "id": 1050202,
+      "script": "cpt_magnhilda_01_02"
+     },
+     {
+      "id": 1050203,
+      "script": "cpt_magnhilda_01_03"
+     },
+     {
+      "id": 1050204,
+      "script": "cpt_magnhilda_01_04"
+     }
+    ]
+   },
+   {
+    "name": "一闪",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1050301,
+      "script": "cpt_magnhilda_02_01"
+     },
+     {
+      "id": 1050302,
+      "script": "cpt_magnhilda_02_02"
+     },
+     {
+      "id": 1050303,
+      "script": "cpt_magnhilda_02_03"
+     },
+     {
+      "id": 1050304,
+      "script": "cpt_magnhilda_02_04"
+     }
+    ]
+   },
+   {
+    "name": "读秒",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1050401,
+      "script": "cpt_magnhilda_03_01"
+     },
+     {
+      "id": 1050402,
+      "script": "cpt_magnhilda_03_02"
+     },
+     {
+      "id": 1050403,
+      "script": "cpt_magnhilda_03_03"
+     },
+     {
+      "id": 1050404,
+      "script": "cpt_magnhilda_03_04"
+     }
+    ]
+   },
+   {
+    "name": "终战",
+    "en": "STAGE 5",
+    "stories": [
+     {
+      "id": 1050501,
+      "script": "cpt_magnhilda_04_01"
+     },
+     {
+      "id": 1050502,
+      "script": "cpt_magnhilda_04_02"
+     },
+     {
+      "id": 1050503,
+      "script": "cpt_magnhilda_04_03"
+     },
+     {
+      "id": 1050504,
+      "script": "cpt_magnhilda_04_04"
+     }
+    ]
+   },
+   {
+    "name": "明日新星",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1050002,
+      "script": "cpt_magnhilda_05_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10006,
+  "type": 10,
+  "total": 6,
+  "groups": [
+   {
+    "name": "异闻",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1051001,
+      "script": "cpt_helix_00_01"
+     }
+    ]
+   },
+   {
+    "name": "仁心",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1051201,
+      "script": "cpt_helix_01_01"
+     },
+     {
+      "id": 1051202,
+      "script": "cpt_helix_01_02"
+     },
+     {
+      "id": 1051203,
+      "script": "cpt_helix_01_03"
+     },
+     {
+      "id": 1051204,
+      "script": "cpt_helix_01_04"
+     }
+    ]
+   },
+   {
+    "name": "不惑",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1051301,
+      "script": "cpt_helix_02_01"
+     },
+     {
+      "id": 1051302,
+      "script": "cpt_helix_02_02"
+     },
+     {
+      "id": 1051303,
+      "script": "cpt_helix_02_03"
+     },
+     {
+      "id": 1051304,
+      "script": "cpt_helix_02_04"
+     }
+    ]
+   },
+   {
+    "name": "急智",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1051401,
+      "script": "cpt_helix_03_01"
+     },
+     {
+      "id": 1051402,
+      "script": "cpt_helix_03_02"
+     },
+     {
+      "id": 1051403,
+      "script": "cpt_helix_03_03"
+     },
+     {
+      "id": 1051404,
+      "script": "cpt_helix_03_04"
+     }
+    ]
+   },
+   {
+    "name": "初诊",
+    "en": "STAGE 5",
+    "stories": [
+     {
+      "id": 1051501,
+      "script": "cpt_helix_04_01"
+     },
+     {
+      "id": 1051502,
+      "script": "cpt_helix_04_02"
+     },
+     {
+      "id": 1051503,
+      "script": "cpt_helix_04_03"
+     },
+     {
+      "id": 1051504,
+      "script": "cpt_helix_04_04"
+     }
+    ]
+   },
+   {
+    "name": "述职",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1051002,
+      "script": "cpt_helix_05_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10007,
+  "type": 10,
+  "total": 6,
+  "groups": [
+   {
+    "name": "墟上",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1052001,
+      "script": "cpt_zangyin_00_01"
+     }
+    ]
+   },
+   {
+    "name": "通释",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1052201,
+      "script": "cpt_zangyin_01_01"
+     },
+     {
+      "id": 1052202,
+      "script": "cpt_zangyin_01_02"
+     },
+     {
+      "id": 1052203,
+      "script": "cpt_zangyin_01_03"
+     },
+     {
+      "id": 1052204,
+      "script": "cpt_zangyin_01_04"
+     }
+    ]
+   },
+   {
+    "name": "闻变",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1052301,
+      "script": "cpt_zangyin_02_01"
+     },
+     {
+      "id": 1052302,
+      "script": "cpt_zangyin_02_02"
+     },
+     {
+      "id": 1052303,
+      "script": "cpt_zangyin_02_03"
+     },
+     {
+      "id": 1052304,
+      "script": "cpt_zangyin_02_04"
+     }
+    ]
+   },
+   {
+    "name": "举正",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1052401,
+      "script": "cpt_zangyin_03_01"
+     },
+     {
+      "id": 1052402,
+      "script": "cpt_zangyin_03_02"
+     },
+     {
+      "id": 1052403,
+      "script": "cpt_zangyin_03_03"
+     }
+    ]
+   },
+   {
+    "name": "通鉴",
+    "en": "STAGE 5",
+    "stories": [
+     {
+      "id": 1052501,
+      "script": "cpt_zangyin_04_01"
+     },
+     {
+      "id": 1052502,
+      "script": "cpt_zangyin_04_02"
+     },
+     {
+      "id": 1052503,
+      "script": "cpt_zangyin_04_03"
+     },
+     {
+      "id": 1052504,
+      "script": "cpt_zangyin_04_04"
+     }
+    ]
+   },
+   {
+    "name": "外纪",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1052002,
+      "script": "cpt_zangyin_05_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10008,
+  "type": 10,
+  "total": 6,
+  "groups": [
+   {
+    "name": "试菜",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1053001,
+      "script": "cpt_gastronomie_00_01"
+     }
+    ]
+   },
+   {
+    "name": "寻觅",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1053201,
+      "script": "cpt_gastronomie_01_01"
+     },
+     {
+      "id": 1053202,
+      "script": "cpt_gastronomie_01_02"
+     },
+     {
+      "id": 1053203,
+      "script": "cpt_gastronomie_01_03"
+     },
+     {
+      "id": 1053204,
+      "script": "cpt_gastronomie_01_04"
+     }
+    ]
+   },
+   {
+    "name": "庖艺",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1053301,
+      "script": "cpt_gastronomie_02_01"
+     },
+     {
+      "id": 1053302,
+      "script": "cpt_gastronomie_02_02"
+     },
+     {
+      "id": 1053303,
+      "script": "cpt_gastronomie_02_03"
+     }
+    ]
+   },
+   {
+    "name": "尝鲜",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1053401,
+      "script": "cpt_gastronomie_03_01"
+     },
+     {
+      "id": 1053402,
+      "script": "cpt_gastronomie_03_02"
+     },
+     {
+      "id": 1053403,
+      "script": "cpt_gastronomie_03_03"
+     },
+     {
+      "id": 1053404,
+      "script": "cpt_gastronomie_03_04"
+     }
+    ]
+   },
+   {
+    "name": "飨饮",
+    "en": "STAGE 5",
+    "stories": [
+     {
+      "id": 1053501,
+      "script": "cpt_gastronomie_04_01"
+     },
+     {
+      "id": 1053502,
+      "script": "cpt_gastronomie_04_02"
+     },
+     {
+      "id": 1053503,
+      "script": "cpt_gastronomie_04_03"
+     },
+     {
+      "id": 1053504,
+      "script": "cpt_gastronomie_04_04"
+     }
+    ]
+   },
+   {
+    "name": "共饮",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1053002,
+      "script": "cpt_gastronomie_05_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10009,
+  "type": 10,
+  "total": 7,
+  "groups": [
+   {
+    "name": "复现",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1058001,
+      "script": "cpt_clukay_00_01"
+     }
+    ]
+   },
+   {
+    "name": "归零",
+    "en": "STAGE 1",
+    "stories": [
+     {
+      "id": 1058101,
+      "script": "cpt_clukay_01_01"
+     },
+     {
+      "id": 1058102,
+      "script": "cpt_clukay_01_02"
+     },
+     {
+      "id": 1058103,
+      "script": "cpt_clukay_01_03"
+     },
+     {
+      "id": 1058104,
+      "script": "cpt_clukay_01_04"
+     }
+    ]
+   },
+   {
+    "name": "救急",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1058201,
+      "script": "cpt_clukay_02_01"
+     },
+     {
+      "id": 1058202,
+      "script": "cpt_clukay_02_02"
+     },
+     {
+      "id": 1058203,
+      "script": "cpt_clukay_02_03"
+     },
+     {
+      "id": 1058204,
+      "script": "cpt_clukay_02_04"
+     }
+    ]
+   },
+   {
+    "name": "对峙",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1058301,
+      "script": "cpt_clukay_03_01"
+     },
+     {
+      "id": 1058302,
+      "script": "cpt_clukay_03_02"
+     },
+     {
+      "id": 1058303,
+      "script": "cpt_clukay_03_03"
+     },
+     {
+      "id": 1058304,
+      "script": "cpt_clukay_03_04"
+     },
+     {
+      "id": 1058305,
+      "script": "cpt_clukay_03_05"
+     }
+    ]
+   },
+   {
+    "name": "疑窦",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1058401,
+      "script": "cpt_clukay_04_01"
+     },
+     {
+      "id": 1058402,
+      "script": "cpt_clukay_04_02"
+     },
+     {
+      "id": 1058403,
+      "script": "cpt_clukay_04_03"
+     },
+     {
+      "id": 1058404,
+      "script": "cpt_clukay_04_04"
+     }
+    ]
+   },
+   {
+    "name": "信赖",
+    "en": "STAGE 5",
+    "stories": [
+     {
+      "id": 1058501,
+      "script": "cpt_clukay_05_01"
+     },
+     {
+      "id": 1058502,
+      "script": "cpt_clukay_05_02"
+     },
+     {
+      "id": 1058503,
+      "script": "cpt_clukay_05_03a"
+     },
+     {
+      "id": 1058504,
+      "script": "cpt_clukay_05_03b"
+     },
+     {
+      "id": 1058505,
+      "script": "cpt_clukay_05_03c"
+     },
+     {
+      "id": 1058506,
+      "script": "cpt_clukay_05_04"
+     },
+     {
+      "id": 1058507,
+      "script": "cpt_clukay_05_05"
+     }
+    ]
+   },
+   {
+    "name": "回寰",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1058002,
+      "script": "cpt_clukay_06_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10010,
+  "type": 10,
+  "total": 6,
+  "groups": [
+   {
+    "name": "夜半回声",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1059001,
+      "script": "cpt_clotho_00_01"
+     }
+    ]
+   },
+   {
+    "name": "薄暮序章",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1059201,
+      "script": "cpt_clotho_01_01"
+     },
+     {
+      "id": 1059202,
+      "script": "cpt_clotho_01_02"
+     },
+     {
+      "id": 1059203,
+      "script": "cpt_clotho_01_03"
+     },
+     {
+      "id": 1059204,
+      "script": "cpt_clotho_01_04"
+     }
+    ]
+   },
+   {
+    "name": "葬月咏叹",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1059301,
+      "script": "cpt_clotho_02_01"
+     },
+     {
+      "id": 1059302,
+      "script": "cpt_clotho_02_02"
+     },
+     {
+      "id": 1059303,
+      "script": "cpt_clotho_02_03"
+     },
+     {
+      "id": 1059304,
+      "script": "cpt_clotho_02_04"
+     }
+    ]
+   },
+   {
+    "name": "怜星间奏",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1059401,
+      "script": "cpt_clotho_03_01"
+     },
+     {
+      "id": 1059402,
+      "script": "cpt_clotho_03_02"
+     },
+     {
+      "id": 1059403,
+      "script": "cpt_clotho_03_03"
+     },
+     {
+      "id": 1059404,
+      "script": "cpt_clotho_03_04"
+     },
+     {
+      "id": 1059405,
+      "script": "cpt_clotho_03_05"
+     }
+    ]
+   },
+   {
+    "name": "钩沉绝响",
+    "en": "STAGE 5",
+    "stories": [
+     {
+      "id": 1059501,
+      "script": "cpt_clotho_04_01"
+     },
+     {
+      "id": 1059502,
+      "script": "cpt_clotho_04_02"
+     },
+     {
+      "id": 1059503,
+      "script": "cpt_clotho_04_03"
+     },
+     {
+      "id": 1059504,
+      "script": "cpt_clotho_04_04"
+     },
+     {
+      "id": 1059505,
+      "script": "cpt_clotho_04_05"
+     }
+    ]
+   },
+   {
+    "name": "晨光谢幕",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1059002,
+      "script": "cpt_clotho_05_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10011,
+  "type": 10,
+  "total": 6,
+  "groups": [
+   {
+    "name": "概率分析",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1060001,
+      "script": "cpt_dupin_00_01"
+     }
+    ]
+   },
+   {
+    "name": "认知偏差",
+    "en": "STAGE 1",
+    "stories": [
+     {
+      "id": 1060201,
+      "script": "cpt_dupin_01_01"
+     },
+     {
+      "id": 1060202,
+      "script": "cpt_dupin_01_02"
+     },
+     {
+      "id": 1060203,
+      "script": "cpt_dupin_01_03"
+     },
+     {
+      "id": 1060204,
+      "script": "cpt_dupin_01_04"
+     },
+     {
+      "id": 1060205,
+      "script": "cpt_dupin_01_05"
+     }
+    ]
+   },
+   {
+    "name": "归因理论",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1060301,
+      "script": "cpt_dupin_02_01"
+     },
+     {
+      "id": 1060302,
+      "script": "cpt_dupin_02_02"
+     },
+     {
+      "id": 1060303,
+      "script": "cpt_dupin_02_03"
+     },
+     {
+      "id": 1060304,
+      "script": "cpt_dupin_02_04"
+     }
+    ]
+   },
+   {
+    "name": "伪二分法",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1060401,
+      "script": "cpt_dupin_03_01"
+     },
+     {
+      "id": 1060402,
+      "script": "cpt_dupin_03_02"
+     },
+     {
+      "id": 1060403,
+      "script": "cpt_dupin_03_03"
+     },
+     {
+      "id": 1060404,
+      "script": "cpt_dupin_03_04"
+     }
+    ]
+   },
+   {
+    "name": "思维定式",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1060501,
+      "script": "cpt_dupin_04_01"
+     },
+     {
+      "id": 1060502,
+      "script": "cpt_dupin_04_02"
+     },
+     {
+      "id": 1060503,
+      "script": "cpt_dupin_04_03"
+     },
+     {
+      "id": 1060504,
+      "script": "cpt_dupin_04_04"
+     }
+    ]
+   },
+   {
+    "name": "演绎推理",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1060002,
+      "script": "cpt_dupin_05_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10012,
+  "type": 10,
+  "total": 6,
+  "groups": [
+   {
+    "name": "庄敬前奏",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1061001,
+      "script": "cpt_undline_00_01"
+     }
+    ]
+   },
+   {
+    "name": "泡影剧院",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1061201,
+      "script": "cpt_undline_01_01"
+     },
+     {
+      "id": 1061202,
+      "script": "cpt_undline_01_02"
+     },
+     {
+      "id": 1061203,
+      "script": "cpt_undline_01_03"
+     },
+     {
+      "id": 1061204,
+      "script": "cpt_undline_01_04"
+     },
+     {
+      "id": 1061205,
+      "script": "cpt_undline_01_05"
+     }
+    ]
+   },
+   {
+    "name": "抒情幕间",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1061301,
+      "script": "cpt_undline_02_01"
+     },
+     {
+      "id": 1061302,
+      "script": "cpt_undline_02_02"
+     },
+     {
+      "id": 1061303,
+      "script": "cpt_undline_02_03"
+     },
+     {
+      "id": 1061304,
+      "script": "cpt_undline_02_04"
+     }
+    ]
+   },
+   {
+    "name": "渐急宣叙",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1061401,
+      "script": "cpt_undline_03_01"
+     },
+     {
+      "id": 1061402,
+      "script": "cpt_undline_03_02"
+     },
+     {
+      "id": 1061403,
+      "script": "cpt_undline_03_03"
+     },
+     {
+      "id": 1061404,
+      "script": "cpt_undline_03_04"
+     }
+    ]
+   },
+   {
+    "name": "慷慨诗篇",
+    "en": "STAGE 5",
+    "stories": [
+     {
+      "id": 1061501,
+      "script": "cpt_undline_04_01"
+     },
+     {
+      "id": 1061502,
+      "script": "cpt_undline_04_02"
+     },
+     {
+      "id": 1061503,
+      "script": "cpt_undline_04_03"
+     },
+     {
+      "id": 1061504,
+      "script": "cpt_undline_04_04"
+     }
+    ]
+   },
+   {
+    "name": "新声再起",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1061002,
+      "script": "cpt_undline_05_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10013,
+  "type": 10,
+  "total": 6,
+  "groups": [
+   {
+    "name": "《骤雨过江》",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1062001,
+      "script": "cpt_jiangyu_00_01"
+     }
+    ]
+   },
+   {
+    "name": "《师妹出马》",
+    "en": "STAGE 1",
+    "stories": [
+     {
+      "id": 1062101,
+      "script": "cpt_jiangyu_01_01"
+     },
+     {
+      "id": 1062102,
+      "script": "cpt_jiangyu_01_02"
+     },
+     {
+      "id": 1062103,
+      "script": "cpt_jiangyu_01_03"
+     },
+     {
+      "id": 1062104,
+      "script": "cpt_jiangyu_01_04"
+     },
+     {
+      "id": 1062105,
+      "script": "cpt_jiangyu_01_05"
+     }
+    ]
+   },
+   {
+    "name": "《习武风云》",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1062201,
+      "script": "cpt_jiangyu_02_01"
+     },
+     {
+      "id": 1062202,
+      "script": "cpt_jiangyu_02_02"
+     },
+     {
+      "id": 1062203,
+      "script": "cpt_jiangyu_02_03"
+     },
+     {
+      "id": 1062204,
+      "script": "cpt_jiangyu_02_04"
+     }
+    ]
+   },
+   {
+    "name": "《一位宗师》",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1062301,
+      "script": "cpt_jiangyu_03_01"
+     },
+     {
+      "id": 1062302,
+      "script": "cpt_jiangyu_03_02"
+     },
+     {
+      "id": 1062303,
+      "script": "cpt_jiangyu_03_03"
+     },
+     {
+      "id": 1062304,
+      "script": "cpt_jiangyu_03_04"
+     },
+     {
+      "id": 1062305,
+      "script": "cpt_jiangyu_03_05"
+     }
+    ]
+   },
+   {
+    "name": "《精武英豪》",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1062401,
+      "script": "cpt_jiangyu_04_01"
+     },
+     {
+      "id": 1062402,
+      "script": "cpt_jiangyu_04_02"
+     },
+     {
+      "id": 1062403,
+      "script": "cpt_jiangyu_04_03"
+     },
+     {
+      "id": 1062404,
+      "script": "cpt_jiangyu_04_04"
+     }
+    ]
+   },
+   {
+    "name": "《绝代双娇》",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1062002,
+      "script": "cpt_jiangyu_05_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10014,
+  "type": 10,
+  "total": 5,
+  "groups": [
+   {
+    "name": "选题：占卜者",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1063001,
+      "script": "cpt_yelena_00_01"
+     }
+    ]
+   },
+   {
+    "name": "彩排：理性者",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1063101,
+      "script": "cpt_yelena_01_01"
+     },
+     {
+      "id": 1063102,
+      "script": "cpt_yelena_01_02"
+     },
+     {
+      "id": 1063103,
+      "script": "cpt_yelena_01_03"
+     },
+     {
+      "id": 1063104,
+      "script": "cpt_yelena_01_04"
+     }
+    ]
+   },
+   {
+    "name": "录制：质疑者",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1063201,
+      "script": "cpt_yelena_02_01"
+     },
+     {
+      "id": 1063202,
+      "script": "cpt_yelena_02_02"
+     },
+     {
+      "id": 1063203,
+      "script": "cpt_yelena_02_03"
+     }
+    ]
+   },
+   {
+    "name": "剪辑：救助者",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1063301,
+      "script": "cpt_yelena_03_01"
+     },
+     {
+      "id": 1063302,
+      "script": "cpt_yelena_03_02"
+     },
+     {
+      "id": 1063303,
+      "script": "cpt_yelena_03_03"
+     }
+    ]
+   },
+   {
+    "name": "成片：拾星者",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1063002,
+      "script": "cpt_yelena_04_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10015,
+  "type": 10,
+  "total": 5,
+  "groups": [
+   {
+    "name": "耀星临空",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1064001,
+      "script": "cpt_erika_00_01"
+     }
+    ]
+   },
+   {
+    "name": "厄难迎击",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1064101,
+      "script": "cpt_erika_01_01"
+     },
+     {
+      "id": 1064102,
+      "script": "cpt_erika_01_02"
+     },
+     {
+      "id": 1064103,
+      "script": "cpt_erika_01_03"
+     },
+     {
+      "id": 1064104,
+      "script": "cpt_erika_01_04"
+     }
+    ]
+   },
+   {
+    "name": "断罪坚途",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1064201,
+      "script": "cpt_erika_02_01"
+     },
+     {
+      "id": 1064202,
+      "script": "cpt_erika_02_02"
+     },
+     {
+      "id": 1064203,
+      "script": "cpt_erika_02_03"
+     },
+     {
+      "id": 1064204,
+      "script": "cpt_erika_02_04"
+     }
+    ]
+   },
+   {
+    "name": "喋血殉路",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1064301,
+      "script": "cpt_erika_03_01"
+     },
+     {
+      "id": 1064302,
+      "script": "cpt_erika_03_02"
+     },
+     {
+      "id": 1064303,
+      "script": "cpt_erika_03_03"
+     },
+     {
+      "id": 1064304,
+      "script": "cpt_erika_03_04"
+     },
+     {
+      "id": 1064305,
+      "script": "cpt_erika_03_05"
+     }
+    ]
+   },
+   {
+    "name": "浴罪重生",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1064002,
+      "script": "cpt_erika_04_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10016,
+  "type": 10,
+  "total": 5,
+  "groups": [
+   {
+    "name": "绿洲险境",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1067001,
+      "script": "cpt_cascadia_00_01"
+     }
+    ]
+   },
+   {
+    "name": "驰援行动",
+    "en": "STAGE 1",
+    "stories": [
+     {
+      "id": 1067101,
+      "script": "cpt_cascadia_01_01"
+     },
+     {
+      "id": 1067102,
+      "script": "cpt_cascadia_01_02"
+     },
+     {
+      "id": 1067103,
+      "script": "cpt_cascadia_01_03"
+     },
+     {
+      "id": 1067104,
+      "script": "cpt_cascadia_01_04"
+     }
+    ]
+   },
+   {
+    "name": "饱和搜救",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1067201,
+      "script": "cpt_cascadia_02_01"
+     },
+     {
+      "id": 1067202,
+      "script": "cpt_cascadia_02_02"
+     },
+     {
+      "id": 1067203,
+      "script": "cpt_cascadia_02_03"
+     }
+    ]
+   },
+   {
+    "name": "援护之魂",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1067301,
+      "script": "cpt_cascadia_03_01"
+     },
+     {
+      "id": 1067302,
+      "script": "cpt_cascadia_03_02"
+     },
+     {
+      "id": 1067303,
+      "script": "cpt_cascadia_03_03"
+     },
+     {
+      "id": 1067304,
+      "script": "cpt_cascadia_03_04"
+     }
+    ]
+   },
+   {
+    "name": "劫后重逢",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1067002,
+      "script": "cpt_cascadia_04_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10017,
+  "type": 10,
+  "total": 5,
+  "groups": [
+   {
+    "name": "忘境",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1068001,
+      "script": "cpt_taisch_00_01"
+     }
+    ]
+   },
+   {
+    "name": "谜行",
+    "en": "STAGE 1",
+    "stories": [
+     {
+      "id": 1068101,
+      "script": "cpt_taisch_01_01"
+     },
+     {
+      "id": 1068102,
+      "script": "cpt_taisch_01_02"
+     },
+     {
+      "id": 1068103,
+      "script": "cpt_taisch_01_03"
+     },
+     {
+      "id": 1068104,
+      "script": "cpt_taisch_01_04"
+     }
+    ]
+   },
+   {
+    "name": "交织",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1068201,
+      "script": "cpt_taisch_02_01"
+     },
+     {
+      "id": 1068202,
+      "script": "cpt_taisch_02_02"
+     },
+     {
+      "id": 1068203,
+      "script": "cpt_taisch_02_03"
+     },
+     {
+      "id": 1068204,
+      "script": "cpt_taisch_02_04"
+     },
+     {
+      "id": 1068205,
+      "script": "cpt_taisch_02_05"
+     }
+    ]
+   },
+   {
+    "name": "长梦",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1068301,
+      "script": "cpt_taisch_03_01"
+     },
+     {
+      "id": 1068302,
+      "script": "cpt_taisch_03_02"
+     },
+     {
+      "id": 1068303,
+      "script": "cpt_taisch_03_03"
+     }
+    ]
+   },
+   {
+    "name": "童谣",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1068002,
+      "script": "cpt_taisch_04_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10018,
+  "type": 10,
+  "total": 5,
+  "groups": [
+   {
+    "name": "暖日",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1069001,
+      "script": "cpt_luna_00_01"
+     }
+    ]
+   },
+   {
+    "name": "回响",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1069101,
+      "script": "cpt_luna_01_01"
+     },
+     {
+      "id": 1069102,
+      "script": "cpt_luna_01_02"
+     },
+     {
+      "id": 1069103,
+      "script": "cpt_luna_01_03"
+     },
+     {
+      "id": 1069104,
+      "script": "cpt_luna_01_04"
+     }
+    ]
+   },
+   {
+    "name": "翔空",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1069201,
+      "script": "cpt_luna_02_01"
+     },
+     {
+      "id": 1069202,
+      "script": "cpt_luna_02_02"
+     },
+     {
+      "id": 1069203,
+      "script": "cpt_luna_02_03"
+     },
+     {
+      "id": 1069204,
+      "script": "cpt_luna_02_04"
+     }
+    ]
+   },
+   {
+    "name": "艰途",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1069301,
+      "script": "cpt_luna_03_01"
+     },
+     {
+      "id": 1069302,
+      "script": "cpt_luna_03_02"
+     },
+     {
+      "id": 1069303,
+      "script": "cpt_luna_03_03"
+     },
+     {
+      "id": 1069304,
+      "script": "cpt_luna_03_04"
+     },
+     {
+      "id": 1069305,
+      "script": "cpt_luna_03_05"
+     }
+    ]
+   },
+   {
+    "name": "潮升",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1069002,
+      "script": "cpt_luna_04_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10019,
+  "type": 10,
+  "total": 5,
+  "groups": [
+   {
+    "name": "锁梦",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1070001,
+      "script": "cpt_kimie_00_01"
+     }
+    ]
+   },
+   {
+    "name": "鬼火",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1070101,
+      "script": "cpt_kimie_01_01"
+     },
+     {
+      "id": 1070102,
+      "script": "cpt_kimie_01_02"
+     },
+     {
+      "id": 1070103,
+      "script": "cpt_kimie_01_03"
+     },
+     {
+      "id": 1070104,
+      "script": "cpt_kimie_01_04"
+     }
+    ]
+   },
+   {
+    "name": "梦行",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1070201,
+      "script": "cpt_kimie_02_01"
+     },
+     {
+      "id": 1070202,
+      "script": "cpt_kimie_02_02"
+     },
+     {
+      "id": 1070203,
+      "script": "cpt_kimie_02_03"
+     },
+     {
+      "id": 1070204,
+      "script": "cpt_kimie_02_04"
+     }
+    ]
+   },
+   {
+    "name": "神隐",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1070301,
+      "script": "cpt_kimie_03_01"
+     },
+     {
+      "id": 1070302,
+      "script": "cpt_kimie_03_02"
+     },
+     {
+      "id": 1070303,
+      "script": "cpt_kimie_03_03"
+     },
+     {
+      "id": 1070304,
+      "script": "cpt_kimie_03_04"
+     }
+    ]
+   },
+   {
+    "name": "神语",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1070002,
+      "script": "cpt_kimie_04_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10020,
+  "type": 10,
+  "total": 5,
+  "groups": [
+   {
+    "name": "询夜",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1076001,
+      "script": "cpt_penumbra_00_01"
+     }
+    ]
+   },
+   {
+    "name": "长忆",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1076101,
+      "script": "cpt_penumbra_01_01"
+     },
+     {
+      "id": 1076102,
+      "script": "cpt_penumbra_01_02"
+     },
+     {
+      "id": 1076103,
+      "script": "cpt_penumbra_01_03"
+     }
+    ]
+   },
+   {
+    "name": "夕晖",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1076201,
+      "script": "cpt_penumbra_02_01"
+     },
+     {
+      "id": 1076202,
+      "script": "cpt_penumbra_02_02"
+     },
+     {
+      "id": 1076203,
+      "script": "cpt_penumbra_02_03"
+     }
+    ]
+   },
+   {
+    "name": "试心",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1076301,
+      "script": "cpt_penumbra_03_01"
+     },
+     {
+      "id": 1076302,
+      "script": "cpt_penumbra_03_02"
+     },
+     {
+      "id": 1076303,
+      "script": "cpt_penumbra_03_03"
+     }
+    ]
+   },
+   {
+    "name": "新愿",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1076002,
+      "script": "cpt_penumbra_04_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 10021,
+  "type": 10,
+  "total": 5,
+  "groups": [
+   {
+    "name": "轰鸣",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1082001,
+      "script": "cpt_bonneville_00_01"
+     }
+    ]
+   },
+   {
+    "name": "探针",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1082101,
+      "script": "cpt_bonneville_01_01"
+     },
+     {
+      "id": 1082102,
+      "script": "cpt_bonneville_01_02"
+     },
+     {
+      "id": 1082103,
+      "script": "cpt_bonneville_01_03"
+     }
+    ]
+   },
+   {
+    "name": "追忆",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1082201,
+      "script": "cpt_bonneville_02_01"
+     },
+     {
+      "id": 1082202,
+      "script": "cpt_bonneville_02_02"
+     },
+     {
+      "id": 1082203,
+      "script": "cpt_bonneville_02_03"
+     }
+    ]
+   },
+   {
+    "name": "共驰",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1082301,
+      "script": "cpt_bonneville_03_01"
+     },
+     {
+      "id": 1082302,
+      "script": "cpt_bonneville_03_02"
+     },
+     {
+      "id": 1082303,
+      "script": "cpt_bonneville_03_03"
+     }
+    ]
+   },
+   {
+    "name": "逐旅",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1082002,
+      "script": "cpt_bonneville_04_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 11001,
+  "type": 11,
+  "total": 24,
+  "groups": [
+   {
+    "name": "抑制链PV",
+    "en": "抑制链PV",
+    "stories": [
+     {
+      "id": 15,
+      "script": "21win_op"
+     }
+    ]
+   },
+   {
+    "name": "围困",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1100101,
+      "script": "cpt_hb_s01"
+     }
+    ]
+   },
+   {
+    "name": "协约",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1100102,
+      "script": "cpt_hb_s02"
+     }
+    ]
+   },
+   {
+    "name": "淡漠",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 1100103,
+      "script": "cpt_hb_s03"
+     }
+    ]
+   },
+   {
+    "name": "行尸",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 1100104,
+      "script": "cpt_hb_s04"
+     }
+    ]
+   },
+   {
+    "name": "求解之途",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 1100105,
+      "script": "cpt_hb_s05"
+     }
+    ]
+   },
+   {
+    "name": "野望",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 1100106,
+      "script": "cpt_hb_s06"
+     }
+    ]
+   },
+   {
+    "name": "庭审",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 1100107,
+      "script": "cpt_hb_s07"
+     }
+    ]
+   },
+   {
+    "name": "造物",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 1100108,
+      "script": "cpt_hb_s08"
+     }
+    ]
+   },
+   {
+    "name": "审判",
+    "en": "STAGE 11",
+    "stories": [
+     {
+      "id": 1100115,
+      "script": "cpt_hb_tutorial_11"
+     }
+    ]
+   },
+   {
+    "name": "献身",
+    "en": "PART.9",
+    "stories": [
+     {
+      "id": 1100109,
+      "script": "cpt_hb_s09"
+     }
+    ]
+   },
+   {
+    "name": "怒意",
+    "en": "PART.10",
+    "stories": [
+     {
+      "id": 1100110,
+      "script": "cpt_hb_s10"
+     }
+    ]
+   },
+   {
+    "name": "义务",
+    "en": "PART.11",
+    "stories": [
+     {
+      "id": 1100111,
+      "script": "cpt_hb_s11"
+     }
+    ]
+   },
+   {
+    "name": "信标",
+    "en": "PART.12",
+    "stories": [
+     {
+      "id": 1100112,
+      "script": "cpt_hb_s12"
+     }
+    ]
+   },
+   {
+    "name": "偏移",
+    "en": "PART.13",
+    "stories": [
+     {
+      "id": 1100113,
+      "script": "cpt_hb_s13"
+     }
+    ]
+   },
+   {
+    "name": "决策",
+    "en": "决策",
+    "stories": [
+     {
+      "id": 1100114,
+      "script": "cpt_hb_s14"
+     }
+    ]
+   },
+   {
+    "name": "情报获取",
+    "en": "情报获取",
+    "stories": [
+     {
+      "id": 1100201,
+      "script": "cpt_hb_h00"
+     }
+    ]
+   },
+   {
+    "name": "信息碎片·I",
+    "en": "信息碎片·I",
+    "stories": [
+     {
+      "id": 1100202,
+      "script": "cpt_hb_h01"
+     }
+    ]
+   },
+   {
+    "name": "信息碎片·Ⅱ",
+    "en": "信息碎片·Ⅱ",
+    "stories": [
+     {
+      "id": 1100203,
+      "script": "cpt_hb_h02"
+     }
+    ]
+   },
+   {
+    "name": "信息碎片·Ⅲ",
+    "en": "信息碎片·Ⅲ",
+    "stories": [
+     {
+      "id": 1100204,
+      "script": "cpt_hb_h03"
+     }
+    ]
+   },
+   {
+    "name": "信息碎片·Ⅳ",
+    "en": "信息碎片·Ⅳ",
+    "stories": [
+     {
+      "id": 1100205,
+      "script": "cpt_hb_h04"
+     }
+    ]
+   },
+   {
+    "name": "信息碎片·Ⅴ",
+    "en": "信息碎片·Ⅴ",
+    "stories": [
+     {
+      "id": 1100206,
+      "script": "cpt_hb_h05"
+     }
+    ]
+   },
+   {
+    "name": "信息碎片·Ⅵ",
+    "en": "信息碎片·Ⅵ",
+    "stories": [
+     {
+      "id": 1100207,
+      "script": "cpt_hb_h06"
+     }
+    ]
+   },
+   {
+    "name": "信息碎片·Ⅶ",
+    "en": "信息碎片·Ⅶ",
+    "stories": [
+     {
+      "id": 1100208,
+      "script": "cpt_hb_h07"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 13001,
+  "type": 13,
+  "total": 19,
+  "groups": [
+   {
+    "name": "愚者二象性",
+    "en": "愚者二象性",
+    "stories": [
+     {
+      "id": 1300101,
+      "script": "22fool_prologue"
+     }
+    ]
+   },
+   {
+    "name": "帕斯卡？",
+    "en": "帕斯卡？",
+    "stories": [
+     {
+      "id": 1300102,
+      "script": "22fool_persicaria"
+     }
+    ]
+   },
+   {
+    "name": "安冬妮娜？",
+    "en": "安冬妮娜？",
+    "stories": [
+     {
+      "id": 1300105,
+      "script": "22fool_anna"
+     }
+    ]
+   },
+   {
+    "name": "苏尔？",
+    "en": "苏尔？",
+    "stories": [
+     {
+      "id": 1300103,
+      "script": "22fool_sol"
+     }
+    ]
+   },
+   {
+    "name": "席摩？",
+    "en": "席摩？",
+    "stories": [
+     {
+      "id": 1300107,
+      "script": "22fool_simo"
+     }
+    ]
+   },
+   {
+    "name": "克罗琦？",
+    "en": "克罗琦？",
+    "stories": [
+     {
+      "id": 1300104,
+      "script": "22fool_croque"
+     }
+    ]
+   },
+   {
+    "name": "桑朵莱希？",
+    "en": "桑朵莱希？",
+    "stories": [
+     {
+      "id": 1300114,
+      "script": "22fool_centaureissi"
+     }
+    ]
+   },
+   {
+    "name": "琴？",
+    "en": "琴？",
+    "stories": [
+     {
+      "id": 1300116,
+      "script": "22fool_gin"
+     }
+    ]
+   },
+   {
+    "name": "德菈赛？",
+    "en": "德菈赛？",
+    "stories": [
+     {
+      "id": 1300113,
+      "script": "22fool_delacey"
+     }
+    ]
+   },
+   {
+    "name": "初尘？",
+    "en": "初尘？",
+    "stories": [
+     {
+      "id": 1300109,
+      "script": "22fool_hatsuchiri"
+     }
+    ]
+   },
+   {
+    "name": "派森？",
+    "en": "派森？",
+    "stories": [
+     {
+      "id": 1300112,
+      "script": "22fool_python"
+     }
+    ]
+   },
+   {
+    "name": "卡萝？",
+    "en": "卡萝？",
+    "stories": [
+     {
+      "id": 1300106,
+      "script": "22fool_kuro"
+     }
+    ]
+   },
+   {
+    "name": "末宵？",
+    "en": "末宵？",
+    "stories": [
+     {
+      "id": 1300110,
+      "script": "22fool_sueyoi"
+     }
+    ]
+   },
+   {
+    "name": "黛烟？",
+    "en": "黛烟？",
+    "stories": [
+     {
+      "id": 1300118,
+      "script": "22fool_haze"
+     }
+    ]
+   },
+   {
+    "name": "野良？",
+    "en": "野良？",
+    "stories": [
+     {
+      "id": 1300117,
+      "script": "22fool_nora"
+     }
+    ]
+   },
+   {
+    "name": "芙洛伦？",
+    "en": "芙洛伦？",
+    "stories": [
+     {
+      "id": 1300115,
+      "script": "22fool_florence"
+     }
+    ]
+   },
+   {
+    "name": "秋？",
+    "en": "秋？",
+    "stories": [
+     {
+      "id": 1300111,
+      "script": "22fool_aki"
+     }
+    ]
+   },
+   {
+    "name": "赫波？",
+    "en": "赫波？",
+    "stories": [
+     {
+      "id": 1300108,
+      "script": "22fool_hubble"
+     }
+    ]
+   },
+   {
+    "name": "愚者二象性",
+    "en": "愚者二象性",
+    "stories": [
+     {
+      "id": 1300119,
+      "script": "22fool_end"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 17001,
+  "type": 17,
+  "total": 20,
+  "groups": [
+   {
+    "name": "逆波共振PV",
+    "en": "逆波共振PV",
+    "stories": [
+     {
+      "id": 19,
+      "script": "22carnival_op"
+     }
+    ]
+   },
+   {
+    "name": "缘由",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1700101,
+      "script": "cpt_imr_s01"
+     }
+    ]
+   },
+   {
+    "name": "故人",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1700102,
+      "script": "cpt_imr_s02"
+     }
+    ]
+   },
+   {
+    "name": "同位",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 1700103,
+      "script": "cpt_imr_s03"
+     }
+    ]
+   },
+   {
+    "name": "启幕",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 1700104,
+      "script": "cpt_imr_s04"
+     }
+    ]
+   },
+   {
+    "name": "夺目",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 1700105,
+      "script": "cpt_imr_s05"
+     }
+    ]
+   },
+   {
+    "name": "憧憬",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 1700106,
+      "script": "cpt_imr_s06"
+     }
+    ]
+   },
+   {
+    "name": "执寻",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 1700107,
+      "script": "cpt_imr_s07"
+     }
+    ]
+   },
+   {
+    "name": "欢歌",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 1700108,
+      "script": "cpt_imr_s08"
+     }
+    ]
+   },
+   {
+    "name": "演绎",
+    "en": "PART.9",
+    "stories": [
+     {
+      "id": 1700109,
+      "script": "cpt_imr_s09"
+     }
+    ]
+   },
+   {
+    "name": "种子",
+    "en": "PART.10",
+    "stories": [
+     {
+      "id": 1700110,
+      "script": "cpt_imr_s10"
+     }
+    ]
+   },
+   {
+    "name": "庆典",
+    "en": "PART.11",
+    "stories": [
+     {
+      "id": 1700111,
+      "script": "cpt_imr_s11"
+     }
+    ]
+   },
+   {
+    "name": "不夜",
+    "en": "PART.12",
+    "stories": [
+     {
+      "id": 1700112,
+      "script": "cpt_imr_s12"
+     }
+    ]
+   },
+   {
+    "name": "启明",
+    "en": "PART.13",
+    "stories": [
+     {
+      "id": 1700113,
+      "script": "cpt_imr_s13"
+     }
+    ]
+   },
+   {
+    "name": "谜底",
+    "en": "PART.14",
+    "stories": [
+     {
+      "id": 1700114,
+      "script": "cpt_imr_s14"
+     }
+    ]
+   },
+   {
+    "name": "叫喊",
+    "en": "PART.15",
+    "stories": [
+     {
+      "id": 1700115,
+      "script": "cpt_imr_s15"
+     }
+    ]
+   },
+   {
+    "name": "未来",
+    "en": "PART.16",
+    "stories": [
+     {
+      "id": 1700116,
+      "script": "cpt_imr_s16"
+     }
+    ]
+   },
+   {
+    "name": "金星",
+    "en": "PART.17",
+    "stories": [
+     {
+      "id": 1700117,
+      "script": "cpt_imr_s17"
+     }
+    ]
+   },
+   {
+    "name": "低压",
+    "en": "PART.18",
+    "stories": [
+     {
+      "id": 1700118,
+      "script": "cpt_imr_s18"
+     }
+    ]
+   },
+   {
+    "name": "“舞台”",
+    "en": "PART.19",
+    "stories": [
+     {
+      "id": 1700119,
+      "script": "cpt_imr_s19"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 18001,
+  "type": 18,
+  "total": 7,
+  "groups": [
+   {
+    "name": "故事书",
+    "en": "Stage 1",
+    "stories": [
+     {
+      "id": 1800101,
+      "script": "22child_01"
+     },
+     {
+      "id": 1800102,
+      "script": "22child_01_02"
+     },
+     {
+      "id": 1800103,
+      "script": "22child_01_03"
+     }
+    ]
+   },
+   {
+    "name": "小机长",
+    "en": "Stage 2",
+    "stories": [
+     {
+      "id": 1800104,
+      "script": "22child_02"
+     }
+    ]
+   },
+   {
+    "name": "嗷呜",
+    "en": "Stage 3",
+    "stories": [
+     {
+      "id": 1800105,
+      "script": "22child_03"
+     }
+    ]
+   },
+   {
+    "name": "机器将军与两个公主",
+    "en": "Stage 4",
+    "stories": [
+     {
+      "id": 1800106,
+      "script": "22child_04"
+     }
+    ]
+   },
+   {
+    "name": "她是龙",
+    "en": "Stage 5",
+    "stories": [
+     {
+      "id": 1800107,
+      "script": "22child_05"
+     }
+    ]
+   },
+   {
+    "name": "沉睡美人",
+    "en": "Stage 6",
+    "stories": [
+     {
+      "id": 1800108,
+      "script": "22child_06"
+     }
+    ]
+   },
+   {
+    "name": "卷末",
+    "en": "Stage 7",
+    "stories": [
+     {
+      "id": 1800109,
+      "script": "22child_07"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 19001,
+  "type": 19,
+  "total": 2,
+  "groups": [
+   {
+    "name": "未雨绸缪",
+    "en": "未雨绸缪",
+    "stories": [
+     {
+      "id": 1900101,
+      "script": "cpt_challenge_01"
+     }
+    ]
+   },
+   {
+    "name": "暴风骤临",
+    "en": "暴风骤临",
+    "stories": [
+     {
+      "id": 1900102,
+      "script": "cpt_challenge_end"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 19002,
+  "type": 19,
+  "total": 2,
+  "groups": [
+   {
+    "name": "携手再砺",
+    "en": "携手再砺",
+    "stories": [
+     {
+      "id": 1900201,
+      "script": "varea_01"
+     }
+    ]
+   },
+   {
+    "name": "且试新锋",
+    "en": "且试新锋",
+    "stories": [
+     {
+      "id": 1900202,
+      "script": "varea_02"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 20001,
+  "type": 20,
+  "total": 29,
+  "groups": [
+   {
+    "name": "临界爆震PV",
+    "en": "临界爆震PV",
+    "stories": [
+     {
+      "id": 20,
+      "script": "22summer_op"
+     }
+    ]
+   },
+   {
+    "name": "战线",
+    "en": "STAGE 1",
+    "stories": [
+     {
+      "id": 1410130,
+      "script": "22summer_p_1_1_1"
+     },
+     {
+      "id": 1410131,
+      "script": "22summer_p_1_1_2"
+     },
+     {
+      "id": 1410132,
+      "script": "22summer_p_1_2_1"
+     }
+    ]
+   },
+   {
+    "name": "退守",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 1410133,
+      "script": "22summer_p_1_2_2"
+     },
+     {
+      "id": 1410134,
+      "script": "22summer_p_1_3_1"
+     }
+    ]
+   },
+   {
+    "name": "协援",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 1410135,
+      "script": "22summer_p_1_4_1"
+     },
+     {
+      "id": 1410136,
+      "script": "22summer_p_1_5_1"
+     },
+     {
+      "id": 1410137,
+      "script": "22summer_p_1_5_2"
+     }
+    ]
+   },
+   {
+    "name": "屏退",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 1410138,
+      "script": "22summer_p_1_6_1"
+     },
+     {
+      "id": 1410139,
+      "script": "22summer_p_1_7_1"
+     }
+    ]
+   },
+   {
+    "name": "解构",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1400101,
+      "script": "22summer_p_2_1_1"
+     }
+    ]
+   },
+   {
+    "name": "倚仗",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1400102,
+      "script": "22summer_p_3_1_1"
+     }
+    ]
+   },
+   {
+    "name": "将明",
+    "en": "STAGE 7",
+    "stories": [
+     {
+      "id": 1410101,
+      "script": "22summer_p_3_2_1"
+     }
+    ]
+   },
+   {
+    "name": "一炮",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 1400103,
+      "script": "22summer_p_3_3_1"
+     }
+    ]
+   },
+   {
+    "name": "诱饵",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 1400104,
+      "script": "22summer_s01"
+     }
+    ]
+   },
+   {
+    "name": "陌生",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 1400105,
+      "script": "22summer_s02"
+     }
+    ]
+   },
+   {
+    "name": "哨塔",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 1400106,
+      "script": "22summer_s03"
+     }
+    ]
+   },
+   {
+    "name": "久违",
+    "en": "STAGE 10",
+    "stories": [
+     {
+      "id": 1410102,
+      "script": "22summer_s03_1"
+     }
+    ]
+   },
+   {
+    "name": "爆破",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 1400107,
+      "script": "22summer_s04"
+     }
+    ]
+   },
+   {
+    "name": "援军",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 1400108,
+      "script": "22summer_s05"
+     }
+    ]
+   },
+   {
+    "name": "争执",
+    "en": "PART.9",
+    "stories": [
+     {
+      "id": 1400109,
+      "script": "22summer_s06"
+     }
+    ]
+   },
+   {
+    "name": "合作",
+    "en": "PART.10",
+    "stories": [
+     {
+      "id": 1400110,
+      "script": "22summer_s07"
+     }
+    ]
+   },
+   {
+    "name": "疑云",
+    "en": "PART.11",
+    "stories": [
+     {
+      "id": 1400111,
+      "script": "22summer_s08"
+     }
+    ]
+   },
+   {
+    "name": "守护",
+    "en": "PART.12",
+    "stories": [
+     {
+      "id": 1400112,
+      "script": "22summer_s09"
+     }
+    ]
+   },
+   {
+    "name": "灵犀",
+    "en": "PART.13",
+    "stories": [
+     {
+      "id": 1400113,
+      "script": "22summer_s10"
+     }
+    ]
+   },
+   {
+    "name": "觉悟",
+    "en": "STAGE 16",
+    "stories": [
+     {
+      "id": 1410129,
+      "script": "22summer_s10_1"
+     }
+    ]
+   },
+   {
+    "name": "拆解",
+    "en": "PART.14",
+    "stories": [
+     {
+      "id": 1400114,
+      "script": "22summer_s11"
+     }
+    ]
+   },
+   {
+    "name": "伙伴",
+    "en": "PART.15",
+    "stories": [
+     {
+      "id": 1400115,
+      "script": "22summer_s12"
+     }
+    ]
+   },
+   {
+    "name": "劫持",
+    "en": "PART.16",
+    "stories": [
+     {
+      "id": 1400116,
+      "script": "22summer_s13"
+     }
+    ]
+   },
+   {
+    "name": "藏锋",
+    "en": "STAGE 19",
+    "stories": [
+     {
+      "id": 1410103,
+      "script": "22summer_s14_1"
+     },
+     {
+      "id": 1410104,
+      "script": "22summer_s14_2"
+     },
+     {
+      "id": 1410105,
+      "script": "22summer_s14_3"
+     },
+     {
+      "id": 1410106,
+      "script": "22summer_s14_4"
+     }
+    ]
+   },
+   {
+    "name": "底牌",
+    "en": "STAGE 20",
+    "stories": [
+     {
+      "id": 1410107,
+      "script": "22summer_s15_1"
+     },
+     {
+      "id": 1410108,
+      "script": "22summer_s15_2"
+     },
+     {
+      "id": 1410109,
+      "script": "22summer_s15_3"
+     },
+     {
+      "id": 1410110,
+      "script": "22summer_s15_4"
+     },
+     {
+      "id": 1410111,
+      "script": "22summer_s15_5"
+     }
+    ]
+   },
+   {
+    "name": "歧路",
+    "en": "STAGE 21",
+    "stories": [
+     {
+      "id": 1410112,
+      "script": "22summer_s16_f1"
+     },
+     {
+      "id": 1410113,
+      "script": "22summer_s16_f2"
+     },
+     {
+      "id": 1410114,
+      "script": "22summer_s16_f3"
+     },
+     {
+      "id": 1410115,
+      "script": "22summer_s16_f4"
+     },
+     {
+      "id": 1410116,
+      "script": "22summer_s16_f5"
+     },
+     {
+      "id": 1410117,
+      "script": "22summer_s16_t1"
+     },
+     {
+      "id": 1410118,
+      "script": "22summer_s16_t2"
+     },
+     {
+      "id": 1410119,
+      "script": "22summer_s16_t3"
+     },
+     {
+      "id": 1410120,
+      "script": "22summer_s16_t4"
+     },
+     {
+      "id": 1410121,
+      "script": "22summer_s16_t5"
+     },
+     {
+      "id": 1410122,
+      "script": "22summer_s16_t6"
+     },
+     {
+      "id": 1410123,
+      "script": "22summer_s16_t7"
+     },
+     {
+      "id": 1410124,
+      "script": "22summer_s16_t8"
+     }
+    ]
+   },
+   {
+    "name": "如梦",
+    "en": "STAGE 22",
+    "stories": [
+     {
+      "id": 1410125,
+      "script": "22summer_s17_1"
+     },
+     {
+      "id": 1410126,
+      "script": "22summer_s17_2"
+     },
+     {
+      "id": 1410127,
+      "script": "22summer_s17_3"
+     }
+    ]
+   },
+   {
+    "name": "初醒",
+    "en": "PART.17",
+    "stories": [
+     {
+      "id": 1400117,
+      "script": "22summer_s14a"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 22001,
+  "type": 22,
+  "total": 6,
+  "groups": [
+   {
+    "name": "扬帆起航",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2200101,
+      "script": "22hallo_s_prologue"
+     }
+    ]
+   },
+   {
+    "name": "神秘海图",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2200102,
+      "script": "22hallo_s01"
+     }
+    ]
+   },
+   {
+    "name": "汹涌怒涛",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2200103,
+      "script": "22hallo_s02"
+     }
+    ]
+   },
+   {
+    "name": "深海洞穴",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 2200104,
+      "script": "22hallo_s03"
+     }
+    ]
+   },
+   {
+    "name": "鏖战诡海",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 2200105,
+      "script": "22hallo_s04"
+     }
+    ]
+   },
+   {
+    "name": "凯旋归来",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 2200106,
+      "script": "22hallo_s_end"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 22002,
+  "type": 22,
+  "total": 6,
+  "groups": [
+   {
+    "name": "初星",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2200131,
+      "script": "22christ_prologue"
+     }
+    ]
+   },
+   {
+    "name": "破碎",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2200132,
+      "script": "22christ_01"
+     }
+    ]
+   },
+   {
+    "name": "纯真",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2200133,
+      "script": "22christ_02"
+     }
+    ]
+   },
+   {
+    "name": "虚实",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 2200134,
+      "script": "22christ_03"
+     }
+    ]
+   },
+   {
+    "name": "心意",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 2200135,
+      "script": "22christ_04"
+     }
+    ]
+   },
+   {
+    "name": "平安夜",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 2200136,
+      "script": "22christ_end"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 24001,
+  "type": 24,
+  "total": 33,
+  "groups": [
+   {
+    "name": "游园团",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2200140,
+      "script": "23spring_prologue"
+     }
+    ]
+   },
+   {
+    "name": "演武队",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2200141,
+      "script": "23spring_s1f"
+     }
+    ]
+   },
+   {
+    "name": "执勤组",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2200142,
+      "script": "23spring_s1w"
+     }
+    ]
+   },
+   {
+    "name": "玩乐者",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 2200143,
+      "script": "23spring_s1t"
+     }
+    ]
+   },
+   {
+    "name": "武备部",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 2200144,
+      "script": "23spring_s2wf"
+     }
+    ]
+   },
+   {
+    "name": "玩乐者",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 2200145,
+      "script": "23spring_s2t"
+     }
+    ]
+   },
+   {
+    "name": "武戏班",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 2200146,
+      "script": "23spring_s3ft"
+     }
+    ]
+   },
+   {
+    "name": "执勤组",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 2200147,
+      "script": "23spring_s3w"
+     }
+    ]
+   },
+   {
+    "name": "游园团",
+    "en": "PART.9",
+    "stories": [
+     {
+      "id": 2200148,
+      "script": "23spring_s4"
+     }
+    ]
+   },
+   {
+    "name": "执勤组",
+    "en": "PART.10",
+    "stories": [
+     {
+      "id": 2200149,
+      "script": "23spring_s5w"
+     }
+    ]
+   },
+   {
+    "name": "武戏班",
+    "en": "PART.11",
+    "stories": [
+     {
+      "id": 2200150,
+      "script": "23spring_s5ft"
+     }
+    ]
+   },
+   {
+    "name": "执勤组",
+    "en": "PART.12",
+    "stories": [
+     {
+      "id": 2200151,
+      "script": "23spring_s6w"
+     }
+    ]
+   },
+   {
+    "name": "武戏班",
+    "en": "PART.13",
+    "stories": [
+     {
+      "id": 2200152,
+      "script": "23spring_s6ft"
+     }
+    ]
+   },
+   {
+    "name": "游园团",
+    "en": "PART.14",
+    "stories": [
+     {
+      "id": 2200153,
+      "script": "23spring_s7"
+     }
+    ]
+   },
+   {
+    "name": "游园团",
+    "en": "PART.15",
+    "stories": [
+     {
+      "id": 2200154,
+      "script": "23spring_s8"
+     }
+    ]
+   },
+   {
+    "name": "福函回礼",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2200155,
+      "script": "23spring_hb_jiangyu_gift"
+     }
+    ]
+   },
+   {
+    "name": "拜年随记",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2200156,
+      "script": "23spring_hb_jiangyu_01"
+     }
+    ]
+   },
+   {
+    "name": "贺春轶闻",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2200157,
+      "script": "23spring_hb_jiangyu_02"
+     }
+    ]
+   },
+   {
+    "name": "福函回礼",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2200158,
+      "script": "23spring_hb_kuro_gift"
+     }
+    ]
+   },
+   {
+    "name": "拜年随记",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2200159,
+      "script": "23spring_hb_kuro_01"
+     }
+    ]
+   },
+   {
+    "name": "贺春轶闻",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2200160,
+      "script": "23spring_hb_kuro_02"
+     }
+    ]
+   },
+   {
+    "name": "福函回礼",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2200161,
+      "script": "23spring_hb_florence_gift"
+     }
+    ]
+   },
+   {
+    "name": "拜年随记",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2200162,
+      "script": "23spring_hb_florence_01"
+     }
+    ]
+   },
+   {
+    "name": "贺春轶闻",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2200163,
+      "script": "23spring_hb_florence_02"
+     }
+    ]
+   },
+   {
+    "name": "福函回礼",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2200164,
+      "script": "23spring_hb_aki_gift"
+     }
+    ]
+   },
+   {
+    "name": "拜年随记",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2200165,
+      "script": "23spring_hb_aki_01"
+     }
+    ]
+   },
+   {
+    "name": "贺春轶闻",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2200166,
+      "script": "23spring_hb_aki_02"
+     }
+    ]
+   },
+   {
+    "name": "福函回礼",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2200167,
+      "script": "23spring_hb_sakuya_gift"
+     }
+    ]
+   },
+   {
+    "name": "拜年随记",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2200168,
+      "script": "23spring_hb_sakuya_01"
+     }
+    ]
+   },
+   {
+    "name": "贺春轶闻",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2200169,
+      "script": "23spring_hb_sakuya_02"
+     }
+    ]
+   },
+   {
+    "name": "福函回礼",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2200170,
+      "script": "23spring_hb_croque_gift"
+     }
+    ]
+   },
+   {
+    "name": "拜年随记",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2200171,
+      "script": "23spring_hb_croque_01"
+     }
+    ]
+   },
+   {
+    "name": "贺春轶闻",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2200172,
+      "script": "23spring_hb_croque_02"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 24003,
+  "type": 24,
+  "total": 21,
+  "groups": [
+   {
+    "name": "初愿",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2400301,
+      "script": "23concert_00"
+     }
+    ]
+   },
+   {
+    "name": "交锋",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2400302,
+      "script": "23concert_01"
+     }
+    ]
+   },
+   {
+    "name": "迷雾",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2400303,
+      "script": "23concert_02"
+     }
+    ]
+   },
+   {
+    "name": "黯淡",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 2400304,
+      "script": "23concert_03"
+     }
+    ]
+   },
+   {
+    "name": "背驰",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 2400305,
+      "script": "23concert_04"
+     }
+    ]
+   },
+   {
+    "name": "新生",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 2400306,
+      "script": "23concert_05"
+     }
+    ]
+   },
+   {
+    "name": "烟火",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 2400307,
+      "script": "23concert_06"
+     }
+    ]
+   },
+   {
+    "name": "荧海",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 2400308,
+      "script": "23concert_07"
+     }
+    ]
+   },
+   {
+    "name": "余韵",
+    "en": "PART.9",
+    "stories": [
+     {
+      "id": 2400309,
+      "script": "23concert_08"
+     }
+    ]
+   },
+   {
+    "name": "星海巡音-可露凯",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2400310,
+      "script": "23concert_clukay_01"
+     }
+    ]
+   },
+   {
+    "name": "星海巡音-可露凯",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2400311,
+      "script": "23concert_clukay_02"
+     }
+    ]
+   },
+   {
+    "name": "星海巡音-可露凯",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2400312,
+      "script": "23concert_clukay_03"
+     }
+    ]
+   },
+   {
+    "name": "星海巡音-薇",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2400313,
+      "script": "23concert_vee_01"
+     }
+    ]
+   },
+   {
+    "name": "星海巡音-薇",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2400314,
+      "script": "23concert_vee_02"
+     }
+    ]
+   },
+   {
+    "name": "星海巡音-薇",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2400315,
+      "script": "23concert_vee_03"
+     }
+    ]
+   },
+   {
+    "name": "星海巡音-桑朵莱希",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2400316,
+      "script": "23concert_centaureissi_01"
+     }
+    ]
+   },
+   {
+    "name": "星海巡音-桑朵莱希",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2400317,
+      "script": "23concert_centaureissi_02"
+     }
+    ]
+   },
+   {
+    "name": "星海巡音-桑朵莱希",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2400318,
+      "script": "23concert_centaureissi_03"
+     }
+    ]
+   },
+   {
+    "name": "星海巡音-温蒂妮",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2400319,
+      "script": "23concert_undline_01"
+     }
+    ]
+   },
+   {
+    "name": "星海巡音-温蒂妮",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2400320,
+      "script": "23concert_undline_02"
+     }
+    ]
+   },
+   {
+    "name": "星海巡音-温蒂妮",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2400321,
+      "script": "23concert_undline_03"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 25001,
+  "type": 25,
+  "total": 22,
+  "groups": [
+   {
+    "name": "后翼危局",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 2500201,
+      "script": "23winter_s00"
+     }
+    ]
+   },
+   {
+    "name": "弱势束缚",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 2500202,
+      "script": "23winter_s01"
+     }
+    ]
+   },
+   {
+    "name": "轻子先行",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 2500203,
+      "script": "23winter_s02"
+     }
+    ]
+   },
+   {
+    "name": "博弈交锋",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 2500204,
+      "script": "23winter_s03"
+     }
+    ]
+   },
+   {
+    "name": "引离计策",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 2500205,
+      "script": "23winter_s04"
+     }
+    ]
+   },
+   {
+    "name": "双重攻击",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 2500206,
+      "script": "23winter_s05"
+     }
+    ]
+   },
+   {
+    "name": "反击收复",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 2500207,
+      "script": "23winter_s06"
+     }
+    ]
+   },
+   {
+    "name": "多路承压",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 2500208,
+      "script": "23winter_s07"
+     }
+    ]
+   },
+   {
+    "name": "极限置换",
+    "en": "PART.9",
+    "stories": [
+     {
+      "id": 2500209,
+      "script": "23winter_s08"
+     }
+    ]
+   },
+   {
+    "name": "冒险提议",
+    "en": "PART.10",
+    "stories": [
+     {
+      "id": 2500210,
+      "script": "23winter_s09"
+     }
+    ]
+   },
+   {
+    "name": "棘路同行",
+    "en": "PART.11",
+    "stories": [
+     {
+      "id": 2500211,
+      "script": "23winter_s10"
+     }
+    ]
+   },
+   {
+    "name": "王翼陷阱",
+    "en": "PART.12",
+    "stories": [
+     {
+      "id": 2500212,
+      "script": "23winter_s11"
+     }
+    ]
+   },
+   {
+    "name": "多层束缚",
+    "en": "PART.13",
+    "stories": [
+     {
+      "id": 2500213,
+      "script": "23winter_s12"
+     }
+    ]
+   },
+   {
+    "name": "中局危翼",
+    "en": "PART.14",
+    "stories": [
+     {
+      "id": 2500214,
+      "script": "23winter_s13"
+     }
+    ]
+   },
+   {
+    "name": "幻象陷阱",
+    "en": "PART.15",
+    "stories": [
+     {
+      "id": 2500215,
+      "script": "23winter_s14"
+     }
+    ]
+   },
+   {
+    "name": "决意交汇",
+    "en": "PART.16",
+    "stories": [
+     {
+      "id": 2500216,
+      "script": "23winter_s15"
+     }
+    ]
+   },
+   {
+    "name": "直刺天元",
+    "en": "PART.17",
+    "stories": [
+     {
+      "id": 2500217,
+      "script": "23winter_s16"
+     }
+    ]
+   },
+   {
+    "name": "杀局引入",
+    "en": "PART.18",
+    "stories": [
+     {
+      "id": 2500218,
+      "script": "23winter_s17"
+     }
+    ]
+   },
+   {
+    "name": "通路联兵",
+    "en": "PART.19",
+    "stories": [
+     {
+      "id": 2500219,
+      "script": "23winter_s18"
+     }
+    ]
+   },
+   {
+    "name": "异色佯动",
+    "en": "PART.20",
+    "stories": [
+     {
+      "id": 2500220,
+      "script": "23winter_s19"
+     }
+    ]
+   },
+   {
+    "name": "星锋前照",
+    "en": "PART.21",
+    "stories": [
+     {
+      "id": 2500221,
+      "script": "23winter_s20"
+     }
+    ]
+   },
+   {
+    "name": "点数清算",
+    "en": "PART.22",
+    "stories": [
+     {
+      "id": 2500222,
+      "script": "23winter_s21"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 31001,
+  "type": 31,
+  "total": 2,
+  "groups": [
+   {
+    "name": "剑引异谭",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 3100011,
+      "script": "23april_prologue"
+     }
+    ]
+   },
+   {
+    "name": "长夜有终",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 3100012,
+      "script": "23april_end"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 33001,
+  "type": 33,
+  "total": 28,
+  "groups": [
+   {
+    "name": "无律背反PV",
+    "en": "无律背反PV",
+    "stories": [
+     {
+      "id": 3300100,
+      "script": "23carnival_op"
+     }
+    ]
+   },
+   {
+    "name": "命途回响",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 3300201,
+      "script": "23carnival_s01"
+     }
+    ]
+   },
+   {
+    "name": "征战登程",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 3300202,
+      "script": "23carnival_s02"
+     }
+    ]
+   },
+   {
+    "name": "圣坛晓谕",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 3300203,
+      "script": "23carnival_s03"
+     }
+    ]
+   },
+   {
+    "name": "捷行证道",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 3300204,
+      "script": "23carnival_s04"
+     }
+    ]
+   },
+   {
+    "name": "分海疾驰",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 3300205,
+      "script": "23carnival_s05"
+     }
+    ]
+   },
+   {
+    "name": "暗潮启明",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 3300206,
+      "script": "23carnival_s06"
+     }
+    ]
+   },
+   {
+    "name": "不破加护",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 3300207,
+      "script": "23carnival_s07"
+     }
+    ]
+   },
+   {
+    "name": "异念丛生",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 3300208,
+      "script": "23carnival_s08"
+     }
+    ]
+   },
+   {
+    "name": "缠身罪业",
+    "en": "PART.9",
+    "stories": [
+     {
+      "id": 3300209,
+      "script": "23carnival_s09"
+     }
+    ]
+   },
+   {
+    "name": "疑途解谕",
+    "en": "PART.10",
+    "stories": [
+     {
+      "id": 3300210,
+      "script": "23carnival_s10"
+     }
+    ]
+   },
+   {
+    "name": "漫路潜寻",
+    "en": "PART.11",
+    "stories": [
+     {
+      "id": 3300211,
+      "script": "23carnival_s11_1"
+     }
+    ]
+   },
+   {
+    "name": "隐没重光",
+    "en": "PART.12",
+    "stories": [
+     {
+      "id": 3300212,
+      "script": "23carnival_s12"
+     }
+    ]
+   },
+   {
+    "name": "高塔引炬",
+    "en": "PART.13",
+    "stories": [
+     {
+      "id": 3300213,
+      "script": "23carnival_s13"
+     }
+    ]
+   },
+   {
+    "name": "酣梦尽处",
+    "en": "PART.14",
+    "stories": [
+     {
+      "id": 3300214,
+      "script": "23carnival_s14"
+     }
+    ]
+   },
+   {
+    "name": "崩解边缘",
+    "en": "PART.15",
+    "stories": [
+     {
+      "id": 3300215,
+      "script": "23carnival_s15"
+     }
+    ]
+   },
+   {
+    "name": "以恨还偿",
+    "en": "PART.16",
+    "stories": [
+     {
+      "id": 3300216,
+      "script": "23carnival_s16_1"
+     }
+    ]
+   },
+   {
+    "name": "天光一线",
+    "en": "PART.17",
+    "stories": [
+     {
+      "id": 3300217,
+      "script": "23carnival_s17"
+     }
+    ]
+   },
+   {
+    "name": "邪祟虚影",
+    "en": "PART.18",
+    "stories": [
+     {
+      "id": 3300218,
+      "script": "23carnival_s18"
+     }
+    ]
+   },
+   {
+    "name": "茧中嬗变",
+    "en": "PART.19",
+    "stories": [
+     {
+      "id": 3300219,
+      "script": "23carnival_s19"
+     }
+    ]
+   },
+   {
+    "name": "第三支箭",
+    "en": "PART.20",
+    "stories": [
+     {
+      "id": 3300220,
+      "script": "23carnival_s20"
+     }
+    ]
+   },
+   {
+    "name": "寻猎之刻",
+    "en": "PART.21",
+    "stories": [
+     {
+      "id": 3300221,
+      "script": "23carnival_s21"
+     }
+    ]
+   },
+   {
+    "name": "波诡云谲",
+    "en": "PART.22",
+    "stories": [
+     {
+      "id": 3300222,
+      "script": "23carnival_s22"
+     }
+    ]
+   },
+   {
+    "name": "嘲善高歌",
+    "en": "PART.23",
+    "stories": [
+     {
+      "id": 3300223,
+      "script": "23carnival_s23"
+     }
+    ]
+   },
+   {
+    "name": "破妄决战",
+    "en": "PART.24",
+    "stories": [
+     {
+      "id": 3300224,
+      "script": "23carnival_s24"
+     }
+    ]
+   },
+   {
+    "name": "永别之约",
+    "en": "PART.25",
+    "stories": [
+     {
+      "id": 3300225,
+      "script": "23carnival_s25"
+     }
+    ]
+   },
+   {
+    "name": "动荡遗光",
+    "en": "PART.26",
+    "stories": [
+     {
+      "id": 3300226,
+      "script": "23carnival_s26"
+     }
+    ]
+   },
+   {
+    "name": "长忆回响",
+    "en": "PART.27",
+    "stories": [
+     {
+      "id": 3300227,
+      "script": "23carnival_s27"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 33003,
+  "type": 33,
+  "total": 22,
+  "groups": [
+   {
+    "name": "致密静点PV",
+    "en": "致密静点PV",
+    "stories": [
+     {
+      "id": 3303100,
+      "script": "23summer_op"
+     }
+    ]
+   },
+   {
+    "name": "九天唤邀",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 3303201,
+      "script": "23summer_s01"
+     }
+    ]
+   },
+   {
+    "name": "远星微讯",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 3303202,
+      "script": "23summer_s02"
+     }
+    ]
+   },
+   {
+    "name": "寰宇联星",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 3303203,
+      "script": "23summer_s03"
+     }
+    ]
+   },
+   {
+    "name": "引力蝴蝶",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 3303204,
+      "script": "23summer_s04"
+     }
+    ]
+   },
+   {
+    "name": "千钧一发",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 3303205,
+      "script": "23summer_s05"
+     }
+    ]
+   },
+   {
+    "name": "溯回焦土",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 3303206,
+      "script": "23summer_s06"
+     }
+    ]
+   },
+   {
+    "name": "负熵而生",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 3303207,
+      "script": "23summer_s07"
+     }
+    ]
+   },
+   {
+    "name": "暗幕吞食",
+    "en": "STAGE 12",
+    "stories": [
+     {
+      "id": 33032071,
+      "script": "23summer_s07_1"
+     },
+     {
+      "id": 33032072,
+      "script": "23summer_s07_2"
+     },
+     {
+      "id": 33032073,
+      "script": "23summer_s07_3"
+     }
+    ]
+   },
+   {
+    "name": "泰坦悲鸣",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 3303208,
+      "script": "23summer_s08"
+     }
+    ]
+   },
+   {
+    "name": "彗暴旋涡",
+    "en": "STAGE 14",
+    "stories": [
+     {
+      "id": 33032081,
+      "script": "23summer_s08_1"
+     },
+     {
+      "id": 33032082,
+      "script": "23summer_s08_2"
+     }
+    ]
+   },
+   {
+    "name": "迷诡星途",
+    "en": "PART.9",
+    "stories": [
+     {
+      "id": 3303209,
+      "script": "23summer_s09"
+     }
+    ]
+   },
+   {
+    "name": "空境交锋",
+    "en": "STAGE 17",
+    "stories": [
+     {
+      "id": 33032101,
+      "script": "23summer_s10_1"
+     }
+    ]
+   },
+   {
+    "name": "逐隐折光",
+    "en": "PART.10",
+    "stories": [
+     {
+      "id": 3303210,
+      "script": "23summer_s10"
+     }
+    ]
+   },
+   {
+    "name": "辰星湮寂",
+    "en": "PART.11",
+    "stories": [
+     {
+      "id": 3303211,
+      "script": "23summer_s11"
+     }
+    ]
+   },
+   {
+    "name": "熵噬曜变",
+    "en": "PART.12",
+    "stories": [
+     {
+      "id": 3303212,
+      "script": "23summer_s12"
+     }
+    ]
+   },
+   {
+    "name": "热寂末日",
+    "en": "PART.13",
+    "stories": [
+     {
+      "id": 3303213,
+      "script": "23summer_s13"
+     }
+    ]
+   },
+   {
+    "name": "暗夜航路",
+    "en": "PART.14",
+    "stories": [
+     {
+      "id": 3303214,
+      "script": "23summer_s14"
+     }
+    ]
+   },
+   {
+    "name": "陨魂归尘",
+    "en": "PART.15",
+    "stories": [
+     {
+      "id": 3303215,
+      "script": "23summer_s15"
+     }
+    ]
+   },
+   {
+    "name": "质量之楔",
+    "en": "PART.16",
+    "stories": [
+     {
+      "id": 3303216,
+      "script": "23summer_s16"
+     }
+    ]
+   },
+   {
+    "name": "鸿蒙重塑",
+    "en": "STAGE 32",
+    "stories": [
+     {
+      "id": 33032161,
+      "script": "23summer_s16_1"
+     }
+    ]
+   },
+   {
+    "name": "奇点烁光",
+    "en": "PART.17",
+    "stories": [
+     {
+      "id": 3303217,
+      "script": "23summer_s17"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 33005,
+  "type": 33,
+  "total": 18,
+  "groups": [
+   {
+    "name": "决战伊始",
+    "en": "PART.0",
+    "stories": [
+     {
+      "id": 3306200,
+      "script": "24summer_s00"
+     }
+    ]
+   },
+   {
+    "name": "终局筹谋",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 3306201,
+      "script": "24summer_s01"
+     }
+    ]
+   },
+   {
+    "name": "战云密布",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 3306202,
+      "script": "24summer_s02"
+     }
+    ]
+   },
+   {
+    "name": "恶智如渊",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 3306203,
+      "script": "24summer_s03"
+     }
+    ]
+   },
+   {
+    "name": "悲怆义释",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 33062031,
+      "script": "24summer_s03_1"
+     }
+    ]
+   },
+   {
+    "name": "暴食之影",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 3306204,
+      "script": "24summer_s04"
+     }
+    ]
+   },
+   {
+    "name": "焰耀星芒",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 3306205,
+      "script": "24summer_s05"
+     }
+    ]
+   },
+   {
+    "name": "骇人秘闻",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 3306206,
+      "script": "24summer_s06"
+     }
+    ]
+   },
+   {
+    "name": "不敬噬欲",
+    "en": "STAGE 9",
+    "stories": [
+     {
+      "id": 33062061,
+      "script": "24summer_s07_0"
+     },
+     {
+      "id": 33062062,
+      "script": "24summer_s07_1"
+     },
+     {
+      "id": 33062063,
+      "script": "24summer_s07_2"
+     },
+     {
+      "id": 33062064,
+      "script": "24summer_s07_3"
+     },
+     {
+      "id": 33062065,
+      "script": "24summer_s07_4"
+     },
+     {
+      "id": 33062066,
+      "script": "24summer_s07_5"
+     }
+    ]
+   },
+   {
+    "name": "千钧悬绝",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 3306207,
+      "script": "24summer_s08"
+     }
+    ]
+   },
+   {
+    "name": "烽火突变",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 3306208,
+      "script": "24summer_s09"
+     }
+    ]
+   },
+   {
+    "name": "不渝真心",
+    "en": "STAGE 13",
+    "stories": [
+     {
+      "id": 33062081,
+      "script": "24summer_s10_0"
+     },
+     {
+      "id": 33062082,
+      "script": "24summer_s10_1"
+     },
+     {
+      "id": 33062083,
+      "script": "24summer_s10_2"
+     },
+     {
+      "id": 33062084,
+      "script": "24summer_s10_3"
+     },
+     {
+      "id": 33062085,
+      "script": "24summer_s10_4"
+     },
+     {
+      "id": 33062086,
+      "script": "24summer_s10_5"
+     }
+    ]
+   },
+   {
+    "name": "破晓羽簇",
+    "en": "PART.9",
+    "stories": [
+     {
+      "id": 3306209,
+      "script": "24summer_s11"
+     }
+    ]
+   },
+   {
+    "name": "执意歧路",
+    "en": "STAGE 15",
+    "stories": [
+     {
+      "id": 33062091,
+      "script": "24summer_s11_1"
+     }
+    ]
+   },
+   {
+    "name": "热血传薪",
+    "en": "PART.10",
+    "stories": [
+     {
+      "id": 3306210,
+      "script": "24summer_s12"
+     }
+    ]
+   },
+   {
+    "name": "洁净圣誓",
+    "en": "PART.11",
+    "stories": [
+     {
+      "id": 3306211,
+      "script": "24summer_s13"
+     }
+    ]
+   },
+   {
+    "name": "骸烬天明",
+    "en": "STAGE 17",
+    "stories": [
+     {
+      "id": 33062111,
+      "script": "24summer_s13_1"
+     },
+     {
+      "id": 33062112,
+      "script": "24summer_s13_2"
+     }
+    ]
+   },
+   {
+    "name": "半途角逐",
+    "en": "PART.12",
+    "stories": [
+     {
+      "id": 3306212,
+      "script": "24summer_s14"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 39001,
+  "type": 39,
+  "total": 4,
+  "groups": [
+   {
+    "name": "周年请柬",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 3900101,
+      "script": "2year_anniversary_d1"
+     }
+    ]
+   },
+   {
+    "name": "星月交辉",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 3900102,
+      "script": "2year_anniversary_d4"
+     }
+    ]
+   },
+   {
+    "name": "晚宴苦短，少女前进吧！",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 3900103,
+      "script": "2year_anniversary_d6"
+     }
+    ]
+   },
+   {
+    "name": "致明日的美酒",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 3900104,
+      "script": "2year_anniversary_d7"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 39002,
+  "type": 39,
+  "total": 2,
+  "groups": [
+   {
+    "name": "蝶翼轻启",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 3900201,
+      "script": "23sg_prologue_01"
+     }
+    ]
+   },
+   {
+    "name": "异界调频",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 3900202,
+      "script": "23sg_prologue_02"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 39003,
+  "type": 39,
+  "total": 2,
+  "groups": [
+   {
+    "name": "魔界奇旅",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 3900301,
+      "script": "24myth_00"
+     }
+    ]
+   },
+   {
+    "name": "同位异梦",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 3900302,
+      "script": "24myth_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 40001,
+  "type": 40,
+  "total": 12,
+  "groups": [
+   {
+    "name": "宇宙演化",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 4000101,
+      "script": "cpt_hubblesp_prologue"
+     }
+    ]
+   },
+   {
+    "name": "天球投影",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 4000102,
+      "script": "cpt_hubblesp_01"
+     }
+    ]
+   },
+   {
+    "name": "穿越星尘",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 4000103,
+      "script": "cpt_hubblesp_02"
+     }
+    ]
+   },
+   {
+    "name": "离心逸散",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 4000104,
+      "script": "cpt_hubblesp_03"
+     }
+    ]
+   },
+   {
+    "name": "半影月食",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 4000105,
+      "script": "cpt_hubblesp_04"
+     }
+    ]
+   },
+   {
+    "name": "引力对抗",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 4000106,
+      "script": "cpt_hubblesp_05"
+     }
+    ]
+   },
+   {
+    "name": "回忆吸积",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 4000107,
+      "script": "cpt_hubblesp_06"
+     }
+    ]
+   },
+   {
+    "name": "彗尾残光",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 4000108,
+      "script": "cpt_hubblesp_07"
+     }
+    ]
+   },
+   {
+    "name": "日鞘边缘",
+    "en": "PART.9",
+    "stories": [
+     {
+      "id": 4000109,
+      "script": "cpt_hubblesp_08"
+     }
+    ]
+   },
+   {
+    "name": "系外行星",
+    "en": "PART.10",
+    "stories": [
+     {
+      "id": 4000110,
+      "script": "cpt_hubblesp_09"
+     }
+    ]
+   },
+   {
+    "name": "逆向自转",
+    "en": "PART.11",
+    "stories": [
+     {
+      "id": 4000111,
+      "script": "cpt_hubblesp_10"
+     }
+    ]
+   },
+   {
+    "name": "星系重组",
+    "en": "PART.12",
+    "stories": [
+     {
+      "id": 4000112,
+      "script": "cpt_hubblesp_end"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 40002,
+  "type": 40,
+  "total": 14,
+  "groups": [
+   {
+    "name": "故俚冉曲",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 4000301,
+      "script": "24winter_s00"
+     }
+    ]
+   },
+   {
+    "name": "荒寂危城",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 4000302,
+      "script": "24winter_s01"
+     }
+    ]
+   },
+   {
+    "name": "同忧偕行",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 4000303,
+      "script": "24winter_s02"
+     }
+    ]
+   },
+   {
+    "name": "隐羽传讯",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 4000304,
+      "script": "24winter_s03"
+     }
+    ]
+   },
+   {
+    "name": "未形之患",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 4000305,
+      "script": "24winter_s04"
+     }
+    ]
+   },
+   {
+    "name": "履险蹈危",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 4000306,
+      "script": "24winter_s05"
+     }
+    ]
+   },
+   {
+    "name": "瞬息之安",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 4000307,
+      "script": "24winter_s06"
+     }
+    ]
+   },
+   {
+    "name": "舛错绝境",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 4000308,
+      "script": "24winter_s07"
+     }
+    ]
+   },
+   {
+    "name": "霜翼碎折",
+    "en": "PART.9",
+    "stories": [
+     {
+      "id": 4000309,
+      "script": "24winter_s08"
+     }
+    ]
+   },
+   {
+    "name": "独弦哀歌",
+    "en": "PART.10",
+    "stories": [
+     {
+      "id": 4000310,
+      "script": "24winter_s09"
+     }
+    ]
+   },
+   {
+    "name": "辰曙戎机",
+    "en": "PART.11",
+    "stories": [
+     {
+      "id": 4000311,
+      "script": "24winter_s10"
+     }
+    ]
+   },
+   {
+    "name": "暗探匿影",
+    "en": "PART.12",
+    "stories": [
+     {
+      "id": 4000312,
+      "script": "24winter_s11"
+     }
+    ]
+   },
+   {
+    "name": "背城一战",
+    "en": "PART.13",
+    "stories": [
+     {
+      "id": 4000313,
+      "script": "24winter_s12"
+     }
+    ]
+   },
+   {
+    "name": "梦尽重逢",
+    "en": "PART.14",
+    "stories": [
+     {
+      "id": 4000314,
+      "script": "24winter_s13"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 45001,
+  "type": 45,
+  "total": 42,
+  "groups": [
+   {
+    "name": "云端偏移的时空坐标",
+    "en": "A Part 01",
+    "stories": [
+     {
+      "id": 4500101,
+      "script": "23sg_a01"
+     }
+    ]
+   },
+   {
+    "name": "此世空间的退相干证明",
+    "en": "A Stage 01",
+    "stories": [
+     {
+      "id": 45001001,
+      "script": "23sg_as01_1"
+     },
+     {
+      "id": 45001002,
+      "script": "23sg_as01_2"
+     }
+    ]
+   },
+   {
+    "name": "域外妄想的科学狂人",
+    "en": "A Part 02",
+    "stories": [
+     {
+      "id": 4500102,
+      "script": "23sg_a02"
+     }
+    ]
+   },
+   {
+    "name": "时空曲率的意外变动",
+    "en": "A Part 03",
+    "stories": [
+     {
+      "id": 4500103,
+      "script": "23sg_a03"
+     }
+    ]
+   },
+   {
+    "name": "无法观测的生命信号",
+    "en": "A Part 04",
+    "stories": [
+     {
+      "id": 4500104,
+      "script": "23sg_a04"
+     }
+    ]
+   },
+   {
+    "name": "绚烂假想的天才骇客",
+    "en": "A Stage 02",
+    "stories": [
+     {
+      "id": 45001011,
+      "script": "23sg_as02_1"
+     },
+     {
+      "id": 45001012,
+      "script": "23sg_as02_2"
+     }
+    ]
+   },
+   {
+    "name": "量子纠缠的SPC",
+    "en": "A Part 05",
+    "stories": [
+     {
+      "id": 4500105,
+      "script": "23sg_a05"
+     }
+    ]
+   },
+   {
+    "name": "世界矩阵的幺正变换",
+    "en": "B Stage 01",
+    "stories": [
+     {
+      "id": 45001021,
+      "script": "23sg_bs01_1"
+     },
+     {
+      "id": 45001022,
+      "script": "23sg_bs01_2"
+     }
+    ]
+   },
+   {
+    "name": "偶然谬误的预期背叛",
+    "en": "B Part 01",
+    "stories": [
+     {
+      "id": 4500106,
+      "script": "23sg_b01"
+     }
+    ]
+   },
+   {
+    "name": "谐振时空的入侵者",
+    "en": "B Stage 02",
+    "stories": [
+     {
+      "id": 45001031,
+      "script": "23sg_bs02_1"
+     },
+     {
+      "id": 45001032,
+      "script": "23sg_bs02_2"
+     }
+    ]
+   },
+   {
+    "name": "费曼图谱上的两性体",
+    "en": "B Part 02",
+    "stories": [
+     {
+      "id": 4500107,
+      "script": "23sg_b02"
+     }
+    ]
+   },
+   {
+    "name": "格式塔假象的意识迷惑",
+    "en": "B2 Stage 01",
+    "stories": [
+     {
+      "id": 45001041,
+      "script": "23sg_b2s01_1"
+     },
+     {
+      "id": 45001042,
+      "script": "23sg_b2s01_2"
+     }
+    ]
+   },
+   {
+    "name": "修正世界线的和谐成像",
+    "en": "B2 Part 01",
+    "stories": [
+     {
+      "id": 4500108,
+      "script": "23sg_b2_01"
+     }
+    ]
+   },
+   {
+    "name": "完美营业的猫耳女仆",
+    "en": "B2 Stage 02",
+    "stories": [
+     {
+      "id": 45001051,
+      "script": "23sg_b2s02_1"
+     },
+     {
+      "id": 45001052,
+      "script": "23sg_b2s02_2"
+     }
+    ]
+   },
+   {
+    "name": "随时演化的蝶翼风暴",
+    "en": "B2 Part 02",
+    "stories": [
+     {
+      "id": 4500109,
+      "script": "23sg_b2_02"
+     }
+    ]
+   },
+   {
+    "name": "电子雪崩的连锁反应",
+    "en": "B3 Part 01",
+    "stories": [
+     {
+      "id": 4500110,
+      "script": "23sg_b3_01"
+     }
+    ]
+   },
+   {
+    "name": "承压纾困的逆熵之战",
+    "en": "B3 Stage 01",
+    "stories": [
+     {
+      "id": 45001061,
+      "script": "23sg_b3s01_1"
+     },
+     {
+      "id": 45001062,
+      "script": "23sg_b3s01_2"
+     },
+     {
+      "id": 45001063,
+      "script": "23sg_b3s01_3"
+     },
+     {
+      "id": 45001064,
+      "script": "23sg_b3s01_4"
+     },
+     {
+      "id": 45001065,
+      "script": "23sg_b3s01_5"
+     }
+    ]
+   },
+   {
+    "name": "存在消逝的痛苦诺言",
+    "en": "B3 Part 02",
+    "stories": [
+     {
+      "id": 4500111,
+      "script": "23sg_b3_02"
+     }
+    ]
+   },
+   {
+    "name": "二级混沌的海姆达尔",
+    "en": "B3 Part 03",
+    "stories": [
+     {
+      "id": 4500112,
+      "script": "23sg_b3_03"
+     }
+    ]
+   },
+   {
+    "name": "共轭未来的转变试探",
+    "en": "B3 Stage 02",
+    "stories": [
+     {
+      "id": 45001071,
+      "script": "23sg_b3s02_1"
+     },
+     {
+      "id": 45001072,
+      "script": "23sg_b3s02_2"
+     }
+    ]
+   },
+   {
+    "name": "无限连锁的叠加态重演",
+    "en": "B3 Stage 03",
+    "stories": [
+     {
+      "id": 45001081,
+      "script": "23sg_b3s03_1"
+     },
+     {
+      "id": 45001082,
+      "script": "23sg_b3s03_2"
+     },
+     {
+      "id": 45001083,
+      "script": "23sg_b3s03_3"
+     },
+     {
+      "id": 45001084,
+      "script": "23sg_b3s03_4"
+     },
+     {
+      "id": 45001085,
+      "script": "23sg_b3s03_5"
+     }
+    ]
+   },
+   {
+    "name": "跨越死亡的重逢见证",
+    "en": "B2 Part 03",
+    "stories": [
+     {
+      "id": 4500113,
+      "script": "23sg_b2_03"
+     }
+    ]
+   },
+   {
+    "name": "深层映射的既视感",
+    "en": "B2 Stage 03",
+    "stories": [
+     {
+      "id": 45001091,
+      "script": "23sg_b2s03_1"
+     },
+     {
+      "id": 45001092,
+      "script": "23sg_b2s03_2"
+     },
+     {
+      "id": 45001093,
+      "script": "23sg_b2s03_3"
+     },
+     {
+      "id": 45001094,
+      "script": "23sg_b2s03_4"
+     },
+     {
+      "id": 45001095,
+      "script": "23sg_b2s03_5"
+     }
+    ]
+   },
+   {
+    "name": "二进制位的相长干涉",
+    "en": "B Part 03",
+    "stories": [
+     {
+      "id": 4500114,
+      "script": "23sg_b03"
+     }
+    ]
+   },
+   {
+    "name": "通往真相的现象相消",
+    "en": "B Stage 03",
+    "stories": [
+     {
+      "id": 45001101,
+      "script": "23sg_bs03_1"
+     }
+    ]
+   },
+   {
+    "name": "虚像歪曲的价值判定",
+    "en": "B Stage 04",
+    "stories": [
+     {
+      "id": 45001111,
+      "script": "23sg_bs04_1"
+     },
+     {
+      "id": 45001112,
+      "script": "23sg_bs04_2"
+     }
+    ]
+   },
+   {
+    "name": "空间反演的境界修正",
+    "en": "B Part 04",
+    "stories": [
+     {
+      "id": 4500115,
+      "script": "23sg_b04"
+     }
+    ]
+   },
+   {
+    "name": "量子比特的初始化",
+    "en": "A Part 06",
+    "stories": [
+     {
+      "id": 4500116,
+      "script": "23sg_a06"
+     }
+    ]
+   },
+   {
+    "name": "恪守信条的相熟骑士",
+    "en": "A Stage 03",
+    "stories": [
+     {
+      "id": 45001121,
+      "script": "23sg_as03"
+     }
+    ]
+   },
+   {
+    "name": "无解程式的参数波动",
+    "en": "A Part 07",
+    "stories": [
+     {
+      "id": 4500117,
+      "script": "23sg_a07"
+     }
+    ]
+   },
+   {
+    "name": "发往过去的未来邮件",
+    "en": "A0 Part 0",
+    "stories": [
+     {
+      "id": 4500118,
+      "script": "23sg_a00_0"
+     }
+    ]
+   },
+   {
+    "name": "短暂观测的存在证明",
+    "en": "A0 Stage 0",
+    "stories": [
+     {
+      "id": 45001131,
+      "script": "23sg_as000_1"
+     },
+     {
+      "id": 45001132,
+      "script": "23sg_as000_2"
+     }
+    ]
+   },
+   {
+    "name": "未知结果的不确定性",
+    "en": "A0 Part 01",
+    "stories": [
+     {
+      "id": 4500119,
+      "script": "23sg_a00_1"
+     }
+    ]
+   },
+   {
+    "name": "叠加真相的沉默直归",
+    "en": "A0 Stage 01",
+    "stories": [
+     {
+      "id": 45001141,
+      "script": "23sg_as001_1"
+     },
+     {
+      "id": 45001142,
+      "script": "23sg_as001_2"
+     }
+    ]
+   },
+   {
+    "name": "迷失再见的镜中花",
+    "en": "A0 Part 02",
+    "stories": [
+     {
+      "id": 4500120,
+      "script": "23sg_a00_2"
+     }
+    ]
+   },
+   {
+    "name": "原点彷徨的弧光灯",
+    "en": "O Stage 0",
+    "stories": [
+     {
+      "id": 45001151,
+      "script": "23sg_o_1"
+     },
+     {
+      "id": 45001152,
+      "script": "23sg_o_1_1"
+     },
+     {
+      "id": 45001153,
+      "script": "23sg_o_1_2"
+     },
+     {
+      "id": 45001154,
+      "script": "23sg_o_1_3"
+     },
+     {
+      "id": 45001155,
+      "script": "23sg_o_1_4"
+     },
+     {
+      "id": 45001156,
+      "script": "23sg_o_1_5"
+     },
+     {
+      "id": 45001157,
+      "script": "23sg_o_2"
+     }
+    ]
+   },
+   {
+    "name": "暗色深渊的星尘",
+    "en": "A0 Stage 02",
+    "stories": [
+     {
+      "id": 45001161,
+      "script": "23sg_as002_1"
+     },
+     {
+      "id": 45001162,
+      "script": "23sg_as002_2"
+     },
+     {
+      "id": 45001163,
+      "script": "23sg_as002_3"
+     }
+    ]
+   },
+   {
+    "name": "永劫轮回的诺亚方舟",
+    "en": "A0 Part 03",
+    "stories": [
+     {
+      "id": 4500121,
+      "script": "23sg_a00_3"
+     }
+    ]
+   },
+   {
+    "name": "逆向推演的活报剧",
+    "en": "A0 Stage 03",
+    "stories": [
+     {
+      "id": 45001171,
+      "script": "23sg_as003_b01"
+     },
+     {
+      "id": 45001172,
+      "script": "23sg_as003_b02"
+     },
+     {
+      "id": 45001173,
+      "script": "23sg_as003_b03"
+     },
+     {
+      "id": 45001174,
+      "script": "23sg_as003_b04"
+     },
+     {
+      "id": 45001175,
+      "script": "23sg_as003_b05"
+     },
+     {
+      "id": 45001176,
+      "script": "23sg_as003_b06"
+     },
+     {
+      "id": 45001177,
+      "script": "23sg_as003_b07"
+     },
+     {
+      "id": 45001178,
+      "script": "23sg_as003_b08"
+     },
+     {
+      "id": 45001179,
+      "script": "23sg_as003_b09"
+     },
+     {
+      "id": 45001180,
+      "script": "23sg_as003_b10"
+     },
+     {
+      "id": 45001181,
+      "script": "23sg_as003_b11"
+     },
+     {
+      "id": 45001182,
+      "script": "23sg_as003_b12"
+     },
+     {
+      "id": 45001183,
+      "script": "23sg_as003_b13"
+     },
+     {
+      "id": 45001184,
+      "script": "23sg_as003_b14"
+     }
+    ]
+   },
+   {
+    "name": "颠覆命运的36字节",
+    "en": "A0 Part 04",
+    "stories": [
+     {
+      "id": 4500122,
+      "script": "23sg_a00_4"
+     }
+    ]
+   },
+   {
+    "name": "境界干涉的延迟选择",
+    "en": "A0 Stage 04",
+    "stories": [
+     {
+      "id": 45001185,
+      "script": "23sg_as004ri_1"
+     },
+     {
+      "id": 45001186,
+      "script": "23sg_as004ri_2"
+     },
+     {
+      "id": 45001187,
+      "script": "23sg_as004ri_3"
+     },
+     {
+      "id": 45001188,
+      "script": "23sg_as004ri_4"
+     },
+     {
+      "id": 45001189,
+      "script": "23sg_as004ri_5"
+     },
+     {
+      "id": 45001190,
+      "script": "23sg_as004ri_6"
+     },
+     {
+      "id": 45001191,
+      "script": "23sg_as004ri_7"
+     },
+     {
+      "id": 45001192,
+      "script": "23sg_as004ri_8"
+     },
+     {
+      "id": 45001193,
+      "script": "23sg_as004be_1"
+     },
+     {
+      "id": 45001194,
+      "script": "23sg_as004be_2"
+     },
+     {
+      "id": 45001195,
+      "script": "23sg_as004be_3"
+     },
+     {
+      "id": 45001196,
+      "script": "23sg_as004be_4"
+     },
+     {
+      "id": 45001197,
+      "script": "23sg_as004be_5"
+     },
+     {
+      "id": 45001198,
+      "script": "23sg_as004be_6"
+     },
+     {
+      "id": 45001199,
+      "script": "23sg_as004be_end"
+     }
+    ]
+   },
+   {
+    "name": "无限远点的旅程",
+    "en": "TE Part 01",
+    "stories": [
+     {
+      "id": 4500123,
+      "script": "23sg_ri_end"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 51001,
+  "type": 51,
+  "total": 8,
+  "groups": [
+   {
+    "name": "喧禧年夜",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 5100101,
+      "script": "24spring_prologue"
+     }
+    ]
+   },
+   {
+    "name": "摄制小憩-1",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 5100102,
+      "script": "24spring_s_xinghuan"
+     }
+    ]
+   },
+   {
+    "name": "摄制小憩-2",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 5100103,
+      "script": "24spring_s_zion"
+     }
+    ]
+   },
+   {
+    "name": "摄制小憩-3",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 5100104,
+      "script": "24spring_s_erika"
+     }
+    ]
+   },
+   {
+    "name": "摄制小憩-4",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 5100105,
+      "script": "24spring_s_kimie"
+     }
+    ]
+   },
+   {
+    "name": "摄制小憩-5",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 5100106,
+      "script": "24spring_s_persicaria"
+     }
+    ]
+   },
+   {
+    "name": "辞岁喜剧",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 5100107,
+      "script": "24spring_end"
+     }
+    ]
+   },
+   {
+    "name": "金龙报喜",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 5100108,
+      "script": "24spring_s_dragon"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 54001,
+  "type": 54,
+  "total": 2,
+  "groups": [
+   {
+    "name": "游离异客",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1083001,
+      "script": "cpt_shale_00"
+     }
+    ]
+   },
+   {
+    "name": "偕行共济",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1083002,
+      "script": "cpt_shale_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 54002,
+  "type": 54,
+  "total": 2,
+  "groups": [
+   {
+    "name": "蔓草",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1085001,
+      "script": "cpt_belladonna_00"
+     }
+    ]
+   },
+   {
+    "name": "蚀心",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1085002,
+      "script": "cpt_belladonna_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 54003,
+  "type": 54,
+  "total": 2,
+  "groups": [
+   {
+    "name": "故土寻踪",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1086001,
+      "script": "cpt_lewis_00"
+     }
+    ]
+   },
+   {
+    "name": "童梦归家",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1086002,
+      "script": "cpt_lewis_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 54004,
+  "type": 54,
+  "total": 2,
+  "groups": [
+   {
+    "name": "康乃馨",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1087001,
+      "script": "cpt_olivia_00"
+     }
+    ]
+   },
+   {
+    "name": "茉莉花",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1087002,
+      "script": "cpt_olivia_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 54005,
+  "type": 54,
+  "total": 2,
+  "groups": [
+   {
+    "name": "忘川遗梦",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1092001,
+      "script": "cpt_inola_00"
+     }
+    ]
+   },
+   {
+    "name": "且行且歌",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1092002,
+      "script": "cpt_inola_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 54006,
+  "type": 54,
+  "total": 2,
+  "groups": [
+   {
+    "name": "数据留痕",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 1093001,
+      "script": "end_00"
+     }
+    ]
+   },
+   {
+    "name": "云端筑梦",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 1093002,
+      "script": "end_01"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 56001,
+  "type": 56,
+  "total": 100,
+  "groups": [
+   {
+    "name": "遇堇识荆",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 5600101,
+      "script": "24carnival_s00"
+     }
+    ]
+   },
+   {
+    "name": "前尘影事",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 5600102,
+      "script": "24carnival_s01"
+     }
+    ]
+   },
+   {
+    "name": "初涉迷海",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 5600103,
+      "script": "24carnival_s01_1"
+     }
+    ]
+   },
+   {
+    "name": "危机囹圄",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 5600104,
+      "script": "24carnival_s02"
+     }
+    ]
+   },
+   {
+    "name": "往忆拼缀",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 5600105,
+      "script": "24carnival_s03"
+     }
+    ]
+   },
+   {
+    "name": "殒荒星火",
+    "en": "STAGE 1",
+    "stories": [
+     {
+      "id": 56001031,
+      "script": "24carnival_s03_1"
+     },
+     {
+      "id": 56001032,
+      "script": "24carnival_s03_2"
+     },
+     {
+      "id": 56001033,
+      "script": "24carnival_s03_3"
+     }
+    ]
+   },
+   {
+    "name": "遥瞩远星",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 5600106,
+      "script": "24carnival_s04"
+     }
+    ]
+   },
+   {
+    "name": "涤尘启明",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 5600107,
+      "script": "24carnival_s05"
+     }
+    ]
+   },
+   {
+    "name": "溯旧弥迹",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 5600108,
+      "script": "24carnival_s06"
+     }
+    ]
+   },
+   {
+    "name": "侧畔幽香",
+    "en": "PART.9",
+    "stories": [
+     {
+      "id": 5600109,
+      "script": "24carnival_s07"
+     }
+    ]
+   },
+   {
+    "name": "天际狼烟",
+    "en": "PART.10",
+    "stories": [
+     {
+      "id": 5600110,
+      "script": "24carnival_s08"
+     }
+    ]
+   },
+   {
+    "name": "霜锋对峙",
+    "en": "STAGE 2",
+    "stories": [
+     {
+      "id": 56001081,
+      "script": "24carnival_s08_1"
+     }
+    ]
+   },
+   {
+    "name": "暗垓灯荧",
+    "en": "PART.11",
+    "stories": [
+     {
+      "id": 5600111,
+      "script": "24carnival_s09"
+     }
+    ]
+   },
+   {
+    "name": "厘错偏移",
+    "en": "PART.12",
+    "stories": [
+     {
+      "id": 5600112,
+      "script": "24carnival_s10"
+     }
+    ]
+   },
+   {
+    "name": "龙战鱼骇",
+    "en": "STAGE 3",
+    "stories": [
+     {
+      "id": 56001101,
+      "script": "24carnival_s10_1"
+     }
+    ]
+   },
+   {
+    "name": "伪影重重",
+    "en": "PART.13",
+    "stories": [
+     {
+      "id": 5600113,
+      "script": "24carnival_s11"
+     }
+    ]
+   },
+   {
+    "name": "悖谬暗源",
+    "en": "STAGE 4",
+    "stories": [
+     {
+      "id": 56001111,
+      "script": "24carnival_s11_1"
+     }
+    ]
+   },
+   {
+    "name": "无光破晓",
+    "en": "PART.14",
+    "stories": [
+     {
+      "id": 5600114,
+      "script": "24carnival_s12"
+     }
+    ]
+   },
+   {
+    "name": "错位缀合",
+    "en": "PART.15",
+    "stories": [
+     {
+      "id": 5600115,
+      "script": "24carnival_s13"
+     }
+    ]
+   },
+   {
+    "name": "双星隐现",
+    "en": "PART.16",
+    "stories": [
+     {
+      "id": 5600116,
+      "script": "24carnival_s14"
+     }
+    ]
+   },
+   {
+    "name": "“Unknown error”",
+    "en": "PART.17",
+    "stories": [
+     {
+      "id": 5600117,
+      "script": "24carnival_end"
+     }
+    ]
+   },
+   {
+    "name": "半影迹印-记忆纽绊一",
+    "en": "LANES.1",
+    "stories": [
+     {
+      "id": 56001201,
+      "script": "24carnival_sangoma"
+     }
+    ]
+   },
+   {
+    "name": "半影迹印-记忆纽绊二",
+    "en": "LANES.2",
+    "stories": [
+     {
+      "id": 56001202,
+      "script": "24carnival_persicaria"
+     },
+     {
+      "id": 56001203,
+      "script": "24carnival_sol"
+     },
+     {
+      "id": 56001204,
+      "script": "24carnival_simo"
+     },
+     {
+      "id": 56001205,
+      "script": "24carnival_croque"
+     },
+     {
+      "id": 56001206,
+      "script": "24carnival_fresnel"
+     },
+     {
+      "id": 56001207,
+      "script": "24carnival_hubble"
+     },
+     {
+      "id": 56001208,
+      "script": "24carnival_aki"
+     },
+     {
+      "id": 56001209,
+      "script": "24carnival_centaureissi"
+     }
+    ]
+   },
+   {
+    "name": "半影迹印-记忆纽绊三",
+    "en": "LANES.3",
+    "stories": [
+     {
+      "id": 56001210,
+      "script": "24carnival_banxsy"
+     },
+     {
+      "id": 56001211,
+      "script": "24carnival_florence"
+     },
+     {
+      "id": 56001212,
+      "script": "24carnival_evelyn"
+     },
+     {
+      "id": 56001213,
+      "script": "24carnival_camellia"
+     },
+     {
+      "id": 56001214,
+      "script": "24carnival_chelsea"
+     },
+     {
+      "id": 56001215,
+      "script": "24carnival_fern"
+     },
+     {
+      "id": 56001216,
+      "script": "24carnival_mai"
+     },
+     {
+      "id": 56001217,
+      "script": "24carnival_max"
+     },
+     {
+      "id": 56001218,
+      "script": "24carnival_panakeia"
+     }
+    ]
+   },
+   {
+    "name": "半影迹印-记忆纽绊四",
+    "en": "LANES.4",
+    "stories": [
+     {
+      "id": 56001219,
+      "script": "24carnival_vee"
+     },
+     {
+      "id": 56001220,
+      "script": "24carnival_willow"
+     },
+     {
+      "id": 56001221,
+      "script": "24carnival_chanzhi"
+     },
+     {
+      "id": 56001222,
+      "script": "24carnival_imhotep"
+     },
+     {
+      "id": 56001223,
+      "script": "24carnival_yanny"
+     },
+     {
+      "id": 56001224,
+      "script": "24carnival_groove"
+     },
+     {
+      "id": 56001225,
+      "script": "24carnival_bonee"
+     },
+     {
+      "id": 56001226,
+      "script": "24carnival_earhart"
+     },
+     {
+      "id": 56001227,
+      "script": "24carnival_ksenia"
+     }
+    ]
+   },
+   {
+    "name": "半影迹印-记忆纽绊五",
+    "en": "LANES.5",
+    "stories": [
+     {
+      "id": 56001228,
+      "script": "24carnival_sakuya"
+     },
+     {
+      "id": 56001229,
+      "script": "24carnival_angela"
+     },
+     {
+      "id": 56001230,
+      "script": "24carnival_betty"
+     },
+     {
+      "id": 56001231,
+      "script": "24carnival_gin"
+     },
+     {
+      "id": 56001232,
+      "script": "24carnival_octogen"
+     },
+     {
+      "id": 56001233,
+      "script": "24carnival_rise"
+     },
+     {
+      "id": 56001234,
+      "script": "24carnival_jessie"
+     },
+     {
+      "id": 56001235,
+      "script": "24carnival_lam"
+     },
+     {
+      "id": 56001236,
+      "script": "24carnival_abigail"
+     },
+     {
+      "id": 56001237,
+      "script": "24carnival_dusevnyj"
+     }
+    ]
+   },
+   {
+    "name": "半影迹印-记忆纽绊六",
+    "en": "LANES.6",
+    "stories": [
+     {
+      "id": 56001238,
+      "script": "24carnival_anna"
+     },
+     {
+      "id": 56001239,
+      "script": "24carnival_daiyan"
+     },
+     {
+      "id": 56001240,
+      "script": "24carnival_choco"
+     },
+     {
+      "id": 56001241,
+      "script": "24carnival_zion"
+     },
+     {
+      "id": 56001242,
+      "script": "24carnival_nanaka"
+     },
+     {
+      "id": 56001243,
+      "script": "24carnival_kuro"
+     },
+     {
+      "id": 56001244,
+      "script": "24carnival_python"
+     },
+     {
+      "id": 56001245,
+      "script": "24carnival_sockdolager"
+     },
+     {
+      "id": 56001246,
+      "script": "24carnival_magnhilda"
+     },
+     {
+      "id": 56001247,
+      "script": "24carnival_helix"
+     }
+    ]
+   },
+   {
+    "name": "半影迹印-记忆纽绊七",
+    "en": "LANES.7",
+    "stories": [
+     {
+      "id": 56001248,
+      "script": "24carnival_puzzle"
+     },
+     {
+      "id": 56001249,
+      "script": "24carnival_nascita"
+     },
+     {
+      "id": 56001250,
+      "script": "24carnival_zangyin"
+     },
+     {
+      "id": 56001251,
+      "script": "24carnival_clotho"
+     },
+     {
+      "id": 56001252,
+      "script": "24carnival_nora"
+     },
+     {
+      "id": 56001253,
+      "script": "24carnival_millau"
+     },
+     {
+      "id": 56001254,
+      "script": "24carnival_undline"
+     },
+     {
+      "id": 56001255,
+      "script": "24carnival_jiangyu"
+     },
+     {
+      "id": 56001256,
+      "script": "24carnival_uranus"
+     },
+     {
+      "id": 56001257,
+      "script": "24carnival_dupin"
+     },
+     {
+      "id": 56001258,
+      "script": "24carnival_yelena"
+     }
+    ]
+   },
+   {
+    "name": "半影迹印-记忆纽绊八",
+    "en": "LANES.8",
+    "stories": [
+     {
+      "id": 56001259,
+      "script": "24carnival_delacey"
+     },
+     {
+      "id": 56001260,
+      "script": "24carnival_hatsuchiri"
+     },
+     {
+      "id": 56001261,
+      "script": "24carnival_sueyoi"
+     },
+     {
+      "id": 56001262,
+      "script": "24carnival_lind"
+     },
+     {
+      "id": 56001263,
+      "script": "24carnival_eos"
+     },
+     {
+      "id": 56001264,
+      "script": "24carnival_clukay"
+     },
+     {
+      "id": 56001265,
+      "script": "24carnival_hannah"
+     },
+     {
+      "id": 56001266,
+      "script": "24carnival_turing"
+     },
+     {
+      "id": 56001267,
+      "script": "24carnival_bonneville"
+     },
+     {
+      "id": 56001268,
+      "script": "24carnival_shale"
+     }
+    ]
+   },
+   {
+    "name": "半影迹印-记忆纽绊九",
+    "en": "LANES.9",
+    "stories": [
+     {
+      "id": 56001269,
+      "script": "24carnival_hubblesp"
+     },
+     {
+      "id": 56001270,
+      "script": "24carnival_xinghuan"
+     },
+     {
+      "id": 56001271,
+      "script": "24carnival_erika"
+     },
+     {
+      "id": 56001272,
+      "script": "24carnival_luna"
+     },
+     {
+      "id": 56001273,
+      "script": "24carnival_taisch"
+     },
+     {
+      "id": 56001274,
+      "script": "24carnival_cascadia"
+     },
+     {
+      "id": 56001275,
+      "script": "24carnival_yuwang"
+     },
+     {
+      "id": 56001276,
+      "script": "24carnival_horizon"
+     },
+     {
+      "id": 56001277,
+      "script": "24carnival_kimie"
+     },
+     {
+      "id": 56001278,
+      "script": "24carnival_penumbra"
+     },
+     {
+      "id": 56001279,
+      "script": "24carnival_tony"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 58001,
+  "type": 58,
+  "total": 4,
+  "groups": [
+   {
+    "name": "热浪",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 5800101,
+      "script": "24summer_cargo01"
+     }
+    ]
+   },
+   {
+    "name": "沁凉",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 5800102,
+      "script": "24summer_cargo02"
+     }
+    ]
+   },
+   {
+    "name": "贝阙",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 5800103,
+      "script": "24summer_cargo03"
+     }
+    ]
+   },
+   {
+    "name": "繁星",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 5800104,
+      "script": "24summer_cargo04"
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "actId": 59001,
+  "type": 59,
+  "total": 42,
+  "groups": [
+   {
+    "name": "樊笼之鸟",
+    "en": "PART.0",
+    "stories": [
+     {
+      "id": 5900200,
+      "script": "24fe_s00"
+     }
+    ]
+   },
+   {
+    "name": "暗渊双影",
+    "en": "PART.1",
+    "stories": [
+     {
+      "id": 5900201,
+      "script": "24fe_s01"
+     }
+    ]
+   },
+   {
+    "name": "暌违重续",
+    "en": "PART.2",
+    "stories": [
+     {
+      "id": 5900202,
+      "script": "24fe_s02"
+     }
+    ]
+   },
+   {
+    "name": "背道而驰",
+    "en": "PART.3",
+    "stories": [
+     {
+      "id": 5900203,
+      "script": "24fe_s03"
+     }
+    ]
+   },
+   {
+    "name": "迷途拐点",
+    "en": "PART.4",
+    "stories": [
+     {
+      "id": 5900204,
+      "script": "24fe_s04"
+     }
+    ]
+   },
+   {
+    "name": "罅隙筹谋",
+    "en": "PART.5",
+    "stories": [
+     {
+      "id": 5900205,
+      "script": "24fe_s05"
+     }
+    ]
+   },
+   {
+    "name": "噬心彷徨",
+    "en": "PART.6",
+    "stories": [
+     {
+      "id": 5900206,
+      "script": "24fe_s06"
+     }
+    ]
+   },
+   {
+    "name": "围阱博弈",
+    "en": "PART.7",
+    "stories": [
+     {
+      "id": 5900207,
+      "script": "24fe_s07"
+     }
+    ]
+   },
+   {
+    "name": "险绝之危",
+    "en": "PART.8",
+    "stories": [
+     {
+      "id": 5900208,
+      "script": "24fe_s08_0"
+     }
+    ]
+   },
+   {
+    "name": "燃血烬心",
+    "en": "STAGE 10",
+    "stories": [
+     {
+      "id": 59002081,
+      "script": "24fe_s08_1"
+     }
+    ]
+   },
+   {
+    "name": "日陵月替",
+    "en": "PART.9",
+    "stories": [
+     {
+      "id": 5900209,
+      "script": "24fe_s09"
+     }
+    ]
+   },
+   {
+    "name": "噩梦囹圄",
+    "en": "STAGE 12",
+    "stories": [
+     {
+      "id": 59002091,
+      "script": "24fe_s10_0"
+     },
+     {
+      "id": 59002092,
+      "script": "24fe_s10_1"
+     }
+    ]
+   },
+   {
+    "name": "沉夜曙光",
+    "en": "PART.10",
+    "stories": [
+     {
+      "id": 5900210,
+      "script": "24fe_s11_0"
+     }
+    ]
+   },
+   {
+    "name": "破晓重临",
+    "en": "STAGE 15",
+    "stories": [
+     {
+      "id": 59002101,
+      "script": "24fe_s11_1"
+     }
+    ]
+   },
+   {
+    "name": "日月交辉",
+    "en": "PART.11",
+    "stories": [
+     {
+      "id": 5900211,
+      "script": "24fe_s12"
+     }
+    ]
+   },
+   {
+    "name": "拨云见日",
+    "en": "PART.12",
+    "stories": [
+     {
+      "id": 5900212,
+      "script": "24fe_s13"
+     }
+    ]
+   },
+   {
+    "name": "续行征途",
+    "en": "PART.13",
+    "stories": [
+     {
+      "id": 5900213,
+      "script": "24fe_s14"
+     }
+    ]
+   },
+   {
+    "name": "致命交锋",
+    "en": "PART.14",
+    "stories": [
+     {
+      "id": 5900214,
+      "script": "24fe_s15"
+     }
+    ]
+   },
+   {
+    "name": "并肩而行",
+    "en": "STAGE 20",
+    "stories": [
+     {
+      "id": 59002141,
+      "script": "24fe_s16"
+     }
+    ]
+   },
+   {
+    "name": "囚鸟破笼",
+    "en": "PART.15",
+    "stories": [
+     {
+      "id": 5900215,
+      "script": "24fe_s17"
+     }
+    ]
+   },
+   {
+    "name": "孑影凝怀",
+    "en": "PART.16",
+    "stories": [
+     {
+      "id": 5900216,
+      "script": "24fe2_s00"
+     }
+    ]
+   },
+   {
+    "name": "深塔晤对",
+    "en": "PART.17",
+    "stories": [
+     {
+      "id": 5900217,
+      "script": "24fe2_s01"
+     }
+    ]
+   },
+   {
+    "name": "故迹回溯",
+    "en": "PART.18",
+    "stories": [
+     {
+      "id": 5900218,
+      "script": "24fe2_s02"
+     }
+    ]
+   },
+   {
+    "name": "往圣乐土",
+    "en": "PART.19",
+    "stories": [
+     {
+      "id": 5900219,
+      "script": "24fe2_s03"
+     }
+    ]
+   },
+   {
+    "name": "虚妄偶戏",
+    "en": "PART.20",
+    "stories": [
+     {
+      "id": 5900220,
+      "script": "24fe2_s04"
+     }
+    ]
+   },
+   {
+    "name": "荒诞残篇",
+    "en": "PART.21",
+    "stories": [
+     {
+      "id": 5900221,
+      "script": "24fe2_s05"
+     }
+    ]
+   },
+   {
+    "name": "晦暗星芒",
+    "en": "PART.22",
+    "stories": [
+     {
+      "id": 5900222,
+      "script": "24fe2_s06"
+     }
+    ]
+   },
+   {
+    "name": "语刃醒梦",
+    "en": "STAGE 28",
+    "stories": [
+     {
+      "id": 59002221,
+      "script": "24fe2_s07"
+     }
+    ]
+   },
+   {
+    "name": "空境假相",
+    "en": "PART.23",
+    "stories": [
+     {
+      "id": 5900223,
+      "script": "24fe2_s08"
+     }
+    ]
+   },
+   {
+    "name": "危城防线",
+    "en": "PART.24",
+    "stories": [
+     {
+      "id": 5900224,
+      "script": "24fe2_s09"
+     }
+    ]
+   },
+   {
+    "name": "图谜嵌合",
+    "en": "PART.25",
+    "stories": [
+     {
+      "id": 5900225,
+      "script": "24fe2_s10"
+     }
+    ]
+   },
+   {
+    "name": "困厄之斗",
+    "en": "PART.26",
+    "stories": [
+     {
+      "id": 5900226,
+      "script": "24fe2_s11"
+     }
+    ]
+   },
+   {
+    "name": "淬火重生",
+    "en": "STAGE 34",
+    "stories": [
+     {
+      "id": 59002261,
+      "script": "24fe2_s12_0"
+     },
+     {
+      "id": 59002262,
+      "script": "24fe2_s12_1"
+     }
+    ]
+   },
+   {
+    "name": "锢心壁垒",
+    "en": "PART.27",
+    "stories": [
+     {
+      "id": 5900227,
+      "script": "24fe2_s13"
+     }
+    ]
+   },
+   {
+    "name": "绝域转机",
+    "en": "STAGE 37",
+    "stories": [
+     {
+      "id": 59002271,
+      "script": "24fe2_s14_0"
+     },
+     {
+      "id": 59002272,
+      "script": "24fe2_s14_g1"
+     },
+     {
+      "id": 59002273,
+      "script": "24fe2_s14_1"
+     },
+     {
+      "id": 59002274,
+      "script": "24fe2_s14_g2"
+     },
+     {
+      "id": 59002275,
+      "script": "24fe2_s14_2"
+     },
+     {
+      "id": 59002276,
+      "script": "24fe2_s14_g3"
+     },
+     {
+      "id": 59002277,
+      "script": "24fe2_s14_3"
+     }
+    ]
+   },
+   {
+    "name": "星火远景",
+    "en": "PART.28",
+    "stories": [
+     {
+      "id": 5900228,
+      "script": "24fe2_s14"
+     }
+    ]
+   },
+   {
+    "name": "戮力衍进",
+    "en": "STAGE 38",
+    "stories": [
+     {
+      "id": 59002281,
+      "script": "24fe2_s15_0"
+     },
+     {
+      "id": 59002282,
+      "script": "24fe2_s15_1"
+     },
+     {
+      "id": 59002283,
+      "script": "24fe2_s15_2"
+     },
+     {
+      "id": 59002284,
+      "script": "24fe2_s15_3"
+     },
+     {
+      "id": 59002285,
+      "script": "24fe2_s15_4"
+     },
+     {
+      "id": 59002286,
+      "script": "24fe2_s15_5"
+     },
+     {
+      "id": 59002287,
+      "script": "24fe2_s15_6"
+     },
+     {
+      "id": 59002288,
+      "script": "24fe2_s15_7"
+     }
+    ]
+   },
+   {
+    "name": "昔影归终",
+    "en": "PART.29",
+    "stories": [
+     {
+      "id": 5900229,
+      "script": "24fe2_s15_8"
+     }
+    ]
+   },
+   {
+    "name": "终焉暮歌",
+    "en": "STAGE 39",
+    "stories": [
+     {
+      "id": 59002291,
+      "script": "24fe2_s16_0"
+     },
+     {
+      "id": 59002292,
+      "script": "24fe2_s16_1"
+     },
+     {
+      "id": 59002293,
+      "script": "24fe2_s16_2"
+     }
+    ]
+   },
+   {
+    "name": "逆旅光隙",
+    "en": "PART.30",
+    "stories": [
+     {
+      "id": 5900230,
+      "script": "24fe2_s16_3"
+     }
+    ]
+   },
+   {
+    "name": "噬暗弧光",
+    "en": "STAGE 41",
+    "stories": [
+     {
+      "id": 59002301,
+      "script": "24fe2_s17_0"
+     },
+     {
+      "id": 59002302,
+      "script": "24fe2_s17_1"
+     }
+    ]
+   },
+   {
+    "name": "朝光往始",
+    "en": "PART.31",
+    "stories": [
+     {
+      "id": 5900231,
+      "script": "24fe2_s18"
+     }
+    ]
+   }
+  ]
+ }
+]
