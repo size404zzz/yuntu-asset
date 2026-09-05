@@ -3,14 +3,16 @@
  * 编辑的是手动覆盖层 data/index/story-archive-manual.json（结构与生成档案
  * story-archive.json 同形：classes / mainline / unarchived）。编辑页以生成
  * 档案播种，保存后 main.js 优先加载手动档案，重跑生成器不冲掉人工调整。
- * 保存端点：tools/ref/serve.py 的 /archive-save；其它静态服务器退化为
- * 导出 JSON 手动放置。
+ * 保存端点只有 tools/ref/serve.py 的 /archive-save；静态部署（pages.dev 对
+ * POST 回 405）走「导出 JSON 放回仓库」，同时把改动写进 localStorage 草稿，
+ * 刷新不丢。
  */
 import {h, clear} from './ui/dom.js';
 
 const SAVE_URL = '/archive-save';
 const MANUAL_URL = 'data/index/story-archive-manual.json';
 const DERIVED_URL = 'data/index/story-archive.json';
+const DRAFT_KEY = 'yuntu.lib-editor.draft';
 const POOL = '待分类';
 const PAGE = 60;
 
@@ -22,6 +24,7 @@ let undoStack = [];
 let dirty = false;
 let savedMark = null;       /* 落盘/载入时的档案指纹：dirty 由它比对出来 */
 let manualIssue = null;   /* 手动档案被跳过时给个可见说明，别让人以为调整丢了 */
+let draftNote = null;     /* 载入的是本地草稿（未落盘）时的标注 */
 let drag = null;          /* 在途拖动 {kind:'entry'|'group', id?, from?, key?} */
 
 const $ = (id) => document.getElementById(id);
@@ -40,9 +43,29 @@ const groupByKey = (key) => allGroups().find((g) => g.key === key);
 const isArchive = (v) => !!v?.classes?.length
     && Array.isArray(v.mainline) && Array.isArray(v.unarchived);
 
+/* —— 本地草稿：静态部署写不了盘，刷新也不该丢改动 —— */
+function writeDraft() {
+  try {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify({at: Date.now(), archive: data}));
+  } catch { /* 隐私模式/超额：草稿只是保险，不拦编辑 */ }
+}
+
+function clearDraft() {
+  try { localStorage.removeItem(DRAFT_KEY); } catch { /* 同上 */ }
+}
+
+function readDraft() {
+  try {
+    const raw = localStorage.getItem(DRAFT_KEY);
+    const parsed = raw && JSON.parse(raw);
+    return isArchive(parsed?.archive) ? parsed : null;
+  } catch { return null; }
+}
+
 function syncDirty() {
   dirty = JSON.stringify(data) !== savedMark;
   $('btn-undo').disabled = !undoStack.length;
+  if (dirty) writeDraft(); else clearDraft();
 }
 
 function pushUndo(state) {
@@ -69,8 +92,9 @@ function markSource() {
       ? '数据源：手动档案（story-archive-manual.json）'
       : '数据源：生成档案（未保存过，保存后生成 story-archive-manual.json）';
   if (manualIssue) el.textContent += `｜${manualIssue}`;
-  el.className = 'libed-src' + (source === 'manual' ? ' manual'
-      : manualIssue ? ' warn' : '');
+  if (draftNote) el.textContent += `｜${draftNote}`;
+  el.className = 'libed-src' + (source === 'manual' && !draftNote ? ' manual'
+      : manualIssue || draftNote ? ' warn' : '');
 }
 
 /* —— 组枚举：统一形态 {key, kind, label, count, ci, id, name, group} —— */
@@ -488,18 +512,31 @@ function renderAll() {
 /* —— 持久化 —— */
 async function save() {
   const body = JSON.stringify({...data, manual: true, savedAt: new Date().toISOString()});
+  let error = null;
   try {
     const res = await fetch(SAVE_URL, {method: 'POST', body});
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    if (!res.ok) error = new Error(`HTTP ${res.status}`);
+  } catch (e) {
+    error = e;
+  }
+  if (!error) {
     source = 'manual';
     savedMark = JSON.stringify(data);
+    draftNote = null;
     syncDirty(); markSource();
     alert('已保存 data/index/story-archive-manual.json —— 回编辑器刷新，剧本库即按这份走');
-  } catch (error) {
-    exportJson();
-    alert(`保存端点不可用（${error.message}），已导出 JSON——请放置到\n`
-        + 'data/index/story-archive-manual.json 后刷新编辑器。');
+    return;
   }
+  exportJson();
+  /* 静态宿主对 POST 一律回 404/405/501（pages.dev 是 405），这是设计内的退路；
+   * 400 是开发服务器真拒收（档案形态不对），得当错误报 */
+  const staticHost = /HTTP 40[45]|HTTP 501/.test(error.message) || error instanceof TypeError;
+  alert(staticHost
+      ? '这是静态部署，没有写入端点（POST 返回 ' + error.message.replace('HTTP ', '')
+        + ' 属正常）。已导出 story-archive-manual.json：放回仓库\n'
+        + 'data/index/story-archive-manual.json\n'
+        + '后重新部署即生效。改动同时存了本地草稿，刷新不会丢。'
+      : `保存失败（${error.message}），已导出 JSON——改动仍存本地草稿。`);
 }
 
 function exportJson() {
@@ -518,8 +555,33 @@ async function reseed() {
   data = await res.json();
   source = 'derived';
   sel = null;
+  draftNote = null;
   syncDirty();
   renderAll(); markSource();
+}
+
+/* 磁盘档案与本地草稿不一致时给一条恢复条（静态部署唯一的续命路径） */
+function offerDraft() {
+  const draft = readDraft();
+  if (!draft || JSON.stringify(draft.archive) === savedMark) return;
+  const bar = $('draft');
+  bar.append(
+      h('span', {text: `本地还有一份未落盘的草稿（${new Date(draft.at).toLocaleString()}）`
+          + `，当前显示的是仓库里的档案。`}),
+      h('button.tiny', {text: '载入草稿', onclick: () => {
+        snapshot();
+        data = draft.archive;
+        sel = null;
+        draftNote = '正在编辑本地草稿（未落盘）';
+        syncDirty();
+        renderAll(); markSource();
+        bar.hidden = true;
+      }}),
+      h('button.tiny', {text: '丢弃草稿', onclick: () => {
+        clearDraft();
+        bar.hidden = true;
+      }}));
+  bar.hidden = false;
 }
 
 async function boot() {
@@ -574,6 +636,7 @@ async function boot() {
   window.addEventListener('beforeunload', (e) => {
     if (dirty) e.preventDefault();
   });
+  offerDraft();
 }
 
 boot();
