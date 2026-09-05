@@ -5,6 +5,7 @@
 """
 import hashlib
 import http.server
+import json
 import os
 import sys
 import urllib.error
@@ -56,8 +57,29 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         return super().do_HEAD()
 
     def do_POST(self):
-        """oracle 跑完把冻结表写回来，省掉 scrape dump-dom 这一步。"""
+        """oracle 跑完把冻结表写回来，省掉 scrape dump-dom 这一步；
+        /archive-save 落盘剧本库手动分类（lib-editor.html 的保存端点）。"""
         route, _, query = self.path.partition('?')
+        if route == '/archive-save':
+            length = int(self.headers.get('Content-Length', 0))
+            body = self.rfile.read(length)
+            try:
+                parsed = json.loads(body)
+            except ValueError:
+                return self.send_error(400, 'invalid json')
+            # 只认档案形态：null / [] / 半成品都会把编辑页钉死在 boot
+            # （读不到 classes 直接抛），落盘前挡掉。
+            if (not isinstance(parsed, dict) or not parsed.get('classes')
+                    or not all(isinstance(parsed.get(k), list)
+                              for k in ('mainline', 'unarchived'))):
+                return self.send_error(400, 'not an archive')
+            folder = os.path.join(ROOT, 'data', 'index')
+            os.makedirs(folder, exist_ok=True)
+            target = os.path.join(folder, 'story-archive-manual.json')
+            with open(target, 'wb') as handle:
+                handle.write(body)
+            print(f'archive-save -> {target} {len(body)} B', flush=True)
+            return self.serve_bytes('text/plain', b'ok')
         if route != '/freeze':
             return self.send_error(404, route)
         scene = dict(urllib.parse.parse_qsl(query)).get('scene', 'scene1')

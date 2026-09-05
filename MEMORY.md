@@ -58,3 +58,31 @@
 - **shader 结论**:自研卡通 shader(_FirstShadowMultColor/_LightMapTex ramps)用 MeshStandardMaterial + 主贴图近似,观感成立;明暗层留 M2
 - **页面坑**:GLTFLoader 报 `reading 'count'` = 蒙皮 primitive 漏 JOINTS_0/WEIGHTS_0(且 JOINTS_0 必须 u8/u16 非 u32);OrbitControls `minDistance` 会把近距相机每帧推开(调试时先调小)
 - **下一步输入**:交互落点换 DormConfigAsset 的 278 条 CharacterDisposition + 21 类移动曲线(现手调常量在 dorm.js 顶部);lightmap 映射需实机 Frida 抓拼装;宿舍逻辑 151 个 Lua 可走现有 lundump/lvm
+
+## 宿舍 M2:摆放编辑器 —— 已结(2026-09-05)
+- **产物**:`dorm/editor.html`(20 件家具目录 / 0.5m 网格吸附 / R 旋转 / 拖动 / Del / IndexedDB 存档)+ `tools/dorm/export_dorm_m2.py` + `data/dorm/furniture-catalog.json`(20 件含 BoxCollider 占位)+ `data/dorm/dorm-interact.json`(278 角色 × {animType,dispositionType} + 21 类移动曲线;interact 本体只有这两个字段,moveTime 在 disposition.moveCurves 上)
+- **新发现**:交互类家具(anniversary/dwc/etj/srt)是**蒙皮骨骼件**(自带 Animator+Avatar+clips);其蒙皮有第三种通道形态 —— 只有索引通道(ch13 u32,可能 dim1)、无权重通道(隐式 1.0),索引带脏数据需按 bindposes 数收敛
+- **坑**:GLTFLoader 报 `reading 'count'` 的根因是 SkinnedMesh primitive 缺 WEIGHTS_0;manifest 多进程写入要共享同一对象(m1.manifest),否则 aabb 读到旧副本
+- **调试方法**:模块级错误要用**内联 <script> 装错误捕获**(handler 随页面销毁,evaluate 后装+reload 是白装);`window.__edb` 阶段标记定位卡点
+- **待办**:lightmap 映射需实机 Frida(`nc-capture/dorm_trace.py` 已就绪,--scene-dorm 需 CS 桥验证);家具动画(自带 AnimatorController)未挂;编辑器→巡游态联动未做
+
+## 宿舍实机抓包(M2.5)—— 已结(2026-09-05,用户配合进宿舍楼)
+- **dorm_trace.py 打通**:adb 串号变了(127.0.0.1:16416,非 7555),需先 `adb forward tcp:27042 tcp:27042`;CS 桥可用(`CS.UnityEngine` 全量可读,Application.version=3.0.1)
+- **决定性发现:游戏运行时 renderer.lightmapIndex 全部 = -1** —— 宿舍根本没烘光照贴图,明暗全靠实时卡通 shader。three.js 实时光照方案就是正解,lightmap 工作取消
+- **房间数据模型**(scene dump → `data/dorm/capture-dorm-scene.json`):DormHolder 下 7 个房间 `<gx>_<gz>`,pos=(4*gx, 2.6 错层, 4*gz);每房 Furniture/Floor/Wall(1-4 面各自 0/90/180/270)/Character/Effect 五个 holder;家具节点={实例id, pos(米), rotY(0/90/180/270)} + prefab(Clone) 带 anchor 偏移(clonePos)
+- **家具清单扩充**:实机 47 种 prefab 全部导出,目录 67 件(data/dorm/furniture-catalog.json);编辑器新增「导入实机房间」(capture-dorm-scene.json → 格子)
+- **角色在室确认**:5 个 dmodel 实例(professor/sol/simo/taisch/turing)在房 -1_1,带 pos+rotY —— M3 角色巡游的真值
+- **待办**:墙饰/门挂墙语义(在 WallHolder 局部系,导入当落地件会悬空);相机 fov=40 euler(10,225,0) 可做巡游默认视角
+
+## 宿舍 M3:角色巡游 —— 已结(2026-09-05)
+- **产物**:`dorm/patrol.html`(房间 -1_1 实机家具布局 + 5 角色 dmodel 巡游)+ `tools/dorm/export_dorm_chars.py`(批量角色导出:professor/simo/sol/taisch/turing,每人 2 蒙皮网格 + 15~18 宿舍 clip)
+- **共享包解析**:dmodel 的 `AssetBundle.m_Dependencies`(CAB 名)→ `tools/dorm/cab-index.json`(UnityPy 扫 shared 包内部 SerializedFile 名建的索引);cab-5883…= dormanimationcontroller(全员公共依赖);sol/taisch/turing 的贴图包**不在已提取集合**(灰模,拿到包重跑脚本即可)
+- **坑**:agent home 是 [x,z] 二元组,误走 toWorld([x,y,z]) → NaN 位置(JSON 里显示 null 就是 NaN);gltf 的 animations 在根对象不在 scene 上
+- **待办**:巡游角色接 dorm-interact 配置坐/躺家具;sol/taisch/turing 贴图包定位;编辑器↔巡游页联动(编辑的布局喂给巡游)
+
+## 宿舍 M3:交互演出链 —— 已结(2026-09-05)
+- **产物**:patrol.js 角色状态机升级为七态:walk / idle / walk→sit / walk→lie / sitting / lying / getup;45% 概率在 idle 结束时选最近空闲交互点,到站立点后按 **DormConfigAsset 的 moveCurves(moveX/Y/Z + moveTime,角色自己的 dispositionType)** 滑入座位,播 dorm_sit→dorm_sit_loop(休憩 5~9s)→dorm_getup→回巡游;床/地毯/吊床走 lie 链(lie_start→lie_loop)
+- **座位点推导**:交互点真值在 C# 配置侧不在包里(fntCfg.interCfg 有 coord/start_coord/angle/bind_path/move_curve_id 字段名,反汇编 DormInterPointData 确认);当前用 BoxCollider 顶面-0.57(sit)/-0.05(lie) 启发式,椅子实测与 M1 手调值吻合
+- **字节码工具链**:tools/lua-disasm.mjs 反汇编自定义 Lua 5.3 可当源码读(152 支宿舍脚本已导出 tools/dorm/lua-out/);GetInterAnimType=interCfg.anime_type、GetInterBindPath=bind_path
+- **坑**:patrol.js 改重了会撞 `const agents` 重复声明(node --check 先行);模块级错误必须在 HTML 内联 <script> 装 handler
+- **待办**:座位点精确值等 fntCfg 数据源(pb.ab/服务端);家具自身动画(蒙皮家具自带 AnimatorController)未挂;墙饰挂墙语义

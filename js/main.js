@@ -257,8 +257,21 @@ let avgManifest = null;
 let storyArchive = null;
 try {
   avgManifest = await (await fetch('data/index/avg-scripts.json')).json();
-  storyArchive = await (await fetch('data/index/story-archive.json')).json();
+  /* 手动分类档案（lib-editor.html 的保存件）优先于生成档案：
+   * 编辑页以生成档案播种，人工调整落盘后在这里生效，重跑生成器不冲掉。 */
+  const manual = await fetch('data/index/story-archive-manual.json');
+  if (manual.ok) {
+    const parsed = await manual.json();
+    /* 三个容器键齐了才算数：archiveTree 逐个遍历，缺一个就在建树时抛 */
+    if (parsed?.classes?.length && Array.isArray(parsed.mainline)
+        && Array.isArray(parsed.unarchived)) storyArchive = parsed;
+  }
 } catch { /* 无索引：纯夹具模式 */ }
+if (avgManifest && !storyArchive) {
+  try {
+    storyArchive = await (await fetch('data/index/story-archive.json')).json();
+  } catch { /* 生成档案也缺席：剧本库按钮置灰 */ }
+}
 const btnStories = document.getElementById('btn-storylib');
 if (!avgManifest) {
   btnStories.disabled = true;

@@ -94,45 +94,81 @@ def hier_to_gltf(builder, hier):
     return roots, pid2node, path2node
 
 
+def _deref(env, pptr):
+    """PPtr → 对象(跨包安全);失败返回 None。"""
+    try:
+        return pptr.read()
+    except Exception:
+        return None
+
+
 def attach_static_meshes(builder, env, objs, hier, pid2node, texcache):
-    """把每个 MeshFilter 的网格挂到对应节点;材质来自同 GameObject 的 MeshRenderer。"""
+    """挂载网格:MeshFilter(静态)与 SkinnedMeshRenderer(骨骼家具)都处理。"""
     mats_used = {}
     tmap = go_to_transform_pids(env)
-    for o in env.objects:
-        if o.type.name != 'MeshFilter':
-            continue
-        mf = o.read()
-        go_pid = mf.m_GameObject.m_PathID
-        gid = pid2node.get(tmap.get(go_pid))
-        if gid is None:
-            continue
-        mesh_obj = objs.get(mf.m_Mesh.m_PathID)
-        if mesh_obj is None:
-            continue
-        md = decode_mesh(mesh_obj.read())
-        mat_ids = []
+
+    def material_ids_for(go_pid):
+        ids = []
         for o2 in env.objects:
-            if o2.type.name != 'MeshRenderer':
+            if o2.type.name != 'MeshRenderer' and o2.type.name != 'SkinnedMeshRenderer':
                 continue
             r = o2.read()
             if r.m_GameObject.m_PathID != go_pid:
                 continue
             for mp in r.m_Materials:
-                mo = objs.get(mp.m_PathID)
+                mo = _deref(env, mp)
                 if mo is None:
-                    mat_ids.append(None)
+                    ids.append(None)
                     continue
-                key = mo.path_id
+                key = getattr(mo, 'path_id', id(mo))
                 if key not in mats_used:
-                    mdata = decode_material(mo, env, OUT, texcache)
+                    mdata = decode_material(mo.object_reader if hasattr(mo, 'object_reader') else mo,
+                                            env, OUT, texcache)
                     mats_used[key] = builder.add_material(mdata, OUT)
-                mat_ids.append(mats_used[key])
+                ids.append(mats_used[key])
             break
-        if not mat_ids:
-            mat_ids = [None]
-        mesh_id = builder.add_mesh(md, mat_ids)
-        builder.json['nodes'][gid]['mesh'] = mesh_id
-        builder.json['nodes'][gid]['extras'] = {'aabb': md['aabb']}
+        return ids or [None]
+
+    for o in env.objects:
+        if o.type.name == 'MeshFilter':
+            mf = o.read()
+            go_pid = mf.m_GameObject.m_PathID
+            gid = pid2node.get(tmap.get(go_pid))
+            if gid is None:
+                continue
+            mesh = _deref(env, mf.m_Mesh)
+            if mesh is None:
+                continue
+            md = decode_mesh(mesh)
+            mesh_id = builder.add_mesh(md, material_ids_for(go_pid))
+            builder.json['nodes'][gid]['mesh'] = mesh_id
+            builder.json['nodes'][gid]['extras'] = {'aabb': md['aabb']}
+        elif o.type.name == 'SkinnedMeshRenderer':
+            s = o.read()
+            go_pid = s.m_GameObject.m_PathID
+            gid = pid2node.get(tmap.get(go_pid))
+            if gid is None:
+                continue
+            mesh = _deref(env, s.m_Mesh)
+            if mesh is None:
+                continue
+            md = decode_mesh(mesh)
+            joint_nodes = []
+            for b in s.m_Bones:
+                # 骨骼在本 bundle 层级里,按 transform pid 对节点
+                bid = None
+                try:
+                    bt = b.read()
+                    bid = pid2node.get(bt.object_reader.path_id)
+                except Exception:
+                    pass
+                joint_nodes.append(bid if bid is not None else 0)
+            if md.get('bindposes'):
+                skin_id = builder.add_skin(joint_nodes, md['bindposes'])
+                builder.json['nodes'][gid]['skin'] = skin_id
+            mesh_id = builder.add_mesh(md, material_ids_for(go_pid))
+            builder.json['nodes'][gid]['mesh'] = mesh_id
+            builder.json['nodes'][gid]['extras'] = {'aabb': md['aabb']}
 
 
 def export_character():

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>剧本库分类编辑</title>
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/avg.css">
+<style>
+.libed { display: flex; flex-direction: column; height: 100vh;
+  background: var(--bg); color: var(--fg); font: 13px/1.5 system-ui, "Microsoft YaHei", sans-serif; }
+.libed-bar { align-items: center; background: var(--panel); border-bottom: 1px solid var(--line);
+  column-gap: 8px; display: flex; padding: 6px 12px; }
+.libed-bar .title { color: var(--accent); font-weight: 600; margin-right: 8px; }
+.libed-src { color: var(--fg-dim); font-size: 12px; }
+.libed-src.manual { color: #7fd18a; }
+.libed-src.warn { color: #e0a94b; }
+.libed-cols { display: flex; flex: 1; min-height: 0; }
+.libed-tree { background: var(--panel); border-right: 1px solid var(--line);
+  overflow: auto; padding: 8px; width: 320px; }
+.libed-node { margin-bottom: 8px; }
+.libed-node > header { color: var(--fg-dim); cursor: pointer; font-size: 12px;
+  letter-spacing: .06em; padding: 2px 4px; }
+.libed-group { align-items: baseline; border-left: 3px solid transparent;
+  cursor: pointer; display: flex; gap: 6px; justify-content: space-between;
+  padding: 3px 6px 3px 14px; }
+.libed-group:hover { background: #ffffff10; }
+.libed-group.selected { background: #2b4257; border-left-color: var(--accent); }
+.libed-group[draggable], .libed-entry[draggable] { cursor: grab; }
+.libed-group.drop-in { background: #2f4d63; border-left-color: var(--accent); }
+.dragging { opacity: .45; }
+.drop-line { box-shadow: inset 0 2px 0 var(--accent); }
+.libed-group .n { color: var(--fg-dim); font: 10px Consolas, monospace; }
+.libed-year { color: var(--fg-dim); font-size: 11px; padding: 3px 6px 0 10px; }
+.libed-panel { display: flex; flex: 1; flex-direction: column; min-width: 0;
+  overflow: auto; padding: 12px; }
+.libed-panel h2 { font-size: 16px; margin: 0 0 10px; }
+.libed-row { align-items: center; display: flex; gap: 6px; margin-bottom: 8px; }
+.libed-row label { color: var(--fg-dim); flex: none; width: 52px; }
+.libed-row input { flex: 0 1 340px; }
+.libed-stories { flex: 1; min-height: 120px; overflow: auto; }
+.libed-entry { align-items: baseline; border-bottom: 1px solid #ffffff0d;
+  display: flex; gap: 8px; padding: 3px 4px; }
+.libed-entry:hover { background: #ffffff0d; }
+.libed-entry .id { font: 12px Consolas, monospace; }
+.libed-entry .name { color: var(--fg-dim); flex: 1; font-size: 11px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.libed-add { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 8px; }
+.libed-add .cands { max-height: 220px; overflow: auto; }
+.libed-hint { color: var(--fg-dim); font-size: 11px; }
+.libed-pool { background: #3a2f1b; }
+</style>
+</head>
+<body>
+<div class="libed">
+  <div class="libed-bar">
+    <span class="title">剧本库分类编辑</span>
+    <span class="libed-src" id="src"></span>
+    <span class="spacer" style="flex:1"></span>
+    <button class="tiny" id="btn-undo" disabled>撤销</button>
+    <button class="tiny" id="btn-reseed">从生成档案重新播种</button>
+    <button class="tiny" id="btn-export">导出 JSON</button>
+    <label class="tiny" style="cursor:pointer">导入 JSON<input type="file"
+        id="file-import" accept=".json" style="display:none"></label>
+    <button class="primary" id="btn-save">保存</button>
+    <a class="tiny" href="index.html" style="align-self:center">返回编辑器</a>
+  </div>
+  <div class="libed-cols">
+    <div class="libed-tree" id="tree"></div>
+    <div class="libed-panel" id="panel"></div>
+  </div>
+</div>
+<script type="module" src="js/lib-editor.js?v=8"></script>
+</body>
+</html>
