@@ -37,6 +37,7 @@ const REGISTRY = [
   {name: 'io', kind: 'browser', desc: '导出→导入→连播快照全等 + bundle 完整性'},
   {name: 'audio', kind: 'node', desc: '音频编排（FakeCtx，含 CV 语音通道）'},
   {name: 'doc', kind: 'node', desc: '撤销栈/失效分级'},
+  {name: 'shotstate', kind: 'node', desc: '检查器舞台状态折叠（出处/延续/一次性）'},
   {name: 'zip', kind: 'node', desc: 'STORE 打包可复现'},
   {name: 'repo-index', kind: 'node', desc: '素材索引/搜索/三级解析'},
   {name: 'storylib', kind: 'node', desc: '剧本库：分组/搜索/loadStory/语音映射'},

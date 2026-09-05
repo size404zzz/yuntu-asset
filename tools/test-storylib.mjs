@@ -116,19 +116,16 @@ assert.equal(archive.classes[2].activities.length, 27, '专属剧情 27 个');
 const fe = archive.classes[0].activities.find((a) => a.id === 59001);
 assert.equal(fe.name, '昔影归终');
 assert.equal(fe.year, 2024);
-assert.equal(fe.stories.length, 32, '昔影归终 32 段真剧情（关卡不计）');
+/* 活体分类（story-classification-live.json）在场时 stories 以它为准：
+ * 42 组展平（分歧段展开）= 60 段，组序 = 游戏显示序 */
+assert.ok([32, 60].includes(fe.stories.length),
+    `昔影归终段数随数据源浮动（静态 32 / 活体 60），实际 ${fe.stories.length}`);
 assert.equal(fe.stories[0].id, '24fe_s00');
-/* 「活动奖励」分母 = 手册 content 行 reward_list，与截图卡片对账：
-   昔影归终 0/12 · 致光态 7/8 · 热海飙运 1/3 */
-assert.equal(fe.rewards.length, 12, '昔影归终 活动奖励 12 项');
-assert.equal(archive.classes[0].activities.find((a) => a.id === 33005).rewards.length, 8,
-    '致光态 活动奖励 8 项');
-assert.equal(archive.classes[1].activities.find((a) => a.id === 58001).rewards.length, 3,
-    '热海飙运 活动奖励 3 项');
-assert.ok(!archive.classes[1].activities.find((a) => a.id === 39003).rewards,
-    '同行礼遇 reward_list 为空 ⇒ 无奖励条（与截图一致）');
-assert.ok(archive.classes[2].activities.every((a) => !a.rewards),
-    '专属剧情的 content 行在动态配置里，静态无奖励数据');
+/* 档案只管「分类 → 年份 → 活动 → 剧情」：奖励/进度是玩家存档态，不还原 */
+for (const act of archive.classes.flatMap((c) => c.activities)) {
+  assert.ok(!('rewards' in act) && !('storyTotal' in act),
+      `${act.id} 不应带奖励/进度字段`);
+}
 const manifestIds = new Set(manifest.stories.map((s) => s.id));
 const archivedIds = new Set(archive.classes.flatMap((c) => c.activities.flatMap((a) => a.stories.map((s) => s.id))));
 for (const id of archivedIds) assert.ok(manifestIds.has(id), `档案段 ${id} 必须在语料索引里`);
@@ -155,24 +152,26 @@ const big24 = tree[0].groups[0];
 assert.deepEqual(big24.activities.map((a) => a.name),
     ['致光态', '弹痕、飞鸟、雏菊', '境界干涉的延迟选择', '半影迹印', '昔影归终']);
 const feNode = big24.activities.find((a) => a.id === 59001);
-const a59001Raw = archive.classes[0].activities.find((a) => a.id === 59001);
-assert.equal(feNode.stories.length, 32, '昔影归终 32 段');
+assert.equal(feNode.stories.length, fe.stories.length, '树与档案同源');
 assert.equal(feNode.stories[0].id, '24fe_s00');
-assert.deepEqual(feNode.rewards, a59001Raw.rewards, '树活动节点带奖励条目');
-/* story_avg.activity_id 直挂列修正：薄暮葬曲 = 2 真剧情 + 1 关卡章节（游戏卡片
-   Create4CharAct 的 stageAvgDic 分支同构），原先被号段前缀撞车错成主线序章单段 */
+/* type 10 专属剧情按活体分类挂角色全部章节（薄暮葬曲 = clotho 章节 20 段）；
+ * 活体缺席时退回静态路由（3 段：2 真剧情 + 1 关卡章节） */
 const mu = tree[2].groups.find((g) => g.label === '2022').activities.find((a) => a.id === 10010);
-assert.deepEqual(mu.stories.map((s) => s.id),
-    ['cpt_clotho_00_01', 'cpt00_e_01_02', 'cpt_clotho_05_01'], '薄暮葬曲 2+1 段');
+assert.ok([3, 20].includes(mu.stories.length),
+    `薄暮葬曲段数随数据源浮动（静态 3 / 活体 20），实际 ${mu.stories.length}`);
+assert.equal(mu.stories[0].id, 'cpt_clotho_00_01');
 const hero24 = tree[2].groups[0];
 assert.deepEqual(hero24.activities.map((a) => a.name),
     ['冥刃沐辉', '浮梦巡驰', '绿境探踪', '荒屿遗株', '救偶总动员', '钢冢与繁枝', '晓光共览', '归档：麦戈拉'],
     '专属剧情 2024 组（跨年档期归结束侧，与游戏时间轴一致）');
 assert.ok(tree[2].groups.every((g) => /^\d{4}$/.test(g.label)), '专属剧情 27 期全有档期年份');
-/* 主线/未归档：单活动组由 UI 直通剧情 */
-const main0 = tree[3].groups[0];
-assert.equal(main0.label, '未分扇区');
-assert.equal(main0.activities[0].stories.length, 883, '主线未分扇区 883 段');
+/* 主线：活体分类接管后全部组有名（六大章节扇区 + sector_stage 归属 +
+ * 事件组），不再有「未分扇区」大桶 */
+const mainlineNode = tree[3];
+assert.ok(mainlineNode.groups.length >= 30, `主线细分组数 ${mainlineNode.groups.length}`);
+assert.ok(mainlineNode.groups.every((g) => g.label), '主线所有组都有名字');
+assert.deepEqual(mainlineNode.groups.map((g) => g.label).slice(0, 7),
+    ['罗萨姆', '基洛普斯', '赫里奥斯', '恩格玛', '庇厄里亚', '柯普利', '绿洲防线']);
 const dormGroup = tree[4].groups[0];
 assert.equal(dormGroup.label, 'dorm');
 assert.equal(dormGroup.activities[0].stories.length, 465, '未归档 dorm 组 465 段');

@@ -95,6 +95,7 @@ textarea { width: 100%; min-height: 64px; resize: vertical; }
 .shot-row .badges { color: var(--fg-dim); font-size: 11px; grid-column: 2; }
 .shot-row .text { grid-column: 2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .shot-row .speaker { color: var(--warn); font-size: 11px; grid-column: 2; }
+.shot-row .speaker.narr { color: var(--fg-dim); }
 
 .preview-area { align-items: flex-start; display: flex; flex-direction: column; padding: 12px; }
 .transport { display: flex; gap: 6px; margin-top: 10px; }
@@ -177,9 +178,6 @@ textarea { width: 100%; min-height: 64px; resize: vertical; }
 .picker-act:hover { background: #ffffff18; }
 .picker-act b { font-size: 13px; }
 .picker-act-n { color: var(--fg-dim); font-size: 11px; }
-/* 活动奖励条：照游戏「行动记录」卡片的那行箱子计数（分母 = 手册 reward_list） */
-.picker-act-reward { background: #ffffff10; border: 1px solid #ffffff1a;
-  color: var(--fg-dim); font-size: 10px; padding: 0 6px; white-space: nowrap; }
 .picker-act-view { color: var(--accent); font-size: 11px; margin-left: auto;
   white-space: nowrap; }
 .picker-back { align-self: flex-start; font-size: 11px; }
@@ -218,6 +216,26 @@ textarea { width: 100%; min-height: 64px; resize: vertical; }
 .ins-ops button { padding: 0 6px; }
 .inspector-scroll { overflow: auto; }
 .ins-timeline { display: flex; flex-direction: column; gap: 6px; }
+/* —— 检查器 0 区：舞台状态（截至本镜，出处可跳转） —— */
+.ss-cap { color: var(--fg-dim); font-size: 11px; letter-spacing: .06em;
+  margin: 8px 0 2px; }
+.ss-cap:first-child { margin-top: 0; }
+.ss-row { flex-wrap: wrap; font-size: 12px; padding: 1px 0; row-gap: 2px; }
+.ss-row .ss-type { background: #ffffff12; border-radius: 3px; color: var(--fg-dim);
+  flex: none; font-size: 11px; padding: 0 5px; }
+.ss-row .ss-main { font-family: Consolas, monospace; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; word-break: break-all; }
+.ss-row .ss-meta { color: var(--fg-dim); font-size: 11px; }
+.ss-row .ss-since { color: var(--fg-dim); font-size: 11px; margin-left: auto;
+  white-space: nowrap; }
+.ss-row .ss-flag { background: #2b4257; border-radius: 3px; color: var(--accent);
+  flex: none; font-size: 10px; padding: 0 5px; }
+.ss-jump { background: none; border: 0; color: var(--accent); cursor: pointer;
+  font: inherit; font-size: 11px; padding: 0 2px; text-decoration: underline;
+  text-underline-offset: 2px; }
+.ss-jump:hover { border: 0; color: #fff; }
+.ss-now { background: #2b4257; border-radius: 3px; color: var(--accent);
+  margin-left: 4px; padding: 0 5px; font-size: 10px; }
 .tl-hint { color: var(--fg-dim); font-size: 11px; }
 .tl-ruler { position: relative; height: 16px; border-bottom: 1px solid #ffffff22;
   cursor: ew-resize; margin-left: 44px; }

@@ -47,6 +47,7 @@ python tools/ref/serve.py 8080     # 或任意静态服务器，根 = 本仓库
 | `node tools/test-io.mjs` | 导出→导入→连播快照全等 + bundle 完整性（含音频资产） | 全部通过 |
 | `node tools/test-audio.mjs` | 音频编排（FakeCtx 纯 Node，含 M15 CV 语音通道） | 10 项 |
 | `node tools/test-doc.mjs` | 撤销栈/失效分级 | 7 项 |
+| `node tools/test-shotstate.mjs` | 检查器「舞台状态」折叠：出处（于第N镜起）/延续/一次性/孤儿镜退化 | 9 组 |
 | `node tools/test-zip.mjs` | STORE 打包可复现 | 4 项 |
 | `node tools/test-repo-index.mjs` | 素材索引/搜索/R13 退化（含音频索引与三级解析） | 9 项 |
 | `node tools/test-storylib.mjs` | 剧本库：分组/搜索/loadStory 装载链/索引增强件/语音映射/行动记录剧情树 | 全部通过 |
@@ -68,7 +69,7 @@ scene4 是 M11 补的形态夹具：type1、多页 `<|>`、通讯框、delete、
 
 ```
 css/       avg.css pandect.css（参考逐声明移植）· app.css（编辑器）· ux.css（动效降级/缺素材占位）
-js/core/   schema markup scheduler state script doc idb repo-index assets lundump lvm avgwire fadeadvice
+js/core/   schema markup scheduler state script doc shotstate idb repo-index assets lundump lvm avgwire fadeadvice
 js/engine/ player sprite typewriter nouns audio
 js/editor/ editor inspector fld picker storylib timeline layout-cal io advice recorder
 js/ui/     dom zip
@@ -269,33 +270,44 @@ ID 的平铺结果，清空恢复树。
 专属剧情整类没有 yearDic，按活动 `rewardEnd_time` 的档期年份补（跨年活动归
 结束侧——冥刃沐辉 2023-12 开启归 2024，与游戏时间轴一致）。
 
-## 截图卡片两件还原件：活动奖励 / 剧情进度（M27）
+## 活体剧情分类：Frida 直取游戏现算结果（M28）
 
-游戏「行动记录」卡片上还有两组数字，反汇编 `UINHandBookActBookFesItem` +
-`CommonPoltReviewData` 定到口径后各还原了一件半：
+树要的「活动 → 剧本段」归属，最终裁决者是活体游戏——静态表里 2024 三活动
+的回顾表走 LoadDynCfg 动态下发、type 10 专属剧情的真分组在角色章节表里，
+纯静态路由只能拿到残缺版。`tools/frida/dyn-config-dump.py/.js` 增加
+`classifyAll`：在 `lua_pcall` 钩子内部（游戏线程被拦截挂起、零竞态）直接
+调用 `HandBookActReviewFunc[type](series)`——游戏「行动记录」卡片渲染用的
+同一批处理器——把返回的 `CommonPoltReviewData.avgGroupList`（剧情组名 +
+AvgIdList，组序 = 游戏显示序）逐活动接住。
 
-- **活动奖励 x/y**：分母 = `handbook_activity.content[actId].reward_list` 的
-  长度（FesItem f1 L42 `_totalRewardCount = #reward_list`），分子 = 玩家持有
-  数（存档数据，不还原）。档案在每个活动上输出 `rewards`（条目 id 数组），
-  树卡片显示「活动奖励 N」。截图对账：昔影归终 12、致光态 8、热海飙运 3 全中；
-  同行礼遇 reward_list 为空 ⇒ 游戏也不渲染奖励条。**已知缺口**：专属剧情整类
-  的 content 行在动态配置里（静态表 `content_count=27` 而 content 空，运行时
-  LoadDynCfg 拉），静态还原不了。
-- **剧情进度 x/y**：显示 = `CommonPoltReviewData.totalUnlockedNum4Show /
-  totalNum4Show`（解锁数/配置数；复刻活动取解锁数大的一份），分子是存档，
-  分母 = 处理器路由出的配置条目数。生成器据此新增两条路由与一个计数字段：
-  ① `story_avg.activity_id` 直挂列（type 10 专属剧情的游戏分组列，证据最强）
-  ——修正了薄暮葬曲被号段前缀撞车错归的主线序章，其 2 真剧情 + 1 关卡章节与
-  游戏 Create4CharAct 的 `stageAvgDic[main_stage]` 分支同构，深红葬场主线组
-  随之解散；② 全量索引（含语料外死行）计数的 `storyTotal`，仅当配置段多于
-  语料可装载段时输出，差值即本地缺件（当前语料下 0 条，字段保留给未来增量）。
-  **已知缺口**：2024 三活动的游戏分母（昔影归终 42 / 致光态 18 / 热海飙运 4）
-  含动态回顾表（anniversary24/carnival23/delivery 走 LoadDynCfg）独有条目，
-  静态证不到；静态可证分母与语料段数一致（32/13/0）。
+- 覆盖 54/56 活动（type 12 的两个处理器要走 UI 流程，不补，两活动本无回顾
+  剧情）；AvgIdList → script_id 映射零缺失。产物
+  `data/index/story-classification-live.json`。
+- 生成器读到它时 `stories` 以活体为准：行动记录从 278 段扩到 **1010 段**，
+  静态 0 段的活动全部补齐（热海飙运 4 = 24summer_cargo01–04、昔影归终
+  42 组、致光态 18 = 截图分母全部对上）；type 10 专属剧情按真语义挂角色
+  全部主线章节（薄暮葬曲 20 段 = clotho 六章）。主线/未归档随之缩小，
+  归属与游戏一致。
+- 卡片上的「活动奖励 x/y」「剧情进度 x/y」仍不还原：分子是玩家存档态，
+  与分类树无关。
+
+## 主线细分：未分扇区归零（M29）
+
+活体分类接管后，主线剩 259 段（六大章节扇区 110 段 + 一大坨 `sectorId` 为空
+的散段）。排查结论：**游戏内不存在这批散段的统一分类函数**——它们的触发
+登记是登录后由服务器按账号推送（`AvgPlayController.OnRecvNewAvgTask` →
+`avgTaskParamDic`/`triggerTypeDic`，账号态、随推送变化），版本配置表里没有
+统一表；游戏里它们散落在各自系统的入口（角色誓约、节日活动、战棋、回归）。
+按两条依据细分归组（`mainlineEventOf`）：
+1. `set_place` → `sector_stage.sector`（关卡归属，游戏权威数据）→ 归入对应
+   扇区（无律背反/致密静点 的剧情关卡与困难模式扇区等）；
+2. 其余按段前缀的事件语义建事件组（誓约剧情 11、2022圣诞/七夕角色剧情、
+   彩蛋小游戏、悬光升变·补充剧情 23、昔影归终·追忆、战棋玩法 12……）。
+「未分扇区」大桶归零；主线共 33 组，树全量 1878 段守恒。
 
 旧版随本改退役：`archiveRows` 平铺分区视图与 `storyLabels` 活动名分组下拉
 （归属规则由 `archiveTree` 的未归档首段分组继承：dorm(465)、cpt(42) 这类
-才仍可点选；`story_avg.sectorId` 为空的 883 段在主线「未分扇区」组下）。
+才仍可点选）。
 
 链路全部实证自 configs.ab 的 642 张表（解出件见上节命令）：
 - `handbook_activity.lua` 顶层 3 条 = 三页签，`content` 给成员、`yearDic`

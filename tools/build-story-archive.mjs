@@ -31,14 +31,8 @@
  * 产物三类：classes（行动记录）、mainline（story_avg 里未归入任何活动的扇区，
  * 按 sectorId 聚簇并用 sector 表解名）、unarchived（语料里连 story_avg 行都没有
  * 的段，留给剧本库按 ID 首段兜底）。
- * 活动(activity)上另有截图「行动记录」卡片的两件还原件：
- *   rewards     手册 content 行 reward_list（卡片「活动奖励 x/y」的分母；x = 玩家
- *               持有数属存档，还原不了）。专属剧情整类的 content 行在动态配置
- *               （LoadDynCfg handbook_activity），静态表 content 为空 ⇒ 无字段。
- *   storyTotal  「剧情进度 x/y」的分母（CommonPoltReviewData.totalNum4Show）里
- *               静态表能证到的部分，仅在与语料段数不同时输出——差值即本地缺件
- *               的配置段。已知缺口：2024 三活动（昔影归终 42 / 致光态 18 /
- *               热海飙运 4）的回顾表走了动态配置，静态证不到全部条目。 */
+ * 卡片上的「活动奖励 x/y」「剧情进度 x/y」不还原：分子是玩家存档态，分母的
+ * 动态表部分随版本漂移，与「分类 → 年份 → 活动 → 剧本」的树无关。 */
 import {readFileSync, writeFileSync, existsSync, readdirSync} from 'node:fs';
 import {join, resolve} from 'node:path';
 import {parseChunk} from '../js/core/lundump.js';
@@ -53,6 +47,11 @@ if (!existsSync(join(src, 'LuaConfigs.handbook_activity.lua.bytes'))) {
       + `——先按 reference-game-lua-logic 解出 configs.ab 的 TextAsset`);
   process.exit(1);
 }
+/* 可选：活体剧情分类（tools/frida/dyn-config-dump.py 的 classifyAll 抓取件，
+ * 经 data/index/story-classification-live.json 进入；缺席时全部退回静态路由）。 */
+const loadOptionalJson = (p) => {
+  try { return JSON.parse(readFileSync(p, 'utf8')); } catch { return null; }
+};
 
 const cache = new Map();
 const decode = (name, maxSteps = 2_000_000_000) => {
@@ -66,14 +65,10 @@ const decode = (name, maxSteps = 2_000_000_000) => {
 const lang = decode('locale_text');
 const text = (key) => (key == null ? null : lang[String(key)] ?? null);
 
-/* —— story_avg：一行一段可播剧情，建三张反查索引 ——
-   两套索引各管一摊：语料内索引（storyRows）管可装载段 stories；全量索引
-   （rowsAll）只管数数——game 卡片「剧情进度 x/y」的 y = 处理器路由出的配置
-   条目数（UINHandBookActBookFesItem f1 L70-76 读 CommonPoltReviewData 的
-   totalNum4Show，构建见 CommonPoltReviewData.Create4*），不管 AvgCfg 在不在
-   本仓库。两处口径差：
+/* —— story_avg：一行一段可播剧情，建反查索引 ——
+   只收语料索引里真能装载的段（stories）。两处口径差：
    ① story_avg 有 1270 段带 script_id，其中 203 段的 AvgCfg 不在本仓库语料里
-      （缺件死行），列进档案只会点了报错 ⇒ stories 收语料内，storyTotal 数全量；
+      （缺件死行），列进档案只会点了报错；
    ② 202 段写成「<容器>.<段名>」（23sg.23sg_a01、24winter.24winter_s00…），
       语料按 AvgCfg 文件名收，不含容器前缀 ⇒ 归一化后才是可装载的 id。 */
 const manifest = JSON.parse(readFileSync(join(ROOT, 'data', 'index', 'avg-scripts.json'), 'utf8'));
@@ -84,22 +79,15 @@ const inCorpus = (id) => {
   return tail && corpus.has(tail) ? tail : null;
 };
 const storyRows = [];
-const rowsAll = [];
 for (const r of Object.values(decode('story_avg'))) {
   if (!r || typeof r !== 'object' || !r.script_id) continue;
   const id = inCorpus(r.script_id);
-  const row = {...r, _norm: id ?? String(r.script_id).split('.').pop()};
-  rowsAll.push(row);
-  if (id) storyRows.push({...row, script_id: id});
+  if (id) storyRows.push({...r, script_id: id});
 }
 const byAvgId = new Map();
 const bySector = new Map();
 const byStage = new Map();
 const byActivity = new Map();       /* story_avg.activity_id 直挂列（语料内） */
-const allByAvgId = new Map();
-const allBySector = new Map();
-const allByStage = new Map();
-const allByActivity = new Map();    /* 同上，含语料外死行，只管计数 */
 const push = (map, key, row) => {
   if (key == null) return;
   const list = map.get(key) ?? [];
@@ -112,12 +100,6 @@ for (const r of storyRows) {
   push(byStage, r.set_place, r);
   push(byActivity, r.activity_id, r);
 }
-for (const r of rowsAll) {
-  push(allByAvgId, r.id, r);
-  push(allBySector, r.sectorId, r);
-  push(allByStage, r.set_place, r);
-  push(allByActivity, r.activity_id, r);
-}
 
 const flatten = (v, out = []) => {
   if (v == null) return out;
@@ -127,22 +109,17 @@ const flatten = (v, out = []) => {
   return out;
 };
 
-/* 一条 activity_*_main 行 → 该行的剧情段。字段语义见头注。
-   idx 缺省 = 语料内索引（管 stories）；传 ALL_IDX = 全量索引（只管计数）。 */
+/* 一条 activity_*_main 行 → 该行的剧情段。字段语义见头注。 */
 const SECTOR_RE = /_sector$|^sector$|^sectorId$/;
 const STAGE_RE = /_stage$|^stage_id$/;
 const AVG_RE = /_avg$|^avg_id$|^story_id$|^story_ids$/;
-const rowsOfField = (key, val, idx) => {
-  const sec = idx?.sector ?? bySector;
-  const stg = idx?.stage ?? byStage;
-  const avg = idx?.avg ?? byAvgId;
+const rowsOfField = (key, val) => {
   const ids = flatten(val).filter((x) => typeof x === 'number' && x > 0);
-  if (SECTOR_RE.test(key)) return ids.flatMap((i) => sec.get(i) ?? []);
-  if (STAGE_RE.test(key)) return ids.flatMap((i) => stg.get(i) ?? []);
-  if (AVG_RE.test(key)) return ids.flatMap((i) => avg.get(i) ?? []);
+  if (SECTOR_RE.test(key)) return ids.flatMap((i) => bySector.get(i) ?? []);
+  if (STAGE_RE.test(key)) return ids.flatMap((i) => byStage.get(i) ?? []);
+  if (AVG_RE.test(key)) return ids.flatMap((i) => byAvgId.get(i) ?? []);
   return [];
 };
-const ALL_IDX = {sector: allBySector, stage: allByStage, avg: allByAvgId};
 
 /* —— 活动 → 剧情段：一次把 activity 系表按 actId 归组，再逐活动查 —— */
 const ACT_TABLE_RE = /^(activity|act_|sign_theater|delivery_activity|hero_)/;
@@ -211,17 +188,6 @@ const TYPE_TABLE = {
 /* 回顾表之外还要读一张的：同行礼遇的剧情挂在按序号归组的任务表上。 */
 const TYPE_EXTRA = {39: 'sign_theater_task_condition'};
 
-/* actId → Map(normId → {score})：同 offer，但吃全量行、按归一化 id 去重，
-   专供剧情进度分母计数（不看语料在不在）。 */
-const ownedAll = new Map();
-const offerAll = (actId, score, row) => {
-  if (!row || row.script_id == null) return;
-  const d = ownedAll.get(Number(actId)) ?? new Map();
-  ownedAll.set(Number(actId), d);
-  const cur = d.get(row._norm);
-  if (!cur || score > cur.score) d.set(row._norm, {score});
-};
-
 const isStoryField = (k) => SECTOR_RE.test(k) || STAGE_RE.test(k) || AVG_RE.test(k);
 const seriesRow = (tbl, series) => (Array.isArray(tbl)
     ? tbl[series - 1] : (tbl ?? {})[String(series)]);
@@ -231,7 +197,6 @@ const collect = (actId) => {
      的唯一挂载点），证据最强。不看它会输给号段前缀——前缀会撞车
      （10010 薄暮葬曲 ← 100101 深红葬场）。 */
   for (const r of byActivity.get(Number(actId)) ?? []) offer(actId, 5, r);
-  for (const r of allByActivity.get(Number(actId)) ?? []) offerAll(actId, 5, r);
   /* ① 处理器路由：类型 → 回顾表 → 该活动在那张表里的那一行 */
   const meta = activity[String(actId)];
   const table = TYPE_TABLE[meta?.type];
@@ -245,7 +210,6 @@ const collect = (actId) => {
         for (const [k, v] of Object.entries(node ?? {})) {
           if (isStoryField(k)) {
             for (const r of rowsOfField(k, v)) offer(actId, 4, r);
-            for (const r of rowsOfField(k, v, ALL_IDX)) offerAll(actId, 4, r);
           } else if (v && typeof v === 'object' && depth < 2) harvest(v, depth + 1);
         }
       };
@@ -257,7 +221,6 @@ const collect = (actId) => {
     for (const [k, val] of Object.entries(row)) {
       if (!isStoryField(k)) continue;
       for (const r of rowsOfField(k, val)) offer(actId, score, r);
-      for (const r of rowsOfField(k, val, ALL_IDX)) offerAll(actId, score, r);
     }
   }
   /* ③ 号段路线：story_avg 的 sectorId 直接以 actId 打头（59001 → 590011/590012）。
@@ -267,25 +230,6 @@ const collect = (actId) => {
     const s = String(r.sectorId ?? '');
     if (s.length > id.length && s.startsWith(id)) offer(actId, 3, r);
   }
-  for (const r of rowsAll) {
-    const s = String(r.sectorId ?? '');
-    if (s.length > id.length && s.startsWith(id)) offerAll(actId, 3, r);
-  }
-};
-
-/* 剧情进度分母（静态能证明的部分）＝同一条分档规则跑全量索引，胜出档的
-   去重段数。以语料段数兜底取 max：全量索引的胜出档可能比语料的更早换档，
-   防倒挂。三条 2024 活动的游戏分母（昔影归终 42 / 致光态 18 / 热海飙运 4）
-   还含动态表（LoadDynCfg 的 anniversary24/carnival23/delivery）独有条目，
-   静态表证不到，属已知缺口——生成器只输出有据可查的数。 */
-const totalOf = (actId, storyCount) => {
-  const all = [...(ownedAll.get(Number(actId)) ?? []).values()];
-  let total = 0;
-  for (const min of [4, 2, 1]) {
-    const tier = all.filter((e) => e.score >= min);
-    if (tier.length) { total = tier.length; break; }
-  }
-  return Math.max(storyCount, total);
 };
 
 /* —— 行动记录三类的成员与顺序 —— */
@@ -349,26 +293,44 @@ const storiesOf = (actId) => {
   }
   return [];
 };
+
+/* —— 活体剧情分类（最高优先级数据源）——
+ * story-classification-live.json 由 tools/frida/dyn-config-dump.py 在运行中的
+ * 游戏里直接调用 HandBookActReviewFunc[type] 处理器取得：每组带 groupName/
+ * groupENName 和 AvgIdList（story_avg 行 id），就是游戏「行动记录」卡片点
+ * 「查看」后显示的分组。存在时 stories 以它为准（组序 = 游戏显示序），缺席
+ * 的段（语料外）跳过，静态路由退居兜底。 */
+const liveClassification = loadOptionalJson(join(ROOT, 'data', 'index', 'story-classification-live.json'));
+const liveByAct = new Map((liveClassification ?? []).map((x) => [Number(x.actId), x]));
+const byScript = new Map(storyRows.map((r) => [r.script_id, r]));
+const storiesFor = (actId) => {
+  const live = liveByAct.get(Number(actId));
+  if (live?.groups?.length) {
+    const seen = new Set();
+    const rows = [];
+    for (const g of live.groups) {
+      for (const s of g.stories) {
+        if (!s.script || seen.has(s.script)) continue;
+        seen.add(s.script);
+        const row = byScript.get(s.script);
+        if (row) rows.push(row);
+      }
+    }
+    if (rows.length) return rows;
+  }
+  return storiesOf(actId);
+};
 const classes = classDefs.map((def) => ({
   classId: def.classId,
   name: def.name,
   activities: def.members.map((id) => {
-    const stories = storiesOf(id);
+    const stories = storiesFor(id);
     for (const s of stories) claimed.add(s.script_id);
-    /* 活动奖励 = 手册 content 行的 reward_list（UINHandBookActBookFesItem f1 L42
-       的 _totalRewardCount = #reward_list；截图对账：昔影归终 12、致光态 8、
-       热海飙运 3）。专属剧情的 content 行在动态配置里（content_count=27 而静态
-       content 为空），故 class 3 无此字段。 */
-    const rewards = (def.content[String(id)]?.reward_list ?? [])
-        .filter((x) => typeof x === 'number' && x > 0);
-    const storyTotal = totalOf(id, stories.length);
     return {
       id,
       name: actName(id),
       year: def.years.get(id) ?? seasonYear(id),
       type: actType(id),
-      ...(rewards.length ? {rewards} : {}),
-      ...(storyTotal > stories.length ? {storyTotal} : {}),
       stories: stories.map((s) => ({
         id: s.script_id, name: text(s.name), brief: text(s.story_review_describe ?? s.describe),
       })),
@@ -376,24 +338,80 @@ const classes = classDefs.map((def) => ({
   }),
 }));
 
-/* —— 未归入行动记录的 story_avg 行：按扇区聚成「主线/其他」 —— */
+/* —— 未归入行动记录的 story_avg 行：按扇区聚成「主线/其他」 ——
+ * sectorId 为空的行做两级细分（游戏里它们没有统一的回顾入口，触发登记是
+ * 登录后按账号从服务器推送的 OnRecvNewAvgTask，属账号态）：
+ *   ① set_place → sector_stage.sector（关卡归属，游戏权威数据）→ 归入扇区；
+ *   ② 剩余按段前缀的语义建事件组（誓约/节日角色剧情/彩蛋小游戏/后日谈…），
+ *      这些在当前版本已无游戏内入口，名称取自脚本前缀的公认事件语义。 */
+const sectorStage = decode('sector_stage');
+/* 段前缀 → 事件组（当前版本游戏内已无入口的散段，按脚本前缀的公认事件语义归组） */
+const MAINLINE_EVENT_GROUPS = [
+  ['23oath_', '誓约剧情'],
+  ['24oath_', '誓约剧情'],
+  ['22white', '2022圣诞·角色剧情'],
+  ['22tana', '2022七夕·角色剧情'],
+  ['22christ', '2022圣诞·小游戏'],
+  ['23april', '2023愚人节'],
+  ['cpt_return', '回归活动'],
+  ['24fe2', '昔影归终·角色小剧场'],
+  ['24fe_zhiyuan', '昔影归终·追忆'],
+  ['24fe2_zhiyuan', '昔影归终·追忆'],
+  ['23sg_cafe', '境界干涉·咖啡厅'],
+  ['24idol', '2023偶像祭'],
+  ['23concert_piano', '星海巡音·钢琴曲'],
+  ['23winter_s', '悬光升变·补充剧情'],
+  ['23carnival_00', '无律背反·OP'],
+  ['23summer_0', '致密静点·OP'],
+  ['22summer_s', '临界爆震·结尾'],
+  ['22hallo_e', '诡海迷航·后日谈'],
+  ['23spring_hb', '迎春闹园记·补充'],
+  ['23christ_florence', '2022圣诞·弗洛伦斯'],
+  ['cpt00', '序章·教学'],
+  ['cpt05', '柯普利·后日谈'],
+  ['cpt_jiangyu', '战棋玩法'],
+  ['cpt_erika', '角色章节·补充'],
+  ['cpt_undline', '角色章节·补充'],
+  ['cpt_sp', '特别篇'],
+  ['1year', '周年庆'],
+  ['2year', '周年庆'],
+];
+const mainlineEventOf = (r) => {
+  const st = r.set_place != null ? sectorStage[String(r.set_place)] : null;
+  if (st?.sector != null) return {sector: Number(st.sector)};
+  for (const [prefix, label] of MAINLINE_EVENT_GROUPS) {
+    if (r.script_id.startsWith(prefix)) return {event: label};
+  }
+  return null;
+};
 const leftoverSectors = new Map();
 const leftoverSeen = new Set();
 for (const r of storyRows) {
   if (claimed.has(r.script_id) || leftoverSeen.has(r.script_id)) continue;
   leftoverSeen.add(r.script_id);
-  const list = leftoverSectors.get(r.sectorId) ?? [];
+  let key = r.sectorId;
+  if (key == null) {
+    const hit = mainlineEventOf(r);
+    if (hit?.sector != null) key = hit.sector;
+    else if (hit?.event != null) key = `event:${hit.event}`;
+  }
+  const list = leftoverSectors.get(key) ?? [];
   list.push(r);
-  leftoverSectors.set(r.sectorId, list);
+  leftoverSectors.set(key, list);
 }
 const mainline = [...leftoverSectors.entries()]
     .map(([sectorId, rows]) => ({
-      sectorId: sectorId ?? null,
-      name: sectorId != null ? text(sector?.[String(sectorId)]?.name) : null,
+      sectorId: typeof sectorId === 'number' ? sectorId : null,
+      event: typeof sectorId === 'string' ? sectorId.slice('event:'.length) : undefined,
+      name: sectorId != null
+          ? (typeof sectorId === 'number'
+              ? text(sector?.[String(sectorId)]?.name)
+              : sectorId.slice('event:'.length))
+          : null,
       stories: rows.sort((a, b) => (a.number ?? 0) - (b.number ?? 0))
           .map((s) => ({id: s.script_id, name: text(s.name)})),
     }))
-    .sort((a, b) => (a.sectorId ?? 0) - (b.sectorId ?? 0));
+    .sort((a, b) => (a.sectorId ?? 999999) - (b.sectorId ?? 999999));
 
 /* —— 语料里连 story_avg 行都没有的段 —— */
 const archived = new Set(storyRows.map((r) => r.script_id));

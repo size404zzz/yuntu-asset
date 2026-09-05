@@ -58,9 +58,7 @@ export function archiveTree(archive, manifest) {
     const byYear = new Map();
     for (const a of c.activities) {
       push(byYear, a.year != null ? String(a.year) : '年份未定',
-          {id: a.id, name: a.name ?? `活动${a.id}`,
-           rewards: a.rewards ?? [], storyTotal: a.storyTotal ?? null,
-           stories: a.stories.map(storyOf)});
+          {id: a.id, name: a.name ?? `活动${a.id}`, stories: a.stories.map(storyOf)});
     }
     const labels = [...byYear.keys()].sort((x, y) =>
         x === '年份未定' ? 1 : y === '年份未定' ? -1 : Number(y) - Number(x));
@@ -150,12 +148,7 @@ export function openStoryPicker(manifest, {title = '剧本库', archive = null, 
       g.activities.forEach((a, i) => main.append(h('button.picker-act',
           {onclick: () => { act = i; renderMain(); }},
           h('b', {text: a.name}),
-          /* 剧情 x/y：y（storyTotal）只在档案数出的配置段多于语料可装载段时出现 */
-          h('span.picker-act-n', {text: a.storyTotal != null
-              ? `剧情 ${a.stories.length}/${a.storyTotal}`
-              : `${a.stories.length} 段`}),
-          a.rewards ? h('span.picker-act-reward',
-              {text: `活动奖励 ${a.rewards.length}`, title: a.rewards.join(', ')}) : null,
+          h('span.picker-act-n', {text: `${a.stories.length} 段`}),
           h('span.picker-act-view', {text: '查看 ▶'}))));
     } else {
       const a = g.activities[direct ? 0 : act];

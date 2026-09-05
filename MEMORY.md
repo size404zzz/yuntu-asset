@@ -49,3 +49,12 @@
 
 ## P0 剩余
 - 折叠模型断言化：把已确认的语义变成带字节码锚点的回归（lvm.js 修复是其前置，现已完成）
+
+## 宿舍 M1 竖切 —— 已结(2026-09-05)
+- **产物**:`dorm/index.html`(three.js 竖切:单房间 + 5 家具 + croque 走/站/坐/躺/说话演出链)+ `dorm/README.md` + `tools/dorm/` 三件套(anim_decode / export_gltf / export_dorm_m1)+ `dorm/assets/` 25 件(3.6MB)
+- **管线定案**:不走 FBX 中转(无 blender/assimp),自研 **Unity→glTF 直出**。动画是运行时打包格式(通用曲线,非人形肌肉流):Streamed(Hermite)/Dense(30fps)/Constant 三层 + Avatar m_TOS 反解路径哈希;格式参考 UtinyRipper/AssetRipper
+- **网格顶点通道(实测)**:2021+ 通道序,ch12=blendWeight f32、ch13=blendIndices u32;**流区域 16B 对齐**(内联)/.resS 无对齐;个别家具 channel dim 字段损坏按下一通道 offset 收敛;家具网格在外部 .resS(shared_models.ab)
+- **骨架结论**:宿舍用 `dmodel_<角色>` 专用包;**18/18 角色人形核心链(40 节 Bip001)逐路径一致**,差异仅网格节点名与附加骨(发/裙/眼)⇒ 动画按各角色 `<角色>_dorm_animator`(277 个 × 41 clip)播放,零重定向
+- **shader 结论**:自研卡通 shader(_FirstShadowMultColor/_LightMapTex ramps)用 MeshStandardMaterial + 主贴图近似,观感成立;明暗层留 M2
+- **页面坑**:GLTFLoader 报 `reading 'count'` = 蒙皮 primitive 漏 JOINTS_0/WEIGHTS_0(且 JOINTS_0 必须 u8/u16 非 u32);OrbitControls `minDistance` 会把近距相机每帧推开(调试时先调小)
+- **下一步输入**:交互落点换 DormConfigAsset 的 278 条 CharacterDisposition + 21 类移动曲线(现手调常量在 dorm.js 顶部);lightmap 映射需实机 Frida 抓拼装;宿舍逻辑 151 个 Lua 可走现有 lundump/lvm

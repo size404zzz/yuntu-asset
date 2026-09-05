@@ -7,7 +7,7 @@
 import {h, clear} from '../ui/dom.js';
 import {Doc, L1, L2, L3} from '../core/doc.js';
 import {serializeScript, insertShot, removeShot, moveShot, isTerminal} from '../core/script.js';
-import {shotSummary} from '../core/schema.js';
+import {shotSummary, CONTENT_TYPES} from '../core/schema.js';
 import {renderInspector} from './inspector.js';
 import {mountTimeline} from './timeline.js';
 
@@ -141,7 +141,10 @@ export class Editor {
     this.onState(this);
   }
 
-  /* —— A 栏分镜列表 —— */
+  /* —— A 栏分镜列表 ——
+     每框两个信息量：这一镜是旁白还是对话（旁白 / 说话人：xxx），加一行
+     文案预览。说话人取 speakerName（bravo=教授），缺名落 characters 表，
+     再缺落 #heroId；无名镜一律归「旁白」。类型细节进行内 tooltip。 */
   renderList() {
     const list = clear(this.dom.shotList);
     const story = this.doc.story;
@@ -157,13 +160,17 @@ export class Editor {
       ].filter(Boolean).join(' ');
       const speaker = shot.speakerName === 'bravo' ? '教授'
           : shot.speakerName || (shot.speakerHeroId != null
-              ? `#${shot.speakerHeroId}` : '');
+              ? (this.characters?.[shot.speakerHeroId]
+                  ?? `#${shot.speakerHeroId}`) : '');
+      const typeLabel = CONTENT_TYPES[shot.contentType]?.label ?? `类型${shot.contentType}`;
       const row = h('div', {
         className: index === this.index ? 'shot-row selected' : 'shot-row',
+        title: `第 ${index} 镜 · ${typeLabel}`,
         onclick: () => this.select(index),
       },
           h('span.num', {text: String(index)}),
-          h('span.speaker', {text: `${shot.contentType ?? '-'} ${speaker}`}),
+          h('span.speaker' + (speaker ? '' : '.narr'), {
+            text: speaker ? `说话人：${speaker}` : '旁白'}),
           h('span.text', {text: text || '（无文案）'}),
           h('span.badges', {text: badges}),
           h('span.ins-ops', {},
@@ -202,6 +209,7 @@ export class Editor {
       registry: this.registry, characters: this.characters,
       timelineHost: this._timelineHost,
       audio: this.player?.audio ?? null,
+      onGoto: (i) => this.select(i),
     });
     clear(this._timelineHost);
     if (this.index != null) {
