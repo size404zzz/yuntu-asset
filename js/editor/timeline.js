@@ -1,9 +1,14 @@
-/* timeline.js —— ★ imgTween 轨道编辑器（M9）。
+/* timeline.js —— ★ imgTween 轨道编辑器（M9，M24 扩展）。
    一 lane = 一个 imgId（posId 只有 1–5，lane 天然有界）；
    一个关键帧 = 一个 imgTween 项：x=delay、宽=duration、填充高=alpha。
    拖中心改 delay、拖右缘改 duration、纵向拖改 alpha，吸附 0.05s；
    点轨道空白插入关键帧并继承前帧全部属性；选中帧给数值微调与删除。
-   点击标尺 → onSeek(t)（编辑器据此 seekTime/游标）。
+   stage = 在场元素清单（检查器折叠态）：还没有帧的元素给幽灵轨道，
+   点空白即为本镜插首帧（α/槽位取台上现状）——各层的状态帧与这里的
+   关键帧是同一份数据。
+   onBusy：指针交互窗口（pointerdown 开、pointerup/cancel 关）。拖拽中
+   editor 不得重建检查器 DOM——元素一换指针捕获就丢；松手后 editor 补一次
+   分区重建。onSeek(t) = 点标尺（编辑器据此 seekTime/游标）。
    纪律：任何写路径都不原地改 doc 里的对象——先算新数组再 doc.patch，
    否则撤销快照拍到的是改后值（第一版就在这栽过）。 */
 
@@ -14,8 +19,18 @@ const H = 26;
 const SNAP = 0.05;
 const snap = (t) => Math.max(0, Math.round(t / SNAP) * SNAP);
 
-export function mountTimeline(root, doc, i, {onSeek} = {}) {
+export function mountTimeline(root, doc, i, {onSeek, onBusy, stage = []} = {}) {
   let sel = null;                   // {imgId, k}
+  const busy = (b) => onBusy?.(b);
+
+  /* 指针交互窗口：按下开（捕获期，先于任何写路径）、松开关（冒泡到
+     document——轨道插帧这类「按下即写」的路径也能正常收窗）。 */
+  const ac = new AbortController();
+  root.addEventListener('pointerdown', () => busy(true),
+      {capture: true, signal: ac.signal});
+  document.addEventListener('pointerup', () => busy(false), {signal: ac.signal});
+  document.addEventListener('pointercancel', () => busy(false), {signal: ac.signal});
+  addEventListener('blur', () => busy(false), {signal: ac.signal});
 
   const tweenOf = () => doc.story.shots[i].imgTween ?? [];
   /* 用新数组替换第 idx 帧（或删帧）后走 patch。 */
@@ -30,9 +45,10 @@ export function mountTimeline(root, doc, i, {onSeek} = {}) {
     const tween = tweenOf();
     clear(root);
     root.append(h('div.tl-hint', {
-      text: '点轨道空白插帧（继承前帧）· 拖中心=delay 右缘=duration 纵向=alpha · 吸附0.05s',
+      text: '点轨道空白插帧（继承前帧）· 虚线轨道=在场还没帧的元素，点空白插首帧'
+          + ' · 拖中心=delay 右缘=duration 纵向=alpha · 吸附0.05s',
     }));
-    if (!tween.length) {
+    if (!tween.length && !stage.length) {
       root.append(h('button.tiny', {text: '+ 关键帧', onclick: () => {
         doc.patch(i, 'imgTween',
             [{imgId: 101, alpha: 1, delay: 0, duration: 0.5}], {label: '加 tween'});
@@ -46,7 +62,8 @@ export function mountTimeline(root, doc, i, {onSeek} = {}) {
       if (!byId.has(f.imgId)) { byId.set(f.imgId, []); lanes.push(f.imgId); }
       byId.get(f.imgId).push({f, n});
     });
-    const maxT = Math.max(2, ...tween.map((f) => (f.delay ?? 0) + (f.duration ?? 0)) + 0.5);
+    const maxT = Math.max(2,
+        ...tween.map((f) => (f.delay ?? 0) + (f.duration ?? 0) + 0.5));
     const pxs = W / maxT;
 
     const ruler = h('div.tl-ruler', {style: {width: `${W}px`}});
@@ -100,6 +117,30 @@ export function mountTimeline(root, doc, i, {onSeek} = {}) {
 
       const hit = sel && entries.find((x) => x.n === sel.n);
       if (hit) root.append(detailRow(hit.f, sel.n, entries, render));
+    }
+
+    /* 幽灵轨道：在场但本镜还没有帧的元素。点空白 = 本镜首帧，
+       α/槽位取台上现状（与检查器各层的状态帧是同一份数据）。 */
+    const known = new Set(lanes);
+    for (const el of stage) {
+      if (known.has(el.imgId)) continue;
+      known.add(el.imgId);
+      const track = h('div.tl-track', {style: {width: `${W}px`, height: `${H}px`},
+        title: `#${el.imgId} ${el.label ?? ''}（在场·本镜还没帧）`});
+      track.addEventListener('pointerdown', (e) => {
+        if (e.target !== track) return;
+        const r = track.getBoundingClientRect();
+        const t = snap((e.clientX - r.left) / pxs);
+        const frame = {imgId: el.imgId, delay: t, duration: 0.5,
+          alpha: el.alpha ?? 1};
+        if (el.imgType === 3) frame.posId = el.posId ?? 3;
+        doc.patch(i, 'imgTween', [...tweenOf(), frame], {label: '插帧'});
+        sel = {n: tweenOf().length - 1, imgId: el.imgId};
+        render();
+      });
+      root.append(h('div.tl-lane.ghost', {},
+          h('span.tl-lname', {text: `#${el.imgId}`, title: el.label ?? ''}),
+          track));
     }
   }
 
@@ -178,5 +219,11 @@ export function mountTimeline(root, doc, i, {onSeek} = {}) {
   }
 
   render();
-  return {render, get sel() { return sel; }, setSel(v) { sel = v; }};
+  return {
+    render,
+    refresh: render,
+    get sel() { return sel; },
+    setSel(v) { sel = v; },
+    dispose: () => ac.abort(),
+  };
 }
