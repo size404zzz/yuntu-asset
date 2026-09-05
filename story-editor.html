@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>云图计划 · 剧情编辑</title>
+<link rel="stylesheet" href="css/app.css">
+<link rel="stylesheet" href="css/avg.css">
+<link rel="stylesheet" href="css/pandect.css">
+<link rel="stylesheet" href="css/ux.css">
+<link rel="stylesheet" href="css/story-editor.css">
+</head>
+<body data-step="setup">
+<div class="app">
+  <!-- —— 第 1 页 · 场景设置：背景图 + 音乐（gfStory SceneSetup 式） —— -->
+  <div class="page page-setup">
+    <div class="bar">
+      <span class="title">剧情编辑 · 场景设置</span>
+      <span id="ss-story-info" class="muted"></span>
+      <span class="spacer"></span>
+      <span id="storage" class="muted"></span>
+      <a class="tiny se-link" href="index.html">回三栏编辑器</a>
+    </div>
+    <div class="se-grid">
+      <section class="se-pane">
+        <div class="se-pane-head">
+          <div>
+            <div class="se-heading">背景图片</div>
+            <div class="se-desc">点击选择开场背景（写入第 1 镜）；再点一次取消</div>
+          </div>
+          <span id="ss-bg-count" class="se-count"></span>
+        </div>
+        <div class="se-search-row">
+          <input id="ss-bg-search" placeholder="搜索名字 / 分组…">
+        </div>
+        <div class="se-pane-body" id="ss-bg-list"></div>
+      </section>
+      <section class="se-pane">
+        <div class="se-pane-head">
+          <div>
+            <div class="se-heading">背景音乐</div>
+            <div class="se-desc">选择开场 BGM（写入第 1 镜）；▶ 试听，再点一次取消</div>
+          </div>
+          <span id="ss-mus-count" class="se-count"></span>
+        </div>
+        <div class="se-search-row">
+          <input id="ss-mus-search" placeholder="搜索曲目…">
+        </div>
+        <div class="se-pane-body" id="ss-mus-list"></div>
+      </section>
+    </div>
+    <div class="se-footer">
+      <div class="se-preview">
+        <div class="se-heading">场景预览</div>
+        <div class="se-stage" id="ss-stage">
+          <div class="se-stage-hint" id="ss-stage-hint">未选择背景</div>
+        </div>
+        <div id="ss-stage-note" class="muted"></div>
+      </div>
+      <div class="se-source">
+        <div class="se-heading">剧本来源</div>
+        <div class="row se-title-row">
+          <input id="ss-title" placeholder="剧本标题（保存 / 导出用）" style="flex:1">
+        </div>
+        <div class="row se-source-btns">
+          <button id="ss-new" class="tiny primary">新建空白剧本</button>
+          <button id="ss-lib" class="tiny">剧本库装载…</button>
+          <button id="ss-import" class="tiny">导入工程 JSON…</button>
+          <button id="ss-idb" class="tiny">已保存工程…</button>
+        </div>
+        <div id="ss-source-info" class="muted se-source-info">当前：新建空白剧本</div>
+        <div class="se-note muted">所选场景在「开始编辑」时写入第 1 镜：背景 =
+          本镜注册的 imgType-2 条目；音乐 = 本镜 audio.bgm（引擎语义自本镜起延续）。
+          装载已有剧本时会自动带出它的开场背景 / BGM。</div>
+        <div class="row se-actions">
+          <span id="ss-error" class="se-error"></span>
+          <span class="spacer"></span>
+          <button id="ss-continue" class="primary">开始编辑剧情 →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- —— 第 2 页 · 编辑（检查器）+ 预览：index.html 右边两栏 —— -->
+  <div class="page page-edit">
+    <div class="bar">
+      <button id="btn-back" class="tiny">← 场景设置</button>
+      <span class="title">剧情编辑</span>
+      <span id="story-label" class="muted"></span>
+      <button id="btn-undo" class="tiny" disabled>撤销</button>
+      <button id="btn-redo" class="tiny" disabled>重做</button>
+      <span class="spacer"></span>
+      <span id="edit-storage" class="muted"></span>
+      <button id="btn-sound" class="tiny">音效·开</button>
+      <button id="btn-save" class="tiny">保存</button>
+      <button id="btn-export" class="tiny">导出JSON</button>
+      <button id="btn-export-zip" class="tiny">导出ZIP</button>
+    </div>
+    <div class="cols se-cols">
+      <div class="col col-b">
+        <header>编辑 · 检查器</header>
+        <div class="body" id="inspector"></div>
+      </div>
+      <div class="col col-c">
+        <header>预览</header>
+        <div class="body preview-area">
+          <div id="preview" style="width:100%"></div>
+          <div class="transport">
+            <button id="tp-prev" class="tiny">⏮</button>
+            <button id="tp-play" class="tiny">▶ 连播</button>
+            <button id="tp-next" class="tiny">⏭</button>
+            <button id="tp-rate" class="tiny" title="10 倍速通读（CSS 过渡不吃这份钟）">1×</button>
+            <select id="tp-mode" class="tiny">
+              <option value="freeze">定格</option>
+              <option value="once">播放本镜</option>
+              <option value="chain">连续播放</option>
+            </select>
+            <span id="tp-pos" class="muted"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="module" src="js/story-editor.js"></script>
+</body>
+</html>

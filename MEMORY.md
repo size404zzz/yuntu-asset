@@ -95,3 +95,11 @@
 - **时间轴**:幽灵轨道(在场没帧元素虚线显示,点空白插首帧取台上现状)+修 maxT 展开优先级 bug(`...arr + 0.5` 数组先转字符串,有帧时刻度全 NaN——旧版拖拽定位其实一直是坏的)
 - **坑**:①本镜注册的条目「移除」要摘条目而不是加 delete(applyImages 先删后注册,delete+register 同镜=没删);②新条目 id 要避开台上已有 id(旧版只看本镜 images 会撞延续条目);③checkbox 语义:明暗是赋值写 true/false,通讯框随注册生效只能走重注册
 - **回归**:test-shotstate 9/test-doc 7/test-gamefold 12/test-script 12/test-fadeadvice 6/test-editor(浏览器 14 断言)全绿;tmp-inspector-probe.* 留作行为探针
+
+## 独立剧情编辑页 M36 —— 已结(2026-09-05)
+- **产物**:`story-editor.html` + `css/story-editor.css` + `js/story-editor.js`(两步式:第 1 页场景设置=背景库/音乐库/场景预览/剧本来源,第 2 页=检查器+预览,即 index.html 右边两栏;入口在 index.html 顶栏「剧情编辑」)
+- **开场场景写入第 1 镜**:背景=imgType-2 注册条目 alpha=1 **+ 0 号揭示帧 `{delay:0,duration:0,alpha:1,isDark:false}`**——播放器只在 tween 帧到来时才把背景画上 DOM(`_tweakBg`),只写注册条目 alpha 不够(语料侧同款补帧=avgwire.materializeFirstBg);补帧只在该元素缺 0 号帧时插,已有淡入节奏不动。音乐=本镜 audio.bgm(保留 fadeIn/fadeOut)
+- **不写原则**:装载已有剧本沿 story.order 带出开场场景(首个 imgType-2 注册/首个 bgm)并自动选中;`setup.applied` 记「剧本现状真值」,所选==真值就不写——装载→直接开始编辑不动原数据(撤销栈空)。返回改场景再进=差异走一次 doc.structure(一步撤销)
+- **分镜列表移除**:Editor.renderList 用隐藏 div 承接,editor.js 零改动;跨镜导航=传输条+检查器跳转
+- **顺带修存量 bug**:editor.js `_wireButtons` 从不更新 undo/redo disabled——index.html 撤销/重做按钮永远是灰的;现每次失效同步 canUndo/canRedo(test-editor 14 断言仍绿)
+- **坑**:Playwright 表面 `fill('')` 不生效(清搜索框要用 evaluate 赋值+dispatchEvent);IAB 截图偶发 capture failed,等 1.5s 重试即好

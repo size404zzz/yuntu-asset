@@ -67,6 +67,8 @@ export class Editor {
 
   _wireButtons() {
     const {undo, redo} = this.dom;
+    undo.disabled = !this.doc.canUndo;
+    redo.disabled = !this.doc.canRedo;
     undo.onclick = () => { this.doc.undo(); this._afterHistory(); };
     redo.onclick = () => { this.doc.redo(); this._afterHistory(); };
   }

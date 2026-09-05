@@ -8,7 +8,8 @@
 
 ```bash
 python tools/ref/serve.py 8080     # 或任意静态服务器，根 = 本仓库
-# 打开 http://127.0.0.1:8080/index.html       编辑器
+# 打开 http://127.0.0.1:8080/index.html       编辑器（三栏）
+#        http://127.0.0.1:8080/story-editor.html 剧情编辑（两步式：场景设置 → 检查器+预览）
 #        http://127.0.0.1:8080/cal.html       立绘标定
 #        http://127.0.0.1:8080/lib-editor.html 剧本库分类编辑
 ```
@@ -498,6 +499,31 @@ M30 起宿舍角色名取自 `avg_character[heroId].name`，这张表是 **AVG �
   （`...arr + 0.5` 把数组转字符串再展开，有帧时时间轴刻度全 NaN）。
 - 新条目 id 避开「台上已有」id（旧版只看本镜 images，会撞延续条目）；
   加背景/加立绘改走素材选择器直选。
+
+## 独立剧情编辑页：两步式「场景设置 → 检查器+预览」（M36，参考 gfStory）
+
+`story-editor.html`（入口：index.html 顶栏「剧情编辑」）把编辑流程拆成两步，
+交互形态参考 gfStory 的 EditorStart → SceneSetup：
+
+- **第 1 页 场景设置**：背景库 / 音乐库两栏（分组折叠 + 搜索 + ▶ 试听，
+  上传件并入「上传」组），底部 16:9 场景预览 + 剧本来源（新建空白 / 剧本库
+  装载 / 导入工程 JSON / 已保存工程）。所选「开场背景 / 开场 BGM」在
+  「开始编辑」时写入第 1 镜：背景 = 本镜 imgType-2 注册条目（alpha=1，无
+  0 号帧时补一条 materializeFirstBg 同款揭示帧——播放器只在 tween 帧到来
+  时才把背景画上 DOM）+ 补帧只在该元素缺 0 号帧时插（已有淡入节奏不动）；
+  音乐 = 本镜 `audio.bgm`（保留已有淡入淡出）。两者都按引擎语义自第 1 镜
+  向后延续。装载已有剧本时沿 `story.order` 带出它的开场场景（首个
+  imgType-2 注册 / 首个 bgm 调用）并自动选中；「所选 == 现状」就不写，
+  装载→直接开始编辑不动原数据一个字节。返回第 1 页改场景再进来，差异以
+  一次可撤销的 `doc.structure` 落到现有 doc 上。
+- **第 2 页 编辑**：index.html 的右边两栏——左「检查器」就地编辑本镜台上
+  状态（M35 全部分区），右「预览」+ 传输条（⏮⏭/连播/倍速/定格-本镜-连播）。
+  分镜列表不保留（`Editor.renderList` 由隐藏 div 承接），跨镜导航走传输条
+  与检查器跳转；顶栏保留撤销/重做/音效/保存/导出 JSON/导出 ZIP，自动保存
+  与 index.html 同一条 io 链（IDB 全量 + localStorage 瘦身兜底，标题即存档键）。
+- 顺带修了一个存量 bug：`editor.js` 的 `_wireButtons` 从不更新 undo/redo 的
+  `disabled`，index.html 的撤销/重做按钮自页面加载起永远是灰的；现在每次
+  失效都同步 `canUndo/canRedo`（test-editor 14 断言仍绿）。
 
 ## 录制剧情视频
 
