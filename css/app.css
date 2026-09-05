@@ -236,6 +236,17 @@ textarea { width: 100%; min-height: 64px; resize: vertical; }
 .ss-jump:hover { border: 0; color: #fff; }
 .ss-now { background: #2b4257; border-radius: 3px; color: var(--accent);
   margin-left: 4px; padding: 0 5px; font-size: 10px; }
+/* —— M24 分层合并视图：台上现状就地编辑 —— */
+.ins-note { border-bottom: 1px solid #ffffff14; color: var(--fg-dim);
+  font-size: 11px; line-height: 1.6; padding: 6px 10px; }
+.ins-item { border-bottom: 1px dashed #ffffff0d; padding: 3px 0; }
+.ins-item:last-child { border-bottom: 0; }
+.ins-item .ss-row { row-gap: 2px; }
+.ins-item input[type=text] { flex: 1 1 110px; min-width: 84px;
+  font-family: Consolas, monospace; }
+.ins-item input[type=number] { flex: none; width: 56px; }
+.ins-item select { flex: none; }
+.ins-item .spacer, .ss-row .spacer { flex: 1; }
 .tl-hint { color: var(--fg-dim); font-size: 11px; }
 .tl-ruler { position: relative; height: 16px; border-bottom: 1px solid #ffffff22;
   cursor: ew-resize; margin-left: 44px; }

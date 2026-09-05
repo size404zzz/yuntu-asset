@@ -86,3 +86,12 @@
 - **字节码工具链**:tools/lua-disasm.mjs 反汇编自定义 Lua 5.3 可当源码读(152 支宿舍脚本已导出 tools/dorm/lua-out/);GetInterAnimType=interCfg.anime_type、GetInterBindPath=bind_path
 - **坑**:patrol.js 改重了会撞 `const agents` 重复声明(node --check 先行);模块级错误必须在 HTML 内联 <script> 装 handler
 - **待办**:座位点精确值等 fntCfg 数据源(pb.ab/服务端);家具自身动画(蒙皮家具自带 AnimatorController)未挂;墙饰挂墙语义
+
+## 检查器分层重构 M35 —— 已结(2026-09-05)
+- **需求**:旧第 0 区「舞台状态」只读、改台上要跳回出处镜;改成各层分区(对白/背景/立绘/动画/音乐/CV/特效)上半展示台上现状(foldShotState,出处可跳),控件就地改「本镜看到的状态」
+- **单镜编辑语义(核心)**:所有写入只落本镜——α/槽位/明暗→本镜 imgTween 0 号状态帧(upsertStateFrame:并入已有 0 号帧,无则插该元素首帧前保持时序);表情→本镜 heroFace;换图/换装/通讯框→本镜 delete+重注册(doc.structure 一步撤销,restore 帧并入 0 号帧);BGM/底色→本镜调用(引擎语义向后延续)。前后镜数据一字不动,探针 28 断言钉死
+- **foldShotState 加 `src`**:sprites/layers 带注册条目原文引用(imgMap 活引用,只读 spread),换图保真 fullScreen/order 等字段
+- **失效管线**:L2/L3 按 field 定点重建分区(refreshSections:imgTween→bg+sprite、heroFace→sprite、bgColor→bg、audio→music),时间轴宿主原地保留 sel;时间轴 onBusy 窗口(pointerdown 捕获开/pointerup 冒泡关+blur 兜底,AbortController 随重挂 abort)防拖拽中重建丢指针捕获
+- **时间轴**:幽灵轨道(在场没帧元素虚线显示,点空白插首帧取台上现状)+修 maxT 展开优先级 bug(`...arr + 0.5` 数组先转字符串,有帧时刻度全 NaN——旧版拖拽定位其实一直是坏的)
+- **坑**:①本镜注册的条目「移除」要摘条目而不是加 delete(applyImages 先删后注册,delete+register 同镜=没删);②新条目 id 要避开台上已有 id(旧版只看本镜 images 会撞延续条目);③checkbox 语义:明暗是赋值写 true/false,通讯框随注册生效只能走重注册
+- **回归**:test-shotstate 9/test-doc 7/test-gamefold 12/test-script 12/test-fadeadvice 6/test-editor(浏览器 14 断言)全绿;tmp-inspector-probe.* 留作行为探针

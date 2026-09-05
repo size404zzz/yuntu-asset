@@ -106,6 +106,9 @@ export function foldShotState(story, index) {
   const layers = [];
   for (const [imgId, img] of state.imgMap) {
     const since = regShot.get(imgId) ?? null;
+    /* src = 当前生效的注册条目原文（doc 里较早某镜 images 的活引用，只读；
+       检查器「换图/换装」据此复制原字段重注册，不丢 pos/fullScreen/order）。 */
+    const src = img;
     if (img.imgType === 3) {
       const lane = state.lanes.get(imgId) ?? null;
       sprites.push({
@@ -118,6 +121,7 @@ export function foldShotState(story, index) {
         faceId: state.faces.get(imgId),
         since, litSince: laneShot.get(imgId) ?? null,
         touched: touched.has(imgId),
+        src,
       });
     } else {
       const layer = state.layers.get(imgId);
@@ -127,6 +131,7 @@ export function foldShotState(story, index) {
         isDark: layer?.isDark ?? false,
         pos: layer?.pos ?? null, scale: layer?.scale ?? null, rot: layer?.rot ?? null,
         since, touched: touched.has(imgId),
+        src,
       });
     }
   }

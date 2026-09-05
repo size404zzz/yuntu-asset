@@ -8,12 +8,22 @@ import {h, clear} from '../ui/dom.js';
 import {Doc, L1, L2, L3} from '../core/doc.js';
 import {serializeScript, insertShot, removeShot, moveShot, isTerminal} from '../core/script.js';
 import {shotSummary, CONTENT_TYPES} from '../core/schema.js';
-import {renderInspector} from './inspector.js';
+import {renderInspector, refreshSections} from './inspector.js';
 import {mountTimeline} from './timeline.js';
 
 const debounce = (ms, fn) => {
   let t = null;
   return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); };
+};
+
+/* L2 字段 → 需要定点重建的分区（台上状态随这些字段变；未列出的字段
+   控件自持，不必重建）。时间轴不在列：imgTween 由它自绘（sel 不丢）。 */
+const L2_SECTIONS = {
+  imgTween: ['bg', 'sprite'],
+  heroFace: ['sprite'],
+  bgColor: ['bg'],
+  speakerHeroPosId: [],
+  scrambleTypeWriter: [],
 };
 
 export class Editor {
@@ -33,6 +43,11 @@ export class Editor {
        再写位置读数（它读到的是新一轮的 shotId，与屏上镜对不上）。 */
     this._seekGen = 0;
     this._timelineHost = h('div.ins-timeline');
+    /* 时间轴句柄与指针交互窗口（timeline 拖拽期间 DOM 一换指针捕获就丢，
+       分区重建要挂起；松开后一次性补课）。 */
+    this._tl = null;
+    this._tlBusy = false;
+    this._tlDirty = false;
   }
 
   useStory(story) {
@@ -62,18 +77,29 @@ export class Editor {
     this._seekInto('freeze');
   }
 
-  /* —— 三级失效 —— */
-  _invalidate({index, level, kind}) {
+  /* —— 三级失效 ——
+     合并视图下检查器各层显示「台上状态」，L2/L3 提交后也要跟上：按字段
+     定点重建受影响分区（refreshSections），全量重建只留给 L1/结构/撤销。 */
+  _invalidate({index, field, level, kind}) {
     this._wireButtons();
     if (kind === 'patch' && level === L3) {
       if (index === this.index && this.player.scene) {
         this.player.patchShot(this.doc.story.shots[index]);
       }
       this.renderList();
+      if (index === this.index && field?.startsWith('audio')) {
+        this.refreshSections(['music']);
+      }
       return;
     }
     if (kind === 'patch' && level === L2 && index === this.index) {
       this.renderList();
+      if (field === 'imgTween' && !this._tlBusy) this._tl?.refresh();
+      if (this._tlBusy) {
+        this._tlDirty = true;
+      } else {
+        this.refreshSections(L2_SECTIONS[field] ?? ['bg', 'sprite']);
+      }
       this._reseek();
       return;
     }
@@ -204,23 +230,49 @@ export class Editor {
   }
 
   renderInspector() {
-    renderInspector(this.dom.inspector, {
+    const stage = renderInspector(this.dom.inspector, {
       doc: this.doc, index: this.index,
       registry: this.registry, characters: this.characters,
-      timelineHost: this._timelineHost,
       audio: this.player?.audio ?? null,
+      timelineHost: this._timelineHost,
       onGoto: (i) => this.select(i),
     });
+    this._mountTimeline(stage);
+  }
+
+  /* 定点重建部分分区（L2/L3 提交后）；时间轴宿主原地保留，sel 不丢。 */
+  refreshSections(keys) {
+    if (this.index == null || !keys.length) return;
+    refreshSections(this.dom.inspector, {
+      doc: this.doc, index: this.index,
+      registry: this.registry, characters: this.characters,
+      audio: this.player?.audio ?? null,
+      onGoto: (i) => this.select(i),
+    }, keys);
+  }
+
+  _mountTimeline(stage) {
+    this._tl?.dispose();
+    this._tl = null;
+    this._tlBusy = false;
+    this._tlDirty = false;
     clear(this._timelineHost);
-    if (this.index != null) {
-      mountTimeline(this._timelineHost, this.doc, this.index, {
-        onSeek: (t) => {
-          /* 轨道游标 = 本镜内时间：seekTime 用全局粗模型，这里先取整镜
-             起点（编辑停留镜的动画预览从 0 起重放）。 */
-          this._seekInto('timed');
-          void t;
-        },
-      });
-    }
+    if (this.index == null) return;
+    this._tl = mountTimeline(this._timelineHost, this.doc, this.index, {
+      stage,
+      onSeek: (t) => {
+        /* 轨道游标 = 本镜内时间：seekTime 用全局粗模型，这里先取整镜
+           起点（编辑停留镜的动画预览从 0 起重放）。 */
+        this._seekInto('timed');
+        void t;
+      },
+      onBusy: (busy) => {
+        this._tlBusy = busy;
+        if (!busy && this._tlDirty) {
+          this._tlDirty = false;
+          this.refreshSections(['bg', 'sprite']);
+        }
+      },
+    });
   }
 }
