@@ -48,6 +48,9 @@
 .libed-add .cands { max-height: 220px; overflow: auto; }
 .libed-hint { color: var(--fg-dim); font-size: 11px; }
 .libed-pool { background: #3a2f1b; }
+.libed-draft { align-items: center; background: #3a2f1b; border-bottom: 1px solid var(--line);
+  color: #e0a94b; display: flex; font-size: 12px; gap: 8px; padding: 5px 12px; }
+.libed-draft[hidden] { display: none; }
 </style>
 </head>
 <body>
@@ -64,11 +67,12 @@
     <button class="primary" id="btn-save">保存</button>
     <a class="tiny" href="index.html" style="align-self:center">返回编辑器</a>
   </div>
+  <div class="libed-draft" id="draft" hidden></div>
   <div class="libed-cols">
     <div class="libed-tree" id="tree"></div>
     <div class="libed-panel" id="panel"></div>
   </div>
 </div>
-<script type="module" src="js/lib-editor.js?v=8"></script>
+<script type="module" src="js/lib-editor.js?v=9"></script>
 </body>
 </html>
