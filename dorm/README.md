@@ -61,3 +61,19 @@ python tools/ref/serve.py 8080     # 仓库根为服务根
 - 无网格摆放编辑器、无吸附(地板 4×4m,编辑网格件 `dormfloorgrid.ab` 已定位未用)
 - 交互落点为手调常量;家具占位/价格等元数据原生在服务端,需本地桩
 - 宿舍大作战(dorm_pvp)是独立玩法,未纳入
+
+## M2:摆放编辑器(2026-09-05)
+
+`dorm/editor.html` + `dorm/editor.js`:
+- 家具目录 20 件(ab2024 套系 + 全部可交互件:bar/table/pool/chair/drumset 等),
+  含 BoxCollider 占位(`data/dorm/furniture-catalog.json`,0.5m 格)
+- 交互:目录点选 → 半透明 ghost 跟随 → 左键放置(网格吸附)→ R 旋转 → 拖动移动 → Del 删除 → Esc 取消
+- 布局自动存 IndexedDB(`yuntu-dorm/layouts/room1`)
+- `tools/dorm/export_dorm_m2.py` 还导出 `data/dorm/dorm-interact.json`:
+  DormConfigAsset 全量交互配置(278 角色 × animType/dispositionType + 21 类移动曲线)
+
+### 交互类家具是蒙皮骨骼件(新发现)
+anniversary/dwc2022/etj2018/srt2022 家具自带 Animator + Avatar + 动画。
+其蒙皮通道有第三种形态:**只有索引通道(ch13 u32 dim1)、无权重通道(隐式权重 1.0)**,
+且索引含脏数据(按 bindposes 数收敛、越界影响清零)——解码器已兼容
+(`export_gltf.py` decode_mesh 尾部)。

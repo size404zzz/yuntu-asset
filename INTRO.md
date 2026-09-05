@@ -8,13 +8,15 @@
 
 ```bash
 python tools/ref/serve.py 8080     # 或任意静态服务器，根 = 本仓库
-# 打开 http://127.0.0.1:8080/index.html   编辑器
-#        http://127.0.0.1:8080/cal.html   立绘标定
+# 打开 http://127.0.0.1:8080/index.html       编辑器
+#        http://127.0.0.1:8080/cal.html       立绘标定
+#        http://127.0.0.1:8080/lib-editor.html 剧本库分类编辑
 ```
 
-`tools/ref/serve.py` 额外提供两样开发期能力：`/images/<名>` 的 wiki 素材代理
-（按 md5 目录寻址、本地缓存优先）和 `/freeze?scene=X` 的冻结件落盘——
-所有回归跑者都依赖它。用别的服务器时页面照常工作，只是代理与自动冻结通道关闭。
+`tools/ref/serve.py` 额外提供三样开发期能力：`/images/<名>` 的 wiki 素材代理
+（按 md5 目录寻址、本地缓存优先）、`/freeze?scene=X` 的冻结件落盘——所有回归
+跑者都依赖它——和 `/archive-save` 的剧本库手动分类落盘（见 M32）。用别的服务器
+时页面照常工作，只是代理与自动落盘通道关闭，编辑页退化为导出 JSON 手动放置。
 
 ## 保真方法论
 
@@ -50,7 +52,7 @@ python tools/ref/serve.py 8080     # 或任意静态服务器，根 = 本仓库
 | `node tools/test-shotstate.mjs` | 检查器「舞台状态」折叠：出处（于第N镜起）/延续/一次性/孤儿镜退化 | 9 组 |
 | `node tools/test-zip.mjs` | STORE 打包可复现 | 4 项 |
 | `node tools/test-repo-index.mjs` | 素材索引/搜索/R13 退化（含音频索引与三级解析） | 9 项 |
-| `node tools/test-storylib.mjs` | 剧本库：分组/搜索/loadStory 装载链/索引增强件/语音映射/行动记录剧情树 | 全部通过 |
+| `node tools/test-storylib.mjs` | 剧本库：分组/搜索/loadStory 装载链/索引增强件/语音映射/行动记录剧情树/手动覆盖层（改名·移动·新增活动）/无年份分类与空节点剔除 | 全部通过 |
 | `node tools/test-avg-runtime.mjs` | Frida 运行时 JSONL → 可重放 Act/场景导入链 | 1 项 |
 | `node tools/test-fadeadvice.mjs` | 退场建议：触发器/排除项/分档/落笔幂等 + wiki 淡出真值下的梯度锚点 | 全部通过 |
 | `node tools/test-recorder.mjs` | 录制剧情视频：mime 优先级/参数清洗/假钟自动驱动/假件采集监测/FakeRecorder 协商/fake 内核转码取消路径 | 12 组断言 |
@@ -75,8 +77,9 @@ js/editor/ editor inspector fld picker storylib timeline layout-cal io advice re
 js/ui/     dom zip
 js/test/   harness.js（观测件：虚拟钟/settle/snapshot，两套回归共用）
 js/play.js 离线 bundle 播放入口
+js/lib-editor.js 剧本库分类编辑页（lib-editor.html）→ 手动覆盖层 story-archive-manual.json
 data/      fixtures（夹具+冻结表+外源淡出真值）· index（可浏览素材索引）· layouts · fonts · ui
-tools/     test-*.mjs 回归跑者 · build-asset-index.mjs · build-fade-fixture.mjs · build-story-archive.mjs · avg-dump.mjs · media/unpack-{acb,avgconfig}.mjs · media/build-voice-index.mjs · shot.mjs
+tools/     test-*.mjs 回归跑者 · build-asset-index.mjs · build-fade-fixture.mjs · build-story-archive.mjs · migrate-story-classes.mjs · avg-dump.mjs · media/unpack-{acb,avgconfig}.mjs · media/build-voice-index.mjs · shot.mjs
 tools/ref/ 参考件（.gitignore 排除）+ driver/uidriver/serve/setup（我们写的观测工具）
 ```
 
@@ -305,6 +308,38 @@ AvgIdList，组序 = 游戏显示序）逐活动接住。
    彩蛋小游戏、悬光升变·补充剧情 23、昔影归终·追忆、战棋玩法 12……）。
 「未分扇区」大桶归零；主线共 33 组，树全量 1878 段守恒。
 
+## 未归档 609 段：游戏数据命名（M30）
+
+未归档 = 语料里有、`story_avg` 没登记的段（dorm 465 + 教学关 63 + 章节支线/
+试炼 46 + 杂项 35）。按游戏数据命名归组：
+- **宿舍互动剧情（465 段）**：`dorm_hero_talk.talk_list` 按英雄登记（93 英雄），
+  本里程碑当时用 `avg_character[heroId].name` 取名 → 88 个「宿舍剧情·角色名」组，
+  其中 48 组是别人的名字（**M34 已改用 `hero_data` 并一人一支，共 93 组**）；
+  ENIAC/Havoc/Inola 三个新角色 talk 表未登记、静态语言表也无中文名（版本差），
+  经 voices 代号索引回退英文名。
+- **教学关（63 段）**：序章/基洛普斯/柯普利/神导异论·教学（tutorial 段）。
+- **活动关卡与支线（46 段）**：逆波共振·试炼 22、抑质链·关卡剧情 11、
+  无律背反·支线 8、致密静点·支线 5 等。
+- **杂项（35 段）**：后日谈、誓约、彩蛋小游戏、测试与演示等。
+未归档节点共 117 组、609 段守恒；旧数据源（无 group 字段）退回 ID 首段分组。
+
+## 小项合并与活动名搜索（M31）
+
+细分产生的散件小组（逆波共振·试炼剧情、抑质链·关卡剧情、无律背反-困难
+模式…）按前缀语义回并大项，活动成为其全部剧情的唯一容器：
+- 组名前缀（`·`/`-` 前的第一段）命中活动名（全等或活动名以前缀开头，
+  如 境界干涉 → 境界干涉的延迟选择）→ 并入该活动；
+- 命中主线扇区组（基洛普斯·教学 → 主线-基洛普斯、柯普利·后日谈 → 柯普利）
+  或主线同名事件组（未归档-序章·教学 → 主线-序章·教学）→ 并入主线组；
+- 无宿主的保留（宿舍剧情·角色 88 组、誓约剧情、2022圣诞·角色剧情、
+  测试与演示…）。
+合并后：昔影归终 77、无律背反 49、逆波共振 42、悬光升变 46、境界干涉 101
+（含试炼/关卡/支线/后日谈），未归档降至 476 段（宿舍 465 + 杂 11）。
+
+搜索框同时支持**剧情 ID** 与**活动/分组名**：输入「逆波」「昔影归终」直接
+命中活动，组头标注归属路径（活动名（分类｜年份）），组内剧情整组列出；
+ID 命中作为补充结果跟在后面（去重）。
+
 旧版随本改退役：`archiveRows` 平铺分区视图与 `storyLabels` 活动名分组下拉
 （归属规则由 `archiveTree` 的未归档首段分组继承：dorm(465)、cpt(42) 这类
 才仍可点选）。
@@ -347,6 +382,89 @@ AvgIdList，组序 = 游戏显示序）逐活动接住。
 `LoadDynCfg` 的动态件、不在配置包里（要收得走 Frida 运行时取真值那条老路）。
 12001/12002（type 12 WhiteDay）不算缺口——分发表里就没有 WhiteDay 处理器，这两
 活动在「行动记录」里也不显示剧情进度。
+
+## 剧本库分类手工覆盖层（M32）
+
+生成档案（`build-story-archive.mjs` → `story-archive.json`）重跑即覆盖，人工微调
+（合并散组、改活动名、把归错的段挪走）没地方落。所以人工调整走**独立覆盖层**
+`data/index/story-archive-manual.json`，与生成档案同形（`classes` / `mainline` /
+`unarchived`，另加 `manual: true` 与 `savedAt`）：
+
+- **加载优先级**：`main.js` 先探手动件，缺席或 `classes` 为空则回退生成件——
+  生成器随便重跑，人工结果不丢。
+- **编辑页 `lib-editor.html`**（`js/lib-editor.js`，顶栏「分类编辑」进入，与
+  index.html 的剧本库共用 `archiveTree` 口径）：左列三层分组（活动 / 主线组 /
+  未归档组，带段数），右侧改组名、改年份、增删活动与主线组、逐条「移出」进
+  「待分类」暂存池、按 ID/简介过滤后「+ 加入」补段。撤销栈 50 步；「重新播种」
+  拉最新生成档案；离线服务器退化为导出 JSON 手动放置。
+- **落盘端点**：`tools/ref/serve.py` 的 `POST /archive-save`（先 `json.loads`
+  校验再写，非法 JSON 直接 400，不会写出半个档案）。
+
+`unarchived` 条目从纯 ID 字符串升级为 `{id, group}`（M30 的游戏数据命名）；
+`archiveTree` 两种形态都吃，缺 group 时退回 ID 首段分组——那样编辑器与剧本库
+会各按一套分组（编辑器侧多出一个无组名的未归档组），所以手动档案里条目必须带
+group，控制台 `__libed().badUna` 专查这一条。搬运用的 `removeFromSource` 里
+**组名要先于 `splice` 取**：按下标回填时末条已被摘掉，读到的既不是原条目（会串
+到邻居组）也可能是 `undefined`（抛错时条目已从数组里消失 = 静默丢段）。
+
+## 未归档拆成宿舍剧情 / 其他剧情，编辑页改拖动（M33）
+
+未归档 476 段里 465 段是 `宿舍剧情·XX`（一层桶里塞了 96 个组，其中角色组的名字
+当时还取错了表，见 M34），点选与搜索都很吃力。按手动覆盖层（M32）重排：
+
+- 新增分类 **宿舍剧情**：93 个角色各成一支、每支 5 段，组名去掉「宿舍剧情·」前缀
+  （晨曦/芬恩/秋/渡宾…）；
+- 新增分类 **其他剧情**：原未归档剩下的 6 组 11 段（测试与演示、挑战关卡、
+  主线·内传…）；
+- 未归档就此清空，退成编辑器的「待分类」暂存池（有内容时才在剧本库出现）。
+- 搬迁件由 `node tools/migrate-story-classes.mjs` 生成（重跑；已有手动档案时
+  默认拒绝，`--force` 才覆盖 —— 那里面是人工调整）。
+
+`archiveTree` 为此补三条规则：
+
+- **分类里没有一个年份 → 活动本身即中层组**，不再劈一个「年份未定」空层
+  （宿舍剧情/其他剧情就是这种无年份分类）；有年份的分类照旧按年份分桶。
+- **单同名活动壳直通到剧情**（原来只对 `kind==='bin'` 开），无年份分类不必
+  多点一次活动卡。
+- **空节点不进树**：`renderMain` 直接取 `groups[group]`，未归档被抽空后留在树里
+  会被点崩。搜索命中的路径头去掉与活动名重复的段（`渡宾（宿舍剧情）`，
+  不再是 `渡宾（宿舍剧情｜渡宾）`）。
+
+编辑页交互改成拖动（`lib-editor.js`）：**条目拖到左列分组**＝改归属（候选区的
+条目拖过去＝加入，落点按指针位置插入）；**分组拖到另一分组**＝整支并入并删掉空壳
+（未归档组由条目派生，搬空即自己消失）；**组内上下拖**＝排序。常驻一个
+count=0 的「待分类」靶子，否则未归档搬空后就没有拖出去的落点。落点走
+`applyDrop()`：原地拖回原位不留撤销点、也不置脏。顺带修了两处年份显示：
+分组描述一直漏带 `year`，所以年份输入框恒空、新增活动恒默认今年；现在读真值，
+且无年份分类里新增活动默认留空（填了年份会凭空劈出年份层）。
+
+## 宿舍剧情对号入座：角色名只认 hero_data（M34）
+
+M30 起宿舍角色名取自 `avg_character[heroId].name`，这张表是 **AVG 演出角色表**：
+键空间 1..414 混着 NPC 与英雄，同一个 heroId 落在里面是**另一个人**（1056 那行解出来
+是「琳德」，而 1056 是 Uranus）。实测 90 个宿舍组里 **48 个报错人**，且会撞名：
+`dorm_eos_*`（晨曦）、`dorm_fern_*`（芬恩）、`dorm_dupin_*`（渡宾）三支全被叫成
+「渡宾」，`dorm_aki_*`（秋）与 `dorm_horizon_*`（苍青）全被叫成「米约尔」。
+
+改判据：`dorm_hero_talk[heroId].talk_list` 直接登记脚本 ID（归属唯一），
+角色名 `hero_data[heroId].name` → `locale_text`；`voices.json` 的 codename
+只作 talk 表缺席时的反查（阿比盖尔 1034 就没登记进 talk 表）。
+
+三条独立证据互相咬合：
+
+- ID 里的代号 = 归属英雄的 voices codename：460 段中 430 段字面相同，
+  余下 30 段是拼写变体（`zangyin`/`hannah` ↔ codename `crypter`/`hanna`），
+  归属仍唯一；
+- **剧本自身的语音字段**：465 段里 talk 表登记过的 460 段，台词
+  `audio.voice.heroId` 全部等于 talk 表归属英雄（0 段例外）；
+- `hero_data.name_en` 与解出的中文名逐一对上（Eos→晨曦、Fern→芬恩、Aki→秋、
+  Dupin→渡宾、Kurisu Makise→牧濑红莉栖、Earhart→埃尔赫、Camellia→薮春）。
+
+唯一没名可取的是 **Uranus（1056）**：`hero_data` 那行根本没有 `name` 字段、
+静态语言表也无条目（版本差），按游戏英文代号落名 `URANUS`，不硬造译名。
+93 英雄 × 5 段 = 465，一人一支不再撞名（`avg_character` 的错名会把两支并成一支，
+所以是 90 → 93）。重跑生成档案实测只动宿舍标签：改 340 条 group，
+非 dorm 标签 0、活动 0/56、主线组 0/20 变动。
 
 ## 录制剧情视频
 

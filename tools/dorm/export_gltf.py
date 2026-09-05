@@ -177,6 +177,18 @@ def decode_mesh(mesh):
             uvs.extend((u[0], 1.0 - u[1]))
     weights = [list(w) for w in bw] if bw else None
     joints = [[int(v) for v in j] for j in bi] if bi else None
+    # 部分家具蒙皮只写索引通道(单影响,隐式权重 1.0)
+    if joints and not weights:
+        weights = [[1.0] * len(j) for j in joints]
+    if weights and not joints:
+        joints = [[0] * len(w) for w in weights]
+    # 索引通道有脏数据:按 bindposes 数收敛,越界影响权重清零
+    if joints and weights:
+        nb = len(mesh.m_BindPose) if mesh.m_BindPose else 0
+        for j4, w4 in zip(joints, weights):
+            for i, (jj, ww) in enumerate(zip(j4, w4)):
+                if nb and not (0 <= jj < nb):
+                    j4[i], w4[i] = 0, 0.0
 
     ibuf = bytes(mesh.m_IndexBuffer)
     fmt32 = bool(getattr(mesh, 'm_IndexFormat', 0) == 1)
@@ -221,8 +233,11 @@ def _aabb(positions):
 # ---------------------------------------------------------------- materials
 
 def decode_material(mat, env, texdir, texcache):
-    """Material → {name, baseColorFactor, baseColorTexture, alphaMode, queue}"""
-    m = mat.read()
+    """Material → {name, baseColorFactor, baseColorTexture, alphaMode, queue}
+
+    mat 可为 ObjectReader 或已解析对象。
+    """
+    m = mat.read() if hasattr(mat, 'read') else mat
     out = {'name': m.m_Name}
     color = [1.0, 1.0, 1.0, 1.0]
     texfn = None

@@ -142,7 +142,7 @@ export class Editor {
   }
 
   /* —— A 栏分镜列表 ——
-     每框两个信息量：这一镜是旁白还是对话（旁白 / 说话人：xxx），加一行
+     每框两个信息量：这一镜是旁白还是对话（旁白 / 说话人名字），加一行
      文案预览。说话人取 speakerName（bravo=教授），缺名落 characters 表，
      再缺落 #heroId；无名镜一律归「旁白」。类型细节进行内 tooltip。 */
   renderList() {
@@ -170,7 +170,7 @@ export class Editor {
       },
           h('span.num', {text: String(index)}),
           h('span.speaker' + (speaker ? '' : '.narr'), {
-            text: speaker ? `说话人：${speaker}` : '旁白'}),
+            text: speaker || '旁白'}),
           h('span.text', {text: text || '（无文案）'}),
           h('span.badges', {text: badges}),
           h('span.ins-ops', {},

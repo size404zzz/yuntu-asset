@@ -413,9 +413,150 @@ const mainline = [...leftoverSectors.entries()]
     }))
     .sort((a, b) => (a.sectorId ?? 999999) - (b.sectorId ?? 999999));
 
-/* —— 语料里连 story_avg 行都没有的段 —— */
+/* —— 语料里连 story_avg 行都没有的段 ——
+ * 按游戏数据细分命名：
+ *   dorm_*：宿舍互动剧情，dorm_hero_talk.talk_list 按英雄登记（93 英雄），
+ *           角色名用 hero_data[heroId].name 解（阿比盖尔未登记进 talk 表，
+ *           走 voices 的 codename 反查，特例 1034）；
+ *   其余：教学关/活动关卡/支线/测试段，按前缀映射到章节与活动的语义组。 */
 const archived = new Set(storyRows.map((r) => r.script_id));
-const unarchived = manifest.stories.map((s) => s.id).filter((id) => !archived.has(id));
+const dormHeroTalk = decode('dorm_hero_talk');
+/* 角色名只认 hero_data：avg_character 是 AVG 演出角色表，它的 name 不按 heroId
+ * 对位（实测 90 个宿舍角色里 48 个报错人：dorm_eos_* 属 hero 1068＝晨曦，
+ * avg_character 却给成渡宾——那是 Dupin 的名字）。 */
+const heroData = decode('hero_data');
+const scriptHeroKey = new Map();
+for (const [heroId, row] of Object.entries(dormHeroTalk)) {
+  for (const s of (row?.talk_list ?? [])) scriptHeroKey.set(s, heroId);
+}
+/* talk 表未登记的后期角色（阿比盖尔）：codename → heroId（voices 索引）→ hero_data 名 */
+const codenameHero = new Map();
+for (const [heroId, info] of Object.entries(loadOptionalJson(join(ROOT, 'data', 'index', 'voices.json'))?.byHero ?? {})) {
+  if (info?.codename) codenameHero.set(String(info.codename), heroId);
+}
+const UNARCHIVED_EVENT_GROUPS = [
+  ['cpt00_tutorial', '序章·教学'],
+  ['cpt00_e', '序章·主线'],
+  ['cpt02_tutorial', '基洛普斯·教学'],
+  ['cpt05_tutorial', '柯普利·教学'],
+  ['cpt06_tutorial', '神导异论·教学'],
+  ['survivors_tutorial', '幸存者·教学'],
+  ['cpt_imr', '逆波共振·试炼剧情'],
+  ['cpt_hb', '抑质链·关卡剧情'],
+  ['22hallo_e', '诡海迷航·后日谈'],
+  ['23carnival', '无律背反·支线'],
+  ['23summer', '致密静点·支线'],
+  ['23winter_defend', '悬光升变·守卫战'],
+  ['24spring_persicaria', '迎春闹园记·佩里卡'],
+  ['1year_anniversary', '周年庆'],
+  ['22christ_hall', '2022圣诞·小游戏'],
+  ['23Music_live', '星海巡音·演唱会'],
+  ['cpt_challenge', '挑战关卡'],
+  ['oath_', '誓约剧情'],
+  ['cpt_inner', '主线·内传'],
+  ['cpt_longtail', '主线·教学'],
+  ['cpt_dupin_chess', '战棋玩法'],
+  ['cpt_undline_chess', '战棋玩法'],
+  ['cpt_yousei', '角色章节·补充'],
+  ['blackhole_demo', '测试与演示'],
+  ['personaltest', '测试与演示'],
+  ['testdemo', '测试与演示'],
+  ['Test', '测试与演示'],
+];
+const CHAPTER_NAMES = {1: '罗萨姆', 2: '基洛普斯', 3: '赫里奥斯', 4: '恩格玛', 5: '柯普利', 6: '神导异论'};
+const unarchivedGroupOf = (id) => {
+  if (id.startsWith('dorm_')) {
+    const codename = id.split('_')[1] ?? '';
+    const heroKey = scriptHeroKey.get(id) ?? codenameHero.get(codename);
+    /* 新角色的中文名可能在静态语言表缺席（版本差），回退游戏英文代号 */
+    const heroName = text(heroData[String(heroKey)]?.name)
+        ?? (codenameHero.has(codename) ? codename.toUpperCase() : null);
+    return heroName ? `宿舍剧情·${heroName}` : '宿舍剧情';
+  }
+  for (const [prefix, label] of UNARCHIVED_EVENT_GROUPS) {
+    if (id.startsWith(prefix)) return label;
+  }
+  const chapter = id.match(/^cpt0([1-6])_(e|h)(?:_|$)/);
+  if (chapter) {
+    return `${CHAPTER_NAMES[chapter[1]] ?? `第${chapter[1]}章`}·${chapter[2] === 'e' ? '支线剧情' : '隐藏剧情'}`;
+  }
+  return null;
+};
+const unarchived = manifest.stories.map((s) => s.id).filter((id) => !archived.has(id))
+    .map((id) => ({id, group: unarchivedGroupOf(id) ?? `未归类·${id.split('_')[0]}`}));
+
+/* —— 小项合并：事件组/未归档组按前缀语义并入对应大项 ——
+ * 「逆波共振·试炼剧情」「抑质链·关卡剧情」这类小项，其前缀就是某个活动的
+ * 名字：并入该活动（大型活动-年份-逆波共振 的容器里看到全部剧情）。优先级：
+ *   ① 活动名 === 前缀，或活动名以前缀开头（境界干涉 → 境界干涉的延迟选择）；
+ *   ② 主线扇区组与前缀同名（基洛普斯·教学 → 主线-基洛普斯）；
+ *   ③ 主线事件组与前缀同名（未归档-序章·教学 → 主线-序章·教学）。
+ * 无宿主的小项（誓约剧情/测试与演示/宿舍剧情·角色…）原地保留。 */
+const activityByName = new Map();
+for (const c of classes) for (const a of c.activities) if (a.name) activityByName.set(a.name, a);
+const activityByBase = (base) => activityByName.get(base)
+    ?? [...activityByName.values()].find((a) => base.length >= 3 && a.name.startsWith(base));
+const baseOf = (label) => label.split(/[·\-]/)[0].trim();
+const absorb = (target, rows) => {
+  const seen = new Set(target.stories.map((s) => s.id));
+  for (const s of rows) if (!seen.has(s.id)) { seen.add(s.id); target.stories.push(s); }
+};
+
+/* ① 未归档组 → 活动 / 主线扇区组 / 主线同名事件组 */
+const unarchivedGroups = new Map();
+for (const e of unarchived) {
+  const list = unarchivedGroups.get(e.group) ?? [];
+  list.push(e);
+  unarchivedGroups.set(e.group, list);
+}
+const keptUnarchived = [];
+for (const [label, entries] of unarchivedGroups) {
+  const base = baseOf(label);
+  const rows = entries.map((e) => ({id: e.id, name: null}));
+  if (base !== label) {
+    const act = activityByBase(base);
+    if (act) { absorb(act, rows); continue; }
+    const sectorGroup = mainline.find((m) => m.sectorId != null && m.name === base);
+    if (sectorGroup) { absorb(sectorGroup, rows); continue; }
+    const eventGroup = mainline.find((m) => m.event === label);
+    if (eventGroup) { absorb(eventGroup, rows); continue; }
+  }
+  for (const e of entries) keptUnarchived.push(e);
+}
+unarchived.length = 0;
+unarchived.push(...keptUnarchived);
+
+/* ② 主线事件组/扇区组 → 活动（无律背反-困难模式 → 无律背反 等）；
+ *    事件组前缀命中主线扇区组（柯普利·后日谈 → 柯普利）也并入 */
+const sectorGroupByName = new Map();
+for (const m of mainline) if (m.sectorId != null && m.name) sectorGroupByName.set(m.name, m);
+const mergedMainline = [];
+for (const m of mainline) {
+  const base = baseOf(m.name ?? '');
+  const act = base && base !== (m.name ?? '') ? activityByBase(base) : null;
+  if (act) { absorb(act, m.stories); continue; }
+  const sectorGroup = base && base !== (m.name ?? '') ? sectorGroupByName.get(base) : null;
+  if (sectorGroup && sectorGroup !== m) { absorb(sectorGroup, m.stories); continue; }
+  mergedMainline.push(m);
+}
+mainline.length = 0;
+mainline.push(...mergedMainline);
+
+/* ③ 未归档组与主线组同名（不同数据源的同类段，如 战棋玩法）→ 并入主线组 */
+const mainlineByName = new Map();
+for (const m of mainline) if (m.name) mainlineByName.set(m.name, m);
+const keptUnarchived2 = [];
+const survivedGroups = new Map();
+for (const e of keptUnarchived) {
+  survivedGroups.set(e.group, [...(survivedGroups.get(e.group) ?? []), e]);
+}
+for (const [label, entries] of survivedGroups) {
+  const target = mainlineByName.get(label);
+  if (target) { absorb(target, entries.map((e) => ({id: e.id, name: null}))); continue; }
+  for (const e of entries) keptUnarchived2.push(e);
+}
+unarchived.length = 0;
+unarchived.push(...keptUnarchived2);
 
 writeFileSync(OUT, JSON.stringify({classes, mainline, unarchived}, null, 1) + '\n');
 

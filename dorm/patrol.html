@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>云图计划 · 宿舍 M3 角色巡游</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #1a1612;
+               font-family: "Segoe UI", "Microsoft YaHei", sans-serif; }
+  #app { position: absolute; inset: 0; }
+  #panel { position: absolute; top: 12px; left: 12px; width: 265px; max-height: calc(100% - 24px);
+           overflow: auto; background: rgba(20,16,12,.82); color: #e8ddc8; border-radius: 8px;
+           padding: 12px 14px; font-size: 12.5px; line-height: 1.55; backdrop-filter: blur(4px); }
+  #panel h1 { font-size: 15px; margin: 0 0 6px; color: #ffd98a; }
+  #panel .ok { color: #9fdc7a; }
+  #panel .dim { color: #a99e8a; }
+  #panel ul { margin: 6px 0; padding-left: 16px; }
+  #panel button { margin: 2px 4px 2px 0; padding: 4px 10px; border-radius: 4px; border: 1px solid #6b5636;
+                  background: #33291c; color: #ffd98a; cursor: pointer; font-size: 12.5px; }
+  #chars .c { margin: 2px 0; }
+  #chars .c b { color: #ffd98a; }
+  .foot { margin-top: 8px; color: #a99e8a; font-size: 11px; }
+  a { color: #f0b95e; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="panel">
+  <h1>宿舍 M3 · 角色巡游 <a href="./index.html" style="float:right;font-size:11px">M1</a></h1>
+  <div>房间 -1_1 · 实机布局 · 5 角色巡游 + 家具交互(坐/躺)</div>
+  <ul id="check"></ul>
+  <div id="chars"></div>
+  <div class="foot">角色状态机:idle(stand)→ 随机走位(walk)→ idle 循环;
+    sol/taisch/turing 贴图包未提取,暂为灰模。</div>
+</div>
+<script>
+  window.__errs = [];
+  window.addEventListener('error', (e) => window.__errs.push((e.error && e.error.stack) || e.message));
+  window.addEventListener('unhandledrejection', (e) => window.__errs.push('REJ ' + ((e.reason && e.reason.stack) || e.reason)));
+</script>
+<script type="module" src="./patrol.js"></script>
+</body>
+</html>

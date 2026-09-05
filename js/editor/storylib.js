@@ -40,11 +40,12 @@ export function storyGroups(manifest) {
       .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
 }
 
-/* 档案 → 三层剧情树。顶层 = 三大分类（档案 classes 顺序）+ 主线 + 未归档；
- * 中层组 = 年份（分类）/ 扇区（主线）/ ID 首段（未归档）；叶子 = 剧情段
- * （镜数从 manifest 补，档案只管归属）。主线扇区与未归档首段没有真「活动」层，
- * 各包一个同名虚拟活动，UI 对单活动组直通到剧情。
- * 年份降序、年份未定的活动垫底；未归档按组大小排（dorm 一大坨排最前）。 */
+/* 档案 → 三层剧情树。顶层 = 分类（档案 classes 顺序）+ 主线 + 未归档；
+ * 中层组 = 年份（有年份的分类）/ 活动本身（无年份的手工分类，如宿舍剧情·
+ * 其他剧情）/ 扇区（主线）/ ID 首段或 group（未归档）；叶子 = 剧情段
+ * （镜数从 manifest 补，档案只管归属）。主线扇区、未归档分组与无年份分类
+ * 没有真「活动」层，各包一个同名虚拟活动，UI 对单同名活动组直通到剧情。
+ * 年份降序、年份未定的活动垫底；未归档按组大小排；空节点不进树。 */
 export function archiveTree(archive, manifest) {
   const steps = new Map(manifest.stories.map((s) => [s.id, s.steps]));
   const storyOf = (s) => ({id: s.id, steps: steps.get(s.id), brief: s.brief ?? s.name});
@@ -55,6 +56,19 @@ export function archiveTree(archive, manifest) {
   };
 
   const nodes = archive.classes.map((c) => {
+    /* 无年份的分类（宿舍剧情/其他剧情这类手工分类）不硬造年份层：
+     * 活动本身即中层组，与主线/未归档同形。 */
+    if (!c.activities.some((a) => a.year != null)) {
+      return {
+        name: c.name,
+        kind: 'class',
+        groups: c.activities.map((a) => ({
+          label: a.name ?? `活动${a.id}`,
+          activities: [{id: a.id, name: a.name ?? `活动${a.id}`,
+                        stories: a.stories.map(storyOf)}],
+        })),
+      };
+    }
     const byYear = new Map();
     for (const a of c.activities) {
       push(byYear, a.year != null ? String(a.year) : '年份未定',
@@ -79,7 +93,13 @@ export function archiveTree(archive, manifest) {
   });
 
   const byPrefix = new Map();
-  for (const id of archive.unarchived) push(byPrefix, groupOf(id), {id, steps: steps.get(id)});
+  /* unarchived 条目：{id, group}（生成器按游戏数据命名）；旧版为纯 id 字符串，
+   * 退回 ID 首段分组。 */
+  for (const entry of archive.unarchived) {
+    const id = typeof entry === 'string' ? entry : entry.id;
+    const group = typeof entry === 'string' ? groupOf(id) : (entry.group ?? groupOf(id));
+    push(byPrefix, group, {id, steps: steps.get(id)});
+  }
   nodes.push({
     name: '未归档',
     kind: 'bin',
@@ -87,7 +107,9 @@ export function archiveTree(archive, manifest) {
         .sort((x, y) => y[1].length - x[1].length || x[0].localeCompare(y[0]))
         .map(([label, stories]) => ({label, activities: [{name: label, stories}]})),
   });
-  return nodes;
+  /* 空节点不进树：picker 的 renderMain 直接取 groups[group]，空层会踩空。
+   * 未归档被手工分类抽空后就是这样（「待分类」再使用时它自己会回来）。 */
+  return nodes.filter((n) => n.groups.length);
 }
 
 /* 解码 + 映射一条龙；meta = avg-scripts.json 的条目 {id, cfg, lang}。
@@ -141,8 +163,9 @@ export function openStoryPicker(manifest, {title = '剧本库', archive = null, 
     clear(main);
     const node = tree[cat];
     const g = node.groups[group];
-    /* 主线/未归档的组只有一个同名虚拟活动壳：直通剧情，不渲染多余的卡片层。 */
-    const direct = node.kind === 'bin' && g.activities.length === 1;
+    /* 组里只有一个同名活动壳（主线/未归档/无年份分类）：直通剧情，
+     * 不渲染多余的卡片层。 */
+    const direct = g.activities.length === 1 && g.activities[0].name === g.label;
     if (act == null && !direct) {
       main.append(h('div.picker-crumb', {text: `${node.name} · ${g.label} · ${groupCount(g)} 段`}));
       g.activities.forEach((a, i) => main.append(h('button.picker-act',
@@ -181,19 +204,52 @@ export function openStoryPicker(manifest, {title = '剧本库', archive = null, 
         h('span.picker-tree-n', {text: String(groupCount(g))}))));
   }
 
-  /* —— 平铺视图：搜索结果（或有档案前的旧路径），分页 —— */
+  /* —— 平铺视图：搜索结果（或有档案前的旧路径）——
+   * 查询同时命中两类：活动/分组名（整组带组头列出）与剧情 ID（平铺，
+   * 去掉已在活动命中里出现过的段）。 */
   function refill(reset = true) {
     if (reset) { offset = 0; clear(list); }
-    items = filterStories(manifest.stories, {query, group: pickGroup});
-    if (!items.length) {
+    const q = query.toLowerCase();
+    let rows;
+    if (q && tree) {
+      rows = [];
+      const listed = new Set();
+      for (const node of tree) {
+        for (const g of node.groups) {
+          for (const a of g.activities) {
+            if ((a.name ?? '').toLowerCase().includes(q)) {
+              /* 无年份分类/主线/未归档的组名就是活动名，路径里重复的段丢掉 */
+              const trail = [node.name, g.label]
+                  .filter((x, i, arr) => x !== a.name && arr.indexOf(x) === i)
+                  .join('｜');
+              rows.push({header: trail ? `${a.name}（${trail}）` : a.name});
+              for (const s of a.stories) {
+                if (!listed.has(s.id)) { listed.add(s.id); rows.push(s); }
+              }
+            }
+          }
+        }
+      }
+      for (const s of filterStories(manifest.stories, {query, group: pickGroup})) {
+        if (!listed.has(s.id)) rows.push(s);
+      }
+    } else {
+      rows = filterStories(manifest.stories, {query, group: pickGroup});
+    }
+    if (!rows.length) {
       list.append(h('div.muted', {text: '没有匹配的剧本'}));
       return;
     }
-    for (const it of items.slice(offset, offset + PAGE)) list.append(row(it));
-    offset += PAGE;
-    if (offset < items.length) {
+    items = rows;
+    const view = rows.slice(offset, offset + PAGE);
+    for (const it of view) {
+      if (it.header) list.append(h('div.picker-group', {text: it.header}));
+      else list.append(row(it));
+    }
+    offset += view.length;
+    if (offset < rows.length) {
       list.append(h('button.picker-more',
-          {text: `加载更多（${items.length - offset}）`, onclick: () => refill(false)}));
+          {text: `加载更多（${rows.length - offset}）`, onclick: () => refill(false)}));
     }
   }
 
