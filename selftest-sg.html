@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <title>23sg 专属演出自检</title>
-<link rel="stylesheet" href="/tools/ref/avg.css">
-<link rel="stylesheet" href="/css/ux.css">
+<link rel="stylesheet" href="tools/ref/avg.css">
+<link rel="stylesheet" href="css/ux.css">
 <style>
   html, body { margin: 0; background: #1b1b1b; overflow: hidden; }
   body { color: black; font-family: "Segoe UI", Lato, "Noto Sans", sans-serif; }
@@ -21,9 +21,9 @@
  * res/ 文件（naturalWidth 判定），sg_theme_099 故意 404 验证「帧缺失退回
  * 标准卡」的降级。断言在跑者 tools/test-sg.mjs。
  */
-import {Player} from '/js/engine/player.js';
-import {VirtualTimer} from '/js/test/harness.js';
-import {reporter} from '/js/test/report.js';
+import {Player} from './js/engine/player.js';
+import {VirtualTimer} from './js/test/harness.js';
+import {reporter} from './js/test/report.js';
 
 const sgReport = reporter('sg_report');
 const pageErrors = [];
@@ -32,7 +32,7 @@ addEventListener('unhandledrejection', (e) => pageErrors.push(`rej: ${e.reason?.
 
 /* 帧解析：真实 res/ 文件（naturalWidth 判定），其余名字 404。 */
 const filePathOf = (name) => /^sg_theme_\d+\.png$/.test(name)
-    ? `/res/Assets/Res/Images/Avg/sg/${name}` : '/nonexistent/' + name;
+    ? `res/Assets/Res/Images/Avg/sg/${name}` : 'nonexistent/' + name;
 
 const clock = new VirtualTimer();
 const player = new Player({

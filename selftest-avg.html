@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <title>avg corpus e2e harness</title>
-<link rel="stylesheet" href="/tools/ref/avg.css">
-<link rel="stylesheet" href="/tools/ref/pandect.css">
-<link rel="stylesheet" href="/tools/ref/nav.css">
+<link rel="stylesheet" href="tools/ref/avg.css">
+<link rel="stylesheet" href="tools/ref/pandect.css">
+<link rel="stylesheet" href="tools/ref/nav.css">
 <style>
   html, body { margin: 0; background: #1b1b1b; }
   html { overflow: hidden; }
@@ -25,17 +25,17 @@
  * 报告 POST 回 /freeze?scene=avg_e2e_report，断言在跑者
  * tools/test-avg-e2e.mjs 里做（与 Node 侧同源解码对拍）。
  */
-import {Player} from '/js/engine/player.js';
-import {parseChunk} from '/js/core/lundump.js';
-import {execChunk, toJS} from '/js/core/lvm.js';
-import {storyToWire, replayChain} from '/js/core/avgwire.js';
-import {loadRepoIndex, flatLookup} from '/js/core/repo-index.js';
-import {reporter} from '/js/test/report.js';
+import {Player} from './js/engine/player.js';
+import {parseChunk} from './js/core/lundump.js';
+import {execChunk, toJS} from './js/core/lvm.js';
+import {storyToWire, replayChain} from './js/core/avgwire.js';
+import {loadRepoIndex, flatLookup} from './js/core/repo-index.js';
+import {reporter} from './js/test/report.js';
 
 const avgReport = reporter('avg_e2e_report');
 const setStep = (s) => { lastStep = s; avgReport.step(s); };
-import {deriveLayout} from '/js/engine/sprite.js';
-import {VirtualTimer} from '/js/test/harness.js';
+import {deriveLayout} from './js/engine/sprite.js';
+import {VirtualTimer} from './js/test/harness.js';
 
 const URLP = new URLSearchParams(location.search);
 const ID = URLP.get('id') || 'cpt00_e_01_01';
@@ -49,14 +49,14 @@ const clock = new VirtualTimer();
 const repo = await loadRepoIndex();
 if (!repo.available) problems.push('repo 索引不可用（R13 退化）');
 
-const manifest = await (await fetch('/data/index/avg-scripts.json')).json();
+const manifest = await (await fetch('data/index/avg-scripts.json')).json();
 const meta = manifest.stories.find((s) => s.id === ID);
 if (!meta) { problems.push(`剧本 ${ID} 不在索引里`); }
 
 let wire = null, stats = null;
 if (meta) {
   const decodeLua = async (path) => {
-    const bytes = new Uint8Array(await (await fetch('/' + path)).arrayBuffer());
+    const bytes = new Uint8Array(await (await fetch(path)).arrayBuffer());
     return toJS(execChunk(parseChunk(bytes))[0]);
   };
   const cfg = await decodeLua(meta.cfg);
@@ -71,19 +71,19 @@ const player = new Player({
   mount: document.getElementById('mount'),
   mode: 'clamp',
   timer: clock,
-  filePathOf: (name) => flatLookup(repo, name) ?? '/images/' + name,
+  filePathOf: (name) => flatLookup(repo, name) ?? 'images/' + name,
   layoutOf: async (img) => {
     /* 编辑器同款三级：标定件 > 仓库 layout > 从 lpic 原图 derive 起点。 */
     try {
-      return await (await fetch('/data/layouts/' + img.imgPath + '.json')).json();
+      return await (await fetch('data/layouts/' + img.imgPath + '.json')).json();
     } catch { /* 无标定件，走 derive */ }
     const path = flatLookup(repo, 'lpic_' + img.imgPath + '.png');
     if (!path) throw new Error(`立绘缺 lpic：${img.imgPath}`);
-    const blob = await (await fetch('/' + path)).blob();
+    const blob = await (await fetch(path)).blob();
     return deriveLayout(await createImageBitmap(blob));
   },
   getName: () => '教授',
-  characters: await (await fetch('/data/Avg_character.json')).json(),
+  characters: await (await fetch('data/Avg_character.json')).json(),
 });
 
 const shots = [];

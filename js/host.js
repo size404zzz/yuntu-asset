@@ -38,7 +38,7 @@ export async function bootCorpusPlayer(mount,
       return 'res/Assets/Res/Character/'
           + `${face[1]}_avg/Face/${face[1]}_avg_face_${face[2]}.png`;
     }
-    return '/images/' + name[0].toUpperCase() + name.slice(1);
+    return 'images/' + name[0].toUpperCase() + name.slice(1);
   };
 
   /* 游戏的 MovieManager 用无扩展名的 vedioPath；本地资源库/用户上传件则

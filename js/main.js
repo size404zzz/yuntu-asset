@@ -396,7 +396,7 @@ loadFixtures().then(async () => {
     recorderSmoke = {opened: false, error: e.message};
   }
   smoke.recorder = recorderSmoke;
-  await fetch('/freeze?scene=editor_smoke', {
+  await fetch('freeze?scene=editor_smoke', {
     method: 'POST', headers: {'Content-Type': 'application/json'},
     body: JSON.stringify(smoke, null, 1),
   });

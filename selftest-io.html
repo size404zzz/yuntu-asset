@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <title>io harness</title>
-<link rel="stylesheet" href="/tools/ref/avg.css">
-<link rel="stylesheet" href="/tools/ref/pandect.css">
-<link rel="stylesheet" href="/tools/ref/nav.css">
+<link rel="stylesheet" href="tools/ref/avg.css">
+<link rel="stylesheet" href="tools/ref/pandect.css">
+<link rel="stylesheet" href="tools/ref/nav.css">
 <style>
   html, body { margin: 0; background: #1b1b1b; }
   html { overflow: hidden; }
@@ -28,21 +28,21 @@
  * 4) 自动保存 saveProject/loadProject 全等 + forget 清空；
  * 5) importProject(applyTo) 把 base64 上传件与标定 layout 灌回注册表。
  */
-import {Player} from '/js/engine/player.js';
-import {reporter} from '/js/test/report.js';
-import {Doc} from '/js/core/doc.js';
-import {normalizeScript} from '/js/core/script.js';
-import {AssetRegistry} from '/js/core/assets.js';
-import {openDB} from '/js/core/idb.js';
+import {Player} from './js/engine/player.js';
+import {reporter} from './js/test/report.js';
+import {Doc} from './js/core/doc.js';
+import {normalizeScript} from './js/core/script.js';
+import {AssetRegistry} from './js/core/assets.js';
+import {openDB} from './js/core/idb.js';
 import {
   makeSettler, makeSnapshotter, createTimeline, VirtualTimer,
-} from '/js/test/harness.js';
+} from './js/test/harness.js';
 import {
   exportProject, projectResolvers, exportZip, saveProject, loadProject,
   forgetProject, importProject,
-} from '/js/editor/io.js';
-import {bootProject} from '/js/play.js';
-import {readZip} from '/js/ui/zip.js';
+} from './js/editor/io.js';
+import {bootProject} from './js/play.js';
+import {readZip} from './js/ui/zip.js';
 
 const problems = [];
 const ioReport = reporter('io_report');
@@ -60,9 +60,9 @@ const check = (label, cond, detail = '') => {
   }
 };
 
-const characters = await (await fetch('/data/Avg_character.json')).json();
-const scene = await (await fetch('/data/fixtures/scene2.json')).json();
-const effects = await (await fetch('/data/index/avg-effects.json')).json();
+const characters = await (await fetch('data/Avg_character.json')).json();
+const scene = await (await fetch('data/fixtures/scene2.json')).json();
+const effects = await (await fetch('data/index/avg-effects.json')).json();
 const registry = await new AssetRegistry().boot();
 
 /* —— 双播放器 —— */
@@ -85,9 +85,9 @@ const rigA = makeRig('mount-a', {
   /* 与编辑器同源的解析（registry：res/ 仓库路径）——B 路 bundle 解析
      拼写一致，快照比的是内容而不是 URL 拼法（内容同源由墨水采样证明）。 */
   filePathOf: (name) => registry.resolve(name)?.url
-      ?? '/images/' + name[0].toUpperCase() + name.slice(1),
+      ?? 'images/' + name[0].toUpperCase() + name.slice(1),
   layoutOf: async (img) =>
-      (await (await fetch('/data/layouts/' + img.imgPath + '.json')).json()),
+      (await (await fetch('data/layouts/' + img.imgPath + '.json')).json()),
 });
 
 setStep('playA');
@@ -129,7 +129,7 @@ const doc = new Doc(normalizeScript(scene));
 const project = await exportProject({
   doc, title: '背水一战', registry, characters,
   effects,
-  glossary: await (await fetch('/data/Noun_des.json')).json(),
+  glossary: await (await fetch('data/Noun_des.json')).json(),
 });
 const wire = JSON.stringify(project);
 const imported = JSON.parse(wire);           // 下载/上传边界
@@ -179,7 +179,7 @@ check('bundle 资产数 = repo 资产数',
   /* 抽查字节：显式选 repo 图片件（音频落在 assets/audio/ 子路径，名字键不同）。 */
   const imgAsset = project.assets.find((a) => !a.data && a.kind !== 'audio');
   const pick = entries.find((e) => e.name === `assets/${imgAsset.name}`);
-  const src = new Uint8Array(await (await fetch('/' + imgAsset.repoPath))
+  const src = new Uint8Array(await (await fetch(imgAsset.repoPath))
       .arrayBuffer());
   check('资产字节与源一致', pick && src.length === pick.data.length
       && src.every((v, n) => v === pick.data[n]),
@@ -209,7 +209,7 @@ check('bundle 资产数 = repo 资产数',
 }
 
 /* 把 bundle 原样交给跑者：解到仓库子目录后真开一次 play.html?probe=1 */
-await fetch('/freeze?scene=bundle_zip_b64', {
+await fetch('freeze?scene=bundle_zip_b64', {
   method: 'POST', headers: {'Content-Type': 'application/json'},
   body: JSON.stringify({done: true, zip: b64encodeZip(zipBytes)}),
 });

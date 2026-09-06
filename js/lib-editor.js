@@ -9,7 +9,9 @@
  */
 import {h, clear} from './ui/dom.js';
 
-const SAVE_URL = '/archive-save';
+/* 相对端点：页面在仓库根，根挂载（serve.py）解析出的请求路径不变，
+ * 子路径部署（pages.dev 子目录）也不会指到站点根。 */
+const SAVE_URL = 'archive-save';
 const MANUAL_URL = 'data/index/story-archive-manual.json';
 const DERIVED_URL = 'data/index/story-archive.json';
 const DRAFT_KEY = 'yuntu.lib-editor.draft';

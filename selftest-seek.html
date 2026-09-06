@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <title>avg seek harness</title>
-<link rel="stylesheet" href="/tools/ref/avg.css">
-<link rel="stylesheet" href="/tools/ref/pandect.css">
-<link rel="stylesheet" href="/tools/ref/nav.css">
+<link rel="stylesheet" href="tools/ref/avg.css">
+<link rel="stylesheet" href="tools/ref/pandect.css">
+<link rel="stylesheet" href="tools/ref/nav.css">
 <style>
   html, body { margin: 0; background: #1b1b1b; }
   html { overflow: hidden; }
@@ -17,8 +17,8 @@
   @font-face {
     font-family: 'Mohave'; font-style: normal; font-weight: 300;
     font-display: block;
-    src: url(/data/fonts/Mohave-Light.woff2) format('woff2'),
-         url(/data/fonts/Mohave-Light.woff) format('woff');
+    src: url(data/fonts/Mohave-Light.woff2) format('woff2'),
+         url(data/fonts/Mohave-Light.woff) format('woff');
   }
 </style>
 </head>
@@ -41,11 +41,11 @@
  * 分支）+ scene3（数组、终点 isEnd）。
  * ?scene=scene2 可只跑一个场景（约 1/2 时长）。
  */
-import {Player} from '/js/engine/player.js';
+import {Player} from './js/engine/player.js';
 import {
   makeSettler, makeSnapshotter, createTimeline, VirtualTimer,
-} from '/js/test/harness.js';
-import {reporter} from '/js/test/report.js';
+} from './js/test/harness.js';
+import {reporter} from './js/test/report.js';
 
 /* ?speed=N：CSS 过渡 N 倍速（harness 泵 playbackRate + 等待等比缩短）。
    A/B 两路同倍率，对拍等价性不变；等价性本身由 --speed=1 对照轮背书。 */
@@ -66,11 +66,11 @@ const makeRig = async (mountId) => {
     mount: document.getElementById(mountId),
     mode: 'clamp',
     timer: clock,
-    filePathOf: (name) => '/images/' + name[0].toUpperCase() + name.slice(1),
-    layoutOf: async (img) => (await fetch('/data/layouts/' + img.imgPath + '.json')).json(),
+    filePathOf: (name) => 'images/' + name[0].toUpperCase() + name.slice(1),
+    layoutOf: async (img) => (await fetch('data/layouts/' + img.imgPath + '.json')).json(),
     getName: () => '教授',
     getGender: () => 'TA',
-    characters: await (await fetch('/data/Avg_character.json')).json(),
+    characters: await (await fetch('data/Avg_character.json')).json(),
   });
   return {
     player,
@@ -208,7 +208,7 @@ try {
   for (const fixture of fixtures) {
     setStep(`${fixture.id}:load`);
     const tag = fixture.id;
-    const scene = await (await fetch(`/data/fixtures/${fixture.id}.json`)).json();
+    const scene = await (await fetch(`data/fixtures/${fixture.id}.json`)).json();
 
     setStep(`${tag}:setScene`);
     rigA.player.setScene(scene, fixture.title, '1', '绿洲防线', '');

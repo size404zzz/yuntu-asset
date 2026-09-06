@@ -13,9 +13,9 @@
  * 注册表上传覆盖仓库、标定 layout 的存/读/删、音频键、R13 退化。
  * 报告 POST 到 /freeze?scene=assets_report，跑者 tools/test-assets.mjs。
  */
-import {openDB, put, get, del, entries, BLOBS, KV} from '/js/core/idb.js';
-import {AssetRegistry} from '/js/core/assets.js';
-import {reporter} from '/js/test/report.js';
+import {openDB, put, get, del, entries, BLOBS, KV} from './js/core/idb.js';
+import {AssetRegistry} from './js/core/assets.js';
+import {reporter} from './js/test/report.js';
 
 const failures = [];
 const problems = [];
@@ -94,7 +94,7 @@ check('清理后仓库解析恢复', reg3.resolve('Lpic_persicaria_avg.png')?.so
 check('清理上传后条目消失', reg3.listUploads().length === 0);
 
 /* ---------- 标定工具（layout-cal） ---------- */
-const {mountCal} = await import('/js/editor/layout-cal.js');
+const {mountCal} = await import('./js/editor/layout-cal.js');
 const calRoot = document.createElement('div');
 document.body.append(calRoot);
 const cal = await mountCal(calRoot, reg3, {id: 'sol_avg', onSaved: () => {}});

@@ -120,7 +120,9 @@ export function archiveTree(archive, manifest) {
    见 avgwire 头注与 tools/audit-decode-completeness.mjs。） */
 export async function loadStory(fetchImpl, meta, {heroSprites, pathOwner} = {}) {
   const decode = async (path) => {
-    const res = await fetchImpl('/' + path);
+    /* path 是仓库相对路径（avg-scripts.json 的 cfg/lang）：相对当前页面
+       解析，根挂载与子路径部署都指到同一文件。 */
+    const res = await fetchImpl(path);
     if (!res.ok) throw new Error(`${path} → ${res.status}`);
     const bytes = new Uint8Array(await res.arrayBuffer());
     return toJS(execChunk(parseChunk(bytes))[0]);

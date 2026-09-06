@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <title>avg player harness</title>
-<link rel="stylesheet" href="/tools/ref/avg.css">
-<link rel="stylesheet" href="/tools/ref/pandect.css">
-<link rel="stylesheet" href="/tools/ref/nav.css">
+<link rel="stylesheet" href="tools/ref/avg.css">
+<link rel="stylesheet" href="tools/ref/pandect.css">
+<link rel="stylesheet" href="tools/ref/nav.css">
 <style>
   html, body { margin: 0; background: #1b1b1b; }
   /* 与参考冻结页同款：滚动条会夹窄 #avg-container，立绘规则按 clientWidth 算。 */
@@ -18,8 +18,8 @@
   @font-face {
     font-family: 'Mohave'; font-style: normal; font-weight: 300;
     font-display: block;
-    src: url(/data/fonts/Mohave-Light.woff2) format('woff2'),
-         url(/data/fonts/Mohave-Light.woff) format('woff');
+    src: url(data/fonts/Mohave-Light.woff2) format('woff2'),
+         url(data/fonts/Mohave-Light.woff) format('woff');
   }
 </style>
 </head>
@@ -39,12 +39,12 @@
  * 观测件（虚拟钟/时间线/settle/snapshot）在 js/test/harness.js，
  * 与 M5 seek 回归共用同一份。
  */
-import {Player} from '/js/engine/player.js';
-import {loadRepoIndex, flatLookup} from '/js/core/repo-index.js';
+import {Player} from './js/engine/player.js';
+import {loadRepoIndex, flatLookup} from './js/core/repo-index.js';
 import {
   makeSettler, makeSnapshotter, createTimeline, VirtualTimer,
-} from '/js/test/harness.js';
-import {reporter} from '/js/test/report.js';
+} from './js/test/harness.js';
+import {reporter} from './js/test/report.js';
 
 /* 像素比对截停模式：?max=N&slug=X 播到第 N 个到达点就停（舞台留在
    settled 态供截图），报告写 expected-X.json 不踩常驻回归件。 */
@@ -69,14 +69,14 @@ const clock = new VirtualTimer();
    缺失文件按 GFWiki 的怪癖返回 200 的 HTML 提示页 —— 纹理永远到不了，
    「纹理到达才开」的门不落地，打字机与点击推进会一起卡死。 */
 const repo = await loadRepoIndex();
-const effectIndex = await (await fetch('/data/index/avg-effects.json')).json();
+const effectIndex = await (await fetch('data/index/avg-effects.json')).json();
 const filePathOf = (name) => flatLookup(repo, name)
-    ?? '/images/' + name[0].toUpperCase() + name.slice(1);
+    ?? 'images/' + name[0].toUpperCase() + name.slice(1);
 const layoutCache = new Map();
 const layoutOf = async (img) => {
   if (!layoutCache.has(img.imgPath)) {
     layoutCache.set(img.imgPath,
-        await (await fetch('/data/layouts/' + img.imgPath + '.json')).json());
+        await (await fetch('data/layouts/' + img.imgPath + '.json')).json());
   }
   return layoutCache.get(img.imgPath);
 };
@@ -90,7 +90,7 @@ const player = new Player({
   layoutOf,
   getName: () => '教授',
   getGender: () => 'TA',
-  characters: await (await fetch('/data/Avg_character.json')).json(),
+  characters: await (await fetch('data/Avg_character.json')).json(),
 });
 const refs = player.refs;
 const timeline = createTimeline(player.container, clock);
@@ -99,10 +99,10 @@ const snapshot = makeSnapshotter({player, timeline});
 
 /* ---------- 开跑 ---------- */
 
-const scene = await (await fetch(`/data/fixtures/${SCENE}.json`)).json();
+const scene = await (await fetch(`data/fixtures/${SCENE}.json`)).json();
 /* 契约已换成游戏本体（2026-08-31），wiki 冻结件随之删除：缺基准时只跑冒烟
    （真实推进全镜 + 结构自证），并在报告里显式声明未对拍。 */
-const expected = await fetch(`/data/fixtures/expected-${SCENE}.json`)
+const expected = await fetch(`data/fixtures/expected-${SCENE}.json`)
     .then((r) => r.ok ? r.json() : null);
 player.setScene(scene, TITLES[SCENE] ?? SCENE, '1', '绿洲防线', '');
 const header = {

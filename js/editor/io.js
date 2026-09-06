@@ -306,7 +306,7 @@ if (new URLSearchParams(location.search).get('probe')) {
     player.container.click();
     await sleep(4000);
   }
-  await fetch('/freeze?scene=bundle_probe', {
+  await fetch('freeze?scene=bundle_probe', {
     method: 'POST', headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
       done: true,
@@ -327,18 +327,18 @@ export async function exportZip({project, fetchImpl = fetch, assetBytes}) {
     {name: 'project.json', data: JSON.stringify(project)},
   ];
   for (const path of BUNDLE_JS) {
-    const r = await fetchImpl(`/${path}`);
+    const r = await fetchImpl(path);
     if (!r.ok) throw new Error(`打包缺文件 ${path}`);
     entries.push({name: path, data: new Uint8Array(await r.arrayBuffer())});
   }
   for (const css of ['css/avg.css', 'css/pandect.css', 'css/ux.css']) {
-    const r = await fetchImpl(`/${css}`);
+    const r = await fetchImpl(css);
     entries.push({name: css, data: new Uint8Array(await r.arrayBuffer())});
   }
   for (const a of project.assets) {
     if (a.data) continue;                       // base64 件已在 project.json
     const bytes = assetBytes ? await assetBytes(a)
-        : await (await fetchImpl(`/${a.repoPath}`)).arrayBuffer();
+        : await (await fetchImpl(a.repoPath)).arrayBuffer();
     entries.push({
       name: a.bundlePath
           ?? (a.kind === 'audio' ? audioFileOf(a.name) : `assets/${a.name}`),

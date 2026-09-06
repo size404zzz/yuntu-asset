@@ -6,7 +6,7 @@
  * POST 串行化：ThreadingHTTPServer 并发写同一文件不保证到达序，
  * 链式追加保证磁盘上看到的心跳单调推进。 */
 export function reporter(scene) {
-  const post = (body) => fetch(`/freeze?scene=${scene}`, {
+  const post = (body) => fetch(`freeze?scene=${scene}`, {
     method: 'POST', body: JSON.stringify(body),
   }).catch(() => {});
   let chain = Promise.resolve();

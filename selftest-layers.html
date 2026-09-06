@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <title>AVG 五层舞台自检</title>
-<link rel="stylesheet" href="/css/avg.css">
-<link rel="stylesheet" href="/css/pandect.css">
-<link rel="stylesheet" href="/css/ux.css">
+<link rel="stylesheet" href="css/avg.css">
+<link rel="stylesheet" href="css/pandect.css">
+<link rel="stylesheet" href="css/ux.css">
 <style>html,body{margin:0;background:#111}#mount{width:1200px;height:540px}</style>
 </head>
 <body>
 <div id="mount"></div>
 <script type="module">
-import {Player} from '/js/engine/player.js';
+import {Player} from './js/engine/player.js';
 
 /* 不依赖仓库图片：用同源 SVG data URL 验证 DOM 挂载与时序，
    type5/vedioPath 则故意走缺失占位，确认视频缺件不会阻塞剧情。 */
@@ -20,7 +20,7 @@ const svg = (color) => 'data:image/svg+xml,' + encodeURIComponent(
     + `<rect width="1200" height="540" fill="${color}"/></svg>`);
 const filePathOf = (name) => svg(name.includes('ef001') ? '#843d4f'
     : name.includes('bg') ? '#20354c' : '#283c27');
-const effectIndex = await (await fetch('/data/index/avg-effects.json')).json();
+const effectIndex = await (await fetch('data/index/avg-effects.json')).json();
 const player = new Player({
   mount: document.getElementById('mount'),
   filePathOf,
@@ -148,7 +148,7 @@ try {
   report.ok = report.failures.length === 0;
 } catch (e) { report.failures.push(String(e)); }
 report.done = true;
-await fetch('/freeze?scene=layers_report', {
+await fetch('freeze?scene=layers_report', {
   method: 'POST', headers: {'Content-Type': 'application/json'},
   body: JSON.stringify(report),
 });
