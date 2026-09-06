@@ -38,8 +38,10 @@ res/Assets/media/
 data/fixtures/expected-*.json
 
 # 一次性调试/探针产物（tmp-*.mjs/.cjs/.html/.png、22child_02 的
-# bundles/_probe 探针与实验件、误存成 idx.html 的下载残骸）：
-# 本地把玩不入库，历史版本仍可在 M60/M80 提交里查到。
+# bundles/_probe 探针与实验件、误存成 idx.html 的下载残骸）：本地把玩不入库。
+# 注意 2026-09-06 历史瘦身按路径剥掉了 res/、data/audio/、bundles/ 三族的死 blob，
+# 所以 bundles/_probe 那批 LuaConfigs 拆包件**只剩本地这一份**，别再当可回收的临时件删；
+# 根目录 tmp-* 与 idx.html 不在这三个前缀里，早先跟踪进 E2E/M80 发的版本仍可从历史查出。
 /tmp-*
 /bundles/
 /idx.html
