@@ -51,6 +51,13 @@
 - 折叠模型断言化：把已确认的语义变成带字节码锚点的回归（lvm.js 修复是其前置，现已完成）
 
 ## 宿舍 M1 竖切 —— 已结(2026-09-05)
+
+> **下面宿舍 M1–M3 三节的产物已不在本仓。** `dorm/`、`tools/dorm/`、`data/dorm/` 共 405 件属
+> 独立项目 `nc-dorm`,且那边是更新版本(本仓这三份是 09-05 的陈旧快照,逐文件比对无一比它新,
+> 2026-09-06 已移出并加 `.gitignore` 防再误打包)。读这三节按映射换算路径:
+> `dorm/*` → `nc-dorm/web/*`、`tools/dorm/*` → `nc-dorm/tools/*`、`data/dorm/*` → `nc-dorm/data/dorm/*`。
+> 三节本身保留 —— 记的是当时的技术判定(管线选型、顶点通道、蒙皮形态、CAB 解析),与住在哪个仓无关。
+
 - **产物**:`dorm/index.html`(three.js 竖切:单房间 + 5 家具 + croque 走/站/坐/躺/说话演出链)+ `dorm/README.md` + `tools/dorm/` 三件套(anim_decode / export_gltf / export_dorm_m1)+ `dorm/assets/` 25 件(3.6MB)
 - **管线定案**:不走 FBX 中转(无 blender/assimp),自研 **Unity→glTF 直出**。动画是运行时打包格式(通用曲线,非人形肌肉流):Streamed(Hermite)/Dense(30fps)/Constant 三层 + Avatar m_TOS 反解路径哈希;格式参考 UtinyRipper/AssetRipper
 - **网格顶点通道(实测)**:2021+ 通道序,ch12=blendWeight f32、ch13=blendIndices u32;**流区域 16B 对齐**(内联)/.resS 无对齐;个别家具 channel dim 字段损坏按下一通道 offset 收敛;家具网格在外部 .resS(shared_models.ab)

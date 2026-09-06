@@ -49,3 +49,12 @@ data/fixtures/expected-*.json
 # IDE 侧跑出来的分析报告件（better-harness 每次运行产 canvas/findings/canvas.tsx）：
 # 是工具产物不是项目源数据，本地保留即可，不入库。
 .qoder/
+
+# 宿舍 3D 查看器（竖切 / 摆放编辑器 / 巡游）属独立项目 nc-dorm，曾被误打包进本仓。
+# 2026-09-06 逐文件比对：这 405 件在 nc-dorm 全有对应，且没有一件是本仓更新
+# （dorm/ 有 28 个模型件更旧，nc-dorm 侧今天还在改 patrol.js）⇒ 本仓三份纯是陈旧快照。
+# 忽略以防再次误打包。注意 AVG 的「宿舍主题剧情」是另一回事，在
+# res/Assets/Res/LuaScripts/Avg/AvgCfg_dorm_*.lua，不依赖这三个目录。
+/dorm/
+/tools/dorm/
+/data/dorm/
