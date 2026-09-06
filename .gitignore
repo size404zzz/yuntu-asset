@@ -30,13 +30,12 @@ res/Assets/media/
 
 # 音频转码产物 data/audio/ 自 M15 起随仓库分发（全量本地部署包）；
 # 仍可由 res/Assets/media 的 acb/awb 经 `node tools/media/unpack-acb.mjs` 重建。
-# test-io 的 zip b64 交接件：selftest-io 每次运行重新生成，不入库。
-data/fixtures/expected-bundle_zip_b64.json
 
-# e2e/五层冒烟的运行期报告件由跑者每次重新生成并自清理，不入库
-# （对照基线是跑者现场从 Node 侧同源解码算出的，不走冻结表）。
-data/fixtures/expected-avg_e2e_report.json
-data/fixtures/expected-layers_report.json
+# 冻结表跑者（tools/ref/freeze.mjs）按 scene 名落 data/fixtures/expected-<scene>.json，
+# 全属运行期交接件（test-io 的 zip b64、e2e/五层/play 报告……）每次重新生成，一律不入库；
+# 逐条列举会漏（play_report 就是新冒出来的），而真正冻结的基线件命名不带 expected- 前缀
+# （scene2/3/4.json、wiki-fades-23carnival.json），所以这里放心用通配。
+data/fixtures/expected-*.json
 
 # 一次性调试/探针产物（tmp-*.mjs/.cjs/.html/.png、22child_02 的
 # bundles/_probe 探针与实验件、误存成 idx.html 的下载残骸）：
@@ -44,3 +43,7 @@ data/fixtures/expected-layers_report.json
 /tmp-*
 /bundles/
 /idx.html
+
+# IDE 侧跑出来的分析报告件（better-harness 每次运行产 canvas/findings/canvas.tsx）：
+# 是工具产物不是项目源数据，本地保留即可，不入库。
+.qoder/
